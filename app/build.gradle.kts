@@ -1,0 +1,226 @@
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
+import java.io.FileInputStream
+import java.util.Locale
+import java.util.Properties
+
+plugins {
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.materialthemebuilder)
+    alias(libs.plugins.kotlinAndroid)
+}
+
+fun getGitHashCommit(): String {
+    return try {
+        val processBuilder = ProcessBuilder("git", "rev-parse", "--short", "HEAD")
+        val process = processBuilder.start()
+        process.inputStream.bufferedReader().readText().trim()
+    } catch (e: Exception) {
+        "unknown"
+    }
+}
+
+val gitHash: String = getGitHashCommit().uppercase(Locale.getDefault())
+
+android {
+    namespace = "com.wa.toolkit"
+    compileSdk = 36
+    ndkVersion = "27.0.11902837 rc2"
+
+    flavorDimensions += "version"
+
+    productFlavors {
+        create("whatsapp") {
+            dimension = "version"
+            applicationIdSuffix = ""
+        }
+        create("business") {
+            dimension = "version"
+            applicationIdSuffix = ".w4b"
+            resValue("string", "app_name", "Whatsapp Toolkit Business")
+        }
+    }
+
+    defaultConfig {
+        applicationId = "com.wa.toolkit"
+        minSdk = 28
+        targetSdk = 34
+        versionCode = 154
+        versionName = "1.5.4-DEV ($gitHash)"
+        multiDexEnabled = true
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        signingConfigs.create("config") {
+            val keystorePropertiesFile = rootProject.file("local.properties")
+            val keystoreProperties = Properties()
+            if (keystorePropertiesFile.exists()) {
+                keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+            }
+
+            val androidStoreFile = project.findProperty("androidStoreFile") as String?
+                ?: keystoreProperties.getProperty("androidStoreFile")
+
+            if (!androidStoreFile.isNullOrEmpty()) {
+                storeFile = rootProject.file(androidStoreFile)
+                storePassword = project.findProperty("androidStorePassword") as String?
+                    ?: keystoreProperties.getProperty("androidStorePassword")
+                keyAlias = project.findProperty("androidKeyAlias") as String?
+                    ?: keystoreProperties.getProperty("androidKeyAlias")
+                keyPassword = project.findProperty("androidKeyPassword") as String?
+                    ?: keystoreProperties.getProperty("androidKeyPassword")
+            }
+        }
+
+        ndk {
+            abiFilters.add("armeabi-v7a")
+            abiFilters.add("arm64-v8a")
+            abiFilters.add("x86_64")
+            abiFilters.add("x86")
+        }
+
+    }
+
+    packaging {
+        resources {
+            excludes += "META-INF/**"
+            excludes += "okhttp3/**"
+            excludes += "kotlin/**"
+            excludes += "org/**"
+            excludes += "**.properties"
+            excludes += "**.bin"
+        }
+    }
+
+    buildTypes {
+        all {
+            signingConfig =
+                if (signingConfigs["config"].storeFile != null) signingConfigs["config"] else signingConfigs["debug"]
+            if (project.hasProperty("minify") && project.properties["minify"].toString()
+                    .toBoolean()
+            ) {
+                isMinifyEnabled = true
+                proguardFiles(
+                    getDefaultProguardFile("proguard-android-optimize.txt"),
+                    "proguard-rules.pro"
+                )
+            }
+        }
+        release {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
+        aidl = true
+    }
+
+
+    lint {
+        disable += "SelectedPhotoAccess"
+    }
+
+    materialThemeBuilder {
+        themes {
+            for ((name, color) in listOf(
+                "Green" to "4FAF50",
+                "Blue" to "3B82F6",
+                "Cyan" to "06B6D4",
+                "Purple" to "8B5CF6",
+                "Orange" to "F97316",
+                "Red" to "EF4444",
+                "Pink" to "EC4899"
+            )) {
+                create("Material$name") {
+                    lightThemeFormat = "ThemeOverlay.Light.%s"
+                    darkThemeFormat = "ThemeOverlay.Dark.%s"
+                    primaryColor = "#$color"
+                }
+            }
+        }
+        // Add Material Design 3 color tokens (such as palettePrimary100) in generated theme
+        // rikka.material >= 2.0.0 provides such attributes
+        generatePalette = true
+    }
+
+}
+
+dependencies {
+    implementation(libs.colorpicker)
+    implementation(files("libs/dexkit-android.aar"))
+    implementation(libs.flatbuffers)
+    compileOnly(libs.libxposed.legacy)
+
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.documentfile)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.fragment)
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.navigation.ui)
+    implementation(libs.rikkax.appcompat)
+    implementation(libs.rikkax.core)
+    implementation(libs.material)
+    implementation(libs.rikkax.material)
+    implementation(libs.rikkax.material.preference)
+    implementation(libs.rikkax.widget.borderview)
+    implementation(libs.jstyleparser)
+    implementation(libs.okhttp)
+    implementation(libs.filepicker)
+    implementation(libs.betterypermissionhelper)
+    implementation(libs.bcpkix.jdk18on)
+    implementation(libs.arscblamer)
+    implementation(libs.markwon.core)
+}
+
+configurations.all {
+    exclude("org.jetbrains", "annotations")
+    exclude("androidx.appcompat", "appcompat")
+    exclude("org.jetbrains.kotlin", "kotlin-stdlib-jdk7")
+    exclude("org.jetbrains.kotlin", "kotlin-stdlib-jdk8")
+}
+
+interface InjectedExecOps {
+    @get:Inject val execOps: ExecOperations
+}
+
+
+afterEvaluate {
+    listOf("installWhatsappDebug", "installBusinessDebug").forEach { taskName ->
+        tasks.findByName(taskName)?.doLast {
+            runCatching {
+                val injected  = project.objects.newInstance<InjectedExecOps>()
+                runBlocking {
+                    injected.execOps.exec {
+                        commandLine(
+                            "adb",
+                            "shell",
+                            "am",
+                            "force-stop",
+                            project.properties["debug_package_name"]?.toString()
+                        )
+                    }
+                    delay(500)
+                    injected.execOps.exec {
+                        commandLine(
+                            "adb",
+                            "shell",
+                            "monkey",
+                            "-p",
+                            project.properties["debug_package_name"].toString(),
+                            "1"
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
