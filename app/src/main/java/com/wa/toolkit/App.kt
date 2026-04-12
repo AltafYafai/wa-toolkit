@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.preference.PreferenceManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import rikka.core.util.LocaleDelegate
 import java.io.File
 import java.util.*
 import java.util.concurrent.ExecutorService
@@ -77,10 +76,11 @@ class App : Application() {
         @JvmStatic
         fun changeLanguage(context: Context) {
             val force = PreferenceManager.getDefaultSharedPreferences(context).getBoolean("force_english", false)
-            LocaleDelegate.setDefaultLocale(if (force) Locale.ENGLISH else Locale.getDefault())
+            val locale = if (force) Locale.ENGLISH else Locale.getDefault()
+            Locale.setDefault(locale)
             val res = context.resources
             val config = res.configuration
-            config.setLocale(LocaleDelegate.getDefaultLocale())
+            config.setLocale(locale)
             @Suppress("DEPRECATION")
             res.updateConfiguration(config, res.displayMetrics)
         }

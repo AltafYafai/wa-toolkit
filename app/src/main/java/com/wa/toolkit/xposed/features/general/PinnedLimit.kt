@@ -135,7 +135,7 @@ class PinnedLimit(loader: ClassLoader, preferences: XSharedPreferences) : Featur
             }
 
             override val size: Int
-                get() = pinnedLinkedHashMap.size()
+                get() = pinnedLinkedHashMap.size
 
             override fun isEmpty(): Boolean = set.isEmpty()
 
@@ -145,7 +145,7 @@ class PinnedLimit(loader: ClassLoader, preferences: XSharedPreferences) : Featur
 
             override fun iterator(): MutableIterator<T> {
                 if (disableInterator) {
-                    if (pinnedLinkedHashMap.size() < pinnedLinkedHashMap.limit) {
+                    if (pinnedLinkedHashMap.size < pinnedLinkedHashMap.limit) {
                         return object : MutableIterator<T> {
                             override fun hasNext(): Boolean = false
                             override fun next(): T = throw NoSuchElementException()
