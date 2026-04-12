@@ -235,10 +235,9 @@ class MessageHistory(context: Context) : SQLiteOpenHelper(context, "MessageHisto
         seenMessagesListCache.evictAll()
     }
 
-    data class MessageItem(val id: Long, val message: String, val timestamp: Long)
+    data class MessageItem(@JvmField val id: Long, @JvmField val message: String, @JvmField val timestamp: Long)
 
-    class MessageSeenItem(val jid: String, val message: String, val viewed: Boolean) {
-        private var fMessageWpp: FMessageWpp? = null
+    class MessageSeenItem(@JvmField val jid: String, @JvmField val message: String, @JvmField val viewed: Boolean) {        private var fMessageWpp: FMessageWpp? = null
 
         fun getFMessage(): FMessageWpp? {
             if (fMessageWpp == null) {

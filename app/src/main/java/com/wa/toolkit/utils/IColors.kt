@@ -3,11 +3,11 @@ package com.wa.toolkit.utils
 import android.graphics.Color
 
 object IColors {
-    val colors = HashMap<String, String>()
-    val alphacolors = HashMap<String, String>()
-    val backgroundColors = HashMap<String, String>()
-    val primaryColors = HashMap<String, String>()
-    val textColors = HashMap<String, String>()
+    @JvmField val colors = HashMap<String, String>()
+    @JvmField val alphacolors = HashMap<String, String>()
+    @JvmField val backgroundColors = HashMap<String, String>()
+    @JvmField val primaryColors = HashMap<String, String>()
+    @JvmField val textColors = HashMap<String, String>()
 
     @JvmStatic
     fun parseColor(str: String): Int {
