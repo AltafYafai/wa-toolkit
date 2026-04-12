@@ -7,7 +7,7 @@ package com.wa.toolkit.model
 data class SearchableFeature(
     val key: String,
     val title: String,
-    val summary: String,
+    val summary: String? = null,
     val category: Category,
     val fragmentType: FragmentType,
     val parentKey: String? = null,
@@ -53,7 +53,7 @@ data class SearchableFeature(
         }
 
         // Check summary
-        if (summary.lowercase().contains(lowerQuery)) {
+        if (summary?.lowercase()?.contains(lowerQuery) == true) {
             return true
         }
 
