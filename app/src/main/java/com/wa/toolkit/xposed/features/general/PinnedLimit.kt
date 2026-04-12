@@ -118,13 +118,12 @@ class PinnedLimit(loader: ClassLoader, preferences: XSharedPreferences) : Featur
     private class PinnedLinkedHashMap<T> : LinkedHashMap<T, T>() {
         var limit: Int = 0
 
-        override fun size(): Int {
-            return if (super.size >= limit) {
+        override val size: Int
+            get() = if (super.size >= limit) {
                 super.size
             } else {
                 -limit
             }
-        }
 
         override val keys: PinnedKeySet<T>
             get() = PinnedKeySet(this, super.keys)

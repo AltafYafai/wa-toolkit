@@ -14,7 +14,7 @@ object FilePicker {
     @JvmField var fileSalve: ActivityResultLauncher<String>? = null
     private var mOnUriPickedListener: OnUriPickedListener? = null
     @JvmField var fileCapture: ActivityResultLauncher<Array<String>>? = null
-    @JvmField var directoryCapture: ActivityResultLauncher<Uri>? = null
+    @JvmField var directoryCapture: ActivityResultLauncher<Uri?>? = null
     @JvmField var imageCapture: ActivityResultLauncher<PickVisualMediaRequest>? = null
 
     @JvmStatic

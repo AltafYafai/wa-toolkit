@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.preference.PreferenceManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import rikka.material.app.LocaleDelegate
+import rikka.core.util.LocaleDelegate
 import java.io.File
 import java.util.*
 import java.util.concurrent.ExecutorService

@@ -62,7 +62,7 @@ class UpdateChecker(private val mActivity: Activity) : Runnable {
             if (hash.isBlank()) return
 
             val appInfo = mActivity.packageManager.getPackageInfo(BuildConfig.APPLICATION_ID, 0)
-            val isNewVersion = !appInfo.versionName.lowercase().contains(hash.lowercase().trim())
+            val isNewVersion = appInfo.versionName?.lowercase()?.contains(hash.lowercase().trim()) != true
             val isIgnored = WppCore.getPrivString("ignored_version", "") == hash
 
             if (isNewVersion && !isIgnored) {

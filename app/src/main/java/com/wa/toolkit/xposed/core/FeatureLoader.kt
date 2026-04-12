@@ -93,7 +93,7 @@ object FeatureLoader {
                         ReflectionUtils.initCache(app)
                         
                         val isSupported = supportedVersions?.any { s -> 
-                            packageInfo.versionName.startsWith(s.replace(".xx", "")) 
+                            packageInfo.versionName?.startsWith(s.replace(".xx", "")) == true
                         } ?: false
                         
                         if (!isSupported) {
@@ -105,7 +105,7 @@ object FeatureLoader {
                         }
                         
                         initComponents(loader, pref)
-                        plugins(loader, pref, packageInfo.versionName)
+                        plugins(loader, pref, packageInfo.versionName ?: "")
                         sendEnabledBroadcast(app)
                         
                         val loadTime = System.currentTimeMillis() - startTime
@@ -114,7 +114,7 @@ object FeatureLoader {
                         XposedBridge.log(e)
                         val error = ErrorItem().apply {
                             pluginName = "MainFeatures[Critical]"
-                            whatsAppVersion = packageInfo.versionName
+                            whatsAppVersion = packageInfo.versionName ?: ""
                             moduleVersion = BuildConfig.VERSION_NAME
                             message = e.message
                             this.error = e.stackTrace
@@ -225,21 +225,21 @@ object FeatureLoader {
                 }
             }
         }
-        ContextCompat.registerReceiver(mApp, restartReceiver, IntentFilter("${BuildConfig.APPLICATION_ID}.WHATSAPP.RESTART"), ContextCompat.RECEIVER_EXPORTED)
+        mApp?.let { ContextCompat.registerReceiver(it, restartReceiver, IntentFilter("${BuildConfig.APPLICATION_ID}.WHATSAPP.RESTART"), ContextCompat.RECEIVER_EXPORTED) }
 
         val wppReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
                 sendEnabledBroadcast(context)
             }
         }
-        ContextCompat.registerReceiver(mApp, wppReceiver, IntentFilter("${BuildConfig.APPLICATION_ID}.CHECK_WPP"), ContextCompat.RECEIVER_EXPORTED)
+        mApp?.let { ContextCompat.registerReceiver(it, wppReceiver, IntentFilter("${BuildConfig.APPLICATION_ID}.CHECK_WPP"), ContextCompat.RECEIVER_EXPORTED) }
 
         val restartManualReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
                 WppCore.setPrivBoolean("need_restart", true)
             }
         }
-        ContextCompat.registerReceiver(mApp, restartManualReceiver, IntentFilter("${BuildConfig.APPLICATION_ID}.MANUAL_RESTART"), ContextCompat.RECEIVER_EXPORTED)
+        mApp?.let { ContextCompat.registerReceiver(it, restartManualReceiver, IntentFilter("${BuildConfig.APPLICATION_ID}.MANUAL_RESTART"), ContextCompat.RECEIVER_EXPORTED) }
     }
 
     private fun sendEnabledBroadcast(context: Context) {

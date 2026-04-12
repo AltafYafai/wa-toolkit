@@ -16,10 +16,10 @@ object StateListDrawableCompact {
             stateListDrawable.stateCount
         } else {
             try {
-                val method = XposedHelpers.findMethodBestMatch(mClass, "getStateCount")
+                val method = XposedHelpers.findMethodExact(mClass, "getStateCount")
                 if (method != null) {
-                    val invoke = method.invoke(stateListDrawable)
-                    if (invoke is Int) {
+                    val invoke = method.invoke(stateListDrawable) as Int?
+                    if (invoke != null) {
                         return invoke
                     }
                 }

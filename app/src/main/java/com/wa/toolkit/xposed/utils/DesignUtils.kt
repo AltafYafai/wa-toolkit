@@ -8,6 +8,7 @@ import android.graphics.drawable.*
 import android.graphics.drawable.shapes.RoundRectShape
 import android.os.Build
 import androidx.core.content.ContextCompat
+import de.robv.android.xposed.XposedBridge
 import com.wa.toolkit.WppXposed
 import com.wa.toolkit.xposed.core.WppCore
 
@@ -93,9 +94,9 @@ object DesignUtils {
                 val paint = shapeDrawable.paint
                 paint.color = Color.TRANSPARENT
                 paint.style = Paint.Style.STROKE
-                paint.strokeWidth = Utils.dipToPixels(2).toFloat()
+                paint.strokeWidth = Utils.dipToPixels(2f).toFloat()
                 paint.color = color
-                val inset = Utils.dipToPixels(2)
+                val inset = Utils.dipToPixels(2f)
                 return InsetDrawable(shapeDrawable, inset, inset, inset, inset)
             }
         }
