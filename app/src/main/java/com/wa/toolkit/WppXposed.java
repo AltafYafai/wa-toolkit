@@ -83,16 +83,19 @@ public class WppXposed implements IXposedHookLoadPackage, IXposedHookInitPackage
         ResParam = resparam;
 
         for (var field : ResId.string.class.getFields()) {
+            if (field.getName().equals("INSTANCE")) continue;
             var field1 = R.string.class.getField(field.getName());
             field.set(null, resparam.res.addResource(modRes, field1.getInt(null)));
         }
 
         for (var field : ResId.array.class.getFields()) {
+            if (field.getName().equals("INSTANCE")) continue;
             var field1 = R.array.class.getField(field.getName());
             field.set(null, resparam.res.addResource(modRes, field1.getInt(null)));
         }
 
         for (var field : ResId.drawable.class.getFields()) {
+            if (field.getName().equals("INSTANCE")) continue;
             var field1 = R.drawable.class.getField(field.getName());
             field.set(null, resparam.res.addResource(modRes, field1.getInt(null)));
         }
