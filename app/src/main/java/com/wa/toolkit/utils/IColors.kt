@@ -4,7 +4,7 @@ import android.graphics.Color
 
 object IColors {
     @JvmField val colors = HashMap<String, String>()
-    @JvmField val alphacolors = HashMap<String, String>()
+    @JvmField var alphacolors = HashMap<String, String>()
     @JvmField val backgroundColors = HashMap<String, String>()
     @JvmField val primaryColors = HashMap<String, String>()
     @JvmField val textColors = HashMap<String, String>()
