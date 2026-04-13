@@ -7,19 +7,16 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import com.wa.toolkit.R;
 import com.wa.toolkit.databinding.ActivityMainBinding;
 import com.wa.toolkit.fragments.DashboardFragment;
-import com.wa.toolkit.fragments.preferences.CustomizationFragment;
-import com.wa.toolkit.fragments.preferences.GeneralFragment;
-import com.wa.toolkit.fragments.preferences.MediaFragment;
-import com.wa.toolkit.fragments.preferences.PrivacyFragment;
-import com.wa.toolkit.fragments.preferences.RecordingsFragment;
-import com.wa.toolkit.fragments.HomeFragment;
-import com.wa.toolkit.utils.FeatureCatalog;
-import com.wa.toolkit.model.SearchableFeature;
+import com.wa.toolkit.ui.fragments.CustomizationFragment;
+import com.wa.toolkit.ui.fragments.GeneralFragment;
+import com.wa.toolkit.ui.fragments.MediaFragment;
+import com.wa.toolkit.ui.fragments.PrivacyFragment;
+import com.wa.toolkit.ui.fragments.RecordingsFragment;
+import com.wa.toolkit.ui.fragments.HomeFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         handleIncomingIntent(getIntent());
+    }
+
+    public static boolean isXposedEnabled() {
+        return false;
     }
 
     private void showDashboard() {
