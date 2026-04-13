@@ -138,12 +138,13 @@ public class HomeFragment extends BaseFragment {
         binding.statusTitle3.setText(R.string.business_in_background);
         var version = intent.getStringExtra("VERSION");
         var supported_list = Arrays.asList(context.getResources().getStringArray(R.array.supported_versions_business));
+        
         if (version != null && supported_list.stream().anyMatch(s -> version.startsWith(s.replace(".xx", "")))) {
             binding.statusSummary3.setText(getString(R.string.version_s, version));
-            binding.status3.getChildAt(0).setBackgroundResource(R.drawable.gradient_success);
+            binding.statusIcon3.setImageTintList(android.content.res.ColorStateList.valueOf(Utils.getColor(context, android.R.attr.colorPrimary)));
         } else {
             binding.statusSummary3.setText(getString(R.string.version_s_not_listed, version));
-            binding.status3.getChildAt(0).setBackgroundResource(R.drawable.gradient_warning);
+            binding.statusIcon3.setImageTintList(android.content.res.ColorStateList.valueOf(Utils.getColor(context, com.google.android.material.R.attr.colorError)));
         }
         binding.rebootBtn2.setVisibility(View.VISIBLE);
         binding.statusSummary3.setVisibility(View.VISIBLE);
@@ -158,10 +159,10 @@ public class HomeFragment extends BaseFragment {
 
         if (version != null && supported_list.stream().anyMatch(s -> version.startsWith(s.replace(".xx", "")))) {
             binding.statusSummary1.setText(getString(R.string.version_s, version));
-            binding.status2.getChildAt(0).setBackgroundResource(R.drawable.gradient_success);
+            binding.statusIcon2.setImageTintList(android.content.res.ColorStateList.valueOf(Utils.getColor(context, android.R.attr.colorPrimary)));
         } else {
             binding.statusSummary1.setText(getString(R.string.version_s_not_listed, version));
-            binding.status2.getChildAt(0).setBackgroundResource(R.drawable.gradient_warning);
+            binding.statusIcon2.setImageTintList(android.content.res.ColorStateList.valueOf(Utils.getColor(context, com.google.android.material.R.attr.colorError)));
         }
         binding.rebootBtn.setVisibility(View.VISIBLE);
         binding.statusSummary1.setVisibility(View.VISIBLE);
@@ -266,13 +267,13 @@ public class HomeFragment extends BaseFragment {
 
         if (MainActivity.isXposedEnabled()) {
             binding.statusIcon.setImageResource(R.drawable.ic_round_check_circle_24);
+            binding.statusIcon.setImageTintList(android.content.res.ColorStateList.valueOf(Utils.getColor(requireContext(), android.R.attr.colorPrimary)));
             binding.statusTitle.setText(R.string.module_enabled);
             binding.statusSummary.setText(String.format(getString(R.string.version_s), BuildConfig.VERSION_NAME));
-            binding.status.getChildAt(0).setBackgroundResource(R.drawable.gradient_success);
         } else {
             binding.statusIcon.setImageResource(R.drawable.ic_round_error_outline_24);
+            binding.statusIcon.setImageTintList(android.content.res.ColorStateList.valueOf(Utils.getColor(requireContext(), com.google.android.material.R.attr.colorError)));
             binding.statusTitle.setText(R.string.module_disabled);
-            binding.status.getChildAt(0).setBackgroundResource(R.drawable.gradient_error);
             binding.statusSummary.setVisibility(View.GONE);
         }
         if (isInstalled(FeatureLoader.PACKAGE_WPP) && App.isOriginalPackage()) {
@@ -310,18 +311,18 @@ public class HomeFragment extends BaseFragment {
 
     private void disableBusiness(FragmentActivity activity) {
         binding.statusIcon3.setImageResource(R.drawable.ic_round_error_outline_24);
+        binding.statusIcon3.setImageTintList(android.content.res.ColorStateList.valueOf(Utils.getColor(requireContext(), com.google.android.material.R.attr.colorError)));
         binding.statusTitle3.setText(R.string.business_is_not_running_or_has_not_been_activated_in_lsposed);
-        binding.status3.getChildAt(0).setBackgroundResource(R.drawable.gradient_error);
         binding.statusSummary3.setVisibility(View.GONE);
-        binding.rebootBtn2.setVisibility(View.GONE);
+        binding.reboot_btn2.setVisibility(View.GONE);
     }
 
     private void disableWpp(FragmentActivity activity) {
         binding.statusIcon2.setImageResource(R.drawable.ic_round_error_outline_24);
+        binding.statusIcon2.setImageTintList(android.content.res.ColorStateList.valueOf(Utils.getColor(requireContext(), com.google.android.material.R.attr.colorError)));
         binding.statusTitle2.setText(R.string.whatsapp_is_not_running_or_has_not_been_activated_in_lsposed);
-        binding.status2.getChildAt(0).setBackgroundResource(R.drawable.gradient_error);
         binding.statusSummary1.setVisibility(View.GONE);
-        binding.rebootBtn.setVisibility(View.GONE);
+        binding.reboot_btn.setVisibility(View.GONE);
     }
 
     private static void checkWpp(FragmentActivity activity) {
