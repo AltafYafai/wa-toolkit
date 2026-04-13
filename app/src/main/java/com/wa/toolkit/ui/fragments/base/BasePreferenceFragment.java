@@ -39,6 +39,14 @@ public abstract class BasePreferenceFragment extends PreferenceFragmentCompat
         mPrefs.registerOnSharedPreferenceChangeListener(this);
     }
 
+    @Override
+    public void onDestroy() {
+        if (mPrefs != null) {
+            mPrefs.unregisterOnSharedPreferenceChangeListener(this);
+        }
+        super.onDestroy();
+    }
+
     @NonNull
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -56,10 +64,28 @@ public abstract class BasePreferenceFragment extends PreferenceFragmentCompat
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, @Nullable String s) {
-        HapticUtil.playTick(requireContext());
+        Context context = getContext();
+        if (context == null) {
+            return;
+        }
+        HapticUtil.playTick(context);
         Intent intent = new Intent(BuildConfig.APPLICATION_ID + ".MANUAL_RESTART");
         App.getInstance().sendBroadcast(intent);
         chanceStates(s);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        
+        // Handle scroll to preference from arguments (passed from search)
+        Bundle args = getArguments();
+        if (args != null && args.containsKey("scroll_to_preference")) {
+            String scrollToKey = args.getString("scroll_to_preference");
+            if (scrollToKey != null) {
+                scrollToPreference(scrollToKey);
+            }
+        }
     }
 
     private void setPreferenceState(String key, boolean enabled) {
@@ -135,7 +161,10 @@ public abstract class BasePreferenceFragment extends PreferenceFragmentCompat
 
         if (Objects.equals(key, "force_english")) {
             mPrefs.edit().commit();
-            Utils.doRestart(requireContext());
+            Context context = getContext();
+            if (context != null) {
+                Utils.doRestart(context);
+            }
         }
 
         var igstatus = mPrefs.getBoolean("igstatus", false);
