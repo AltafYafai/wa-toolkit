@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <Preference
-        app:fragment="com.wa.toolkit.ui.fragments.GeneralFragment$HomeGeneralPreference"
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         app:iconSpaceReserved="false"
-        app:title="@string/general" />
+        app:title="@string/general">
 
-    <Preference
-        app:fragment="com.wa.toolkit.ui.fragments.GeneralFragment$HomeScreenGeneralPreference"
-        app:iconSpaceReserved="false"
-        app:title="@string/home_screen" />
+        <Preference
+            app:fragment="com.wa.toolkit.ui.fragments.GeneralFragment$HomeGeneralPreference"
+            app:iconSpaceReserved="false"
+            app:title="@string/general" />
 
-    <Preference
-        app:fragment="com.wa.toolkit.ui.fragments.GeneralFragment$ConversationGeneralPreference"
-        app:iconSpaceReserved="false"
-        app:title="@string/conversation" />
+        <Preference
+            app:fragment="com.wa.toolkit.ui.fragments.GeneralFragment$HomeScreenGeneralPreference"
+            app:iconSpaceReserved="false"
+            app:title="@string/home_screen" />
+
+        <Preference
+            app:fragment="com.wa.toolkit.ui.fragments.GeneralFragment$ConversationGeneralPreference"
+            app:iconSpaceReserved="false"
+            app:title="@string/conversation" />
+
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
     <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         app:iconSpaceReserved="false"

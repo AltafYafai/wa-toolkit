@@ -69,8 +69,8 @@
     <style name="ModernToolbarStyle" parent="Widget.Material3.Toolbar">
         <item name="titleTextAppearance">@style/ToolbarTitleStyle</item>
         <item name="android:minHeight">?attr/actionBarSize</item>
-        <item name="contentInsetStart">0dp</item>
-        <item name="contentInsetStartWithNavigation">0dp</item>
+        <item name="contentInsetStart">16dp</item>
+        <item name="contentInsetStartWithNavigation">16dp</item>
     </style>
 
     <style name="NoActionBarTheme" parent="AppTheme">
