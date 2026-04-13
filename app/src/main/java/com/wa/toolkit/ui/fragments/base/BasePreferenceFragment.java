@@ -348,16 +348,22 @@ public abstract class BasePreferenceFragment extends PreferenceFragmentCompat
                 android.graphics.Color.green(primaryColor),
                 android.graphics.Color.blue(primaryColor));
 
-        // Save original background
-        android.graphics.drawable.Drawable originalBackground = view.getBackground();
+        // Save original foreground if any
+        android.graphics.drawable.Drawable originalForeground = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            originalForeground = view.getForeground();
+            // Set highlight foreground
+            view.setForeground(new android.graphics.drawable.ColorDrawable(highlightColor));
+        } else {
+            // Fallback for older versions if needed, though we target higher
+            view.setBackgroundColor(highlightColor);
+        }
 
-        // Set highlight background
-        view.setBackgroundColor(highlightColor);
-
+        final android.graphics.drawable.Drawable finalOriginalForeground = originalForeground;
         // Fade out after 1.5 seconds
         view.postDelayed(() -> {
-            if (originalBackground != null) {
-                view.setBackground(originalBackground);
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                view.setForeground(finalOriginalForeground);
             } else {
                 view.setBackgroundColor(android.graphics.Color.TRANSPARENT);
             }
