@@ -283,7 +283,7 @@
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/importBtn"
-                            style="?attr/materialButtonElevationLessStyle"
+                            style="?attr/materialButtonOutlinedStyle"
                             android:layout_width="0dp"
                             android:layout_height="64dp"
                             android:layout_margin="4dp"
@@ -294,7 +294,7 @@
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/exportBtn"
-                            style="?attr/materialButtonElevationLessStyle"
+                            style="?attr/materialButtonOutlinedStyle"
                             android:layout_width="0dp"
                             android:layout_height="64dp"
                             android:layout_margin="4dp"

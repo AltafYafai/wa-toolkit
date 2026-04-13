@@ -58,7 +58,7 @@
                             android:layout_width="64dp"
                             android:layout_height="64dp"
                             android:layout_gravity="center"
-                            android:src="@mipmap/launcher_foreground"
+                            android:src="@mipmap/launcher"
                             app:tint="?attr/colorPrimary" />
 
                     </com.google.android.material.card.MaterialCardView>
@@ -116,7 +116,7 @@
                         android:paddingHorizontal="16dp"
                         android:text="Telegram Group"
                         android:textAllCaps="false"
-                        app:icon="@drawable/ic_send"
+                        app:icon="@drawable/about"
                         app:iconPadding="16dp"
                         app:iconTint="?attr/colorPrimary" />
 
@@ -160,7 +160,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/credits"
+                        android:text="@string/about"
                         android:textAppearance="?attr/textAppearanceTitleMedium"
                         android:textStyle="bold" />
 
