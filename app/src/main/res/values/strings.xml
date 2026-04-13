@@ -235,6 +235,10 @@
     <string name="wae_color_mode">WAE color mode</string>
     <string name="wae_color_preset">Preset color</string>
     <string name="wae_color_mode_preset">Preset</string>
+    <string name="pure_black">Pure Black (AMOLED)</string>
+    <string name="pure_black_sum">Use absolute black background for Dark theme (saves battery on OLED)</string>
+    <string name="haptic_feedback">Haptic Feedback</string>
+    <string name="haptic_feedback_sum">Provide tactile vibrations on clicks and toggles</string>
     <string name="wae_color_mode_auto_monet">Automatic (Monet)</string>
     <string name="color_preset_green">Green</string>
     <string name="color_preset_blue">Blue</string>

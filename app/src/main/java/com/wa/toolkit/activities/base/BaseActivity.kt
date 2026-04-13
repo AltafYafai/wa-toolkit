@@ -18,6 +18,14 @@ open class BaseActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme)
         
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+
+        if (prefs.getBoolean("pure_black", false)) {
+            val isDark = (resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK) == android.content.res.Configuration.UI_MODE_NIGHT_YES
+            if (isDark) {
+                theme.applyStyle(R.style.ThemeOverlay_Black, true)
+            }
+        }
+
         val colorMode = prefs.getString("wae_color_mode", "monet")
         
         if (colorMode != "monet") {

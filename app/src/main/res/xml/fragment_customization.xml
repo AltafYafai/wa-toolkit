@@ -24,6 +24,18 @@
             app:title="@string/wae_color_mode_preset" />
 
         <rikka.material.preference.MaterialSwitchPreference
+            app:defaultValue="false"
+            app:key="pure_black"
+            app:summary="@string/pure_black_sum"
+            app:title="@string/pure_black" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            app:defaultValue="true"
+            app:key="haptic_feedback"
+            app:summary="@string/haptic_feedback_sum"
+            app:title="@string/haptic_feedback" />
+
+        <rikka.material.preference.MaterialSwitchPreference
             app:key="changecolor"
             app:summary="@string/colors_customization_sum"
             app:title="@string/colors_customization" />

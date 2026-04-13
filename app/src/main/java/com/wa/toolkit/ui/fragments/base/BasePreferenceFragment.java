@@ -22,6 +22,7 @@ import androidx.preference.PreferenceManager;
 
 import com.wa.toolkit.App;
 import com.wa.toolkit.BuildConfig;
+import com.wa.toolkit.utils.HapticUtil;
 import com.wa.toolkit.xposed.utils.Utils;
 
 import java.util.Objects;
@@ -55,6 +56,7 @@ public abstract class BasePreferenceFragment extends PreferenceFragmentCompat
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, @Nullable String s) {
+        HapticUtil.playTick(requireContext());
         Intent intent = new Intent(BuildConfig.APPLICATION_ID + ".MANUAL_RESTART");
         App.getInstance().sendBroadcast(intent);
         chanceStates(s);
@@ -125,7 +127,7 @@ public abstract class BasePreferenceFragment extends PreferenceFragmentCompat
         var useMonet = Objects.equals(colorMode, "monet") && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S;
         setPreferenceState("wae_color_preset", !useMonet);
 
-        if (Objects.equals(key, "wae_color_mode") || Objects.equals(key, "wae_color_preset")) {
+        if (Objects.equals(key, "wae_color_mode") || Objects.equals(key, "wae_color_preset") || Objects.equals(key, "pure_black") || Objects.equals(key, "haptic_feedback")) {
             if (getActivity() != null) {
                 getActivity().recreate();
             }

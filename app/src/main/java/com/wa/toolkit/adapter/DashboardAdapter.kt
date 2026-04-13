@@ -5,25 +5,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.card.MaterialCardView
 import com.wa.toolkit.R
+import com.wa.toolkit.utils.HapticUtil
 
-data class DashboardItem(
-    val id: Int,
-    val title: String,
-    val summary: String,
-    @DrawableRes val icon: Int
-)
+data class DashboardItem(val id: Int, val title: String, val summary: String, val icon: Int)
 
 class DashboardAdapter(
     private val items: List<DashboardItem>,
-    private val onClick: (DashboardItem) -> Unit
+    private val onItemClick: (DashboardItem) -> Unit
 ) : RecyclerView.Adapter<DashboardAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val cardView: MaterialCardView = view.findViewById(R.id.cardView)
+        val card: View = view.findViewById(R.id.cardView)
         val icon: ImageView = view.findViewById(R.id.icon)
         val title: TextView = view.findViewById(R.id.title)
         val summary: TextView = view.findViewById(R.id.summary)
@@ -40,7 +34,10 @@ class DashboardAdapter(
         holder.title.text = item.title
         holder.summary.text = item.summary
         holder.icon.setImageResource(item.icon)
-        holder.cardView.setOnClickListener { onClick(item) }
+        holder.card.setOnClickListener {
+            HapticUtil.playClick(it.context)
+            onItemClick(item)
+        }
     }
 
     override fun getItemCount() = items.size
