@@ -150,7 +150,14 @@ public class SeparateGroup extends Feature {
                             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                                 if (param.args.length > 2 && ((int) param.args[1]) == GROUPS) {
                                     MenuItem menuItem = (MenuItem) param.getResult();
-                                    menuItem.setIcon(Utils.getID("home_tab_communities_selector", "drawable"));
+                                    int iconId = Utils.getID("home_tab_communities_selector", "drawable");
+                                    if (iconId == 0) iconId = Utils.getID("home_tab_groups_selector", "drawable");
+                                    if (iconId == 0) iconId = Utils.getID("ic_home_group", "drawable");
+                                    if (iconId == 0) iconId = Utils.getID("ic_groups", "drawable");
+                                    if (iconId == 0) iconId = Utils.getID("ic_community", "drawable");
+                                    if (iconId != 0) {
+                                        menuItem.setIcon(iconId);
+                                    }
                                 }
                             }
                         });
