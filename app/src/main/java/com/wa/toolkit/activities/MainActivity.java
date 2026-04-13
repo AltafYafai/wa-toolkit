@@ -129,12 +129,6 @@ public class MainActivity extends BaseActivity {
                 }
             }
             return true;
-        } else if (item.getItemId() == R.id.menu_search) {
-            startActivity(new Intent(this, SearchActivity.class));
-            return true;
-        } else if (item.getItemId() == R.id.menu_about) {
-            startActivity(new Intent(this, AboutActivity.class));
-            return true;
         }
         return super.onOptionsItemSelected(item);
     }

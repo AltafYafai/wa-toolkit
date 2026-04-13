@@ -41,7 +41,17 @@ class DashboardFragment : Fragment() {
             DashboardItem(7, getString(R.string.calls), R.drawable.ic_contacts)
         )
 
-        recyclerView.layoutManager = GridLayoutManager(context, 2)
+        val layoutManager = GridLayoutManager(context, 2)
+        layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                return when (recyclerView.adapter?.getItemViewType(position)) {
+                    DashboardAdapter.TYPE_HEADER, DashboardAdapter.TYPE_ABOUT -> 2
+                    else -> 1
+                }
+            }
+        }
+
+        recyclerView.layoutManager = layoutManager
         recyclerView.adapter = DashboardAdapter(items) { item ->
             listener?.onDashboardItemClick(item)
         }
