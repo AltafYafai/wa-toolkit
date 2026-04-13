@@ -19,6 +19,7 @@ object ResId {
         @JvmField var edit2: Int = 0
         @JvmField var ic_privacy: Int = 0
         @JvmField var user_foreground: Int = 0
+        @JvmField var ic_groups: Int = 0
     }
 
     object string {
