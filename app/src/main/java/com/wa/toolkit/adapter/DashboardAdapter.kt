@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.wa.toolkit.R
 import com.wa.toolkit.utils.HapticUtil
 
-data class DashboardItem(val id: Int, val title: String, val summary: String, val icon: Int)
+data class DashboardItem(val id: Int, val title: String, val icon: Int)
 
 class DashboardAdapter(
     private val items: List<DashboardItem>,
@@ -20,7 +20,6 @@ class DashboardAdapter(
         val card: View = view.findViewById(R.id.cardView)
         val icon: ImageView = view.findViewById(R.id.icon)
         val title: TextView = view.findViewById(R.id.title)
-        val summary: TextView = view.findViewById(R.id.summary)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -32,7 +31,6 @@ class DashboardAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
         holder.title.text = item.title
-        holder.summary.text = item.summary
         holder.icon.setImageResource(item.icon)
         holder.card.setOnClickListener {
             HapticUtil.playClick(it.context)

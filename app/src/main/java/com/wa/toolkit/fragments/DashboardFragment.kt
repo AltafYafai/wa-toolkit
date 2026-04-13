@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.wa.toolkit.R
 import com.wa.toolkit.adapter.DashboardAdapter
@@ -31,14 +32,14 @@ class DashboardFragment : Fragment() {
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
 
         val items = listOf(
-            DashboardItem(0, getString(R.string.general), "General tweaks & settings", R.drawable.ic_general),
-            DashboardItem(1, getString(R.string.privacy), "Ghost mode & privacy", R.drawable.ic_privacy),
-            DashboardItem(2, getString(R.string.title_home), "Home screen actions", R.drawable.ic_home_black_24dp),
-            DashboardItem(3, getString(R.string.media), "High quality & downloads", R.drawable.ic_media),
-            DashboardItem(4, getString(R.string.perso), "Themes & customization", R.drawable.ic_dashboard_black_24dp),
-            DashboardItem(5, getString(R.string.recordings_manager), "Call recordings", R.drawable.ic_recording)
+            DashboardItem(1, getString(R.string.privacy), R.drawable.ic_privacy),
+            DashboardItem(3, getString(R.string.media), R.drawable.ic_media),
+            DashboardItem(0, getString(R.string.general), R.drawable.ic_general),
+            DashboardItem(4, getString(R.string.perso), R.drawable.ic_dashboard_black_24dp),
+            DashboardItem(5, "Tools", R.drawable.ic_settings)
         )
 
+        recyclerView.layoutManager = GridLayoutManager(context, 2)
         recyclerView.adapter = DashboardAdapter(items) { item ->
             listener?.onDashboardItemClick(item)
         }
