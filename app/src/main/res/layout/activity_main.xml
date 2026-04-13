@@ -9,7 +9,6 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/Widget.Material3.AppBarLayout.Empty"
         android:background="@android:color/transparent">
 
         <com.google.android.material.appbar.MaterialToolbar
