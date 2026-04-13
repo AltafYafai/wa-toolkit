@@ -1,8 +1,9 @@
 # Whatsapp Toolkit
 
 <div align="center">
-  <img src="explainer.png" alt="Whatsapp Toolkit Logo" width="200"/>
+  <img src="docs/new_logo_proposal.svg" alt="Whatsapp Toolkit Logo" width="200"/>
   <p><strong>Whatsapp Toolkit is an advanced Xposed module that enhances your WhatsApp experience with privacy, customization, and utility tools.</strong></p>
+  <p>Featuring the new <b>"Emerald Hub"</b> adaptive identity.</p>
   <p>Developed by <strong>AltafYafai</strong></p>
 </div>
 
@@ -72,3 +73,11 @@ This project is licensed under the **GNU General Public License v3.0**. See the 
 ---
 
 **Note:** Please use **Whatsapp Toolkit** responsibly. This tool is not affiliated with WhatsApp Inc. or Meta.
+
+## 🎨 Visual Identity
+
+Whatsapp Toolkit features a modern, adaptive design called **"The Emerald Hub"**. 
+
+*   **Design Philosophy:** Combines the core WhatsApp aesthetic with a "toolkit" engineering focus.
+*   **Adaptive Icon:** Optimized for Android 8.0+ with full squircle/circle/rounded-corner support.
+*   **Vector Source:** [new_logo_proposal.svg](docs/new_logo_proposal.svg)
