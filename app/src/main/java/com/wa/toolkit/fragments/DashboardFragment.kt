@@ -36,7 +36,7 @@ class DashboardFragment : Fragment() {
             DashboardItem(3, getString(R.string.media), R.drawable.ic_media),
             DashboardItem(0, getString(R.string.general), R.drawable.ic_general),
             DashboardItem(4, getString(R.string.perso), R.drawable.ic_dashboard_black_24dp),
-            DashboardItem(5, "Tools", R.drawable.ic_settings)
+            DashboardItem(5, "Tools", R.drawable.ic_general)
         )
 
         recyclerView.layoutManager = GridLayoutManager(context, 2)
