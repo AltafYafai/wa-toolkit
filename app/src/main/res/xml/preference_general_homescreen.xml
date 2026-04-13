@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         app:iconSpaceReserved="false"
-        app:title="@string/home_screen">
-
-        <rikka.material.preference.MaterialSwitchPreference
-            app:defaultValue="true"
-            app:key="buttonaction"
-            app:summary="@string/show_menu_buttons_as_icons_sum"
-            app:title="@string/show_menu_buttons_as_icons" />
+        app:title="@string/category_header_profile">
 
         <rikka.material.preference.MaterialSwitchPreference
             app:key="shownamehome"
@@ -19,6 +14,52 @@
             app:key="showbiohome"
             app:summary="@string/showbio_sum"
             app:title="@string/showbio" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            app:key="disable_profile_status"
+            app:summary="@string/disable_status_in_the_profile_photo_sum"
+            app:title="@string/disable_status_in_the_profile_photo" />
+
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/category_navigation_filters">
+
+        <rikka.material.preference.MaterialSwitchPreference
+            app:key="separategroups"
+            app:summary="@string/separate_groups_sum"
+            app:title="@string/separate_groups" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            app:key="filtergroups"
+            app:summary="@string/new_ui_group_filter_sum"
+            app:title="@string/new_ui_group_filter" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            app:key="filterseen"
+            app:summary="@string/enable_filter_chats_sum"
+            app:title="@string/enable_filter_chats" />
+
+        <ListPreference
+            app:entries="@array/chatfilter_buttons"
+            app:entryValues="@array/chatfilter_values"
+            app:defaultValue="2"
+            app:key="chatfilter"
+            app:summary="@string/novofiltro_sum"
+            app:title="@string/novofiltro" />
+
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/category_menu_buttons">
+
+        <rikka.material.preference.MaterialSwitchPreference
+            app:defaultValue="true"
+            app:key="buttonaction"
+            app:summary="@string/show_menu_buttons_as_icons_sum"
+            app:title="@string/show_menu_buttons_as_icons" />
 
         <rikka.material.preference.MaterialSwitchPreference
             app:key="show_dndmode"
@@ -43,15 +84,11 @@
             app:summary="@string/enable_wa_enhancer_button_sum"
             app:title="@string/enable_wa_enhancer_button" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="separategroups"
-            app:summary="@string/separate_groups_sum"
-            app:title="@string/separate_groups" />
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="filtergroups"
-            app:summary="@string/new_ui_group_filter_sum"
-            app:title="@string/new_ui_group_filter" />
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/category_online_indicators">
 
         <rikka.material.preference.MaterialSwitchPreference
             app:key="dotonline"
@@ -63,29 +100,16 @@
             app:summary="@string/show_online_last_seen_in_conversation_list_sum"
             app:title="@string/show_online_last_seen_in_conversation_list" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="filterseen"
-            app:summary="@string/enable_filter_chats_sum"
-            app:title="@string/enable_filter_chats" />
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="Other">
 
         <rikka.material.preference.MaterialSwitchPreference
             app:key="metaai"
             app:summary="@string/disable_metaai_sum"
             app:title="@string/disable_metaai" />
-
-        <ListPreference
-            app:entries="@array/chatfilter_buttons"
-            app:entryValues="@array/chatfilter_values"
-            app:defaultValue="2"
-            app:key="chatfilter"
-            app:summary="@string/novofiltro_sum"
-            app:title="@string/novofiltro" />
-
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="disable_profile_status"
-            app:summary="@string/disable_status_in_the_profile_photo_sum"
-            app:title="@string/disable_status_in_the_profile_photo" />
-
 
     </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 

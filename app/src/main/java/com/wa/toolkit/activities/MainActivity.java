@@ -62,12 +62,13 @@ public class MainActivity extends BaseActivity {
         String title;
 
         switch (id) {
-            case 0 -> { fragment = new GeneralFragment(); title = getString(R.string.general); }
             case 1 -> { fragment = new PrivacyFragment(); title = getString(R.string.privacy); }
-            case 2 -> { fragment = new HomeFragment(); title = getString(R.string.title_home); }
+            case 2 -> { fragment = new GeneralFragment.ConversationGeneralPreference(); title = "Chat"; }
             case 3 -> { fragment = new MediaFragment(); title = getString(R.string.media); }
             case 4 -> { fragment = new CustomizationFragment(); title = getString(R.string.perso); }
-            case 5 -> { fragment = new RecordingsFragment(); title = getString(R.string.recordings_manager); }
+            case 5 -> { fragment = new GeneralFragment.HomeGeneralPreference(); title = "Tools"; }
+            case 6 -> { fragment = new StatusFragment(); title = getString(R.string.status); }
+            case 7 -> { fragment = new CallsFragment(); title = getString(R.string.calls); }
             default -> { return; }
         }
 

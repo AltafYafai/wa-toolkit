@@ -34,9 +34,11 @@ class DashboardFragment : Fragment() {
         val items = listOf(
             DashboardItem(1, getString(R.string.privacy), R.drawable.ic_privacy),
             DashboardItem(3, getString(R.string.media), R.drawable.ic_media),
-            DashboardItem(0, getString(R.string.general), R.drawable.ic_general),
+            DashboardItem(2, "Chat", R.drawable.ic_chat_black_24dp),
             DashboardItem(4, getString(R.string.perso), R.drawable.ic_dashboard_black_24dp),
-            DashboardItem(5, "Tools", R.drawable.ic_general)
+            DashboardItem(5, "Tools", R.drawable.ic_general),
+            DashboardItem(6, getString(R.string.status), R.drawable.online),
+            DashboardItem(7, getString(R.string.calls), R.drawable.ic_contacts)
         )
 
         recyclerView.layoutManager = GridLayoutManager(context, 2)

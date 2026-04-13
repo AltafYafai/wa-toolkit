@@ -24,11 +24,6 @@
             app:title="@string/local_download" />
 
         <rikka.material.preference.MaterialSwitchPreference
-            app:key="downloadstatus"
-            app:summary="@string/statusdowload_sum"
-            app:title="@string/statusdowload" />
-
-        <rikka.material.preference.MaterialSwitchPreference
             app:key="downloadviewonce"
             app:summary="@string/downloadviewonce_sum"
             app:title="@string/downloadviewonce" />
@@ -63,42 +58,6 @@
             app:key="video_maxfps"
             app:summary="@string/send_video_in_60fps_sum"
             app:title="@string/send_video_in_60fps" />
-    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
-
-    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
-        app:iconSpaceReserved="false"
-        app:title="@string/call_recording_title">
-
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="call_recording_enable"
-            app:summary="@string/call_recording_enable_sum"
-            app:title="@string/call_recording_enable" />
-
-        <com.wa.toolkit.preference.FileSelectPreference
-            android:defaultValue="/sdcard/Music/WhatsappToolkit/Recordings"
-            app:dependency="call_recording_enable"
-            app:directory="true"
-            app:key="call_recording_path"
-            app:title="@string/call_recording_path" />
-
-        <rikka.material.preference.MaterialSwitchPreference
-            android:defaultValue="false"
-            app:dependency="call_recording_enable"
-            app:key="call_recording_toast"
-            app:summary="@string/call_recording_toast_summary"
-            app:title="@string/call_recording_toast_title" />
-
-        <Preference
-            app:dependency="call_recording_enable"
-            app:key="call_recording_settings"
-            app:summary="@string/recording_mode_description"
-            app:title="@string/call_recording_settings" />
-
-        <rikka.material.preference.MaterialSwitchPreference
-            android:enabled="false"
-            app:key="video_call_screen_rec"
-            app:summary="@string/coming_soon"
-            app:title="@string/video_call_screen_rec" />
     </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
     <com.wa.toolkit.ui.preferences.CardPreferenceCategory
@@ -170,6 +129,5 @@
             app:title="@string/enable_media_preview" />
 
     </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
-
 
 </PreferenceScreen>

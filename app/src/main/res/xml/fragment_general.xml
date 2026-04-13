@@ -3,50 +3,26 @@
 
     <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         app:iconSpaceReserved="false"
-        app:title="@string/general">
+        app:title="@string/category_navigation">
 
         <Preference
             app:fragment="com.wa.toolkit.ui.fragments.GeneralFragment$HomeGeneralPreference"
             app:iconSpaceReserved="false"
-            app:title="@string/general" />
+            app:summary="@string/summary_tools"
+            app:title="@string/tools" />
 
         <Preference
             app:fragment="com.wa.toolkit.ui.fragments.GeneralFragment$HomeScreenGeneralPreference"
             app:iconSpaceReserved="false"
+            app:summary="@string/summary_home_screen"
             app:title="@string/home_screen" />
 
         <Preference
             app:fragment="com.wa.toolkit.ui.fragments.GeneralFragment$ConversationGeneralPreference"
             app:iconSpaceReserved="false"
-            app:title="@string/conversation" />
+            app:summary="@string/summary_chat"
+            app:title="@string/chat" />
 
     </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
-
-    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
-        app:iconSpaceReserved="false"
-        app:title="@string/status">
-
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="autonext_status"
-            app:summary="@string/disable_auto_status_sum"
-            app:title="@string/disable_auto_status" />
-
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="copystatus"
-            app:summary="@string/enable_copy_status_sum"
-            app:title="@string/enable_copy_status" />
-
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="toast_viewed_status"
-            app:summary="@string/toast_on_viewed_status_sum"
-            app:title="@string/toast_on_viewed_status" />
-
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="enable_spy"
-            app:summary="@string/enable_spy_sum"
-            app:title="@string/enable_spy" />
-
-    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
-
 
 </PreferenceScreen>

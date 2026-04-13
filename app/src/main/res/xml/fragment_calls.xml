@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/calls">
+
+        <rikka.material.preference.MaterialSwitchPreference
+            app:key="call_info"
+            app:summary="@string/additional_call_information_sum"
+            app:title="@string/additional_call_information" />
+
+        <ListPreference
+            app:entries="@array/call_blocker_buttons"
+            app:entryValues="@array/call_blocker_values"
+            app:key="call_privacy"
+            app:summary="@string/call_blocker_sum"
+            app:title="@string/call_blocker" />
+
+        <ListPreference
+            app:entries="@array/call_type_buttons"
+            app:entryValues="@array/call_type_values"
+            app:key="call_type"
+            app:summary="@string/call_blocking_type_sum"
+            app:title="@string/call_blocking_type" />
+
+        <com.wa.toolkit.preference.ContactPickerPreference
+            android:key="call_block_contacts"
+            android:title="@string/contact_block_list"
+            app:summaryOff="@string/no_contacts_selected"
+            app:summaryOn="@string/contact_were_selected" />
+
+        <com.wa.toolkit.preference.ContactPickerPreference
+            android:key="call_white_contacts"
+            android:title="@string/contact_white_list"
+            app:summaryOff="@string/no_contacts_selected"
+            app:summaryOn="@string/contact_were_selected" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            app:key="calltype"
+            app:summary="@string/selection_of_call_type_sum"
+            app:title="@string/selection_of_call_type" />
+
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/call_recording_title">
+
+        <rikka.material.preference.MaterialSwitchPreference
+            app:key="call_recording_enable"
+            app:summary="@string/call_recording_enable_sum"
+            app:title="@string/call_recording_enable" />
+
+        <com.wa.toolkit.preference.FileSelectPreference
+            android:defaultValue="/sdcard/Music/WhatsappToolkit/Recordings"
+            app:dependency="call_recording_enable"
+            app:directory="true"
+            app:key="call_recording_path"
+            app:title="@string/call_recording_path" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            app:dependency="call_recording_enable"
+            app:key="call_recording_toast"
+            app:summary="@string/call_recording_toast_summary"
+            app:title="@string/call_recording_toast_title" />
+
+        <Preference
+            app:dependency="call_recording_enable"
+            app:key="call_recording_settings"
+            app:summary="@string/recording_mode_description"
+            app:title="@string/call_recording_settings" />
+
+        <Preference
+            app:key="view_recordings"
+            app:icon="@drawable/ic_recording"
+            app:title="View Recordings"
+            app:summary="Manage and play your recorded calls" />
+
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+
+</PreferenceScreen>

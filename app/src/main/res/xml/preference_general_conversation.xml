@@ -1,23 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
     <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         app:iconSpaceReserved="false"
-        app:title="@string/conversation">
-
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="showonline"
-            app:summary="@string/show_toast_on_contact_online_sum"
-            app:title="@string/show_toast_on_contact_online" />
-
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="toastdeleted"
-            app:summary="@string/toast_on_delete_sum"
-            app:title="@string/toast_on_delete" />
-
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="toast_viewed_message"
-            app:summary="@string/toast_on_viewed_message_sum"
-            app:title="@string/toast_on_viewed_message" />
+        app:title="@string/category_message_protection">
 
         <ListPreference
             app:entries="@array/antirevoke_entries"
@@ -41,9 +28,36 @@
             app:title="@string/antidisappearing" />
 
         <rikka.material.preference.MaterialSwitchPreference
-            app:key="broadcast_tag"
-            app:summary="@string/show_chat_broadcast_icon_sum"
-            app:title="@string/show_chat_broadcast_icon" />
+            app:key="antieditmessages"
+            app:summary="@string/show_edited_message_history_sum"
+            app:title="@string/show_edited_message_history" />
+
+        <Preference
+            app:key="open_deleted_messages"
+            app:summary="@string/deleted_messages_sum"
+            app:title="@string/deleted_messages_title" />
+
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/category_safe_interaction">
+
+        <rikka.material.preference.MaterialSwitchPreference
+            app:key="verify_blocked_contact"
+            app:summary="@string/show_contact_blocked_sum"
+            app:title="@string/show_contact_blocked" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            app:key="alertsticker"
+            app:summary="@string/enable_confirmation_to_send_sticker_sum"
+            app:title="@string/enable_confirmation_to_send_sticker" />
+
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/category_chat_enhancements">
 
         <rikka.material.preference.MaterialSwitchPreference
             app:key="pinnedlimit"
@@ -61,6 +75,11 @@
             app:title="@string/hidetag" />
 
         <rikka.material.preference.MaterialSwitchPreference
+            app:key="broadcast_tag"
+            app:summary="@string/show_chat_broadcast_icon_sum"
+            app:title="@string/show_chat_broadcast_icon" />
+
+        <rikka.material.preference.MaterialSwitchPreference
             app:key="revokeallmessages"
             app:summary="@string/delete_for_everyone_all_messages_sum"
             app:title="@string/delete_for_everyone_all_messages" />
@@ -71,29 +90,15 @@
             app:title="@string/remove_see_more_button" />
 
         <rikka.material.preference.MaterialSwitchPreference
-            app:key="antieditmessages"
-            app:summary="@string/show_edited_message_history_sum"
-            app:title="@string/show_edited_message_history" />
-
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="alertsticker"
-            app:summary="@string/enable_confirmation_to_send_sticker_sum"
-            app:title="@string/enable_confirmation_to_send_sticker" />
-
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="calltype"
-            app:summary="@string/selection_of_call_type_sum"
-            app:title="@string/selection_of_call_type" />
-
-        <rikka.material.preference.MaterialSwitchPreference
             app:key="disable_defemojis"
             app:summary="@string/disable_default_emojis_sum"
             app:title="@string/disable_default_emojis" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="stamp_copied_message"
-            app:summary="@string/stamp_copied_messages_sum"
-            app:title="@string/stamp_copied_messages" />
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/category_interactions_tools">
 
         <rikka.material.preference.MaterialSwitchPreference
             app:defaultValue="true"
@@ -115,9 +120,9 @@
             app:title="@string/google_translate" />
 
         <rikka.material.preference.MaterialSwitchPreference
-            app:key="verify_blocked_contact"
-            app:summary="@string/show_contact_blocked_sum"
-            app:title="@string/show_contact_blocked" />
+            app:key="stamp_copied_message"
+            app:summary="@string/stamp_copied_messages_sum"
+            app:title="@string/stamp_copied_messages" />
 
     </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
