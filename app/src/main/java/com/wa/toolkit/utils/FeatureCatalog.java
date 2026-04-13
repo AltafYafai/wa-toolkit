@@ -54,7 +54,7 @@ public class FeatureCatalog {
                 context.getString(R.string.theme_mode),
                 context.getString(R.string.theme_mode_sum),
                 SearchableFeature.Category.GENERAL_HOME,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_HOME,
                 "general_home",
                 Arrays.asList("dark", "light", "theme")));
 
@@ -62,7 +62,7 @@ public class FeatureCatalog {
                 context.getString(R.string.update_check),
                 context.getString(R.string.update_check_sum),
                 SearchableFeature.Category.GENERAL_HOME,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_HOME,
                 "general_home",
                 Arrays.asList("update", "check", "automatic")));
 
@@ -70,7 +70,7 @@ public class FeatureCatalog {
                 context.getString(R.string.disable_whatsapp_expiration),
                 context.getString(R.string.disable_whatsapp_expiration_sum),
                 SearchableFeature.Category.GENERAL_HOME,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_HOME,
                 "general_home",
                 Arrays.asList("expiration", "version")));
 
@@ -78,7 +78,7 @@ public class FeatureCatalog {
                 context.getString(R.string.force_restore_backup),
                 context.getString(R.string.force_restore_backup_summary),
                 SearchableFeature.Category.GENERAL_HOME,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_HOME,
                 "general_home",
                 Arrays.asList("backup", "restore", "force")));
 
@@ -86,7 +86,7 @@ public class FeatureCatalog {
                 context.getString(R.string.lite_mode),
                 context.getString(R.string.lite_mode_sum),
                 SearchableFeature.Category.GENERAL_HOME,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_HOME,
                 "general_home",
                 Arrays.asList("lite", "performance", "battery")));
 
@@ -94,7 +94,7 @@ public class FeatureCatalog {
                 context.getString(R.string.force_english),
                 null,
                 SearchableFeature.Category.GENERAL_HOME,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_HOME,
                 "general_home",
                 Arrays.asList("english", "language")));
 
@@ -102,7 +102,7 @@ public class FeatureCatalog {
                 context.getString(R.string.verbose_logs),
                 null,
                 SearchableFeature.Category.GENERAL_HOME,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_HOME,
                 "general_home",
                 Arrays.asList("logs", "debug", "verbose")));
 
@@ -110,7 +110,7 @@ public class FeatureCatalog {
                 context.getString(R.string.disable_version_check),
                 context.getString(R.string.disable_version_check_sum),
                 SearchableFeature.Category.GENERAL_HOME,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_HOME,
                 "general_home",
                 Arrays.asList("version", "check", "bypass")));
 
@@ -118,7 +118,7 @@ public class FeatureCatalog {
                 context.getString(R.string.bootloader_spoofer),
                 context.getString(R.string.bootloader_spoofer_sum),
                 SearchableFeature.Category.GENERAL_HOME,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_HOME,
                 "general_home",
                 Arrays.asList("bootloader", "spoofer", "ban")));
 
@@ -126,7 +126,7 @@ public class FeatureCatalog {
                 context.getString(R.string.ampm),
                 null,
                 SearchableFeature.Category.GENERAL_HOME,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_HOME,
                 "general_home",
                 Arrays.asList("time", "12", "hour", "format")));
 
@@ -134,7 +134,7 @@ public class FeatureCatalog {
                 context.getString(R.string.segundosnahora),
                 context.getString(R.string.segundosnahora_sum),
                 SearchableFeature.Category.GENERAL_HOME,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_HOME,
                 "general_home",
                 Arrays.asList("seconds", "timestamp", "time")));
 
@@ -142,7 +142,7 @@ public class FeatureCatalog {
                 context.getString(R.string.textonahora),
                 context.getString(R.string.textonahora_sum),
                 SearchableFeature.Category.GENERAL_HOME,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_HOME,
                 "general_home",
                 Arrays.asList("text", "timestamp", "custom")));
 
@@ -150,7 +150,7 @@ public class FeatureCatalog {
                 context.getString(R.string.enable_tasker_automation),
                 context.getString(R.string.enable_tasker_automation_sum),
                 SearchableFeature.Category.GENERAL_HOME,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_HOME,
                 "general_home",
                 Arrays.asList("tasker", "automation", "intent")));
 
@@ -159,7 +159,7 @@ public class FeatureCatalog {
                 context.getString(R.string.show_menu_buttons_as_icons),
                 context.getString(R.string.show_menu_buttons_as_icons_sum),
                 SearchableFeature.Category.GENERAL_HOMESCREEN,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_HOME,
                 "homescreen",
                 Arrays.asList("menu", "icons", "buttons")));
 
@@ -167,7 +167,7 @@ public class FeatureCatalog {
                 context.getString(R.string.showname),
                 context.getString(R.string.showname_sum),
                 SearchableFeature.Category.GENERAL_HOMESCREEN,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_HOME,
                 "homescreen",
                 Arrays.asList("name", "profile", "title")));
 
@@ -175,7 +175,7 @@ public class FeatureCatalog {
                 context.getString(R.string.showbio),
                 context.getString(R.string.showbio_sum),
                 SearchableFeature.Category.GENERAL_HOMESCREEN,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_HOME,
                 "homescreen",
                 Arrays.asList("bio", "status", "toolbar")));
 
@@ -183,7 +183,7 @@ public class FeatureCatalog {
                 context.getString(R.string.show_dnd_button),
                 context.getString(R.string.show_dnd_button_sum),
                 SearchableFeature.Category.GENERAL_HOMESCREEN,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_HOME,
                 "homescreen",
                 Arrays.asList("dnd", "do not disturb", "button")));
 
@@ -191,7 +191,7 @@ public class FeatureCatalog {
                 context.getString(R.string.enable_new_chat_button),
                 context.getString(R.string.enable_new_chat_button_sum),
                 SearchableFeature.Category.GENERAL_HOMESCREEN,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_HOME,
                 "homescreen",
                 Arrays.asList("new", "chat", "button")));
 
@@ -199,7 +199,7 @@ public class FeatureCatalog {
                 context.getString(R.string.enable_restart_button),
                 context.getString(R.string.enable_restart_button_sum),
                 SearchableFeature.Category.GENERAL_HOMESCREEN,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_HOME,
                 "homescreen",
                 Arrays.asList("restart", "reboot", "button")));
 
@@ -207,7 +207,7 @@ public class FeatureCatalog {
                 context.getString(R.string.enable_wa_enhancer_button),
                 context.getString(R.string.enable_wa_enhancer_button_sum),
                 SearchableFeature.Category.GENERAL_HOMESCREEN,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_HOME,
                 "homescreen",
                 Arrays.asList("wa enhancer", "open", "button")));
 
@@ -215,7 +215,7 @@ public class FeatureCatalog {
                 context.getString(R.string.separate_groups),
                 context.getString(R.string.separate_groups_sum),
                 SearchableFeature.Category.GENERAL_HOMESCREEN,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_HOME,
                 "homescreen",
                 Arrays.asList("separate", "groups", "filter")));
 
@@ -223,7 +223,7 @@ public class FeatureCatalog {
                 context.getString(R.string.new_ui_group_filter),
                 context.getString(R.string.new_ui_group_filter_sum),
                 SearchableFeature.Category.GENERAL_HOMESCREEN,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_HOME,
                 "homescreen",
                 Arrays.asList("filter", "groups", "ui")));
 
@@ -231,7 +231,7 @@ public class FeatureCatalog {
                 context.getString(R.string.show_online_dot_in_conversation_list),
                 context.getString(R.string.show_online_dot_in_conversation_list_sum),
                 SearchableFeature.Category.GENERAL_HOMESCREEN,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_HOME,
                 "homescreen",
                 Arrays.asList("online", "dot", "green")));
 
@@ -239,7 +239,7 @@ public class FeatureCatalog {
                 context.getString(R.string.show_online_last_seen_in_conversation_list),
                 context.getString(R.string.show_online_last_seen_in_conversation_list_sum),
                 SearchableFeature.Category.GENERAL_HOMESCREEN,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_HOME,
                 "homescreen",
                 Arrays.asList("online", "last seen", "text")));
 
@@ -247,7 +247,7 @@ public class FeatureCatalog {
                 context.getString(R.string.enable_filter_chats),
                 context.getString(R.string.enable_filter_chats_sum),
                 SearchableFeature.Category.GENERAL_HOMESCREEN,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_HOME,
                 "homescreen",
                 Arrays.asList("filter", "chats", "unseen")));
 
@@ -255,7 +255,7 @@ public class FeatureCatalog {
                 context.getString(R.string.disable_metaai),
                 context.getString(R.string.disable_metaai_sum),
                 SearchableFeature.Category.GENERAL_HOMESCREEN,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_HOME,
                 "homescreen",
                 Arrays.asList("meta", "ai", "disable")));
 
@@ -263,7 +263,7 @@ public class FeatureCatalog {
                 context.getString(R.string.novofiltro),
                 context.getString(R.string.novofiltro_sum),
                 SearchableFeature.Category.GENERAL_HOMESCREEN,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_HOME,
                 "homescreen",
                 Arrays.asList("search", "filter", "icon", "bar")));
 
@@ -271,7 +271,7 @@ public class FeatureCatalog {
                 context.getString(R.string.disable_status_in_the_profile_photo),
                 context.getString(R.string.disable_status_in_the_profile_photo_sum),
                 SearchableFeature.Category.GENERAL_HOMESCREEN,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_HOME,
                 "homescreen",
                 Arrays.asList("status", "profile", "photo", "circle")));
 
@@ -280,7 +280,7 @@ public class FeatureCatalog {
                 context.getString(R.string.show_toast_on_contact_online),
                 context.getString(R.string.show_toast_on_contact_online_sum),
                 SearchableFeature.Category.GENERAL_CONVERSATION,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_CONVERSATION,
                 "conversation",
                 Arrays.asList("toast", "online", "notification")));
 
@@ -288,7 +288,7 @@ public class FeatureCatalog {
                 context.getString(R.string.toast_on_delete),
                 context.getString(R.string.toast_on_delete_sum),
                 SearchableFeature.Category.GENERAL_CONVERSATION,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_CONVERSATION,
                 "conversation",
                 Arrays.asList("toast", "deleted", "notification")));
 
@@ -296,7 +296,7 @@ public class FeatureCatalog {
                 context.getString(R.string.toast_on_viewed_message),
                 context.getString(R.string.toast_on_viewed_message_sum),
                 SearchableFeature.Category.GENERAL_CONVERSATION,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_CONVERSATION,
                 "conversation",
                 Arrays.asList("toast", "viewed", "read", "notification")));
 
@@ -304,7 +304,7 @@ public class FeatureCatalog {
                 context.getString(R.string.antirevoke),
                 context.getString(R.string.antirevoke_sum),
                 SearchableFeature.Category.GENERAL_CONVERSATION,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_CONVERSATION,
                 "conversation",
                 Arrays.asList("anti", "revoke", "delete", "deleted")));
 
@@ -312,7 +312,7 @@ public class FeatureCatalog {
                 context.getString(R.string.antirevokestatus),
                 context.getString(R.string.antirevokestatus_sum),
                 SearchableFeature.Category.GENERAL_CONVERSATION,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_CONVERSATION,
                 "conversation",
                 Arrays.asList("anti", "delete", "status")));
 
@@ -320,7 +320,7 @@ public class FeatureCatalog {
                 context.getString(R.string.antidisappearing),
                 context.getString(R.string.antidisappearing_sum),
                 SearchableFeature.Category.GENERAL_CONVERSATION,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_CONVERSATION,
                 "conversation",
                 Arrays.asList("anti", "disappearing", "temporary", "messages")));
 
@@ -328,7 +328,7 @@ public class FeatureCatalog {
                 context.getString(R.string.show_chat_broadcast_icon),
                 context.getString(R.string.show_chat_broadcast_icon_sum),
                 SearchableFeature.Category.GENERAL_CONVERSATION,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_CONVERSATION,
                 "conversation",
                 Arrays.asList("broadcast", "icon", "tag")));
 
@@ -336,7 +336,7 @@ public class FeatureCatalog {
                 context.getString(R.string.disable_pinned_limit),
                 context.getString(R.string.disable_pinned_limit_sum),
                 SearchableFeature.Category.GENERAL_CONVERSATION,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_CONVERSATION,
                 "conversation",
                 Arrays.asList("pinned", "limit", "chats")));
 
@@ -344,7 +344,7 @@ public class FeatureCatalog {
                 context.getString(R.string.removeforwardlimit),
                 context.getString(R.string.removeforwardlimit_sum),
                 SearchableFeature.Category.GENERAL_CONVERSATION,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_CONVERSATION,
                 "conversation",
                 Arrays.asList("forward", "limit", "remove")));
 
@@ -352,7 +352,7 @@ public class FeatureCatalog {
                 context.getString(R.string.hidetag),
                 context.getString(R.string.hidetag_sum),
                 SearchableFeature.Category.GENERAL_CONVERSATION,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_CONVERSATION,
                 "conversation",
                 Arrays.asList("forwarded", "tag", "hide")));
 
@@ -360,7 +360,7 @@ public class FeatureCatalog {
                 context.getString(R.string.delete_for_everyone_all_messages),
                 context.getString(R.string.delete_for_everyone_all_messages_sum),
                 SearchableFeature.Category.GENERAL_CONVERSATION,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_CONVERSATION,
                 "conversation",
                 Arrays.asList("delete", "everyone", "limit", "revoke")));
 
@@ -368,7 +368,7 @@ public class FeatureCatalog {
                 context.getString(R.string.remove_see_more_button),
                 context.getString(R.string.remove_see_more_button_),
                 SearchableFeature.Category.GENERAL_CONVERSATION,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_CONVERSATION,
                 "conversation",
                 Arrays.asList("see more", "button", "remove")));
 
@@ -376,7 +376,7 @@ public class FeatureCatalog {
                 context.getString(R.string.show_edited_message_history),
                 context.getString(R.string.show_edited_message_history_sum),
                 SearchableFeature.Category.GENERAL_CONVERSATION,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_CONVERSATION,
                 "conversation",
                 Arrays.asList("edited", "history", "message")));
 
@@ -384,7 +384,7 @@ public class FeatureCatalog {
                 context.getString(R.string.enable_confirmation_to_send_sticker),
                 context.getString(R.string.enable_confirmation_to_send_sticker_sum),
                 SearchableFeature.Category.GENERAL_CONVERSATION,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_CONVERSATION,
                 "conversation",
                 Arrays.asList("sticker", "confirmation", "alert")));
 
@@ -392,7 +392,7 @@ public class FeatureCatalog {
                 context.getString(R.string.selection_of_call_type),
                 context.getString(R.string.selection_of_call_type_sum),
                 SearchableFeature.Category.GENERAL_CONVERSATION,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_CONVERSATION,
                 "conversation",
                 Arrays.asList("call", "type", "selection", "phone")));
 
@@ -400,7 +400,7 @@ public class FeatureCatalog {
                 context.getString(R.string.disable_default_emojis),
                 context.getString(R.string.disable_default_emojis_sum),
                 SearchableFeature.Category.GENERAL_CONVERSATION,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_CONVERSATION,
                 "conversation",
                 Arrays.asList("emoji", "default", "disable")));
 
@@ -408,7 +408,7 @@ public class FeatureCatalog {
                 context.getString(R.string.stamp_copied_messages),
                 context.getString(R.string.stamp_copied_messages_sum),
                 SearchableFeature.Category.GENERAL_CONVERSATION,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_CONVERSATION,
                 "conversation",
                 Arrays.asList("copy", "stamp", "copied", "messages")));
 
@@ -416,7 +416,7 @@ public class FeatureCatalog {
                 context.getString(R.string.double_click_to_react),
                 context.getString(R.string.double_click_to_like_sum),
                 SearchableFeature.Category.GENERAL_CONVERSATION,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_CONVERSATION,
                 "conversation",
                 Arrays.asList("double", "tap", "click", "react", "like")));
 
@@ -424,7 +424,7 @@ public class FeatureCatalog {
                 context.getString(R.string.custom_reaction),
                 context.getString(R.string.custom_reaction_sum),
                 SearchableFeature.Category.GENERAL_CONVERSATION,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_CONVERSATION,
                 "conversation",
                 Arrays.asList("reaction", "emoji", "custom")));
 
@@ -432,7 +432,7 @@ public class FeatureCatalog {
                 context.getString(R.string.google_translate),
                 context.getString(R.string.google_translate_sum),
                 SearchableFeature.Category.GENERAL_CONVERSATION,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_CONVERSATION,
                 "conversation",
                 Arrays.asList("translate", "google", "language")));
 
@@ -448,7 +448,7 @@ public class FeatureCatalog {
                 context.getString(R.string.show_contact_blocked),
                 context.getString(R.string.show_contact_blocked_sum),
                 SearchableFeature.Category.GENERAL_CONVERSATION,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.GENERAL_CONVERSATION,
                 "conversation",
                 Arrays.asList("blocked", "contact", "verify")));
 
@@ -457,7 +457,7 @@ public class FeatureCatalog {
                 context.getString(R.string.disable_auto_status),
                 context.getString(R.string.disable_auto_status_sum),
                 SearchableFeature.Category.GENERAL,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.STATUS,
                 null,
                 Arrays.asList("auto", "status", "skip")));
 
@@ -465,7 +465,7 @@ public class FeatureCatalog {
                 context.getString(R.string.enable_copy_status),
                 context.getString(R.string.enable_copy_status_sum),
                 SearchableFeature.Category.GENERAL,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.STATUS,
                 null,
                 Arrays.asList("copy", "status", "caption")));
 
@@ -473,7 +473,7 @@ public class FeatureCatalog {
                 context.getString(R.string.toast_on_viewed_status),
                 context.getString(R.string.toast_on_viewed_status_sum),
                 SearchableFeature.Category.GENERAL,
-                SearchableFeature.FragmentType.GENERAL,
+                SearchableFeature.FragmentType.STATUS,
                 null,
                 Arrays.asList("toast", "viewed", "status", "notification")));
 
@@ -976,7 +976,7 @@ public class FeatureCatalog {
                 context.getString(R.string.export_settings),
                 context.getString(R.string.backup_settings),
                 SearchableFeature.Category.HOME_ACTIONS,
-                SearchableFeature.FragmentType.HOME,
+                SearchableFeature.FragmentType.GENERAL_HOME,
                 null,
                 Arrays.asList("export", "backup", "settings", "config")));
 
@@ -984,7 +984,7 @@ public class FeatureCatalog {
                 context.getString(R.string.import_settings),
                 context.getString(R.string.backup_settings),
                 SearchableFeature.Category.HOME_ACTIONS,
-                SearchableFeature.FragmentType.HOME,
+                SearchableFeature.FragmentType.GENERAL_HOME,
                 null,
                 Arrays.asList("import", "restore", "settings", "config")));
 
@@ -992,7 +992,7 @@ public class FeatureCatalog {
                 context.getString(R.string.reset_settings),
                 null,
                 SearchableFeature.Category.HOME_ACTIONS,
-                SearchableFeature.FragmentType.HOME,
+                SearchableFeature.FragmentType.GENERAL_HOME,
                 null,
                 Arrays.asList("reset", "settings", "clear")));
 
@@ -1000,7 +1000,7 @@ public class FeatureCatalog {
                 context.getString(R.string.restart_whatsapp),
                 null,
                 SearchableFeature.Category.HOME_ACTIONS,
-                SearchableFeature.FragmentType.HOME,
+                SearchableFeature.FragmentType.GENERAL_HOME,
                 null,
                 Arrays.asList("restart", "reboot", "whatsapp", "refresh")));
     }

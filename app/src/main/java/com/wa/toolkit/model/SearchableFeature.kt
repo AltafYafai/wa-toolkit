@@ -27,12 +27,13 @@ data class SearchableFeature(
     }
 
     enum class FragmentType(val position: Int) {
-        GENERAL(0),
         PRIVACY(1),
-        HOME(2),
+        GENERAL_CONVERSATION(2),
         MEDIA(3),
         CUSTOMIZATION(4),
-        RECORDINGS(5),
+        GENERAL_HOME(5),
+        STATUS(6),
+        CALLS(7),
         ACTIVITY(99)
     }
 
