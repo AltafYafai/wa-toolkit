@@ -5,11 +5,11 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.wa.toolkit.R;
-import com.wa.toolkit.databinding.ActivityMainBinding;
+import com.wa.toolkit.activities.base.BaseActivity;
 import com.wa.toolkit.fragments.DashboardFragment;
 import com.wa.toolkit.ui.fragments.CustomizationFragment;
 import com.wa.toolkit.ui.fragments.GeneralFragment;
@@ -18,18 +18,17 @@ import com.wa.toolkit.ui.fragments.PrivacyFragment;
 import com.wa.toolkit.ui.fragments.RecordingsFragment;
 import com.wa.toolkit.ui.fragments.HomeFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
-    private ActivityMainBinding binding;
     private static final String TAG_DASHBOARD = "dashboard";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        setContentView(R.layout.activity_main);
 
-        setSupportActionBar(binding.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         if (savedInstanceState == null) {
             showDashboard();
@@ -52,8 +51,10 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.fragment_container, fragment, TAG_DASHBOARD)
                 .commit();
         
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        getSupportActionBar().setTitle(R.string.app_name);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            getSupportActionBar().setTitle(R.string.app_name);
+        }
     }
 
     private void navigateToCategory(int id) {
@@ -79,8 +80,10 @@ public class MainActivity extends AppCompatActivity {
                 .addToBackStack(null)
                 .commit();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(title);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(title);
+        }
     }
 
     @Override
@@ -88,8 +91,10 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             getSupportFragmentManager().popBackStack();
             if (getSupportFragmentManager().getBackStackEntryCount() <= 1) {
-                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-                getSupportActionBar().setTitle(R.string.app_name);
+                if (getSupportActionBar() != null) {
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                    getSupportActionBar().setTitle(R.string.app_name);
+                }
             }
             return true;
         } else if (item.getItemId() == R.id.menu_search) {
@@ -121,8 +126,10 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            getSupportActionBar().setTitle(R.string.app_name);
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                getSupportActionBar().setTitle(R.string.app_name);
+            }
         }
     }
 }
