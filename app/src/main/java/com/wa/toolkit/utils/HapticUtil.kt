@@ -9,6 +9,7 @@ import androidx.preference.PreferenceManager
 
 object HapticUtil {
 
+    @JvmStatic
     fun playClick(context: Context) {
         if (!isHapticEnabled(context)) return
         
@@ -21,6 +22,7 @@ object HapticUtil {
         }
     }
 
+    @JvmStatic
     fun playTick(context: Context) {
         if (!isHapticEnabled(context)) return
         
