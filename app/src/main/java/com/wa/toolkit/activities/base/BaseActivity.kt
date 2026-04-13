@@ -9,23 +9,21 @@ import com.wa.toolkit.R
 open class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.AppTheme)
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        val colorMode = prefs.getString("wae_color_mode", "monet")
+        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && colorMode == "monet") {
+            // Let DynamicColors from App.onCreate handle it
+        } else {
+            setTheme(R.style.AppTheme)
+            val colorPreset = prefs.getString("wae_color_preset", "green")
+            theme.applyStyle(resolveColorOverlay(colorPreset), true)
+        }
+        
         theme.applyStyle(rikka.material.preference.R.style.ThemeOverlay_Rikka_Material3_Preference, true)
         theme.applyStyle(R.style.ThemeOverlay, true)
-        applyThemeOverlay()
+        
         super.onCreate(savedInstanceState)
-    }
-
-    private fun applyThemeOverlay() {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        val colorMode = prefs.getString("wae_color_mode", "preset")
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && colorMode == "monet") {
-            return
-        }
-
-        val colorPreset = prefs.getString("wae_color_preset", "green")
-        theme.applyStyle(resolveColorOverlay(colorPreset), true)
     }
 
     private fun resolveColorOverlay(colorPreset: String?): Int {
