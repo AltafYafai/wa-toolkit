@@ -82,22 +82,43 @@ public class WppXposed implements IXposedHookLoadPackage, IXposedHookInitPackage
         XModuleResources modRes = XModuleResources.createInstance(MODULE_PATH, resparam.res);
         ResParam = resparam;
 
-        for (var field : ResId.string.class.getFields()) {
-            if (field.getName().equals("INSTANCE")) continue;
-            var field1 = R.string.class.getField(field.getName());
-            field.set(null, resparam.res.addResource(modRes, field1.getInt(null)));
+        XposedBridge.log("[•] Mirroring resources for " + packageName);
+
+        for (var field : ResId.drawable.class.getDeclaredFields()) {
+            if (field.getName().equals("INSTANCE") || field.getName().equals("$stable")) continue;
+            try {
+                var field1 = R.drawable.class.getField(field.getName());
+                int resId = resparam.res.addResource(modRes, field1.getInt(null));
+                field.setAccessible(true);
+                field.set(null, resId);
+                XposedBridge.log("[•] Mirrored drawable: " + field.getName() + " -> " + Integer.toHexString(resId));
+            } catch (Exception e) {
+                XposedBridge.log("[•] Failed to mirror drawable: " + field.getName() + " - " + e.getMessage());
+            }
         }
 
-        for (var field : ResId.array.class.getFields()) {
-            if (field.getName().equals("INSTANCE")) continue;
-            var field1 = R.array.class.getField(field.getName());
-            field.set(null, resparam.res.addResource(modRes, field1.getInt(null)));
+        for (var field : ResId.string.class.getDeclaredFields()) {
+            if (field.getName().equals("INSTANCE") || field.getName().equals("$stable")) continue;
+            try {
+                var field1 = R.string.class.getField(field.getName());
+                int resId = resparam.res.addResource(modRes, field1.getInt(null));
+                field.setAccessible(true);
+                field.set(null, resId);
+            } catch (Exception e) {
+                XposedBridge.log("[•] Failed to mirror string: " + field.getName() + " - " + e.getMessage());
+            }
         }
 
-        for (var field : ResId.drawable.class.getFields()) {
-            if (field.getName().equals("INSTANCE")) continue;
-            var field1 = R.drawable.class.getField(field.getName());
-            field.set(null, resparam.res.addResource(modRes, field1.getInt(null)));
+        for (var field : ResId.array.class.getDeclaredFields()) {
+            if (field.getName().equals("INSTANCE") || field.getName().equals("$stable")) continue;
+            try {
+                var field1 = R.array.class.getField(field.getName());
+                int resId = resparam.res.addResource(modRes, field1.getInt(null));
+                field.setAccessible(true);
+                field.set(null, resId);
+            } catch (Exception e) {
+                XposedBridge.log("[•] Failed to mirror array: " + field.getName() + " - " + e.getMessage());
+            }
         }
 
     }
