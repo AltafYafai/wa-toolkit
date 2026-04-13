@@ -15,13 +15,6 @@ public class CustomizationFragment extends BasePreferenceFragment {
         setPreferencesFromResource(R.xml.fragment_customization, rootKey);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        setDisplayHomeAsUpEnabled(false);
-    }
-    
-    @Override
     public void onViewCreated(@NonNull android.view.View view, @Nullable android.os.Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         

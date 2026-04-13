@@ -46,12 +46,6 @@ public class GeneralFragment extends BaseFragment {
             super.onCreatePreferences(savedInstanceState, rootKey);
             setPreferencesFromResource(R.xml.fragment_general, rootKey);
         }
-
-        @Override
-        public void onResume() {
-            super.onResume();
-            setDisplayHomeAsUpEnabled(false);
-        }
     }
 
     public static class HomeGeneralPreference extends BasePreferenceFragment {

@@ -29,12 +29,6 @@ public class PrivacyFragment extends BasePreferenceFragment {
         });
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        setDisplayHomeAsUpEnabled(false);
-    }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

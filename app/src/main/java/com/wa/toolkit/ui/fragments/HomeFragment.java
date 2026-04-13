@@ -133,12 +133,6 @@ public class HomeFragment extends BaseFragment {
         view.startAnimation(scaleIn);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        setDisplayHomeAsUpEnabled(false);
-    }
-
     @SuppressLint("StringFormatInvalid")
     private void receiverBroadcastBusiness(Context context, Intent intent) {
         binding.statusTitle3.setText(R.string.business_in_background);
