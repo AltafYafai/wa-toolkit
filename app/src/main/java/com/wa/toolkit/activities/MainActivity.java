@@ -57,7 +57,7 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    private void navigateToCategory(int id) {
+    private void navigateToCategory(int id, Intent intent) {
         Fragment fragment;
         String title;
 
@@ -69,6 +69,16 @@ public class MainActivity extends BaseActivity {
             case 4 -> { fragment = new CustomizationFragment(); title = getString(R.string.perso); }
             case 5 -> { fragment = new RecordingsFragment(); title = getString(R.string.recordings_manager); }
             default -> { return; }
+        }
+
+        // Pass search arguments if any
+        if (intent != null && intent.hasExtra("scroll_to_preference")) {
+            Bundle args = new Bundle();
+            args.putString("scroll_to_preference", intent.getStringExtra("scroll_to_preference"));
+            if (intent.hasExtra("parent_preference")) {
+                args.putString("parent_preference", intent.getStringExtra("parent_preference"));
+            }
+            fragment.setArguments(args);
         }
 
         getSupportFragmentManager().beginTransaction()
@@ -86,46 +96,17 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(android.view.Menu menu) {
-        getMenuInflater().inflate(R.menu.header_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            getSupportFragmentManager().popBackStack();
-            if (getSupportFragmentManager().getBackStackEntryCount() <= 1) {
-                if (getSupportActionBar() != null) {
-                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-                    getSupportActionBar().setTitle(R.string.app_name);
-                }
-            }
-            return true;
-        } else if (item.getItemId() == R.id.menu_search) {
-            startActivity(new Intent(this, SearchActivity.class));
-            return true;
-        } else if (item.getItemId() == R.id.menu_about) {
-            startActivity(new Intent(this, AboutActivity.class));
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        handleIncomingIntent(intent);
-    }
-
     private void handleIncomingIntent(Intent intent) {
         if (intent != null && intent.hasExtra("navigate_to_fragment")) {
             int position = intent.getIntExtra("navigate_to_fragment", -1);
             if (position != -1) {
-                navigateToCategory(position);
+                navigateToCategory(position, intent);
             }
         }
+    }
+
+    private void navigateToCategory(int id) {
+        navigateToCategory(id, null);
     }
 
     @Override

@@ -83,7 +83,18 @@ public abstract class BasePreferenceFragment extends PreferenceFragmentCompat
         Bundle args = getArguments();
         if (args != null && args.containsKey("scroll_to_preference")) {
             String scrollToKey = args.getString("scroll_to_preference");
+            String parentKey = args.getString("parent_preference");
+            
             if (scrollToKey != null) {
+                // If there's a parent preference (like a PreferenceCategory or nested screen)
+                // we might need to ensure it's expanded or visible first
+                if (parentKey != null) {
+                    var parent = findPreference(parentKey);
+                    if (parent instanceof androidx.preference.PreferenceGroup) {
+                        parent.setVisible(true);
+                    }
+                }
+                
                 scrollToPreference(scrollToKey);
             }
         }
