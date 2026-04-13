@@ -15,6 +15,7 @@ import com.wa.toolkit.xposed.core.WppCore;
 import com.wa.toolkit.xposed.core.db.MessageStore;
 import com.wa.toolkit.xposed.core.devkit.Unobfuscator;
 import com.wa.toolkit.xposed.core.devkit.UnobfuscatorCache;
+import com.wa.toolkit.xposed.utils.ResId;
 import com.wa.toolkit.xposed.utils.ReflectionUtils;
 import com.wa.toolkit.xposed.utils.Utils;
 
