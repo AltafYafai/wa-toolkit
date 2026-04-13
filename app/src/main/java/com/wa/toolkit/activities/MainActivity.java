@@ -17,6 +17,8 @@ import com.wa.toolkit.ui.fragments.MediaFragment;
 import com.wa.toolkit.ui.fragments.PrivacyFragment;
 import com.wa.toolkit.ui.fragments.RecordingsFragment;
 import com.wa.toolkit.ui.fragments.HomeFragment;
+import com.wa.toolkit.ui.fragments.StatusFragment;
+import com.wa.toolkit.ui.fragments.CallsFragment;
 
 public class MainActivity extends BaseActivity {
 
