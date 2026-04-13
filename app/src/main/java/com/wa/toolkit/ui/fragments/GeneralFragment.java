@@ -75,4 +75,22 @@ public class GeneralFragment extends BaseFragment {
         }
     }
 
+    public static class StatusGeneralPreference extends BasePreferenceFragment {
+        @Override
+        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            super.onCreatePreferences(savedInstanceState, rootKey);
+            setPreferencesFromResource(R.xml.fragment_status, rootKey);
+            setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    public static class CallsGeneralPreference extends BasePreferenceFragment {
+        @Override
+        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            super.onCreatePreferences(savedInstanceState, rootKey);
+            setPreferencesFromResource(R.xml.fragment_calls, rootKey);
+            setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
 }

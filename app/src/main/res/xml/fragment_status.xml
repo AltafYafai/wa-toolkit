@@ -81,6 +81,11 @@
             app:summary="@string/custom_colors_for_text_status_sum"
             app:title="@string/custom_colors_for_text_status" />
 
+        <rikka.material.preference.MaterialSwitchPreference
+            app:key="vertical_status"
+            app:summary="@string/vertical_status_sum"
+            app:title="@string/vertical_status" />
+
     </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
 </PreferenceScreen>

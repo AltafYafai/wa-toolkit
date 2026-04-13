@@ -69,6 +69,7 @@ public class MainActivity extends BaseActivity {
             case 3 -> { fragment = new MediaFragment(); title = getString(R.string.media); }
             case 4 -> { fragment = new CustomizationFragment(); title = getString(R.string.perso); }
             case 5 -> { fragment = new GeneralFragment.HomeGeneralPreference(); title = "Tools"; }
+            case 8 -> { fragment = new GeneralFragment.HomeScreenGeneralPreference(); title = getString(R.string.home_screen); }
             case 6 -> { fragment = new StatusFragment(); title = getString(R.string.status); }
             case 7 -> { fragment = new CallsFragment(); title = getString(R.string.calls); }
             default -> { return; }

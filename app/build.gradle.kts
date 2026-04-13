@@ -45,8 +45,8 @@ android {
         applicationId = "com.wa.toolkit"
         minSdk = 28
         targetSdk = 34
-        versionCode = 154
-        versionName = "1.5.4-DEV ($gitHash)"
+        versionCode = (System.currentTimeMillis() / 60000).toInt()
+        versionName = "1.0.0-beta ($gitHash)"
         multiDexEnabled = true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

@@ -100,6 +100,40 @@
             app:summary="@string/show_online_last_seen_in_conversation_list_sum"
             app:title="@string/show_online_last_seen_in_conversation_list" />
 
+        <rikka.material.preference.MaterialSwitchPreference
+            app:key="hide_tabs_on_home"
+            app:summary="@string/hide_tabs_on_home_sum"
+            app:title="@string/hide_tabs_on_home" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            app:key="show_toast_on_contact_online"
+            app:summary="@string/show_toast_on_contact_online_sum"
+            app:title="@string/show_toast_on_contact_online" />
+
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="Wallpaper">
+
+        <rikka.material.preference.MaterialSwitchPreference
+            app:key="wallpaper_in_home_screen"
+            app:summary="@string/wallpaper_in_home_screen_sum"
+            app:title="@string/wallpaper_in_home_screen" />
+
+        <Preference
+            app:dependency="wallpaper_in_home_screen"
+            app:key="select_wallpaper"
+            app:title="@string/select_wallpaper" />
+
+        <com.wa.toolkit.preference.FloatSeekBarPreference
+            android:defaultValue="0.5"
+            app:dependency="wallpaper_in_home_screen"
+            app:key="wallpaper_transparency"
+            app:maxValue="1.0"
+            app:minValue="0.0"
+            app:title="@string/wallpaper_transparency" />
+
     </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
     <com.wa.toolkit.ui.preferences.CardPreferenceCategory

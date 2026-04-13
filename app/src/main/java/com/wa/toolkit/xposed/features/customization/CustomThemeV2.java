@@ -368,6 +368,15 @@ public class CustomThemeV2 extends Feature {
             alphacolors = newAlphaColors;
         }
 
+        if (prefs.getBoolean("pure_black", false) && DesignUtils.isNightMode()) {
+            backgroundColors.put("#ff0b141a", "#ff000000");
+            backgroundColors.put("#ff111b21", "#ff000000");
+            backgroundColors.put("#ff0a1014", "#ff000000");
+            backgroundColors.put("#ff10161a", "#ff000000");
+            backgroundColors.put("#ff12181c", "#ff000000");
+            backgroundColors.put("#ff20272b", "#ff000000");
+        }
+
         IColors.colors.putAll(primaryColors);
         IColors.colors.putAll(textColors);
         IColors.colors.putAll(backgroundColors);

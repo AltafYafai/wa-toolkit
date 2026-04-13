@@ -16,9 +16,9 @@ import java.util.concurrent.TimeUnit
 class UpdateChecker(private val mActivity: Activity) : Runnable {
 
     companion object {
-        private const val LATEST_RELEASE_API = ""
-        private const val RELEASE_TAG_PREFIX = "debug-"
-        private const val TELEGRAM_UPDATE_URL = ""
+        private const val LATEST_RELEASE_API = "https://api.github.com/repos/Dev4Mod/WaEnhancer/releases/latest"
+        private const val RELEASE_TAG_PREFIX = ""
+        private const val TELEGRAM_UPDATE_URL = "https://t.me/WaEnhancer"
 
         @Volatile
         private var httpClient: OkHttpClient? = null
@@ -39,7 +39,7 @@ class UpdateChecker(private val mActivity: Activity) : Runnable {
                 .url(LATEST_RELEASE_API)
                 .build()
 
-            var hash = ""
+            var remoteVersion = ""
             var changelog = ""
             var publishedAt = ""
 
@@ -48,26 +48,25 @@ class UpdateChecker(private val mActivity: Activity) : Runnable {
 
                 val content = response.body?.string() ?: return
                 val release = JSONObject(content)
-                val tagName = release.optString("tag_name", "")
-
-                if (tagName.isBlank() || !tagName.startsWith(RELEASE_TAG_PREFIX)) {
-                    return
-                }
-
-                hash = tagName.substring(RELEASE_TAG_PREFIX.length).trim()
+                remoteVersion = release.optString("tag_name", "").trim()
                 changelog = release.optString("body", "No changelog available.").trim()
                 publishedAt = release.optString("published_at", "")
             }
 
-            if (hash.isBlank()) return
+            if (remoteVersion.isBlank()) return
 
-            val appInfo = mActivity.packageManager.getPackageInfo(BuildConfig.APPLICATION_ID, 0)
-            val isNewVersion = appInfo.versionName?.lowercase()?.contains(hash.lowercase().trim()) != true
-            val isIgnored = WppCore.getPrivString("ignored_version", "") == hash
+            val appInfo = mActivity.packageManager.getPackageInfo(mActivity.packageName, 0)
+            val currentVersion = appInfo.versionName ?: ""
+            
+            // Check if remote version is different and doesn't match current version name or hash
+            val isNewVersion = !currentVersion.contains(remoteVersion) && 
+                              !currentVersion.lowercase().contains(remoteVersion.lowercase())
+            
+            val isIgnored = WppCore.getPrivString("ignored_version", "") == remoteVersion
 
             if (isNewVersion && !isIgnored) {
                 mActivity.runOnUiThread {
-                    showUpdateDialog(hash, changelog, publishedAt)
+                    showUpdateDialog(remoteVersion, changelog, publishedAt)
                 }
             }
         } catch (e: Exception) {
@@ -75,7 +74,7 @@ class UpdateChecker(private val mActivity: Activity) : Runnable {
         }
     }
 
-    private fun showUpdateDialog(hash: String, changelog: String, publishedAt: String) {
+    private fun showUpdateDialog(version: String, changelog: String, publishedAt: String) {
         try {
             val markwon = Markwon.create(mActivity)
             val dialog = AlertDialogWpp(mActivity)
@@ -85,7 +84,7 @@ class UpdateChecker(private val mActivity: Activity) : Runnable {
 
             // Build simple message with version and date
             val message = StringBuilder()
-            message.append("📦 **Version:** `").append(hash).append("`\n")
+            message.append("📦 **Version:** `").append(version).append("`\n")
             if (formattedDate.isNotEmpty()) {
                 message.append("📅 **Released:** ").append(formattedDate).append("\n")
             }
@@ -94,7 +93,7 @@ class UpdateChecker(private val mActivity: Activity) : Runnable {
             dialog.setTitle("🎉 New Update Available!")
             dialog.setMessage(markwon.toMarkdown(message.toString()))
             dialog.setNegativeButton("Ignore") { dialog1, _ ->
-                WppCore.setPrivString("ignored_version", hash)
+                WppCore.setPrivString("ignored_version", version)
                 dialog1.dismiss()
             }
             dialog.setPositiveButton("Update Now") { dialog1, _ ->

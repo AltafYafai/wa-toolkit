@@ -23,6 +23,18 @@
             app:summary="@string/summary_chat"
             app:title="@string/chat" />
 
+        <Preference
+            app:fragment="com.wa.toolkit.ui.fragments.GeneralFragment$StatusGeneralPreference"
+            app:iconSpaceReserved="false"
+            app:summary="Stories, Styles and Privacy"
+            app:title="@string/status" />
+
+        <Preference
+            app:fragment="com.wa.toolkit.ui.fragments.GeneralFragment$CallsGeneralPreference"
+            app:iconSpaceReserved="false"
+            app:summary="Blocker and Recording"
+            app:title="@string/calls" />
+
     </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
 </PreferenceScreen>

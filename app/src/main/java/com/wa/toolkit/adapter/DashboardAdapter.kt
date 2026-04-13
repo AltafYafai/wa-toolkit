@@ -12,7 +12,7 @@ import com.wa.toolkit.activities.AboutActivity
 import com.wa.toolkit.activities.SearchActivity
 import com.wa.toolkit.utils.HapticUtil
 
-data class DashboardItem(val id: Int, val title: String, val icon: Int)
+data class DashboardItem(val id: Int, val title: String, val summary: String, val icon: Int)
 
 class DashboardAdapter(
     private val items: List<DashboardItem>,
@@ -41,6 +41,7 @@ class DashboardAdapter(
         val card: View = view.findViewById(R.id.cardView)
         val icon: ImageView = view.findViewById(R.id.icon)
         val title: TextView = view.findViewById(R.id.title)
+        val summary: TextView = view.findViewById(R.id.summary)
     }
 
     class AboutViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -73,6 +74,7 @@ class DashboardAdapter(
             is ItemViewHolder -> {
                 val item = items[position - 1]
                 holder.title.text = item.title
+                holder.summary.text = item.summary
                 holder.icon.setImageResource(item.icon)
                 holder.card.setOnClickListener {
                     HapticUtil.playClick(it.context)
