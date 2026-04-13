@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <PreferenceCategory
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         app:iconSpaceReserved="false"
         app:title="@string/general">
 
@@ -102,6 +102,6 @@
             app:summary="@string/enable_tasker_automation_sum"
             app:title="@string/enable_tasker_automation" />
 
-    </PreferenceCategory>
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
 </PreferenceScreen>

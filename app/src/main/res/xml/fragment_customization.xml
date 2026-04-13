@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         app:iconSpaceReserved="false"
         app:title="@string/general">
 
@@ -126,9 +126,9 @@
             app:summary="@string/list_animations_home_screen_sum"
             app:title="@string/list_animations_home_screen" />
 
-    </PreferenceCategory>
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
-    <PreferenceCategory
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         app:iconSpaceReserved="false"
         app:title="@string/conversation">
 
@@ -166,9 +166,9 @@
             app:key="bubble_right"
             app:summary="@string/default_color"
             app:title="@string/bubble_right" />
-    </PreferenceCategory>
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
-    <PreferenceCategory
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         app:iconSpaceReserved="false"
         app:title="@string/home_screen">
 
@@ -184,9 +184,9 @@
             app:summary="@string/novaconfig_sum"
             app:title="@string/novaconfig" />
 
-    </PreferenceCategory>
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
-    <PreferenceCategory
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         app:iconSpaceReserved="false"
         app:title="@string/status">
 
@@ -222,6 +222,6 @@
             app:key="statuscomposer"
             app:summary="@string/custom_colors_for_text_status_sum"
             app:title="@string/custom_colors_for_text_status" />
-    </PreferenceCategory>
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
 </PreferenceScreen>

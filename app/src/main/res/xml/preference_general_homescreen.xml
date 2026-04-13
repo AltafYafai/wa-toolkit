@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
-    <PreferenceCategory
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         app:iconSpaceReserved="false"
         app:title="@string/home_screen">
 
@@ -87,6 +87,6 @@
             app:title="@string/disable_status_in_the_profile_photo" />
 
 
-    </PreferenceCategory>
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
 </PreferenceScreen>

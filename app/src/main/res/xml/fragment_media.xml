@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         app:iconSpaceReserved="false"
         app:title="@string/title_image">
 
@@ -11,9 +11,9 @@
             app:summary="@string/imagequality_sum"
             app:title="@string/imagequality" />
 
-    </PreferenceCategory>
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
-    <PreferenceCategory
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         app:iconSpaceReserved="false"
         app:title="@string/download_title">
 
@@ -33,9 +33,9 @@
             app:summary="@string/downloadviewonce_sum"
             app:title="@string/downloadviewonce" />
 
-    </PreferenceCategory>
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
-    <PreferenceCategory
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         app:iconSpaceReserved="false"
         app:title="@string/title_video">
 
@@ -63,9 +63,9 @@
             app:key="video_maxfps"
             app:summary="@string/send_video_in_60fps_sum"
             app:title="@string/send_video_in_60fps" />
-    </PreferenceCategory>
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
-    <PreferenceCategory
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         app:iconSpaceReserved="false"
         app:title="@string/call_recording_title">
 
@@ -99,9 +99,9 @@
             app:key="video_call_screen_rec"
             app:summary="@string/coming_soon"
             app:title="@string/video_call_screen_rec" />
-    </PreferenceCategory>
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
-    <PreferenceCategory
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         app:iconSpaceReserved="false"
         app:title="@string/title_audio">
 
@@ -157,9 +157,9 @@
             app:summary="@string/groq_api_key_sum"
             app:title="@string/groq_api_key" />
 
-    </PreferenceCategory>
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
-    <PreferenceCategory
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         app:iconSpaceReserved="false"
         app:title="@string/other">
 
@@ -169,7 +169,7 @@
             app:summary="@string/enable_media_preview_sum"
             app:title="@string/enable_media_preview" />
 
-    </PreferenceCategory>
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
 
 </PreferenceScreen>

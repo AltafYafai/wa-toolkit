@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
-    <PreferenceCategory
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         app:iconSpaceReserved="false"
         app:title="@string/conversation">
 
@@ -119,6 +119,6 @@
             app:summary="@string/show_contact_blocked_sum"
             app:title="@string/show_contact_blocked" />
 
-    </PreferenceCategory>
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
 </PreferenceScreen>

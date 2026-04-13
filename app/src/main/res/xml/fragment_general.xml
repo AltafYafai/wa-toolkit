@@ -16,7 +16,7 @@
         app:iconSpaceReserved="false"
         app:title="@string/conversation" />
 
-    <PreferenceCategory
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         app:iconSpaceReserved="false"
         app:title="@string/status">
 
@@ -40,7 +40,7 @@
             app:summary="@string/enable_spy_sum"
             app:title="@string/enable_spy" />
 
-    </PreferenceCategory>
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
 
 </PreferenceScreen>
