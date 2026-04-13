@@ -9,13 +9,12 @@ import com.wa.toolkit.R
 open class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
+        
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
         val colorMode = prefs.getString("wae_color_mode", "monet")
         
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && colorMode == "monet") {
-            // Let DynamicColors from App.onCreate handle it
-        } else {
-            setTheme(R.style.AppTheme)
+        if (colorMode != "monet") {
             val colorPreset = prefs.getString("wae_color_preset", "green")
             theme.applyStyle(resolveColorOverlay(colorPreset), true)
         }

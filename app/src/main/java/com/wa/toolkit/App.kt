@@ -103,7 +103,6 @@ class App : Application() {
     @SuppressLint("ApplySharedPref")
     override fun onCreate() {
         super.onCreate()
-        DynamicColors.applyToActivitiesIfAvailable(this)
         instance = this
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val modeStr = sharedPreferences.getString("thememode", "0") ?: "0"
