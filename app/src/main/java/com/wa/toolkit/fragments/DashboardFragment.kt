@@ -34,7 +34,7 @@ class DashboardFragment : Fragment() {
         val items = listOf(
             DashboardItem(1, getString(R.string.privacy), R.drawable.ic_privacy),
             DashboardItem(3, getString(R.string.media), R.drawable.ic_media),
-            DashboardItem(2, "Chat", R.drawable.ic_chat_black_24dp),
+            DashboardItem(2, "Chat", R.drawable.ic_telegram),
             DashboardItem(4, getString(R.string.perso), R.drawable.ic_dashboard_black_24dp),
             DashboardItem(5, "Tools", R.drawable.ic_general),
             DashboardItem(6, getString(R.string.status), R.drawable.online),
