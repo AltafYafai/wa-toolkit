@@ -90,6 +90,14 @@ public class FeatureCatalog {
                 "general_home",
                 Arrays.asList("lite", "performance", "battery")));
 
+        catalog.add(new SearchableFeature("enable_spy",
+                context.getString(R.string.enable_spy),
+                context.getString(R.string.enable_spy_sum),
+                SearchableFeature.Category.GENERAL_HOME,
+                SearchableFeature.FragmentType.GENERAL_HOME,
+                "general_home",
+                Arrays.asList("spy", "log", "debug", "internal")));
+
         catalog.add(new SearchableFeature("force_english",
                 context.getString(R.string.force_english),
                 null,
@@ -97,6 +105,14 @@ public class FeatureCatalog {
                 SearchableFeature.FragmentType.GENERAL_HOME,
                 "general_home",
                 Arrays.asList("english", "language")));
+
+        catalog.add(new SearchableFeature("change_dpi",
+                context.getString(R.string.change_default_dpi),
+                context.getString(R.string.change_default_dpi_sum),
+                SearchableFeature.Category.GENERAL_HOME,
+                SearchableFeature.FragmentType.GENERAL_HOME,
+                "general_home",
+                Arrays.asList("dpi", "density", "screen", "resolution")));
 
         catalog.add(new SearchableFeature("enablelogs",
                 context.getString(R.string.verbose_logs),
@@ -159,7 +175,7 @@ public class FeatureCatalog {
                 context.getString(R.string.show_menu_buttons_as_icons),
                 context.getString(R.string.show_menu_buttons_as_icons_sum),
                 SearchableFeature.Category.GENERAL_HOMESCREEN,
-                SearchableFeature.FragmentType.GENERAL_HOME,
+                SearchableFeature.FragmentType.GENERAL_HOMESCREEN,
                 "homescreen",
                 Arrays.asList("menu", "icons", "buttons")));
 
@@ -167,7 +183,7 @@ public class FeatureCatalog {
                 context.getString(R.string.showname),
                 context.getString(R.string.showname_sum),
                 SearchableFeature.Category.GENERAL_HOMESCREEN,
-                SearchableFeature.FragmentType.GENERAL_HOME,
+                SearchableFeature.FragmentType.GENERAL_HOMESCREEN,
                 "homescreen",
                 Arrays.asList("name", "profile", "title")));
 
@@ -175,7 +191,7 @@ public class FeatureCatalog {
                 context.getString(R.string.showbio),
                 context.getString(R.string.showbio_sum),
                 SearchableFeature.Category.GENERAL_HOMESCREEN,
-                SearchableFeature.FragmentType.GENERAL_HOME,
+                SearchableFeature.FragmentType.GENERAL_HOMESCREEN,
                 "homescreen",
                 Arrays.asList("bio", "status", "toolbar")));
 
@@ -183,7 +199,7 @@ public class FeatureCatalog {
                 context.getString(R.string.show_dnd_button),
                 context.getString(R.string.show_dnd_button_sum),
                 SearchableFeature.Category.GENERAL_HOMESCREEN,
-                SearchableFeature.FragmentType.GENERAL_HOME,
+                SearchableFeature.FragmentType.GENERAL_HOMESCREEN,
                 "homescreen",
                 Arrays.asList("dnd", "do not disturb", "button")));
 
@@ -191,7 +207,7 @@ public class FeatureCatalog {
                 context.getString(R.string.enable_new_chat_button),
                 context.getString(R.string.enable_new_chat_button_sum),
                 SearchableFeature.Category.GENERAL_HOMESCREEN,
-                SearchableFeature.FragmentType.GENERAL_HOME,
+                SearchableFeature.FragmentType.GENERAL_HOMESCREEN,
                 "homescreen",
                 Arrays.asList("new", "chat", "button")));
 
@@ -199,7 +215,7 @@ public class FeatureCatalog {
                 context.getString(R.string.enable_restart_button),
                 context.getString(R.string.enable_restart_button_sum),
                 SearchableFeature.Category.GENERAL_HOMESCREEN,
-                SearchableFeature.FragmentType.GENERAL_HOME,
+                SearchableFeature.FragmentType.GENERAL_HOMESCREEN,
                 "homescreen",
                 Arrays.asList("restart", "reboot", "button")));
 
@@ -207,7 +223,7 @@ public class FeatureCatalog {
                 context.getString(R.string.enable_wa_enhancer_button),
                 context.getString(R.string.enable_wa_enhancer_button_sum),
                 SearchableFeature.Category.GENERAL_HOMESCREEN,
-                SearchableFeature.FragmentType.GENERAL_HOME,
+                SearchableFeature.FragmentType.GENERAL_HOMESCREEN,
                 "homescreen",
                 Arrays.asList("wa enhancer", "open", "button")));
 
@@ -215,7 +231,7 @@ public class FeatureCatalog {
                 context.getString(R.string.separate_groups),
                 context.getString(R.string.separate_groups_sum),
                 SearchableFeature.Category.GENERAL_HOMESCREEN,
-                SearchableFeature.FragmentType.GENERAL_HOME,
+                SearchableFeature.FragmentType.GENERAL_HOMESCREEN,
                 "homescreen",
                 Arrays.asList("separate", "groups", "filter")));
 
@@ -223,7 +239,7 @@ public class FeatureCatalog {
                 context.getString(R.string.new_ui_group_filter),
                 context.getString(R.string.new_ui_group_filter_sum),
                 SearchableFeature.Category.GENERAL_HOMESCREEN,
-                SearchableFeature.FragmentType.GENERAL_HOME,
+                SearchableFeature.FragmentType.GENERAL_HOMESCREEN,
                 "homescreen",
                 Arrays.asList("filter", "groups", "ui")));
 
@@ -231,7 +247,7 @@ public class FeatureCatalog {
                 context.getString(R.string.show_online_dot_in_conversation_list),
                 context.getString(R.string.show_online_dot_in_conversation_list_sum),
                 SearchableFeature.Category.GENERAL_HOMESCREEN,
-                SearchableFeature.FragmentType.GENERAL_HOME,
+                SearchableFeature.FragmentType.GENERAL_HOMESCREEN,
                 "homescreen",
                 Arrays.asList("online", "dot", "green")));
 
@@ -239,15 +255,31 @@ public class FeatureCatalog {
                 context.getString(R.string.show_online_last_seen_in_conversation_list),
                 context.getString(R.string.show_online_last_seen_in_conversation_list_sum),
                 SearchableFeature.Category.GENERAL_HOMESCREEN,
-                SearchableFeature.FragmentType.GENERAL_HOME,
+                SearchableFeature.FragmentType.GENERAL_HOMESCREEN,
                 "homescreen",
                 Arrays.asList("online", "last seen", "text")));
+
+        catalog.add(new SearchableFeature("hide_tabs_on_home",
+                context.getString(R.string.hide_tabs_on_home),
+                context.getString(R.string.hide_tabs_on_home_sum),
+                SearchableFeature.Category.GENERAL_HOMESCREEN,
+                SearchableFeature.FragmentType.GENERAL_HOMESCREEN,
+                "homescreen",
+                Arrays.asList("hide", "tabs", "home", "navigation")));
+
+        catalog.add(new SearchableFeature("show_toast_on_contact_online",
+                context.getString(R.string.show_toast_on_contact_online),
+                context.getString(R.string.show_toast_on_contact_online_sum),
+                SearchableFeature.Category.GENERAL_HOMESCREEN,
+                SearchableFeature.FragmentType.GENERAL_HOMESCREEN,
+                "homescreen",
+                Arrays.asList("toast", "online", "notification")));
 
         catalog.add(new SearchableFeature("filterseen",
                 context.getString(R.string.enable_filter_chats),
                 context.getString(R.string.enable_filter_chats_sum),
                 SearchableFeature.Category.GENERAL_HOMESCREEN,
-                SearchableFeature.FragmentType.GENERAL_HOME,
+                SearchableFeature.FragmentType.GENERAL_HOMESCREEN,
                 "homescreen",
                 Arrays.asList("filter", "chats", "unseen")));
 
@@ -255,7 +287,7 @@ public class FeatureCatalog {
                 context.getString(R.string.disable_metaai),
                 context.getString(R.string.disable_metaai_sum),
                 SearchableFeature.Category.GENERAL_HOMESCREEN,
-                SearchableFeature.FragmentType.GENERAL_HOME,
+                SearchableFeature.FragmentType.GENERAL_HOMESCREEN,
                 "homescreen",
                 Arrays.asList("meta", "ai", "disable")));
 
@@ -263,7 +295,7 @@ public class FeatureCatalog {
                 context.getString(R.string.novofiltro),
                 context.getString(R.string.novofiltro_sum),
                 SearchableFeature.Category.GENERAL_HOMESCREEN,
-                SearchableFeature.FragmentType.GENERAL_HOME,
+                SearchableFeature.FragmentType.GENERAL_HOMESCREEN,
                 "homescreen",
                 Arrays.asList("search", "filter", "icon", "bar")));
 
@@ -271,9 +303,25 @@ public class FeatureCatalog {
                 context.getString(R.string.disable_status_in_the_profile_photo),
                 context.getString(R.string.disable_status_in_the_profile_photo_sum),
                 SearchableFeature.Category.GENERAL_HOMESCREEN,
-                SearchableFeature.FragmentType.GENERAL_HOME,
+                SearchableFeature.FragmentType.GENERAL_HOMESCREEN,
                 "homescreen",
                 Arrays.asList("status", "profile", "photo", "circle")));
+
+        catalog.add(new SearchableFeature("facebook_style_status",
+                context.getString(R.string.enable_facebook_style_for_status),
+                context.getString(R.string.enable_facebook_style_for_status_sum),
+                SearchableFeature.Category.GENERAL_HOMESCREEN,
+                SearchableFeature.FragmentType.GENERAL_HOMESCREEN,
+                "homescreen",
+                Arrays.asList("facebook", "style", "status")));
+
+        catalog.add(new SearchableFeature("oldstatus",
+                context.getString(R.string.old_statuses),
+                context.getString(R.string.old_statuses_sum),
+                SearchableFeature.Category.GENERAL_HOMESCREEN,
+                SearchableFeature.FragmentType.GENERAL_HOMESCREEN,
+                "homescreen",
+                Arrays.asList("old", "status", "vertical")));
 
         // GENERAL FRAGMENT - Conversation sub-preferences
         catalog.add(new SearchableFeature("showonline",

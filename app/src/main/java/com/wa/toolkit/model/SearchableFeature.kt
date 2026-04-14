@@ -34,6 +34,7 @@ data class SearchableFeature(
         GENERAL_HOME(5),
         STATUS(6),
         CALLS(7),
+        GENERAL_HOMESCREEN(8),
         ACTIVITY(99)
     }
 
