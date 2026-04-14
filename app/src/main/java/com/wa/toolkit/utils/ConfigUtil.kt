@@ -38,6 +38,10 @@ object ConfigUtil {
     }
 
     fun exportConfigs(context: Context) {
+        if (FilePicker.fileSalve == null) {
+            Toast.makeText(context, "FilePicker not initialized", Toast.LENGTH_SHORT).show()
+            return
+        }
         FilePicker.setOnUriPickedListener(object : FilePicker.OnUriPickedListener {
             override fun onUriPicked(uri: android.net.Uri) {
                 try {
@@ -58,6 +62,10 @@ object ConfigUtil {
     }
 
     fun importConfigs(context: Context) {
+        if (FilePicker.fileCapture == null) {
+            Toast.makeText(context, "FilePicker not initialized", Toast.LENGTH_SHORT).show()
+            return
+        }
         FilePicker.setOnUriPickedListener(object : FilePicker.OnUriPickedListener {
             override fun onUriPicked(uri: android.net.Uri) {
                 try {

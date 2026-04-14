@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import androidx.core.content.ContextCompat;
 import com.wa.toolkit.BuildConfig;
+import com.wa.toolkit.utils.FilePicker;
 import com.wa.toolkit.xposed.core.FeatureLoader;
 
 public class MainActivity extends BaseActivity {
@@ -56,6 +57,7 @@ public class MainActivity extends BaseActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        FilePicker.registerFilePicker(this);
         setupStatusReceiver();
 
         if (savedInstanceState == null) {
