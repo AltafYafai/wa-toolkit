@@ -111,6 +111,16 @@
             app:summary="@string/show_toast_on_contact_online_sum"
             app:title="@string/show_toast_on_contact_online" />
 
+        <rikka.material.preference.MaterialSwitchPreference
+            app:key="facebook_style_status"
+            app:summary="@string/enable_facebook_style_for_status_sum"
+            app:title="@string/enable_facebook_style_for_status" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            app:key="oldstatus"
+            app:summary="@string/old_statuses_sum"
+            app:title="@string/old_statuses" />
+
     </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
     <com.wa.toolkit.ui.preferences.CardPreferenceCategory

@@ -49,8 +49,21 @@
             app:title="@string/lite_mode" />
 
         <rikka.material.preference.MaterialSwitchPreference
+            app:key="enable_spy"
+            app:summary="@string/enable_spy_sum"
+            app:title="@string/enable_spy" />
+
+        <rikka.material.preference.MaterialSwitchPreference
             app:key="force_english"
+            app:summary="Force English language for the module UI"
             app:title="@string/force_english" />
+
+        <com.wa.toolkit.preference.FloatSeekBarPreference
+            android:defaultValue="0"
+            app:key="change_dpi"
+            app:maxValue="600"
+            app:minValue="0"
+            app:title="@string/change_default_dpi" />
 
         <rikka.material.preference.MaterialSwitchPreference
             app:key="ampm"

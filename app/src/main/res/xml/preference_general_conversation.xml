@@ -110,6 +110,11 @@
             app:title="@string/new_context_menu_ui" />
 
         <rikka.material.preference.MaterialSwitchPreference
+            app:key="disable_audio_sensor"
+            app:summary="@string/disable_audio_sensor_sum"
+            app:title="@string/disable_audio_sensor" />
+
+        <rikka.material.preference.MaterialSwitchPreference
             app:key="disable_defemojis"
             app:summary="@string/disable_default_emojis_sum"
             app:title="@string/disable_default_emojis" />

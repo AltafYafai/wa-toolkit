@@ -87,6 +87,16 @@
             app:title="@string/hidereceipt" />
 
         <rikka.material.preference.MaterialSwitchPreference
+            app:key="seentick"
+            app:summary="@string/show_button_to_send_blue_tick_sum"
+            app:title="@string/show_button_to_send_blue_tick" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            app:key="show_contact_blocked"
+            app:summary="@string/show_contact_blocked_sum"
+            app:title="@string/show_contact_blocked" />
+
+        <rikka.material.preference.MaterialSwitchPreference
             app:key="ghostmode_t"
             app:summary="@string/ghostmode_sum"
             app:title="@string/ghostmode" />

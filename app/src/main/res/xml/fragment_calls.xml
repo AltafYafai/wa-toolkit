@@ -18,6 +18,11 @@
             app:summary="@string/call_blocker_sum"
             app:title="@string/call_blocker" />
 
+        <rikka.material.preference.MaterialSwitchPreference
+            app:key="block_unverified"
+            app:summary="Block calls from unverified business accounts"
+            app:title="@string/block_unverified" />
+
         <ListPreference
             app:entries="@array/call_type_buttons"
             app:entryValues="@array/call_type_values"

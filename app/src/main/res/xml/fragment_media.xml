@@ -79,8 +79,8 @@
             android:defaultValue="0"
             android:entries="@array/audio_type_buttons"
             android:entryValues="@array/audio_type_values"
-            android:summary="@string/send_audio_as_voice_audio_note_sum"
             app:key="audio_type"
+            app:summary="@string/send_audio_as_voice_audio_note_sum"
             app:title="@string/send_audio_as_voice_audio_note" />
 
         <com.wa.toolkit.preference.FloatSeekBarPreference
