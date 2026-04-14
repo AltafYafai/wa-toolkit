@@ -27,6 +27,7 @@ import com.wa.toolkit.R;
 import com.wa.toolkit.activities.MainActivity;
 import com.wa.toolkit.databinding.FragmentHomeBinding;
 import com.wa.toolkit.ui.fragments.base.BaseFragment;
+import com.wa.toolkit.utils.ConfigUtil;
 import com.wa.toolkit.utils.FilePicker;
 import com.wa.toolkit.xposed.core.FeatureLoader;
 import com.wa.toolkit.xposed.utils.Utils;
