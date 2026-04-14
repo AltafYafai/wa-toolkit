@@ -719,6 +719,14 @@ public class FeatureCatalog {
                 null,
                 Arrays.asList("image", "quality", "hd")));
 
+        catalog.add(new SearchableFeature("download_profile",
+                "Download Profile Picture",
+                "Add a download button when viewing profile pictures",
+                SearchableFeature.Category.MEDIA,
+                SearchableFeature.FragmentType.MEDIA,
+                null,
+                Arrays.asList("download", "profile", "picture", "photo")));
+
         catalog.add(new SearchableFeature("download_local",
                 context.getString(R.string.local_download),
                 null,

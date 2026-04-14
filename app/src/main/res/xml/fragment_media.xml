@@ -11,6 +11,11 @@
             app:summary="@string/imagequality_sum"
             app:title="@string/imagequality" />
 
+        <rikka.material.preference.MaterialSwitchPreference
+            app:key="download_profile"
+            app:summary="Add a download button when viewing profile pictures"
+            app:title="Download Profile Picture" />
+
     </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
     <com.wa.toolkit.ui.preferences.CardPreferenceCategory
