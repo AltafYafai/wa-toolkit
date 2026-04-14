@@ -19,6 +19,14 @@ class DashboardAdapter(
     private val onItemClick: (DashboardItem) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    var isXposedEnabled: Boolean = false
+    var wppVersion: String = "Not Detected"
+    var isWppActive: Boolean = false
+
+    var onBackupClick: (() -> Unit)? = null
+    var onRestoreClick: (() -> Unit)? = null
+    var onRestartClick: (() -> Unit)? = null
+
     companion object {
         const val TYPE_HEADER = 0
         const val TYPE_ITEM = 1
@@ -34,7 +42,14 @@ class DashboardAdapter(
     }
 
     class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val card: View = view.findViewById(R.id.cardSearch)
+        val searchCard: View = view.findViewById(R.id.cardSearch)
+        val imgXposed: ImageView = view.findViewById(R.id.imgXposedStatus)
+        val txtXposed: TextView = view.findViewById(R.id.txtXposedStatus)
+        val imgWpp: ImageView = view.findViewById(R.id.imgWppStatus)
+        val txtWpp: TextView = view.findViewById(R.id.txtWppVersion)
+        val btnBackup: View = view.findViewById(R.id.btnBackup)
+        val btnRestore: View = view.findViewById(R.id.btnRestore)
+        val btnRestart: View = view.findViewById(R.id.btnRestart)
     }
 
     class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -60,10 +75,33 @@ class DashboardAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is HeaderViewHolder -> {
-                holder.card.setOnClickListener {
+                holder.searchCard.setOnClickListener {
                     HapticUtil.playClick(it.context)
                     it.context.startActivity(Intent(it.context, SearchActivity::class.java))
                 }
+
+                // Bind Status
+                if (isXposedEnabled) {
+                    holder.imgXposed.setImageResource(R.drawable.ic_round_check_circle_24)
+                    holder.imgXposed.imageTintList = android.content.res.ColorStateList.valueOf(holder.itemView.context.getColor(R.color.gradient_start_success))
+                    holder.txtXposed.text = "LSPosed Active"
+                } else {
+                    holder.imgXposed.setImageResource(R.drawable.ic_round_error_outline_24)
+                    holder.imgXposed.imageTintList = android.content.res.ColorStateList.valueOf(holder.itemView.context.getColor(R.color.gradient_start_error))
+                    holder.txtXposed.text = "LSPosed Inactive"
+                }
+
+                holder.txtWpp.text = wppVersion
+                if (isWppActive) {
+                    holder.imgWpp.imageTintList = android.content.res.ColorStateList.valueOf(holder.itemView.context.getColor(R.color.gradient_start_primary))
+                } else {
+                    holder.imgWpp.imageTintList = android.content.res.ColorStateList.valueOf(holder.itemView.context.getColor(R.color.gradient_start_error))
+                }
+
+                // Bind Actions
+                holder.btnBackup.setOnClickListener { HapticUtil.playClick(it.context); onBackupClick?.invoke() }
+                holder.btnRestore.setOnClickListener { HapticUtil.playClick(it.context); onRestoreClick?.invoke() }
+                holder.btnRestart.setOnClickListener { HapticUtil.playClick(it.context); onRestartClick?.invoke() }
             }
             is AboutViewHolder -> {
                 holder.card.setOnClickListener {

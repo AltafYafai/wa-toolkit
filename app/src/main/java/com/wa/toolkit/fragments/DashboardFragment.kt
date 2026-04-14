@@ -11,6 +11,11 @@ import com.wa.toolkit.R
 import com.wa.toolkit.adapter.DashboardAdapter
 import com.wa.toolkit.adapter.DashboardItem
 
+import com.wa.toolkit.activities.MainActivity
+import com.wa.toolkit.utils.ConfigUtil
+import com.wa.toolkit.App
+import com.wa.toolkit.xposed.core.FeatureLoader
+
 class DashboardFragment : Fragment() {
 
     interface OnDashboardItemClickListener {
@@ -42,6 +47,27 @@ class DashboardFragment : Fragment() {
             DashboardItem(7, getString(R.string.calls), "Privacy and Call Recording", R.drawable.ic_contacts)
         )
 
+        val adapter = DashboardAdapter(items) { item ->
+            listener?.onDashboardItemClick(item)
+        }
+
+        // Initialize status
+        adapter.isXposedEnabled = MainActivity.isXposedEnabled()
+        
+        // Setup listeners
+        (activity as? MainActivity)?.setOnStatusUpdateListener { version, active ->
+            adapter.wppVersion = "WhatsApp $version"
+            adapter.isWppActive = active
+            adapter.notifyItemChanged(0) // Update header
+        }
+
+        adapter.onBackupClick = { ConfigUtil.exportConfigs(requireContext()) }
+        adapter.onRestoreClick = { ConfigUtil.importConfigs(requireContext()) }
+        adapter.onRestartClick = {
+            App.getInstance().restartApp(FeatureLoader.PACKAGE_WPP)
+            App.getInstance().restartApp(FeatureLoader.PACKAGE_BUSINESS)
+        }
+
         val layoutManager = GridLayoutManager(context, 2)
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
@@ -53,9 +79,7 @@ class DashboardFragment : Fragment() {
         }
 
         recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = DashboardAdapter(items) { item ->
-            listener?.onDashboardItemClick(item)
-        }
+        recyclerView.adapter = adapter
 
         return view
     }

@@ -20,9 +20,33 @@ import com.wa.toolkit.ui.fragments.HomeFragment;
 import com.wa.toolkit.ui.fragments.StatusFragment;
 import com.wa.toolkit.ui.fragments.CallsFragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import androidx.core.content.ContextCompat;
+import com.wa.toolkit.BuildConfig;
+import com.wa.toolkit.xposed.core.FeatureLoader;
+
 public class MainActivity extends BaseActivity {
 
     private static final String TAG_DASHBOARD = "dashboard";
+    private String wppVersion = "Not Detected";
+    private boolean isWppActive = false;
+    private BroadcastReceiver statusReceiver;
+
+    public interface OnStatusUpdateListener {
+        void onStatusUpdate(String version, boolean active);
+    }
+
+    private OnStatusUpdateListener statusListener;
+
+    public void setOnStatusUpdateListener(OnStatusUpdateListener listener) {
+        this.statusListener = listener;
+        if (listener != null) {
+            listener.onStatusUpdate(wppVersion, isWppActive);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,15 +56,74 @@ public class MainActivity extends BaseActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        setupStatusReceiver();
+
         if (savedInstanceState == null) {
             showDashboard();
         }
 
         handleIncomingIntent(getIntent());
+        checkWpp();
+    }
+
+    private void setupStatusReceiver() {
+        var intentFilter = new IntentFilter(BuildConfig.APPLICATION_ID + ".RECEIVER_WPP");
+        statusReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                wppVersion = intent.getStringExtra("VERSION");
+                isWppActive = true;
+                if (statusListener != null) {
+                    statusListener.onStatusUpdate(wppVersion, isWppActive);
+                }
+            }
+        };
+        ContextCompat.registerReceiver(this, statusReceiver, intentFilter, ContextCompat.RECEIVER_EXPORTED);
+    }
+
+    private void checkWpp() {
+        Intent checkWpp = new Intent(BuildConfig.APPLICATION_ID + ".CHECK_WPP");
+        sendBroadcast(checkWpp);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (statusReceiver != null) {
+            unregisterReceiver(statusReceiver);
+        }
+        super.onDestroy();
     }
 
     public static boolean isXposedEnabled() {
         return false;
+    }
+
+    public String getWhatsAppVersion() {
+        try {
+            return getPackageManager().getPackageInfo(FeatureLoader.PACKAGE_WPP, 0).versionName;
+        } catch (Exception e) {
+            try {
+                return getPackageManager().getPackageInfo(FeatureLoader.PACKAGE_BUSINESS, 0).versionName;
+            } catch (Exception e2) {
+                return "Not Installed";
+            }
+        }
+    }
+
+    public boolean isWhatsAppRunning() {
+        // This is usually handled via the broadcast receiver in HomeFragment
+        // For the dashboard, we can just check if the package is installed
+        try {
+            getPackageManager().getPackageInfo(FeatureLoader.PACKAGE_WPP, 0);
+            return true;
+        } catch (Exception e) {
+            try {
+                getPackageManager().getPackageInfo(FeatureLoader.PACKAGE_BUSINESS, 0);
+                return true;
+            } catch (Exception e2) {
+                return false;
+            }
+        }
     }
 
     private void showDashboard() {

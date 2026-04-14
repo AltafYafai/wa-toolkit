@@ -100,17 +100,17 @@ public class HomeFragment extends BaseFragment {
 
         binding.exportBtn.setOnClickListener(view -> {
             animateClick(view);
-            saveConfigs(this.getContext());
+            ConfigUtil.INSTANCE.exportConfigs(requireContext());
         });
 
         binding.importBtn.setOnClickListener(view -> {
             animateClick(view);
-            importConfigs(this.getContext());
+            ConfigUtil.INSTANCE.importConfigs(requireContext());
         });
 
         binding.resetBtn.setOnClickListener(view -> {
             animateClick(view);
-            resetConfigs(this.getContext());
+            ConfigUtil.INSTANCE.resetConfigs(requireContext());
         });
 
         startCardAnimations();
@@ -188,99 +188,6 @@ public class HomeFragment extends BaseFragment {
         binding.rebootBtn.setVisibility(View.VISIBLE);
         binding.statusSummary1.setVisibility(View.VISIBLE);
         binding.statusIcon2.setImageResource(R.drawable.ic_round_check_circle_24);
-    }
-
-    private void resetConfigs(Context context) {
-        var prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        prefs.getAll().forEach((key, value) -> prefs.edit().remove(key).apply());
-        App.getInstance().restartApp(FeatureLoader.PACKAGE_WPP);
-        App.getInstance().restartApp(FeatureLoader.PACKAGE_BUSINESS);
-        Utils.showToast(context.getString(R.string.configs_reset), Toast.LENGTH_SHORT);
-    }
-
-    private static @NonNull JSONObject getJsonObject(SharedPreferences prefs) throws JSONException {
-        var entries = prefs.getAll();
-        var JSOjsonObject = new JSONObject();
-        for (var entry : entries.entrySet()) {
-            var type = new JSONObject();
-            var keyValue = entry.getValue();
-            if (keyValue instanceof HashSet<?> hashSet) {
-                keyValue = new JSONArray(new ArrayList<>(hashSet));
-            }
-            type.put("type", keyValue.getClass().getSimpleName());
-            type.put("value", keyValue);
-            JSOjsonObject.put(entry.getKey(), type);
-        }
-        return JSOjsonObject;
-    }
-
-    private void saveConfigs(Context context) {
-        FilePicker.setOnUriPickedListener((uri) -> {
-            try {
-                try (var output = context.getContentResolver().openOutputStream(uri)) {
-                    var prefs = PreferenceManager.getDefaultSharedPreferences(context);
-                    var JSOjsonObject = getJsonObject(prefs);
-                    Objects.requireNonNull(output).write(JSOjsonObject.toString(4).getBytes());
-                }
-                Toast.makeText(context, context.getString(R.string.configs_saved), Toast.LENGTH_SHORT).show();
-            } catch (Exception e) {
-                Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.US);
-        String formattedDate = dateFormat.format(new Date());
-        FilePicker.fileSalve.launch("whatsapp_toolkit_configs_" + formattedDate + ".json");
-    }
-
-    private void importConfigs(Context context) {
-        FilePicker.setOnUriPickedListener((uri) -> {
-            try {
-                try (var input = context.getContentResolver().openInputStream(uri)) {
-                    var data = IOUtils.toString(input);
-                    var prefs = PreferenceManager.getDefaultSharedPreferences(context);
-                    var jsonObject = new JSONObject(data);
-                    prefs.getAll().forEach((key, value) -> prefs.edit().remove(key).apply());
-                    var key = jsonObject.keys();
-                    while (key.hasNext()) {
-                        var keyName = key.next();
-                        var value = jsonObject.get(keyName);
-                        var type = value.getClass().getSimpleName();
-                        if (value instanceof JSONObject valueJson) {
-                            value = valueJson.get("value");
-                            type = valueJson.getString("type");
-                        }
-
-                        if (type.equals(JSONArray.class.getSimpleName())) {
-                            var jsonArray = (JSONArray) value;
-                            HashSet<String> hashSet = new HashSet<>();
-                            for (var i = 0; i < jsonArray.length(); i++) {
-                                hashSet.add(jsonArray.getString(i));
-                            }
-                            prefs.edit().putStringSet(keyName, hashSet).apply();
-                        } else if (type.equals(String.class.getSimpleName())) {
-                            prefs.edit().putString(keyName, (String) value).apply();
-                        } else if (type.equals(Boolean.class.getSimpleName())) {
-                            prefs.edit().putBoolean(keyName, (boolean) value).apply();
-                        } else if (type.equals(Integer.class.getSimpleName())) {
-                            prefs.edit().putInt(keyName, (int) value).apply();
-                        } else if (type.equals(Long.class.getSimpleName())) {
-                            prefs.edit().putLong(keyName, (long) value).apply();
-                        } else if (type.equals(Double.class.getSimpleName())) {
-                            prefs.edit().putFloat(keyName, Float.parseFloat(String.valueOf(value))).apply();
-                        } else if (type.equals(Float.class.getSimpleName())) {
-                            prefs.edit().putFloat(keyName, Float.parseFloat(String.valueOf(value))).apply();
-                        }
-                    }
-                }
-                Toast.makeText(context, context.getString(R.string.configs_imported), Toast.LENGTH_SHORT).show();
-                App.getInstance().restartApp(FeatureLoader.PACKAGE_WPP);
-                App.getInstance().restartApp(FeatureLoader.PACKAGE_BUSINESS);
-            } catch (Exception e) {
-                Log.e("importConfigs", e.getMessage(), e);
-                Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-        FilePicker.fileCapture.launch(new String[]{"application/json"});
     }
 
     @SuppressLint("StringFormatInvalid")
