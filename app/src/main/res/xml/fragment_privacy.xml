@@ -2,148 +2,141 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.wa.toolkit.ui.preferences.CardPreferenceCategory app:title="@string/home_screen">
+    <PreferenceCategory android:title="@string/home_screen">
 
         <ListPreference
             android:defaultValue="0"
             android:entries="@array/archive_entries"
             android:entryValues="@array/archive_values"
-            app:key="typearchive"
-            app:summary="@string/hide_archived_chat_sum"
-            app:title="@string/hide_archived_chat" />
+            android:key="typearchive"
+            android:summary="@string/hide_archived_chat_sum"
+            android:title="@string/hide_archived_chat" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:defaultValue="true"
-            app:key="show_freezeLastSeen"
-            app:summary="@string/show_freezeLastSeen_sum"
-            app:title="@string/show_freezeLastSeen_button" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="show_freezeLastSeen"
+            android:summary="@string/show_freezeLastSeen_sum"
+            android:title="@string/show_freezeLastSeen_button" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:defaultValue="true"
-            app:key="ghostmode"
-            app:summary="@string/ghost_mode_sum"
-            app:title="@string/ghost_mode_title" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="ghostmode"
+            android:summary="@string/ghost_mode_sum"
+            android:title="@string/ghost_mode_title" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="always_online"
-            app:summary="@string/always_online_sum"
-            app:title="@string/always_online" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="always_online"
+            android:summary="@string/always_online_sum"
+            android:title="@string/always_online" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="lockedchats_enhancer"
-            app:summary="@string/lockedchats_enhancer_sum"
-            app:title="@string/lockedchats_enhancer" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="lockedchats_enhancer"
+            android:summary="@string/lockedchats_enhancer_sum"
+            android:title="@string/lockedchats_enhancer" />
 
-    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+    </PreferenceCategory>
 
 
-    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
-        app:iconSpaceReserved="false"
-        app:title="@string/conversation">
+    <PreferenceCategory
+        android:title="@string/conversation">
 
         <Preference
-            app:key="open_deleted_messages"
-            app:title="@string/deleted_messages_title"
-            app:summary="@string/deleted_messages_sum" />
+            android:key="open_deleted_messages"
+            android:summary="@string/deleted_messages_sum"
+            android:title="@string/deleted_messages_title" />
 
         <ListPreference
-            app:defaultValue="0"
-            app:entries="@array/custom_privacy_entries"
-            app:entryValues="@array/custom_privacy_values"
-            app:key="custom_privacy_type"
-            app:summary="@string/custom_privacy_per_contact_sum"
-            app:title="@string/custom_privacy_per_contact" />
+            android:defaultValue="0"
+            android:entries="@array/custom_privacy_entries"
+            android:entryValues="@array/custom_privacy_values"
+            android:key="custom_privacy_type"
+            android:summary="@string/custom_privacy_per_contact_sum"
+            android:title="@string/custom_privacy_per_contact" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="freezelastseen"
-            app:summary="@string/freezelastseen_sum"
-            app:title="@string/freezelastseen" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="freezelastseen"
+            android:summary="@string/freezelastseen_sum"
+            android:title="@string/freezelastseen" />
 
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="hideread"
-            app:summary="@string/hideread_sum"
-            app:title="@string/hideread" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="hideread"
+            android:summary="@string/hideread_sum"
+            android:title="@string/hideread" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="hide_seen_view"
-            app:dependency="hideread"
-            app:summary="@string/view_seen_tick_sum"
-            app:title="@string/view_seen_tick" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:dependency="hideread"
+            android:key="hide_seen_view"
+            android:summary="@string/view_seen_tick_sum"
+            android:title="@string/view_seen_tick" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="blueonreply"
-            app:summary="@string/blueonreply_sum"
-            app:title="@string/blueonreply" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="blueonreply"
+            android:summary="@string/blueonreply_sum"
+            android:title="@string/blueonreply" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="hideread_group"
-            app:summary="@string/hideread_group_sum"
-            app:title="@string/hideread_group" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="hideread_group"
+            android:summary="@string/hideread_group_sum"
+            android:title="@string/hideread_group" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="hidereceipt"
-            app:summary="@string/hidereceipt_sum"
-            app:title="@string/hidereceipt" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="hidereceipt"
+            android:summary="@string/hidereceipt_sum"
+            android:title="@string/hidereceipt" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="seentick"
-            app:summary="@string/show_button_to_send_blue_tick_sum"
-            app:title="@string/show_button_to_send_blue_tick" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="show_contact_blocked"
+            android:summary="@string/show_contact_blocked_sum"
+            android:title="@string/show_contact_blocked" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="show_contact_blocked"
-            app:summary="@string/show_contact_blocked_sum"
-            app:title="@string/show_contact_blocked" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="ghostmode_t"
+            android:summary="@string/ghostmode_sum"
+            android:title="@string/ghostmode" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="ghostmode_t"
-            app:summary="@string/ghostmode_sum"
-            app:title="@string/ghostmode" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="ghostmode_r"
+            android:summary="@string/ghostmode_sum_r"
+            android:title="@string/ghostmode_r" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="ghostmode_r"
-            app:summary="@string/ghostmode_sum_r"
-            app:title="@string/ghostmode_r" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="hideonceseen"
+            android:summary="@string/hide_once_view_seen_sum"
+            android:title="@string/hide_once_view_seen" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="hideonceseen"
-            app:summary="@string/hide_once_view_seen_sum"
-            app:title="@string/hide_once_view_seen" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="hideaudioseen"
+            android:summary="@string/hide_audio_seen_sum"
+            android:title="@string/hide_audio_seen" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="hideaudioseen"
-            app:summary="@string/hide_audio_seen_sum"
-            app:title="@string/hide_audio_seen" />
-
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="viewonce"
-            app:summary="@string/viewonce_sum"
-            app:title="@string/viewonce" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="viewonce"
+            android:summary="@string/viewonce_sum"
+            android:title="@string/viewonce" />
 
         <ListPreference
-            app:entries="@array/seentick_buttons"
-            app:entryValues="@array/seentick_values"
-            app:key="seentick"
-            app:summary="@string/show_button_to_send_blue_tick_sum"
-            app:title="@string/show_button_to_send_blue_tick" />
+            android:entries="@array/seentick_buttons"
+            android:entryValues="@array/seentick_values"
+            android:key="seentick"
+            android:summary="@string/show_button_to_send_blue_tick_sum"
+            android:title="@string/show_button_to_send_blue_tick" />
 
-    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+    </PreferenceCategory>
 
-    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
-        app:iconSpaceReserved="false"
-        app:title="Chat Notifications">
+    <PreferenceCategory
+        android:title="Chat Notifications">
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="toast_viewed_message"
-            app:summary="@string/toast_on_viewed_message_sum"
-            app:title="@string/toast_on_viewed_message" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="toast_viewed_message"
+            android:summary="@string/toast_on_viewed_message_sum"
+            android:title="@string/toast_on_viewed_message" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="toastdeleted"
-            app:summary="@string/toast_on_delete_sum"
-            app:title="@string/toast_on_delete" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="toastdeleted"
+            android:summary="@string/toast_on_delete_sum"
+            android:title="@string/toast_on_delete" />
 
-    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+    </PreferenceCategory>
 
 </PreferenceScreen>

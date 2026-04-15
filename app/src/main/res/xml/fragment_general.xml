@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+    <PreferenceCategory
         app:iconSpaceReserved="false"
-        app:title="@string/category_navigation">
+        android:title="@string/category_navigation">
 
         <Preference
-            app:fragment="com.wa.toolkit.ui.fragments.GeneralFragment$HomeGeneralPreference"
+            android:fragment="com.wa.toolkit.ui.fragments.GeneralFragment$HomeGeneralPreference"
             app:iconSpaceReserved="false"
-            app:summary="@string/summary_tools"
-            app:title="@string/tools" />
+            android:summary="@string/summary_tools"
+            android:title="@string/tools" />
 
         <Preference
-            app:fragment="com.wa.toolkit.ui.fragments.GeneralFragment$HomeScreenGeneralPreference"
+            android:fragment="com.wa.toolkit.ui.fragments.GeneralFragment$HomeScreenGeneralPreference"
             app:iconSpaceReserved="false"
-            app:summary="@string/summary_home_screen"
-            app:title="@string/home_screen" />
+            android:summary="@string/summary_home_screen"
+            android:title="@string/home_screen" />
 
         <Preference
-            app:fragment="com.wa.toolkit.ui.fragments.GeneralFragment$ConversationGeneralPreference"
+            android:fragment="com.wa.toolkit.ui.fragments.GeneralFragment$ConversationGeneralPreference"
             app:iconSpaceReserved="false"
-            app:summary="@string/summary_chat"
-            app:title="@string/chat" />
+            android:summary="@string/summary_chat"
+            android:title="@string/chat" />
 
         <Preference
-            app:fragment="com.wa.toolkit.ui.fragments.GeneralFragment$StatusGeneralPreference"
+            android:fragment="com.wa.toolkit.ui.fragments.GeneralFragment$StatusGeneralPreference"
             app:iconSpaceReserved="false"
-            app:summary="Stories, Styles and Privacy"
-            app:title="@string/status" />
+            android:summary="Stories, Styles and Privacy"
+            android:title="@string/status" />
 
         <Preference
-            app:fragment="com.wa.toolkit.ui.fragments.GeneralFragment$CallsGeneralPreference"
+            android:fragment="com.wa.toolkit.ui.fragments.GeneralFragment$CallsGeneralPreference"
             app:iconSpaceReserved="false"
-            app:summary="Blocker and Recording"
-            app:title="@string/calls" />
+            android:summary="Blocker and Recording"
+            android:title="@string/calls" />
 
-    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+    </PreferenceCategory>
 
 </PreferenceScreen>

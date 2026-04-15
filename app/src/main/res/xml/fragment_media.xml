@@ -2,137 +2,137 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+    <PreferenceCategory
         app:iconSpaceReserved="false"
-        app:title="@string/title_image">
+        android:title="@string/title_image">
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="imagequality"
-            app:summary="@string/imagequality_sum"
-            app:title="@string/imagequality" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="imagequality"
+            android:summary="@string/imagequality_sum"
+            android:title="@string/imagequality" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="download_profile"
-            app:summary="Add a download button when viewing profile pictures"
-            app:title="Download Profile Picture" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="download_profile"
+            android:summary="Add a download button when viewing profile pictures"
+            android:title="Download Profile Picture" />
 
-    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+    </PreferenceCategory>
 
-    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+    <PreferenceCategory
         app:iconSpaceReserved="false"
-        app:title="@string/download_title">
+        android:title="@string/download_title">
 
         <com.wa.toolkit.preference.FileSelectPreference
             android:defaultValue="/sdcard/Download"
             app:directory="true"
-            app:key="download_local"
-            app:title="@string/local_download" />
+            android:key="download_local"
+            android:title="@string/local_download" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="downloadviewonce"
-            app:summary="@string/downloadviewonce_sum"
-            app:title="@string/downloadviewonce" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="downloadviewonce"
+            android:summary="@string/downloadviewonce_sum"
+            android:title="@string/downloadviewonce" />
 
-    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+    </PreferenceCategory>
 
-    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+    <PreferenceCategory
         app:iconSpaceReserved="false"
-        app:title="@string/title_video">
+        android:title="@string/title_video">
 
         <com.wa.toolkit.preference.FloatSeekBarPreference
             android:defaultValue="60"
-            app:key="video_limit_size"
+            android:key="video_limit_size"
             app:maxValue="90"
             app:minValue="30"
-            app:title="@string/increase_video_size_limit"
+            android:title="@string/increase_video_size_limit"
             app:valueSpacing="10" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="videoquality"
-            app:summary="@string/videoquality_sum"
-            app:title="@string/videoquality" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="videoquality"
+            android:summary="@string/videoquality_sum"
+            android:title="@string/videoquality" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:dependency="videoquality"
-            app:key="video_real_resolution"
-            app:summary="@string/send_video_in_real_resolution_sum"
-            app:title="@string/send_video_in_real_resolution" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:dependency="videoquality"
+            android:key="video_real_resolution"
+            android:summary="@string/send_video_in_real_resolution_sum"
+            android:title="@string/send_video_in_real_resolution" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:dependency="videoquality"
-            app:key="video_maxfps"
-            app:summary="@string/send_video_in_60fps_sum"
-            app:title="@string/send_video_in_60fps" />
-    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+        <androidx.preference.SwitchPreferenceCompat
+            android:dependency="videoquality"
+            android:key="video_maxfps"
+            android:summary="@string/send_video_in_60fps_sum"
+            android:title="@string/send_video_in_60fps" />
+    </PreferenceCategory>
 
-    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+    <PreferenceCategory
         app:iconSpaceReserved="false"
-        app:title="@string/title_audio">
+        android:title="@string/title_audio">
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="disable_sensor_proximity"
-            app:summary="@string/disable_the_proximity_sensor_sum"
-            app:title="@string/disable_the_proximity_sensor" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="disable_sensor_proximity"
+            android:summary="@string/disable_the_proximity_sensor_sum"
+            android:title="@string/disable_the_proximity_sensor" />
 
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="proximity_audios"
-            app:summary="@string/disable_audio_sensor_sum"
-            app:title="@string/disable_audio_sensor" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="proximity_audios"
+            android:summary="@string/disable_audio_sensor_sum"
+            android:title="@string/disable_audio_sensor" />
 
         <ListPreference
             android:defaultValue="0"
             android:entries="@array/audio_type_buttons"
             android:entryValues="@array/audio_type_values"
-            app:key="audio_type"
-            app:summary="@string/send_audio_as_voice_audio_note_sum"
-            app:title="@string/send_audio_as_voice_audio_note" />
+            android:key="audio_type"
+            android:summary="@string/send_audio_as_voice_audio_note_sum"
+            android:title="@string/send_audio_as_voice_audio_note" />
 
         <com.wa.toolkit.preference.FloatSeekBarPreference
             android:defaultValue="2"
-            app:key="voicenote_speed"
+            android:key="voicenote_speed"
             app:maxValue="5"
             app:minValue="0.1"
-            app:title="@string/voice_note_speed" />
+            android:title="@string/voice_note_speed" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="audio_transcription"
-            app:summary="@string/audio_transcription_sum"
-            app:title="@string/audio_transcription" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="audio_transcription"
+            android:summary="@string/audio_transcription_sum"
+            android:title="@string/audio_transcription" />
 
         <ListPreference
             android:dependency="audio_transcription"
             android:defaultValue="assemblyai"
             android:entries="@array/transcription_provider_entries"
             android:entryValues="@array/transcription_provider_values"
-            app:key="transcription_provider"
-            app:summary="@string/transcription_provider_sum"
-            app:title="@string/transcription_provider" />
+            android:key="transcription_provider"
+            android:summary="@string/transcription_provider_sum"
+            android:title="@string/transcription_provider" />
 
         <EditTextPreference
             android:dependency="audio_transcription"
-            app:key="assemblyai_key"
-            app:summary="@string/assemblyai_key_sum"
-            app:title="@string/assemblyai_key" />
+            android:key="assemblyai_key"
+            android:summary="@string/assemblyai_key_sum"
+            android:title="@string/assemblyai_key" />
 
         <EditTextPreference
             android:dependency="audio_transcription"
-            app:key="groq_api_key"
-            app:summary="@string/groq_api_key_sum"
-            app:title="@string/groq_api_key" />
+            android:key="groq_api_key"
+            android:summary="@string/groq_api_key_sum"
+            android:title="@string/groq_api_key" />
 
-    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+    </PreferenceCategory>
 
-    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+    <PreferenceCategory
         app:iconSpaceReserved="false"
-        app:title="@string/other">
+        android:title="@string/other">
 
-        <rikka.material.preference.MaterialSwitchPreference
+        <androidx.preference.SwitchPreferenceCompat
             android:defaultValue="true"
-            app:key="media_preview"
-            app:summary="@string/enable_media_preview_sum"
-            app:title="@string/enable_media_preview" />
+            android:key="media_preview"
+            android:summary="@string/enable_media_preview_sum"
+            android:title="@string/enable_media_preview" />
 
-    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+    </PreferenceCategory>
 
 </PreferenceScreen>

@@ -40,7 +40,6 @@ class DashboardFragment : Fragment() {
             DashboardItem(1, getString(R.string.privacy), "Ghost Mode and Protection", R.drawable.ic_privacy),
             DashboardItem(3, getString(R.string.media), "HD Images, Video & Audio", R.drawable.ic_media),
             DashboardItem(2, "Chat", getString(R.string.summary_chat), R.drawable.ic_telegram),
-            DashboardItem(4, getString(R.string.perso), "Themes and Custom CSS", R.drawable.ic_dashboard_black_24dp),
             DashboardItem(8, getString(R.string.home_screen), getString(R.string.summary_home_screen), R.drawable.ic_home_black_24dp),
             DashboardItem(5, "Tools", getString(R.string.summary_tools), R.drawable.ic_general),
             DashboardItem(6, getString(R.string.status), "IG Style and Downloads", R.drawable.online),

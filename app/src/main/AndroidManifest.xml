@@ -40,6 +40,7 @@
 
 
     <application
+        android:theme="@style/AppTheme"
         android:forceQueryable="true"
         android:name=".App"
         android:allowBackup="true"

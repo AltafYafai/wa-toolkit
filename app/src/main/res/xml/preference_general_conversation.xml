@@ -2,158 +2,158 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+    <PreferenceCategory
         app:iconSpaceReserved="false"
-        app:title="@string/category_message_protection">
+        android:title="@string/category_message_protection">
 
         <ListPreference
-            app:entries="@array/antirevoke_entries"
-            app:entryValues="@array/antirevoke_values"
+            android:entries="@array/antirevoke_entries"
+            android:entryValues="@array/antirevoke_values"
             app:iconSpaceReserved="false"
-            app:key="antirevoke"
-            app:summary="@string/antirevoke_sum"
-            app:title="@string/antirevoke" />
+            android:key="antirevoke"
+            android:summary="@string/antirevoke_sum"
+            android:title="@string/antirevoke" />
 
         <ListPreference
-            app:entries="@array/antirevoke_entries"
-            app:entryValues="@array/antirevoke_values"
+            android:entries="@array/antirevoke_entries"
+            android:entryValues="@array/antirevoke_values"
             app:iconSpaceReserved="false"
-            app:key="antirevokestatus"
-            app:summary="@string/antirevokestatus_sum"
-            app:title="@string/antirevokestatus" />
+            android:key="antirevokestatus"
+            android:summary="@string/antirevokestatus_sum"
+            android:title="@string/antirevokestatus" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="antidisappearing"
-            app:summary="@string/antidisappearing_sum"
-            app:title="@string/antidisappearing" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="antidisappearing"
+            android:summary="@string/antidisappearing_sum"
+            android:title="@string/antidisappearing" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="antieditmessages"
-            app:summary="@string/show_edited_message_history_sum"
-            app:title="@string/show_edited_message_history" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="antieditmessages"
+            android:summary="@string/show_edited_message_history_sum"
+            android:title="@string/show_edited_message_history" />
 
         <Preference
-            app:key="open_deleted_messages"
-            app:summary="@string/deleted_messages_sum"
-            app:title="@string/deleted_messages_title" />
+            android:key="open_deleted_messages"
+            android:summary="@string/deleted_messages_sum"
+            android:title="@string/deleted_messages_title" />
 
-    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+    </PreferenceCategory>
 
-    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+    <PreferenceCategory
         app:iconSpaceReserved="false"
-        app:title="@string/category_safe_interaction">
+        android:title="@string/category_safe_interaction">
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="verify_blocked_contact"
-            app:summary="@string/show_contact_blocked_sum"
-            app:title="@string/show_contact_blocked" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="verify_blocked_contact"
+            android:summary="@string/show_contact_blocked_sum"
+            android:title="@string/show_contact_blocked" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="alertsticker"
-            app:summary="@string/enable_confirmation_to_send_sticker_sum"
-            app:title="@string/enable_confirmation_to_send_sticker" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="alertsticker"
+            android:summary="@string/enable_confirmation_to_send_sticker_sum"
+            android:title="@string/enable_confirmation_to_send_sticker" />
 
-    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+    </PreferenceCategory>
 
-    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+    <PreferenceCategory
         app:iconSpaceReserved="false"
-        app:title="@string/category_chat_enhancements">
+        android:title="@string/category_chat_enhancements">
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="pinnedlimit"
-            app:summary="@string/disable_pinned_limit_sum"
-            app:title="@string/disable_pinned_limit" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="pinnedlimit"
+            android:summary="@string/disable_pinned_limit_sum"
+            android:title="@string/disable_pinned_limit" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="removeforwardlimit"
-            app:summary="@string/removeforwardlimit_sum"
-            app:title="@string/removeforwardlimit" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="removeforwardlimit"
+            android:summary="@string/removeforwardlimit_sum"
+            android:title="@string/removeforwardlimit" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="hidetag"
-            app:summary="@string/hidetag_sum"
-            app:title="@string/hidetag" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="hidetag"
+            android:summary="@string/hidetag_sum"
+            android:title="@string/hidetag" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="broadcast_tag"
-            app:summary="@string/show_chat_broadcast_icon_sum"
-            app:title="@string/show_chat_broadcast_icon" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="broadcast_tag"
+            android:summary="@string/show_chat_broadcast_icon_sum"
+            android:title="@string/show_chat_broadcast_icon" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="revokeallmessages"
-            app:summary="@string/delete_for_everyone_all_messages_sum"
-            app:title="@string/delete_for_everyone_all_messages" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="revokeallmessages"
+            android:summary="@string/delete_for_everyone_all_messages_sum"
+            android:title="@string/delete_for_everyone_all_messages" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="removeseemore"
-            app:summary="@string/remove_see_more_button_"
-            app:title="@string/remove_see_more_button" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="removeseemore"
+            android:summary="@string/remove_see_more_button_"
+            android:title="@string/remove_see_more_button" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="remove_limit_edit_message"
-            app:summary="@string/remove_limit_edit_message_sum"
-            app:title="@string/remove_limit_edit_message" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="remove_limit_edit_message"
+            android:summary="@string/remove_limit_edit_message_sum"
+            android:title="@string/remove_limit_edit_message" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="show_admin_group_icon"
-            app:summary="@string/show_admin_group_icon_sum"
-            app:title="@string/show_admin_group_icon" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="show_admin_group_icon"
+            android:summary="@string/show_admin_group_icon_sum"
+            android:title="@string/show_admin_group_icon" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="animation_emojis"
-            app:summary="@string/animation_emojis_sum"
-            app:title="@string/animation_emojis" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="animation_emojis"
+            android:summary="@string/animation_emojis_sum"
+            android:title="@string/animation_emojis" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="new_context_menu_ui"
-            app:summary="@string/new_context_menu_ui_sum"
-            app:title="@string/new_context_menu_ui" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="new_context_menu_ui"
+            android:summary="@string/new_context_menu_ui_sum"
+            android:title="@string/new_context_menu_ui" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="disable_audio_sensor"
-            app:summary="@string/disable_audio_sensor_sum"
-            app:title="@string/disable_audio_sensor" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="disable_audio_sensor"
+            android:summary="@string/disable_audio_sensor_sum"
+            android:title="@string/disable_audio_sensor" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="disable_defemojis"
-            app:summary="@string/disable_default_emojis_sum"
-            app:title="@string/disable_default_emojis" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="disable_defemojis"
+            android:summary="@string/disable_default_emojis_sum"
+            android:title="@string/disable_default_emojis" />
 
-    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+    </PreferenceCategory>
 
-    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+    <PreferenceCategory
         app:iconSpaceReserved="false"
-        app:title="@string/category_interactions_tools">
+        android:title="@string/category_interactions_tools">
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:defaultValue="true"
-            app:key="doubletap2like"
-            app:summary="@string/double_click_to_like_sum"
-            app:title="@string/double_click_to_react" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="doubletap2like"
+            android:summary="@string/double_click_to_like_sum"
+            android:title="@string/double_click_to_react" />
 
         <com.wa.toolkit.preference.LimitedEditTextPreference
-            app:defaultValue="👍"
-            app:dependency="doubletap2like"
-            app:key="doubletap2like_emoji"
+            android:defaultValue="👍"
+            android:dependency="doubletap2like"
+            android:key="doubletap2like_emoji"
             app:maxLength="2"
-            app:summary="@string/custom_reaction_sum"
-            app:title="@string/custom_reaction" />
+            android:summary="@string/custom_reaction_sum"
+            android:title="@string/custom_reaction" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="google_translate"
-            app:summary="@string/google_translate_sum"
-            app:title="@string/google_translate" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="google_translate"
+            android:summary="@string/google_translate_sum"
+            android:title="@string/google_translate" />
 
         <Preference
-            app:key="read_all_mark_as_read"
-            app:summary="Mark all chats as read with one click"
-            app:title="@string/read_all_mark_as_read" />
+            android:key="read_all_mark_as_read"
+            android:summary="Mark all chats as read with one click"
+            android:title="@string/read_all_mark_as_read" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="stamp_copied_message"
-            app:summary="@string/stamp_copied_messages_sum"
-            app:title="@string/stamp_copied_messages" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="stamp_copied_message"
+            android:summary="@string/stamp_copied_messages_sum"
+            android:title="@string/stamp_copied_messages" />
 
-    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+    </PreferenceCategory>
 
 </PreferenceScreen>

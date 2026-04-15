@@ -2,33 +2,33 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+    <PreferenceCategory
         app:iconSpaceReserved="false"
-        app:title="@string/calls">
+        android:title="@string/calls">
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="call_info"
-            app:summary="@string/additional_call_information_sum"
-            app:title="@string/additional_call_information" />
-
-        <ListPreference
-            app:entries="@array/call_blocker_buttons"
-            app:entryValues="@array/call_blocker_values"
-            app:key="call_privacy"
-            app:summary="@string/call_blocker_sum"
-            app:title="@string/call_blocker" />
-
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="block_unverified"
-            app:summary="Block calls from unverified business accounts"
-            app:title="@string/block_unverified" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="call_info"
+            android:summary="@string/additional_call_information_sum"
+            android:title="@string/additional_call_information" />
 
         <ListPreference
-            app:entries="@array/call_type_buttons"
-            app:entryValues="@array/call_type_values"
-            app:key="call_type"
-            app:summary="@string/call_blocking_type_sum"
-            app:title="@string/call_blocking_type" />
+            android:entries="@array/call_blocker_buttons"
+            android:entryValues="@array/call_blocker_values"
+            android:key="call_privacy"
+            android:summary="@string/call_blocker_sum"
+            android:title="@string/call_blocker" />
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="block_unverified"
+            android:summary="Block calls from unverified business accounts"
+            android:title="@string/block_unverified" />
+
+        <ListPreference
+            android:entries="@array/call_type_buttons"
+            android:entryValues="@array/call_type_values"
+            android:key="call_type"
+            android:summary="@string/call_blocking_type_sum"
+            android:title="@string/call_blocking_type" />
 
         <com.wa.toolkit.preference.ContactPickerPreference
             android:key="call_block_contacts"
@@ -42,48 +42,48 @@
             app:summaryOff="@string/no_contacts_selected"
             app:summaryOn="@string/contact_were_selected" />
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="calltype"
-            app:summary="@string/selection_of_call_type_sum"
-            app:title="@string/selection_of_call_type" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="calltype"
+            android:summary="@string/selection_of_call_type_sum"
+            android:title="@string/selection_of_call_type" />
 
-    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+    </PreferenceCategory>
 
-    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+    <PreferenceCategory
         app:iconSpaceReserved="false"
-        app:title="@string/call_recording_title">
+        android:title="@string/call_recording_title">
 
-        <rikka.material.preference.MaterialSwitchPreference
-            app:key="call_recording_enable"
-            app:summary="@string/call_recording_enable_sum"
-            app:title="@string/call_recording_enable" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="call_recording_enable"
+            android:summary="@string/call_recording_enable_sum"
+            android:title="@string/call_recording_enable" />
 
         <com.wa.toolkit.preference.FileSelectPreference
             android:defaultValue="/sdcard/Music/WhatsappToolkit/Recordings"
-            app:dependency="call_recording_enable"
+            android:dependency="call_recording_enable"
             app:directory="true"
-            app:key="call_recording_path"
-            app:title="@string/call_recording_path" />
+            android:key="call_recording_path"
+            android:title="@string/call_recording_path" />
 
-        <rikka.material.preference.MaterialSwitchPreference
+        <androidx.preference.SwitchPreferenceCompat
             android:defaultValue="false"
-            app:dependency="call_recording_enable"
-            app:key="call_recording_toast"
-            app:summary="@string/call_recording_toast_summary"
-            app:title="@string/call_recording_toast_title" />
+            android:dependency="call_recording_enable"
+            android:key="call_recording_toast"
+            android:summary="@string/call_recording_toast_summary"
+            android:title="@string/call_recording_toast_title" />
 
         <Preference
-            app:dependency="call_recording_enable"
-            app:key="call_recording_settings"
-            app:summary="@string/recording_mode_description"
-            app:title="@string/call_recording_settings" />
+            android:dependency="call_recording_enable"
+            android:key="call_recording_settings"
+            android:summary="@string/recording_mode_description"
+            android:title="@string/call_recording_settings" />
 
         <Preference
-            app:key="view_recordings"
-            app:icon="@drawable/ic_recording"
-            app:title="View Recordings"
-            app:summary="Manage and play your recorded calls" />
+            android:key="view_recordings"
+            android:icon="@drawable/ic_recording"
+            android:title="View Recordings"
+            android:summary="Manage and play your recorded calls" />
 
-    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+    </PreferenceCategory>
 
 </PreferenceScreen>
