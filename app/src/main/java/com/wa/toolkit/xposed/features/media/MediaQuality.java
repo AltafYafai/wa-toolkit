@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 
 import com.wa.toolkit.xposed.core.Feature;
 import com.wa.toolkit.xposed.core.devkit.Unobfuscator;
-import com.wa.toolkit.xposed.features.general.Others;
+import com.wa.toolkit.xposed.features.general.SystemProperties;
 import com.wa.toolkit.xposed.utils.ReflectionUtils;
 
 import org.json.JSONObject;
@@ -50,7 +50,7 @@ public class MediaQuality extends Feature {
         var realResolution = prefs.getBoolean("video_real_resolution", false);
 
         // Disable manual calculation ProcessMediaQuality
-        Others.propsBoolean.put(14447, false);
+        SystemProperties.propsBoolean.put(14447, false);
 
         // Enable Media Quality selection for Stories
         try {
@@ -72,7 +72,7 @@ public class MediaQuality extends Feature {
         }
 
         if (videoQuality) {
-            Others.propsBoolean.put(5549, true);
+            SystemProperties.propsBoolean.put(5549, true);
 
             var ProcessVideoQualityClass = Unobfuscator.loadProcessVideoQualityClass(classLoader);
             var processVideoQualityFields = Unobfuscator.getAllMapFields(ProcessVideoQualityClass);

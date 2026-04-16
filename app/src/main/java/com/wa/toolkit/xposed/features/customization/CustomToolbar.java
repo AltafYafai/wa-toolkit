@@ -18,7 +18,7 @@ import com.wa.toolkit.listeners.OnMultiClickListener;
 import com.wa.toolkit.xposed.core.Feature;
 import com.wa.toolkit.xposed.core.WppCore;
 import com.wa.toolkit.xposed.core.devkit.Unobfuscator;
-import com.wa.toolkit.xposed.features.general.Others;
+import com.wa.toolkit.xposed.features.general.SystemProperties;
 import com.wa.toolkit.xposed.utils.DesignUtils;
 import com.wa.toolkit.xposed.utils.ReflectionUtils;
 import com.wa.toolkit.xposed.utils.ResId;
@@ -70,7 +70,7 @@ public class CustomToolbar extends Feature {
         );
 
         hookExpirationInfo();
-        Others.propsBoolean.put(6481, false);
+        SystemProperties.propsBoolean.put(6481, false);
     }
 
     @NonNull

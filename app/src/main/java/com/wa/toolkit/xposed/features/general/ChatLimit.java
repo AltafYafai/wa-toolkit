@@ -55,14 +55,6 @@ public class ChatLimit extends Feature {
         });
 
 
-//        var chatLimitEditClass = Unobfuscator.loadChatLimitEditClass(loader);
-
-//        if (prefs.getBoolean("editallmessages", false)) {
-//            Others.propsInteger.put(2983, Integer.MAX_VALUE);
-//            Others.propsInteger.put(3272, Integer.MAX_VALUE);
-//        }
-
-
         if (revokeallmessages) {
             XposedBridge.hookMethod(chatLimitDelete2Method, new XC_MethodHook() {
                 private Unhook unhooked;

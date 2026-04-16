@@ -15,7 +15,7 @@ import com.wa.toolkit.xposed.core.Feature;
 import com.wa.toolkit.xposed.core.WppCore;
 import com.wa.toolkit.xposed.core.components.FMessageWpp;
 import com.wa.toolkit.xposed.core.devkit.Unobfuscator;
-import com.wa.toolkit.xposed.features.general.Others;
+import com.wa.toolkit.xposed.features.general.SystemProperties;
 import com.wa.toolkit.xposed.utils.DesignUtils;
 import com.wa.toolkit.xposed.utils.ReflectionUtils;
 import com.wa.toolkit.xposed.utils.ResId;
@@ -71,7 +71,7 @@ public class ContactBlockedVerify extends Feature {
         if (!prefs.getBoolean("verify_blocked_contact", false))
             return;
 
-        Others.propsBoolean.put(2966, true);
+        SystemProperties.propsBoolean.put(2966, true);
 
 
         Class<?> sendGetProfilePhoto = Unobfuscator.loadGetProfilePhoto(classLoader);

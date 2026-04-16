@@ -16,8 +16,6 @@ import de.robv.android.xposed.XposedBridge;
 
 public class HideChat extends Feature {
 
-//    public static View.OnClickListener mClickListenerLocked;
-
     public HideChat(@NonNull ClassLoader loader, @NonNull XSharedPreferences preferences) {
         super(loader, preferences);
     }
@@ -49,43 +47,6 @@ public class HideChat extends Feature {
 
         }
 
-//        if (prefs.getBoolean("hidelocked", false)) {
-//
-//            var lockedChatFrame = Unobfuscator.loadArchiveLockedChatClass(classLoader);
-//            log("Locked Class: " + lockedChatFrame);
-//            XposedBridge.hookMethod(lockedChatFrame.getMethod("setOnLockedClickListener", View.OnClickListener.class), new XC_MethodHook() {
-//                @Override
-//                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-//                    mClickListenerLocked = (View.OnClickListener) param.args[0];
-//                }
-//            });
-//
-//            var runMethod = ReflectionUtils.findMethodUsingFilter(lockedChatFrame, method -> method.getParameterCount() == 1 && method.getParameterTypes()[0].equals(Runnable.class));
-//            XposedBridge.hookMethod(runMethod, new XC_MethodHook() {
-//                @Override
-//                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-//                    ((Runnable) param.args[0]).run();
-//                }
-//            });
-//
-//            var method1 = Unobfuscator.loadArchiveCheckLockedChatsMethod(classLoader);
-//            var method2 = Unobfuscator.loadArchiveCheckLockedChatsMethod2(classLoader);
-//            XposedBridge.hookMethod(method1, new XC_MethodHook() {
-//                private Unhook hooked;
-//
-//                @Override
-//                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-//                    hooked = XposedBridge.hookMethod(method2, XC_MethodReplacement.returnConstant(true));
-//                    Others.propsBoolean.put(7280, false);
-//                }
-//
-//                @Override
-//                protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-//                    hooked.unhook();
-//                    Others.propsBoolean.remove(7280);
-//                }
-//            });
-//        }
     }
 
     @NonNull
