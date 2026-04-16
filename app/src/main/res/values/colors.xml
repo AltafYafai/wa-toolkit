@@ -43,4 +43,5 @@
     <color name="whatsapp_green">#25D366</color>
     <color name="surface_container">#232A26</color>
     <color name="surface_container_high">#2B332E</color>
+    <color name="md_theme_material_green_dark_onPrimaryContainer">#89F8C7</color>
 </resources>

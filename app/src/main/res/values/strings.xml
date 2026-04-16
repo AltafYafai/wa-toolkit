@@ -497,4 +497,8 @@
     <string name="summary_tools">System, Updates, Call Recording, and more</string>
     <string name="summary_home_screen">Header, Profile, Filters, and Navigation</string>
     <string name="summary_chat">Protection, Enhancements, and Interactions</string>
+
+    <!-- Compatibility Strings -->
+    <string name="disable_ads">Disable Ads</string>
+    <string name="disable_ads_sum">Completely remove all advertisements from WhatsApp</string>
 </resources>
