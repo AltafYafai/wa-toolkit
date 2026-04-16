@@ -24,8 +24,8 @@ val gitHash: String = getGitHashCommit().uppercase(Locale.getDefault())
 
 android {
     namespace = "com.wa.toolkit"
-    compileSdk = 36
-    ndkVersion = "27.0.11902837 rc2"
+    compileSdk = 35
+    ndkVersion = "27.0.12077973"
 
     flavorDimensions += "version"
 
