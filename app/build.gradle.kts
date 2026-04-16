@@ -10,17 +10,26 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
 }
 
-fun getGitHashCommit(): String {
-    return try {
-        val processBuilder = ProcessBuilder("git", "rev-parse", "--short", "HEAD")
-        val process = processBuilder.start()
-        process.inputStream.bufferedReader().readText().trim()
-    } catch (e: Exception) {
-        "unknown"
+abstract class GitHashValueSource : ValueSource<String, ValueSourceParameters.None> {
+    @get:Inject
+    abstract val execOperations: ExecOperations
+
+    override fun obtain(): String {
+        return try {
+            val output = java.io.ByteArrayOutputStream()
+            execOperations.exec {
+                commandLine("git", "rev-parse", "--short", "HEAD")
+                standardOutput = output
+            }
+            output.toString().trim()
+        } catch (e: Exception) {
+            "unknown"
+        }
     }
 }
 
-val gitHash: String = getGitHashCommit().uppercase(Locale.getDefault())
+val gitHashProvider = providers.of(GitHashValueSource::class.java) {}
+val gitHash: String = gitHashProvider.get().uppercase(Locale.getDefault())
 
 android {
     namespace = "com.wa.toolkit"
