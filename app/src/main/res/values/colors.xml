@@ -27,4 +27,10 @@
     <color name="md_theme_dark_surfaceVariant">#404943</color>
     <color name="md_theme_dark_onSurfaceVariant">#C0C9C2</color>
     <color name="md_theme_dark_outline">#8A938D</color>
+
+    <!-- Base Compatibility Colors -->
+    <color name="primary_background">#191C1B</color>
+    <color name="text_primary">#E1E3E0</color>
+    <color name="text_secondary">#C0C9C2</color>
+    <color name="text_on_gradient">#FFFFFF</color>
 </resources>

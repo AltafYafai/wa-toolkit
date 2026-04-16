@@ -1,6 +1,6 @@
 <resources>
 
-    <!-- Global App Theme -->
+    <!-- Global App Theme (Dark) -->
     <style name="Base.AppTheme" parent="Theme.Material3.DynamicColors.Dark.Rikka">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -28,14 +28,34 @@
 
     <style name="Theme" parent="Base.AppTheme" />
 
-    <!-- Modern Preference Theme (The "Clean & Attractive" part) -->
-    <style name="ModernPreferenceTheme" parent="@style/PreferenceThemeOverlay.Material3">
-        <item name="switchPreferenceCompatStyle">@style/ModernSwitchStyle</item>
+    <!-- Global App Theme (Light) -->
+    <style name="Base.AppTheme.Light" parent="Theme.Material3.DynamicColors.Light.Rikka">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+        <item name="colorPrimary">@color/md_theme_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_light_onPrimaryContainer</item>
+        <item name="colorSurface">@color/md_theme_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_light_outline</item>
+
+        <item name="preferenceTheme">@style/ModernPreferenceTheme</item>
+        <item name="toolbarStyle">@style/ModernToolbarStyle</item>
     </style>
 
-    <!-- Beautiful Togles (M3 Expressive Style) -->
-    <style name="ModernSwitchStyle" parent="@style/Preference.Material3.SwitchPreferenceCompat">
-        <item name="android:layout">@layout/rikkax_material_switch_preference</item>
+    <style name="Theme.Light" parent="Base.AppTheme.Light" />
+
+    <!-- Modern Preference Theme -->
+    <style name="ModernPreferenceTheme" parent="Theme.Material3.DynamicColors.Dark.Rikka">
+        <!-- Using base theme as parent since M3 Preference styles might be missing -->
     </style>
 
     <style name="ModernToolbarStyle" parent="Widget.Material3.Toolbar">
