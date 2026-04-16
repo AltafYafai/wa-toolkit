@@ -139,7 +139,7 @@ public class Others extends Feature {
         propsBoolean.put(8643, true);  // Enable TextStatusComposerActivityV2
 //        propsBoolean.put(3403, true);  // Enable Sticker Suggestion
         propsBoolean.put(8607, true);  // Enable Dialer keyboard
-        propsBoolean.put(9578, true);  // Enable Privacy Checkup
+        propsBoolean.put(9578, false);  // Disable Privacy Checkup (causing crash)
         propsInteger.put(8135, 2);  // Call Filters
 
         // Enable Translate Message
