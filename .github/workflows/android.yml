@@ -3,7 +3,7 @@ name: Android CI
 on:
   workflow_dispatch: 
   push:
-    branches: [ "main", "master", "feature/*" ]
+    branches: [ "main", "master", "feature/*", "experimental" ]
 
 jobs:
   build:
