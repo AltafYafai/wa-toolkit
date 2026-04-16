@@ -276,7 +276,7 @@ public abstract class BasePreferenceFragment extends PreferenceFragmentCompat
                     androidx.preference.PreferenceViewHolder prefHolder = (androidx.preference.PreferenceViewHolder) holder;
 
                     // Try to match by adapter position
-                    int position = prefHolder.getBindingAdapterPosition();
+                    int position = prefHolder.getAdapterPosition();
                     if (position != androidx.recyclerview.widget.RecyclerView.NO_POSITION) {
                         try {
                             // Get all preferences recursively
@@ -315,7 +315,7 @@ public abstract class BasePreferenceFragment extends PreferenceFragmentCompat
                 // Get the preference at this position and check key
                 androidx.recyclerview.widget.RecyclerView.ViewHolder holder = recyclerView.getChildViewHolder(child);
                 if (holder instanceof androidx.preference.PreferenceViewHolder) {
-                    int position = holder.getBindingAdapterPosition();
+                    int position = holder.getAdapterPosition();
                     if (position != androidx.recyclerview.widget.RecyclerView.NO_POSITION) {
                         androidx.preference.Preference pref = findPreferenceAtPosition(getPreferenceScreen(), position);
                         if (pref != null && pref.getKey() != null && pref.getKey().equals(targetKey)) {
