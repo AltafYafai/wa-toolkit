@@ -2,40 +2,79 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory
-        app:iconSpaceReserved="false"
-        android:title="@string/category_navigation">
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+        android:title="Interface &amp; Layout">
 
-        <Preference
-            android:fragment="com.wa.toolkit.ui.fragments.GeneralFragment$HomeGeneralPreference"
-            app:iconSpaceReserved="false"
-            android:summary="@string/summary_tools"
-            android:title="@string/tools" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="floatingmenu"
+            android:summary="Modern centered action menu"
+            android:title="Floating Home Menu"
+            app:icon="@drawable/ic_dashboard_black_24dp" />
 
-        <Preference
-            android:fragment="com.wa.toolkit.ui.fragments.GeneralFragment$HomeScreenGeneralPreference"
-            app:iconSpaceReserved="false"
-            android:summary="@string/summary_home_screen"
-            android:title="@string/home_screen" />
+        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="novaconfig"
+            android:summary="Redesigned settings navigation"
+            android:title="Experimental Settings UI"
+            app:icon="@drawable/ic_round_settings_24" />
 
-        <Preference
-            android:fragment="com.wa.toolkit.ui.fragments.GeneralFragment$ConversationGeneralPreference"
-            app:iconSpaceReserved="false"
-            android:summary="@string/summary_chat"
-            android:title="@string/chat" />
+        <androidx.preference.ListPreference
+            android:defaultValue="2"
+            android:entries="@array/chat_filters_entries"
+            android:entryValues="@array/chat_filters_values"
+            android:key="chatfilter"
+            android:summary="%s"
+            android:title="Home Filter Style"
+            app:icon="@drawable/ic_home_black_24dp" />
 
-        <Preference
-            android:fragment="com.wa.toolkit.ui.fragments.GeneralFragment$StatusGeneralPreference"
-            app:iconSpaceReserved="false"
-            android:summary="Stories, Styles and Privacy"
-            android:title="@string/status" />
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
-        <Preference
-            android:fragment="com.wa.toolkit.ui.fragments.GeneralFragment$CallsGeneralPreference"
-            app:iconSpaceReserved="false"
-            android:summary="Blocker and Recording"
-            android:title="@string/calls" />
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+        android:title="Visual Enhancements">
 
-    </PreferenceCategory>
+        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="menuwicon"
+            android:summary="Show icons next to menu items"
+            android:title="Menu Icons"
+            app:icon="@drawable/about" />
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="animation_emojis"
+            android:summary="Smooth animated emoji interactions"
+            android:title="Animated Emojis"
+            app:icon="@drawable/ic_round_check_circle_24" />
+
+        <androidx.preference.ListPreference
+            android:defaultValue="default"
+            android:entries="@array/animation_list_entries"
+            android:entryValues="@array/animation_list_values"
+            android:key="animation_list"
+            android:summary="%s"
+            android:title="List Animations"
+            app:icon="@drawable/ic_dashboard_black_24dp" />
+
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+        android:title="Intelligence">
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="metaai"
+            android:summary="Completely hide Meta AI integration"
+            android:title="Disable Meta AI"
+            app:icon="@drawable/ic_round_bug_report_24" />
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="audio_transcription"
+            android:summary="Enable native voice note transcripts"
+            android:title="Audio Transcription"
+            app:icon="@drawable/ic_recording" />
+
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
 </PreferenceScreen>

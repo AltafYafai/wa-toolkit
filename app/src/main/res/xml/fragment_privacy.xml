@@ -2,141 +2,74 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory android:title="@string/home_screen">
-
-        <ListPreference
-            android:defaultValue="0"
-            android:entries="@array/archive_entries"
-            android:entryValues="@array/archive_values"
-            android:key="typearchive"
-            android:summary="@string/hide_archived_chat_sum"
-            android:title="@string/hide_archived_chat" />
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+        android:title="Anti-Revoke &amp; Security">
 
         <androidx.preference.SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:key="show_freezeLastSeen"
-            android:summary="@string/show_freezeLastSeen_sum"
-            android:title="@string/show_freezeLastSeen_button" />
+            android:defaultValue="false"
+            android:key="antirevoke"
+            android:summary="Keep messages even after they are deleted for everyone"
+            android:title="Anti-Revoke"
+            app:icon="@drawable/deleted" />
 
-        <androidx.preference.SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:key="ghostmode"
-            android:summary="@string/ghost_mode_sum"
-            android:title="@string/ghost_mode_title" />
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="always_online"
-            android:summary="@string/always_online_sum"
-            android:title="@string/always_online" />
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="lockedchats_enhancer"
-            android:summary="@string/lockedchats_enhancer_sum"
-            android:title="@string/lockedchats_enhancer" />
-
-    </PreferenceCategory>
-
-
-    <PreferenceCategory
-        android:title="@string/conversation">
-
-        <Preference
+        <androidx.preference.Preference
             android:key="open_deleted_messages"
-            android:summary="@string/deleted_messages_sum"
-            android:title="@string/deleted_messages_title" />
-
-        <ListPreference
-            android:defaultValue="0"
-            android:entries="@array/custom_privacy_entries"
-            android:entryValues="@array/custom_privacy_values"
-            android:key="custom_privacy_type"
-            android:summary="@string/custom_privacy_per_contact_sum"
-            android:title="@string/custom_privacy_per_contact" />
+            android:summary="Browse and manage all captured deleted content"
+            android:title="View Deleted Messages"
+            app:icon="@drawable/ic_delete" />
 
         <androidx.preference.SwitchPreferenceCompat
-            android:key="freezelastseen"
-            android:summary="@string/freezelastseen_sum"
-            android:title="@string/freezelastseen" />
-
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="hideread"
-            android:summary="@string/hideread_sum"
-            android:title="@string/hideread" />
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:dependency="hideread"
-            android:key="hide_seen_view"
-            android:summary="@string/view_seen_tick_sum"
-            android:title="@string/view_seen_tick" />
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="blueonreply"
-            android:summary="@string/blueonreply_sum"
-            android:title="@string/blueonreply" />
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="hideread_group"
-            android:summary="@string/hideread_group_sum"
-            android:title="@string/hideread_group" />
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="hidereceipt"
-            android:summary="@string/hidereceipt_sum"
-            android:title="@string/hidereceipt" />
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="show_contact_blocked"
-            android:summary="@string/show_contact_blocked_sum"
-            android:title="@string/show_contact_blocked" />
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="ghostmode_t"
-            android:summary="@string/ghostmode_sum"
-            android:title="@string/ghostmode" />
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="ghostmode_r"
-            android:summary="@string/ghostmode_sum_r"
-            android:title="@string/ghostmode_r" />
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="hideonceseen"
-            android:summary="@string/hide_once_view_seen_sum"
-            android:title="@string/hide_once_view_seen" />
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="hideaudioseen"
-            android:summary="@string/hide_audio_seen_sum"
-            android:title="@string/hide_audio_seen" />
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="viewonce"
-            android:summary="@string/viewonce_sum"
-            android:title="@string/viewonce" />
-
-        <ListPreference
-            android:entries="@array/seentick_buttons"
-            android:entryValues="@array/seentick_values"
-            android:key="seentick"
-            android:summary="@string/show_button_to_send_blue_tick_sum"
-            android:title="@string/show_button_to_send_blue_tick" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:title="Chat Notifications">
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="toast_viewed_message"
-            android:summary="@string/toast_on_viewed_message_sum"
-            android:title="@string/toast_on_viewed_message" />
-
-        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="false"
             android:key="toastdeleted"
-            android:summary="@string/toast_on_delete_sum"
-            android:title="@string/toast_on_delete" />
+            android:summary="Show a real-time alert when a message is revoked"
+            android:title="Notify on Deletion"
+            app:icon="@drawable/ic_round_warning_24" />
 
-    </PreferenceCategory>
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+        android:title="Presence Control">
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="freezelastseen"
+            android:summary="Freeze your last seen timestamp at the current moment"
+            android:title="Freeze Last Seen"
+            app:icon="@drawable/eye_disabled" />
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="always_online"
+            android:summary="Show you as online even when WhatsApp is closed"
+            android:title="Always Online"
+            app:icon="@drawable/online" />
+
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+        android:title="Interactive Privacy">
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="doubletap2like"
+            android:summary="Double-tap a message to react with a custom emoji"
+            android:title="Double-Tap to React"
+            app:icon="@drawable/ic_round_check_circle_24" />
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="hide_audio_seen"
+            android:summary="Play voice notes without showing the played receipt"
+            android:title="Hide Voice Note Seen"
+            app:icon="@drawable/ic_recording" />
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="hide_once_view_seen"
+            android:summary="View 'View Once' media unlimited times privately"
+            android:title="Stealth View Once"
+            app:icon="@drawable/eye_enabled" />
+
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
 </PreferenceScreen>
