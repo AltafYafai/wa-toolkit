@@ -21,8 +21,8 @@
 
         <androidx.preference.ListPreference
             android:defaultValue="2"
-            android:entries="@array/chat_filters_entries"
-            android:entryValues="@array/chat_filters_values"
+            android:entries="@array/chatfilter_buttons"
+            android:entryValues="@array/chatfilter_values"
             android:key="chatfilter"
             android:summary="%s"
             android:title="Home Filter Style"
@@ -49,8 +49,8 @@
 
         <androidx.preference.ListPreference
             android:defaultValue="default"
-            android:entries="@array/animation_list_entries"
-            android:entryValues="@array/animation_list_values"
+            android:entries="@array/animations_names"
+            android:entryValues="@array/animations_values"
             android:key="animation_list"
             android:summary="%s"
             android:title="List Animations"

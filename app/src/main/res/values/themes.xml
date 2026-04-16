@@ -54,13 +54,29 @@
     <style name="Theme.Light" parent="Base.AppTheme.Light" />
 
     <!-- Modern Preference Theme -->
-    <style name="ModernPreferenceTheme" parent="Theme.Material3.DynamicColors.Dark.Rikka">
-        <!-- Using base theme as parent since M3 Preference styles might be missing -->
+    <style name="ModernPreferenceTheme" parent="Theme.Material3.DynamicColors.Dark.Rikka" />
+
+    <!-- Modern Toolbar Style -->
+    <style name="ModernToolbarStyle" parent="Widget.Material3.Toolbar">
+        <item name="titleTextAppearance">@style/ToolbarTitleStyle</item>
+        <item name="android:background">?colorSurface</item>
     </style>
 
-    <style name="ModernToolbarStyle" parent="Widget.Material3.Toolbar">
-        <item name="titleTextAppearance">?textAppearanceTitleLarge</item>
-        <item name="android:background">?colorSurface</item>
+    <style name="ToolbarTitleStyle" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <!-- Modern Buttons (Compatibility) -->
+    <style name="ModernButton" parent="Widget.Material3.Button">
+        <item name="cornerRadius">16dp</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="ModernButton.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="cornerRadius">16dp</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 
     <!-- Card Styles -->
