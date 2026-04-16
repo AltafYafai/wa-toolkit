@@ -114,20 +114,20 @@ public abstract class BasePreferenceFragment extends PreferenceFragmentCompat
         var pref = findPreference(key);
         if (pref != null) {
             pref.setEnabled(enabled);
-            if (pref instanceof MaterialSwitchPreference && !enabled) {
-                ((MaterialSwitchPreference) pref).setChecked(false);
+            if (pref instanceof androidx.preference.TwoStatePreference && !enabled) {
+                ((androidx.preference.TwoStatePreference) pref).setChecked(false);
             }
         }
     }
 
     private void monitorPreference() {
-        var downloadstatus = (MaterialSwitchPreference) findPreference("downloadstatus");
+        var downloadstatus = findPreference("downloadstatus");
 
         if (downloadstatus != null) {
             downloadstatus.setOnPreferenceChangeListener((preference, newValue) -> checkStoragePermission(newValue));
         }
 
-        var downloadviewonce = (MaterialSwitchPreference) findPreference("downloadviewonce");
+        var downloadviewonce = findPreference("downloadviewonce");
         if (downloadviewonce != null) {
             downloadviewonce.setOnPreferenceChangeListener((preference, newValue) -> checkStoragePermission(newValue));
         }
