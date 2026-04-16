@@ -1,5 +1,6 @@
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
+import java.io.ByteArrayOutputStream
 import java.io.FileInputStream
 import java.util.Locale
 import java.util.Properties
@@ -16,7 +17,7 @@ abstract class GitHashValueSource : ValueSource<String, ValueSourceParameters.No
 
     override fun obtain(): String {
         return try {
-            val output = java.io.ByteArrayOutputStream()
+            val output = ByteArrayOutputStream()
             execOperations.exec {
                 commandLine("git", "rev-parse", "--short", "HEAD")
                 standardOutput = output
