@@ -37,7 +37,6 @@ public abstract class BasePreferenceFragment extends PreferenceFragmentCompat
     @Override
     public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey) {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
-        mPrefs.registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -60,7 +59,18 @@ public abstract class BasePreferenceFragment extends PreferenceFragmentCompat
     @Override
     public void onResume() {
         super.onResume();
+        if (mPrefs != null) {
+            mPrefs.registerOnSharedPreferenceChangeListener(this);
+        }
         setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mPrefs != null) {
+            mPrefs.unregisterOnSharedPreferenceChangeListener(this);
+        }
     }
 
     @Override

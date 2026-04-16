@@ -23,10 +23,13 @@ public class PrivacyFragment extends BasePreferenceFragment {
         super.onCreatePreferences(savedInstanceState, rootKey);
         setPreferencesFromResource(R.xml.fragment_privacy, rootKey);
 
-        findPreference("open_deleted_messages").setOnPreferenceClickListener(preference -> {
-            startActivity(new Intent(requireContext(), com.wa.toolkit.activities.DeletedMessagesActivity.class));
-            return true;
-        });
+        androidx.preference.Preference openDeletedMessages = findPreference("open_deleted_messages");
+        if (openDeletedMessages != null) {
+            openDeletedMessages.setOnPreferenceClickListener(preference -> {
+                startActivity(new Intent(requireContext(), com.wa.toolkit.activities.DeletedMessagesActivity.class));
+                return true;
+            });
+        }
     }
 
 
