@@ -15,6 +15,7 @@ import org.luckypray.dexkit.query.enums.StringMatchType;
 
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XSharedPreferences;
+import de.robv.android.xposed.XposedBridge;
 
 public class PlaybackSpeed extends Feature {
 

@@ -16,6 +16,7 @@ import java.util.Properties;
 
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XSharedPreferences;
+import de.robv.android.xposed.XposedBridge;
 
 public class ListAnimations extends Feature {
 
@@ -23,7 +24,7 @@ public class ListAnimations extends Feature {
 
     public ListAnimations(ClassLoader loader, XSharedPreferences preferences) {
         super(loader, preferences);
-        this.properties = Utils.getProperties(prefs, "custom_css"); // Assuming custom_css is where home_list_animation is stored
+        this.properties = Utils.getProperties(prefs, "custom_css", null); // Assuming custom_css is where home_list_animation is stored
     }
 
     @Override

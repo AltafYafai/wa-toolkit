@@ -7,6 +7,7 @@ import com.wa.toolkit.xposed.core.WppCore;
 import com.wa.toolkit.xposed.core.devkit.Unobfuscator;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XSharedPreferences;
+import de.robv.android.xposed.XposedBridge;
 import com.wa.toolkit.xposed.utils.ReflectionUtils;
 
 import java.util.HashMap;
