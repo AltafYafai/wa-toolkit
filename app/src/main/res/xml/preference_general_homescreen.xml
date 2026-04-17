@@ -5,19 +5,19 @@
     <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         android:title="@string/category_header_profile">
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:key="shownamehome"
             android:summary="@string/showname_sum"
             android:title="@string/showname"
             app:icon="@drawable/ic_person" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:key="showbiohome"
             android:summary="@string/showbio_sum"
             android:title="@string/showbio"
             app:icon="@drawable/edit" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:key="disable_profile_status"
             android:summary="@string/disable_status_in_the_profile_photo_sum"
             android:title="@string/disable_status_in_the_profile_photo"
@@ -28,19 +28,19 @@
     <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         android:title="@string/category_navigation_filters">
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:key="separategroups"
             android:summary="@string/separate_groups_sum"
             android:title="@string/separate_groups"
             app:icon="@drawable/ic_groups" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:key="filtergroups"
             android:summary="@string/new_ui_group_filter_sum"
             android:title="@string/new_ui_group_filter"
             app:icon="@drawable/ic_home_black_24dp" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:key="filterseen"
             android:summary="@string/enable_filter_chats_sum"
             android:title="@string/enable_filter_chats"
@@ -51,25 +51,25 @@
     <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         android:title="@string/category_online_indicators">
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:key="dotonline"
             android:summary="@string/show_online_dot_in_conversation_list_sum"
             android:title="@string/show_online_dot_in_conversation_list"
             app:icon="@drawable/online" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:key="showonlinetext"
             android:summary="@string/show_online_last_seen_in_conversation_list_sum"
             android:title="@string/show_online_last_seen_in_conversation_list"
             app:icon="@drawable/eye_enabled" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:key="show_toast_on_contact_online"
             android:summary="@string/show_toast_on_contact_online_sum"
             android:title="@string/show_toast_on_contact_online"
             app:icon="@drawable/ic_round_warning_24" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:key="oldstatus"
             android:summary="@string/old_statuses_sum"
             android:title="@string/old_statuses"
@@ -80,7 +80,7 @@
     <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         android:title="Wallpaper">
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:key="wallpaper_in_home_screen"
             android:summary="@string/wallpaper_in_home_screen_sum"
             android:title="@string/wallpaper_in_home_screen"

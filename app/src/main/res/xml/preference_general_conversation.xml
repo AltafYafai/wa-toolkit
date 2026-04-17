@@ -21,13 +21,13 @@
             android:title="@string/antirevokestatus"
             app:icon="@drawable/eye_enabled" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:key="antidisappearing"
             android:summary="@string/antidisappearing_sum"
             android:title="@string/antidisappearing"
             app:icon="@drawable/airplane_enabled" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:key="antieditmessages"
             android:summary="@string/show_edited_message_history_sum"
             android:title="@string/show_edited_message_history"
@@ -44,13 +44,13 @@
     <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         android:title="@string/category_safe_interaction">
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:key="verify_blocked_contact"
             android:summary="@string/show_contact_blocked_sum"
             android:title="@string/show_contact_blocked"
             app:icon="@drawable/ic_person" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:key="alertsticker"
             android:summary="@string/enable_confirmation_to_send_sticker_sum"
             android:title="@string/enable_confirmation_to_send_sticker"
@@ -61,43 +61,43 @@
     <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         android:title="@string/category_chat_enhancements">
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:key="pinnedlimit"
             android:summary="@string/disable_pinned_limit_sum"
             android:title="@string/disable_pinned_limit"
             app:icon="@drawable/ic_round_settings_24" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:key="removeforwardlimit"
             android:summary="@string/removeforwardlimit_sum"
             android:title="@string/removeforwardlimit"
             app:icon="@drawable/ic_baseline_arrow_back_24" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:key="hidetag"
             android:summary="@string/hidetag_sum"
             android:title="@string/hidetag"
             app:icon="@drawable/eye_disabled" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:key="revokeallmessages"
             android:summary="@string/delete_for_everyone_all_messages_sum"
             android:title="@string/delete_for_everyone_all_messages"
             app:icon="@drawable/ic_delete" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:key="removeseemore"
             android:summary="@string/remove_see_more_button_"
             android:title="@string/remove_see_more_button"
             app:icon="@drawable/edit" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:key="show_admin_group_icon"
             android:summary="@string/show_admin_group_icon_sum"
             android:title="@string/show_admin_group_icon"
             app:icon="@drawable/admin" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:key="animation_emojis"
             android:summary="@string/animation_emojis_sum"
             android:title="@string/animation_emojis"
@@ -108,20 +108,20 @@
     <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         android:title="@string/category_interactions_tools">
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="true"
             android:key="doubletap2like"
             android:summary="@string/double_click_to_like_sum"
             android:title="@string/double_click_to_react"
             app:icon="@drawable/ic_check_circle" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:key="google_translate"
             android:summary="@string/google_translate_sum"
             android:title="@string/google_translate"
             app:icon="@drawable/about" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:key="stamp_copied_message"
             android:summary="@string/stamp_copied_messages_sum"
             android:title="@string/stamp_copied_messages"

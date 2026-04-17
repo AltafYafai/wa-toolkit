@@ -5,14 +5,14 @@
     <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         android:title="Interface &amp; Layout">
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
             android:key="floatingmenu"
             android:summary="Modern centered action menu"
             android:title="Floating Home Menu"
             app:icon="@drawable/ic_dashboard_black_24dp" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
             android:key="novaconfig"
             android:summary="Redesigned settings navigation"
@@ -33,14 +33,14 @@
     <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         android:title="Visual Enhancements">
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
             android:key="menuwicon"
             android:summary="Show icons next to menu items"
             android:title="Menu Icons"
             app:icon="@drawable/about" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
             android:key="animation_emojis"
             android:summary="Smooth animated emoji interactions"
@@ -61,14 +61,14 @@
     <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         android:title="Intelligence">
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
             android:key="metaai"
             android:summary="Completely hide Meta AI integration"
             android:title="Disable Meta AI"
             app:icon="@drawable/ic_round_bug_report_24" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
             android:key="audio_transcription"
             android:summary="Enable native voice note transcripts"

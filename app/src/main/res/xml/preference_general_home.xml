@@ -5,21 +5,21 @@
     <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         android:title="@string/category_app_management">
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:key="update_check"
             android:defaultValue="true"
             android:summary="@string/update_check_sum"
             android:title="@string/update_check"
             app:icon="@drawable/ic_round_update_24" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
             android:key="disable_expiration"
             android:summary="@string/disable_whatsapp_expiration_sum"
             android:title="@string/disable_whatsapp_expiration"
             app:icon="@drawable/airplane_disabled" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
             android:key="bypass_version_check"
             android:summary="@string/disable_version_check_sum"
@@ -39,13 +39,13 @@
             android:title="@string/theme_mode"
             app:icon="@drawable/ic_dashboard_black_24dp" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:key="lite_mode"
             android:summary="@string/lite_mode_sum"
             android:title="@string/lite_mode"
             app:icon="@drawable/ic_round_check_circle_24" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:key="enable_spy"
             android:summary="@string/enable_spy_sum"
             android:title="@string/enable_spy"
@@ -59,14 +59,14 @@
             android:title="@string/change_default_dpi"
             app:icon="@drawable/ic_round_settings_24" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="true"
             android:key="haptic_feedback"
             android:summary="@string/haptic_feedback_sum"
             android:title="@string/haptic_feedback"
             app:icon="@drawable/ic_check_circle" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="true"
             android:key="enablelogs"
             android:title="@string/verbose_logs"
@@ -77,13 +77,13 @@
     <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         android:title="@string/category_advanced_tweaks">
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:summary="@string/bootloader_spoofer_sum"
             android:title="@string/bootloader_spoofer"
             android:key="bootloader_spoofer"
             app:icon="@drawable/ic_round_warning_24" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:key="tasker"
             android:summary="@string/enable_tasker_automation_sum"
             android:title="@string/enable_tasker_automation"
