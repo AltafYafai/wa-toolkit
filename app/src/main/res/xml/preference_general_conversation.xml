@@ -19,13 +19,13 @@
             android:key="antirevokestatus"
             android:summary="@string/antirevokestatus_sum"
             android:title="@string/antirevokestatus"
-            app:icon="@drawable/ic_status" />
+            app:icon="@drawable/eye_enabled" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="antidisappearing"
             android:summary="@string/antidisappearing_sum"
             android:title="@string/antidisappearing"
-            app:icon="@drawable/ic_timer" />
+            app:icon="@drawable/airplane_enabled" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="antieditmessages"
@@ -54,7 +54,7 @@
             android:key="alertsticker"
             android:summary="@string/enable_confirmation_to_send_sticker_sum"
             android:title="@string/enable_confirmation_to_send_sticker"
-            app:icon="@drawable/ic_sticker" />
+            app:icon="@drawable/ic_media" />
 
     </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
@@ -65,13 +65,13 @@
             android:key="pinnedlimit"
             android:summary="@string/disable_pinned_limit_sum"
             android:title="@string/disable_pinned_limit"
-            app:icon="@drawable/ic_pin" />
+            app:icon="@drawable/ic_round_settings_24" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="removeforwardlimit"
             android:summary="@string/removeforwardlimit_sum"
             android:title="@string/removeforwardlimit"
-            app:icon="@drawable/ic_forward" />
+            app:icon="@drawable/ic_baseline_arrow_back_24" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="hidetag"
@@ -89,13 +89,13 @@
             android:key="removeseemore"
             android:summary="@string/remove_see_more_button_"
             android:title="@string/remove_see_more_button"
-            app:icon="@drawable/ic_text" />
+            app:icon="@drawable/edit" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="show_admin_group_icon"
             android:summary="@string/show_admin_group_icon_sum"
             android:title="@string/show_admin_group_icon"
-            app:icon="@drawable/ic_admin" />
+            app:icon="@drawable/admin" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="animation_emojis"
@@ -113,19 +113,19 @@
             android:key="doubletap2like"
             android:summary="@string/double_click_to_like_sum"
             android:title="@string/double_click_to_react"
-            app:icon="@drawable/ic_touch" />
+            app:icon="@drawable/ic_check_circle" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="google_translate"
             android:summary="@string/google_translate_sum"
             android:title="@string/google_translate"
-            app:icon="@drawable/ic_translate" />
+            app:icon="@drawable/about" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="stamp_copied_message"
             android:summary="@string/stamp_copied_messages_sum"
             android:title="@string/stamp_copied_messages"
-            app:icon="@drawable/ic_copy" />
+            app:icon="@drawable/edit2" />
 
     </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 

@@ -10,14 +10,14 @@
             android:defaultValue="true"
             android:summary="@string/update_check_sum"
             android:title="@string/update_check"
-            app:icon="@drawable/ic_round_settings_24" />
+            app:icon="@drawable/ic_round_update_24" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="disable_expiration"
             android:summary="@string/disable_whatsapp_expiration_sum"
             android:title="@string/disable_whatsapp_expiration"
-            app:icon="@drawable/ic_timer" />
+            app:icon="@drawable/airplane_disabled" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:defaultValue="false"
@@ -64,13 +64,13 @@
             android:key="haptic_feedback"
             android:summary="@string/haptic_feedback_sum"
             android:title="@string/haptic_feedback"
-            app:icon="@drawable/ic_touch" />
+            app:icon="@drawable/ic_check_circle" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:defaultValue="true"
             android:key="enablelogs"
             android:title="@string/verbose_logs"
-            app:icon="@drawable/ic_text" />
+            app:icon="@drawable/edit" />
 
     </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 

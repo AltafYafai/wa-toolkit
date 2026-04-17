@@ -15,13 +15,13 @@
             android:key="showbiohome"
             android:summary="@string/showbio_sum"
             android:title="@string/showbio"
-            app:icon="@drawable/ic_text" />
+            app:icon="@drawable/edit" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="disable_profile_status"
             android:summary="@string/disable_status_in_the_profile_photo_sum"
             android:title="@string/disable_status_in_the_profile_photo"
-            app:icon="@drawable/ic_status" />
+            app:icon="@drawable/eye_enabled" />
 
     </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
@@ -32,7 +32,7 @@
             android:key="separategroups"
             android:summary="@string/separate_groups_sum"
             android:title="@string/separate_groups"
-            app:icon="@drawable/ic_group" />
+            app:icon="@drawable/ic_groups" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="filtergroups"
@@ -73,7 +73,7 @@
             android:key="oldstatus"
             android:summary="@string/old_statuses_sum"
             android:title="@string/old_statuses"
-            app:icon="@drawable/ic_status" />
+            app:icon="@drawable/eye_enabled" />
 
     </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
