@@ -3,22 +3,23 @@ package com.wa.toolkit.preference;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.widget.SeekBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceViewHolder;
 
+import com.google.android.material.slider.Slider;
 import com.wa.toolkit.R;
 
-public class FloatSeekBarPreference extends Preference implements SeekBar.OnSeekBarChangeListener {
+public class FloatSeekBarPreference extends Preference {
 
     private float minValue;
     private float maxValue;
     private float valueSpacing;
     private String format;
 
-    private SeekBar seekbar;
+    private Slider seekbar;
     private TextView textView;
 
     private float defaultValue = 0F;
@@ -57,35 +58,45 @@ public class FloatSeekBarPreference extends Preference implements SeekBar.OnSeek
         super.onBindViewHolder(holder);
 
         holder.itemView.setClickable(false);
-        seekbar = (SeekBar) holder.findViewById(R.id.seekbar);
+        seekbar = (Slider) holder.findViewById(R.id.seekbar);
         textView = (TextView) holder.findViewById(R.id.seekbar_value);
 
-        seekbar.setOnSeekBarChangeListener(this);
-        seekbar.setMax((int) ((maxValue - minValue) / valueSpacing));
-        seekbar.setProgress((int) ((newValue - minValue) / valueSpacing));
-        seekbar.setEnabled(isEnabled());
+        if (seekbar != null) {
+            // Safety checks to prevent Slider crashes
+            float min = minValue;
+            float max = maxValue;
+            if (min >= max) {
+                max = min + 1.0f;
+            }
+
+            seekbar.setValueFrom(min);
+            seekbar.setValueTo(max);
+            seekbar.setStepSize(valueSpacing > 0 ? valueSpacing : 1.0f);
+            
+            float valueToSet = Math.max(min, Math.min(max, newValue));
+            seekbar.setValue(valueToSet);
+            seekbar.setEnabled(isEnabled());
+
+            seekbar.addOnChangeListener((slider, value, fromUser) -> {
+                if (fromUser) {
+                    textView.setText(String.format(format, value));
+                }
+            });
+
+            seekbar.addOnSliderTouchListener(new Slider.OnSliderTouchListener() {
+                @Override
+                public void onStartTrackingTouch(@NonNull Slider slider) {
+                    // Not used
+                }
+
+                @Override
+                public void onStopTrackingTouch(@NonNull Slider slider) {
+                    persistFloat(slider.getValue());
+                }
+            });
+        }
 
         textView.setText(String.format(format, newValue));
-    }
-
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        if (!fromUser) {
-            return;
-        }
-        float v = minValue + progress * valueSpacing;
-        textView.setText(String.format(format, v));
-    }
-
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
-        // Not used
-    }
-
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
-        float v = minValue + seekBar.getProgress() * valueSpacing;
-        persistFloat(v);
     }
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
@@ -103,7 +114,7 @@ public class FloatSeekBarPreference extends Preference implements SeekBar.OnSeek
     }
 
     public float getValue() {
-        return (seekbar != null) ? (seekbar.getProgress() * valueSpacing) + minValue : 0F;
+        return (seekbar != null) ? seekbar.getValue() : 0F;
     }
 
     public void setValue(float value) {
