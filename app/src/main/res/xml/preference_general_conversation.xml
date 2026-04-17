@@ -2,158 +2,131 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory
-        app:iconSpaceReserved="false"
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         android:title="@string/category_message_protection">
 
-        <ListPreference
+        <androidx.preference.ListPreference
             android:entries="@array/antirevoke_entries"
             android:entryValues="@array/antirevoke_values"
-            app:iconSpaceReserved="false"
             android:key="antirevoke"
             android:summary="@string/antirevoke_sum"
-            android:title="@string/antirevoke" />
+            android:title="@string/antirevoke"
+            app:icon="@drawable/deleted" />
 
-        <ListPreference
+        <androidx.preference.ListPreference
             android:entries="@array/antirevoke_entries"
             android:entryValues="@array/antirevoke_values"
-            app:iconSpaceReserved="false"
             android:key="antirevokestatus"
             android:summary="@string/antirevokestatus_sum"
-            android:title="@string/antirevokestatus" />
+            android:title="@string/antirevokestatus"
+            app:icon="@drawable/ic_status" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="antidisappearing"
             android:summary="@string/antidisappearing_sum"
-            android:title="@string/antidisappearing" />
+            android:title="@string/antidisappearing"
+            app:icon="@drawable/ic_timer" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="antieditmessages"
             android:summary="@string/show_edited_message_history_sum"
-            android:title="@string/show_edited_message_history" />
+            android:title="@string/show_edited_message_history"
+            app:icon="@drawable/edit2" />
 
-        <Preference
+        <androidx.preference.Preference
             android:key="open_deleted_messages"
             android:summary="@string/deleted_messages_sum"
-            android:title="@string/deleted_messages_title" />
+            android:title="@string/deleted_messages_title"
+            app:icon="@drawable/ic_delete" />
 
-    </PreferenceCategory>
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
-    <PreferenceCategory
-        app:iconSpaceReserved="false"
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         android:title="@string/category_safe_interaction">
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="verify_blocked_contact"
             android:summary="@string/show_contact_blocked_sum"
-            android:title="@string/show_contact_blocked" />
+            android:title="@string/show_contact_blocked"
+            app:icon="@drawable/ic_person" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="alertsticker"
             android:summary="@string/enable_confirmation_to_send_sticker_sum"
-            android:title="@string/enable_confirmation_to_send_sticker" />
+            android:title="@string/enable_confirmation_to_send_sticker"
+            app:icon="@drawable/ic_sticker" />
 
-    </PreferenceCategory>
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
-    <PreferenceCategory
-        app:iconSpaceReserved="false"
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         android:title="@string/category_chat_enhancements">
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="pinnedlimit"
             android:summary="@string/disable_pinned_limit_sum"
-            android:title="@string/disable_pinned_limit" />
+            android:title="@string/disable_pinned_limit"
+            app:icon="@drawable/ic_pin" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="removeforwardlimit"
             android:summary="@string/removeforwardlimit_sum"
-            android:title="@string/removeforwardlimit" />
+            android:title="@string/removeforwardlimit"
+            app:icon="@drawable/ic_forward" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="hidetag"
             android:summary="@string/hidetag_sum"
-            android:title="@string/hidetag" />
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="broadcast_tag"
-            android:summary="@string/show_chat_broadcast_icon_sum"
-            android:title="@string/show_chat_broadcast_icon" />
+            android:title="@string/hidetag"
+            app:icon="@drawable/eye_disabled" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="revokeallmessages"
             android:summary="@string/delete_for_everyone_all_messages_sum"
-            android:title="@string/delete_for_everyone_all_messages" />
+            android:title="@string/delete_for_everyone_all_messages"
+            app:icon="@drawable/ic_delete" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="removeseemore"
             android:summary="@string/remove_see_more_button_"
-            android:title="@string/remove_see_more_button" />
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="remove_limit_edit_message"
-            android:summary="@string/remove_limit_edit_message_sum"
-            android:title="@string/remove_limit_edit_message" />
+            android:title="@string/remove_see_more_button"
+            app:icon="@drawable/ic_text" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="show_admin_group_icon"
             android:summary="@string/show_admin_group_icon_sum"
-            android:title="@string/show_admin_group_icon" />
+            android:title="@string/show_admin_group_icon"
+            app:icon="@drawable/ic_admin" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="animation_emojis"
             android:summary="@string/animation_emojis_sum"
-            android:title="@string/animation_emojis" />
+            android:title="@string/animation_emojis"
+            app:icon="@drawable/ic_round_check_circle_24" />
 
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="new_context_menu_ui"
-            android:summary="@string/new_context_menu_ui_sum"
-            android:title="@string/new_context_menu_ui" />
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="disable_audio_sensor"
-            android:summary="@string/disable_audio_sensor_sum"
-            android:title="@string/disable_audio_sensor" />
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="disable_defemojis"
-            android:summary="@string/disable_default_emojis_sum"
-            android:title="@string/disable_default_emojis" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        app:iconSpaceReserved="false"
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         android:title="@string/category_interactions_tools">
 
         <androidx.preference.SwitchPreferenceCompat
             android:defaultValue="true"
             android:key="doubletap2like"
             android:summary="@string/double_click_to_like_sum"
-            android:title="@string/double_click_to_react" />
-
-        <com.wa.toolkit.preference.LimitedEditTextPreference
-            android:defaultValue="👍"
-            android:dependency="doubletap2like"
-            android:key="doubletap2like_emoji"
-            app:maxLength="2"
-            android:summary="@string/custom_reaction_sum"
-            android:title="@string/custom_reaction" />
+            android:title="@string/double_click_to_react"
+            app:icon="@drawable/ic_touch" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="google_translate"
             android:summary="@string/google_translate_sum"
-            android:title="@string/google_translate" />
-
-        <Preference
-            android:key="read_all_mark_as_read"
-            android:summary="Mark all chats as read with one click"
-            android:title="@string/read_all_mark_as_read" />
+            android:title="@string/google_translate"
+            app:icon="@drawable/ic_translate" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="stamp_copied_message"
             android:summary="@string/stamp_copied_messages_sum"
-            android:title="@string/stamp_copied_messages" />
+            android:title="@string/stamp_copied_messages"
+            app:icon="@drawable/ic_copy" />
 
-    </PreferenceCategory>
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
 </PreferenceScreen>

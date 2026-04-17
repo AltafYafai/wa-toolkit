@@ -2,140 +2,95 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory
-        app:iconSpaceReserved="false"
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         android:title="@string/category_header_profile">
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="shownamehome"
             android:summary="@string/showname_sum"
-            android:title="@string/showname" />
+            android:title="@string/showname"
+            app:icon="@drawable/ic_person" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="showbiohome"
             android:summary="@string/showbio_sum"
-            android:title="@string/showbio" />
+            android:title="@string/showbio"
+            app:icon="@drawable/ic_text" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="disable_profile_status"
             android:summary="@string/disable_status_in_the_profile_photo_sum"
-            android:title="@string/disable_status_in_the_profile_photo" />
+            android:title="@string/disable_status_in_the_profile_photo"
+            app:icon="@drawable/ic_status" />
 
-    </PreferenceCategory>
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
-    <PreferenceCategory
-        app:iconSpaceReserved="false"
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         android:title="@string/category_navigation_filters">
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="separategroups"
             android:summary="@string/separate_groups_sum"
-            android:title="@string/separate_groups" />
+            android:title="@string/separate_groups"
+            app:icon="@drawable/ic_group" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="filtergroups"
             android:summary="@string/new_ui_group_filter_sum"
-            android:title="@string/new_ui_group_filter" />
+            android:title="@string/new_ui_group_filter"
+            app:icon="@drawable/ic_home_black_24dp" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="filterseen"
             android:summary="@string/enable_filter_chats_sum"
-            android:title="@string/enable_filter_chats" />
+            android:title="@string/enable_filter_chats"
+            app:icon="@drawable/eye_enabled" />
 
-        <ListPreference
-            android:entries="@array/chatfilter_buttons"
-            android:entryValues="@array/chatfilter_values"
-            android:defaultValue="2"
-            android:key="chatfilter"
-            android:summary="@string/novofiltro_sum"
-            android:title="@string/novofiltro" />
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        app:iconSpaceReserved="false"
-        android:title="@string/category_menu_buttons">
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:key="buttonaction"
-            android:summary="@string/show_menu_buttons_as_icons_sum"
-            android:title="@string/show_menu_buttons_as_icons" />
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="show_dndmode"
-            android:summary="@string/show_dnd_button_sum"
-            android:title="@string/show_dnd_button" />
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:key="newchat"
-            android:summary="@string/enable_new_chat_button_sum"
-            android:title="@string/enable_new_chat_button" />
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:key="restartbutton"
-            android:summary="@string/enable_restart_button_sum"
-            android:title="@string/enable_restart_button" />
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:key="open_wae"
-            android:summary="@string/enable_wa_enhancer_button_sum"
-            android:title="@string/enable_wa_enhancer_button" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        app:iconSpaceReserved="false"
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         android:title="@string/category_online_indicators">
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="dotonline"
             android:summary="@string/show_online_dot_in_conversation_list_sum"
-            android:title="@string/show_online_dot_in_conversation_list" />
+            android:title="@string/show_online_dot_in_conversation_list"
+            app:icon="@drawable/online" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="showonlinetext"
             android:summary="@string/show_online_last_seen_in_conversation_list_sum"
-            android:title="@string/show_online_last_seen_in_conversation_list" />
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="hide_tabs_on_home"
-            android:summary="@string/hide_tabs_on_home_sum"
-            android:title="@string/hide_tabs_on_home" />
+            android:title="@string/show_online_last_seen_in_conversation_list"
+            app:icon="@drawable/eye_enabled" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="show_toast_on_contact_online"
             android:summary="@string/show_toast_on_contact_online_sum"
-            android:title="@string/show_toast_on_contact_online" />
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="facebook_style_status"
-            android:summary="@string/enable_facebook_style_for_status_sum"
-            android:title="@string/enable_facebook_style_for_status" />
+            android:title="@string/show_toast_on_contact_online"
+            app:icon="@drawable/ic_round_warning_24" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="oldstatus"
             android:summary="@string/old_statuses_sum"
-            android:title="@string/old_statuses" />
+            android:title="@string/old_statuses"
+            app:icon="@drawable/ic_status" />
 
-    </PreferenceCategory>
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
-    <PreferenceCategory
-        app:iconSpaceReserved="false"
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         android:title="Wallpaper">
 
         <androidx.preference.SwitchPreferenceCompat
             android:key="wallpaper_in_home_screen"
             android:summary="@string/wallpaper_in_home_screen_sum"
-            android:title="@string/wallpaper_in_home_screen" />
+            android:title="@string/wallpaper_in_home_screen"
+            app:icon="@drawable/ic_image" />
 
-        <Preference
+        <androidx.preference.Preference
             android:dependency="wallpaper_in_home_screen"
             android:key="select_wallpaper"
-            android:title="@string/select_wallpaper" />
+            android:title="@string/select_wallpaper"
+            app:icon="@drawable/ic_image" />
 
         <com.wa.toolkit.preference.FloatSeekBarPreference
             android:defaultValue="0.5"
@@ -143,19 +98,9 @@
             android:key="wallpaper_transparency"
             app:maxValue="1.0"
             app:minValue="0.0"
-            android:title="@string/wallpaper_transparency" />
+            android:title="@string/wallpaper_transparency"
+            app:icon="@drawable/ic_round_settings_24" />
 
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        app:iconSpaceReserved="false"
-        android:title="Other">
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="metaai"
-            android:summary="@string/disable_metaai_sum"
-            android:title="@string/disable_metaai" />
-
-    </PreferenceCategory>
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
 </PreferenceScreen>
