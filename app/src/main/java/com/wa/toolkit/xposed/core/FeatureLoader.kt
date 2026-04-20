@@ -255,120 +255,14 @@ object FeatureLoader {
     }
 
     private fun plugins(loader: ClassLoader, pref: XSharedPreferences, versionWpp: String) {
-        val classes = arrayOf(
-            DebugFeature::class.java,
-            ContactItemListener::class.java,
-            ConversationItemListener::class.java,
-            MenuStatusListener::class.java,
-            ShowEditMessage::class.java,
-            AntiRevoke::class.java,
-            CustomToolbar::class.java,
-            SeenTick::class.java,
-            CallPrivacy::class.java,
-            ActivityController::class.java,
-            ChatLimit::class.java,
-            SeparateGroup::class.java,
-            ShowOnline::class.java,
-            DndMode::class.java,
-            FreezeLastSeen::class.java,
-            TypingPrivacy::class.java,
-            HideChat::class.java,
-            HideReceipt::class.java,
-            HideSeen::class.java,
-            HideSeenView::class.java,
-            TagMessage::class.java,
-            HideTabs::class.java,
-            IGStatus::class.java,
-            LiteMode::class.java,
-            MediaQuality::class.java,
-            NewChat::class.java,
-            SystemProperties::class.java,
-            AlwaysOnline::class.java,
-            CallInformation::class.java,
-            DoubleTapReaction::class.java,
-            ListAnimations::class.java,
-            PlaybackSpeed::class.java,
-            ProximitySensor::class.java,
-            SearchCustomization::class.java,
-            ProfileStatus::class.java,
-            HomeFilters::class.java,
-            StatusTweaks::class.java,
-            AudioTypeTweaks::class.java,
-            StatusStyle::class.java,
-            StampCopiedMessage::class.java,
-            DefEmojis::class.java,
-            FilterItems::class.java,
-            ShowOnlineNotification::class.java,
-            PinnedLimit::class.java,
-            CustomTime::class.java,
-            ShareLimit::class.java,
-            StatusDownload::class.java,
-            ViewOnce::class.java,
-            CallType::class.java,
-            MediaPreview::class.java,
-            FilterGroups::class.java,
-            Tasker::class.java,
-            DeleteStatus::class.java,
-            DownloadViewOnce::class.java,
-            Channels::class.java,
-            DownloadProfile::class.java,
-            ChatFilters::class.java,
-            GroupAdmin::class.java,
-            Stickers::class.java,
-            CopyStatus::class.java,
-            TextStatusComposer::class.java,
-            ToastViewer::class.java,
-            MenuHome::class.java,
-            AntiWa::class.java,
-            CustomPrivacy::class.java,
-            AudioTranscript::class.java,
-            GoogleTranslate::class.java,
-            ContactBlockedVerify::class.java,
-            LockedChatsEnhancer::class.java,
-            CallRecording::class.java,
-            BackupRestore::class.java,
-            Spy::class.java,
-            RecoverDeleteForMe::class.java
-        )
+        XposedBridge.log("Discovering Plugins")
+        mApp?.let { FeatureManager.discoverFeatures(it) }
         
         XposedBridge.log("Loading Plugins")
-        val executorService = Executors.newWorkStealingPool(minOf(Runtime.getRuntime().availableProcessors(), 4))
-        val times = Vector<String>()
-        
-        for (clazz in classes) {
-            CompletableFuture.runAsync({
-                val startTime = System.currentTimeMillis()
-                try {
-                    val constructor = clazz.getConstructor(ClassLoader::class.java, XSharedPreferences::class.java)
-                    val plugin = constructor.newInstance(loader, pref) as Feature
-                    plugin.doHook()
-                } catch (e: Throwable) {
-                    XposedBridge.log(e)
-                    val error = ErrorItem().apply {
-                        pluginName = clazz.simpleName
-                        whatsAppVersion = versionWpp
-                        moduleVersion = BuildConfig.VERSION_NAME
-                        message = e.message
-                        this.error = e.stackTrace
-                            .filter { !it.className.startsWith("android") && !it.className.startsWith("com.android") }
-                            .joinToString(prefix = "[", postfix = "]") { it.toString() }
-                    }
-                    list.add(error)
-                }
-                val loadTime = System.currentTimeMillis() - startTime
-                times.add("* Loaded Plugin ${clazz.simpleName} in ${loadTime}ms")
-            }, executorService)
-        }
-        
-        executorService.shutdown()
-        executorService.awaitTermination(15, TimeUnit.SECONDS)
-        
-        if (Feature.DEBUG) {
-            times.forEach { XposedBridge.log(it) }
-        }
+        list.addAll(FeatureManager.loadAll(loader, pref, versionWpp))
     }
 
-    private class ErrorItem {
+    class ErrorItem {
         var pluginName: String? = null
         var whatsAppVersion: String? = null
         var error: String? = null

@@ -3,8 +3,6 @@ package com.wa.toolkit;
 import android.annotation.SuppressLint;
 import android.content.ContextWrapper;
 import android.content.res.XModuleResources;
-import android.view.Window;
-import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
@@ -19,7 +17,6 @@ import com.wa.toolkit.xposed.utils.ResId;
 import de.robv.android.xposed.IXposedHookInitPackageResources;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
-import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XC_MethodReplacement;
 import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
@@ -67,8 +64,6 @@ public class WppXposed implements IXposedHookLoadPackage, IXposedHookInitPackage
 
             // Load features
             FeatureLoader.start(classLoader, getPref(), lpparam.appInfo.sourceDir);
-
-            disableSecureFlag();
         }
     }
 
@@ -83,70 +78,12 @@ public class WppXposed implements IXposedHookLoadPackage, IXposedHookInitPackage
         ResParam = resparam;
 
         XposedBridge.log("[•] Mirroring resources for " + packageName);
-
-        for (var field : ResId.drawable.class.getDeclaredFields()) {
-            if (field.getName().equals("INSTANCE") || field.getName().equals("$stable")) continue;
-            try {
-                var field1 = R.drawable.class.getField(field.getName());
-                int resId = resparam.res.addResource(modRes, field1.getInt(null));
-                field.setAccessible(true);
-                field.set(null, resId);
-                XposedBridge.log("[•] Mirrored drawable: " + field.getName() + " -> " + Integer.toHexString(resId));
-            } catch (Exception e) {
-                XposedBridge.log("[•] Failed to mirror drawable: " + field.getName() + " - " + e.getMessage());
-            }
-        }
-
-        for (var field : ResId.string.class.getDeclaredFields()) {
-            if (field.getName().equals("INSTANCE") || field.getName().equals("$stable")) continue;
-            try {
-                var field1 = R.string.class.getField(field.getName());
-                int resId = resparam.res.addResource(modRes, field1.getInt(null));
-                field.setAccessible(true);
-                field.set(null, resId);
-            } catch (Exception e) {
-                XposedBridge.log("[•] Failed to mirror string: " + field.getName() + " - " + e.getMessage());
-            }
-        }
-
-        for (var field : ResId.array.class.getDeclaredFields()) {
-            if (field.getName().equals("INSTANCE") || field.getName().equals("$stable")) continue;
-            try {
-                var field1 = R.array.class.getField(field.getName());
-                int resId = resparam.res.addResource(modRes, field1.getInt(null));
-                field.setAccessible(true);
-                field.set(null, resId);
-            } catch (Exception e) {
-                XposedBridge.log("[•] Failed to mirror array: " + field.getName() + " - " + e.getMessage());
-            }
-        }
-
+        com.wa.toolkit.xposed.utils.ResourceMirror.INSTANCE.mirror(resparam, modRes);
     }
 
     @Override
     public void initZygote(StartupParam startupParam) throws Throwable {
         MODULE_PATH = startupParam.modulePath;
-    }
-
-
-    public void disableSecureFlag() {
-        XposedHelpers.findAndHookMethod(Window.class, "setFlags", int.class, int.class, new XC_MethodHook() {
-            @Override
-            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                param.args[0] = (int) param.args[0] & ~WindowManager.LayoutParams.FLAG_SECURE;
-                param.args[1] = (int) param.args[1] & ~WindowManager.LayoutParams.FLAG_SECURE;
-            }
-        });
-
-        XposedHelpers.findAndHookMethod(Window.class, "addFlags", int.class, new XC_MethodHook() {
-            @Override
-            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                param.args[0] = (int) param.args[0] & ~WindowManager.LayoutParams.FLAG_SECURE;
-                if ((int) param.args[0] == 0) {
-                    param.setResult(null);
-                }
-            }
-        });
     }
 
 }
