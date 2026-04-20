@@ -18,6 +18,7 @@ import de.robv.android.xposed.XposedHelpers;
 public class FontEngine extends Feature {
 
     private Typeface customTypeface;
+    private float fontScale = 1.0f;
 
     public FontEngine(ClassLoader loader, XSharedPreferences preferences) {
         super(loader, preferences);
@@ -26,6 +27,8 @@ public class FontEngine extends Feature {
     @Override
     public void doHook() throws Throwable {
         String fontPath = prefs.getString("custom_font_path", "");
+        fontScale = prefs.getFloat("custom_font_scale", 100f) / 100f;
+        
         if (fontPath.isEmpty()) return;
 
         File fontFile = new File(fontPath);
@@ -45,6 +48,14 @@ public class FontEngine extends Feature {
                     param.args[0] = customTypeface;
                 }
             }
+            
+            @Override
+            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                if (fontScale != 1.0f) {
+                    TextView textView = (TextView) param.thisObject;
+                    textView.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, textView.getTextSize() * fontScale);
+                }
+            }
         });
 
         XposedHelpers.findAndHookMethod(TextView.class, "setTypeface", Typeface.class, int.class, new XC_MethodHook() {
@@ -52,6 +63,14 @@ public class FontEngine extends Feature {
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 if (customTypeface != null) {
                     param.args[0] = customTypeface;
+                }
+            }
+            
+            @Override
+            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                if (fontScale != 1.0f) {
+                    TextView textView = (TextView) param.thisObject;
+                    textView.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, textView.getTextSize() * fontScale);
                 }
             }
         });

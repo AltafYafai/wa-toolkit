@@ -25,6 +25,27 @@
             android:title="Notify on Deletion"
             app:icon="@drawable/ic_round_warning_24" />
 
+        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="metadata_stripper"
+            android:summary="Strip GPS and device metadata from media before sending"
+            android:title="Metadata Stripper"
+            app:icon="@drawable/ic_privacy" />
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="panic_mode"
+            android:summary="Kill app instantly by holding Volume Up + Down for 3s"
+            android:title="Panic Mode"
+            app:icon="@drawable/ic_round_warning_24" />
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="disable_secure_flag"
+            android:summary="Allow taking screenshots in all WhatsApp screens"
+            android:title="Bypass Screenshot Protection"
+            app:icon="@drawable/ic_privacy" />
+
     </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
     <com.wa.toolkit.ui.preferences.CardPreferenceCategory

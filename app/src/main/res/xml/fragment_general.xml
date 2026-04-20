@@ -75,6 +75,20 @@
             android:title="Audio Transcription"
             app:icon="@drawable/ic_recording" />
 
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="smart_reply"
+            android:summary="Suggest context-aware quick replies"
+            android:title="Smart Reply"
+            app:icon="@drawable/ic_dashboard_black_24dp" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="chat_summarization"
+            android:summary="Summarize long unread group messages"
+            android:title="Chat Summarization"
+            app:icon="@drawable/about" />
+
     </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
 </PreferenceScreen>

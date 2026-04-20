@@ -138,6 +138,45 @@
             android:summary="@string/manage_theme_sum"
             android:title="@string/theme_manager" />
 
+        <androidx.preference.PreferenceCategory
+            android:title="Font Engine">
+
+            <com.wa.toolkit.preference.FileSelectPreference
+                android:key="custom_font_path"
+                android:summary="Select a .ttf or .otf file from storage"
+                android:title="Custom Font" />
+
+            <SeekBarPreference
+                android:defaultValue="100"
+                android:key="custom_font_scale"
+                android:max="200"
+                app:min="50"
+                app:showSeekBarValue="true"
+                android:summary="Scale custom font size (Default: 100%)"
+                android:title="Font Scale" />
+
+        </androidx.preference.PreferenceCategory>
+
+        <androidx.preference.PreferenceCategory
+            android:title="Tab Architect">
+
+            <androidx.preference.SwitchPreferenceCompat
+                android:defaultValue="false"
+                android:key="hide_channels_tab"
+                android:title="Hide Channels Tab" />
+
+            <androidx.preference.SwitchPreferenceCompat
+                android:defaultValue="false"
+                android:key="hide_communities_tab"
+                android:title="Hide Communities Tab" />
+
+            <androidx.preference.SwitchPreferenceCompat
+                android:defaultValue="false"
+                android:key="hide_status_tab"
+                android:title="Hide Status Tab" />
+
+        </androidx.preference.PreferenceCategory>
+
         <ListPreference
             android:entries="@array/animations_names"
             android:defaultValue="default"
