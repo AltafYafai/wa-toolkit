@@ -8,7 +8,7 @@ import android.util.LruCache
 import com.wa.toolkit.xposed.core.components.FMessageWpp
 import com.wa.toolkit.xposed.utils.Utils
 
-class MessageHistory(context: Context) : SQLiteOpenHelper(context, "MessageHistory.db", null, 3) {
+class MessageHistory(context: Context) : SQLiteOpenHelper(context, "MessageHistory.db", null, 4) {
     
     private var dbWrite: SQLiteDatabase = writableDatabase
 
@@ -36,6 +36,17 @@ class MessageHistory(context: Context) : SQLiteOpenHelper(context, "MessageHisto
                     mInstance = it
                 }
             }
+        }
+    }
+
+    fun insertStatusView(jid: String, messageId: String, timestamp: Long) {
+        synchronized(this) {
+            val content = ContentValues().apply {
+                put("jid", jid)
+                put("message_id", messageId)
+                put("timestamp", timestamp)
+            }
+            dbWrite.insert("status_views", null, content)
         }
     }
 
@@ -205,11 +216,15 @@ class MessageHistory(context: Context) : SQLiteOpenHelper(context, "MessageHisto
     override fun onCreate(sqLiteDatabase: SQLiteDatabase) {
         sqLiteDatabase.execSQL("create table MessageHistory(_id INTEGER PRIMARY KEY AUTOINCREMENT, row_id INTEGER NOT NULL, text_data TEXT NOT NULL, editTimestamp BIGINT DEFAULT 0 );")
         sqLiteDatabase.execSQL("create table hide_seen_messages(_id INTEGER PRIMARY KEY AUTOINCREMENT, jid TEXT NOT NULL, message_id TEXT NOT NULL,type INT NOT NULL, viewed INT DEFAULT 0);")
+        sqLiteDatabase.execSQL("create table status_views(_id INTEGER PRIMARY KEY AUTOINCREMENT, jid TEXT NOT NULL, message_id TEXT NOT NULL, timestamp BIGINT DEFAULT 0);")
     }
 
     override fun onUpgrade(sqLiteDatabase: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         if (oldVersion < 2) {
             sqLiteDatabase.execSQL("create table hide_seen_messages(_id INTEGER PRIMARY KEY AUTOINCREMENT, jid TEXT NOT NULL, message_id TEXT NOT NULL,type INT NOT NULL, viewed INT DEFAULT 0);")
+        }
+        if (oldVersion < 4) {
+            sqLiteDatabase.execSQL("create table status_views(_id INTEGER PRIMARY KEY AUTOINCREMENT, jid TEXT NOT NULL, message_id TEXT NOT NULL, timestamp BIGINT DEFAULT 0);")
         }
     }
 
