@@ -16,14 +16,61 @@ jobs:
     if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && !contains(github.event.head_commit.message, 'Merge')
     steps:
       - uses: actions/checkout@v6
+      - name: Get short SHA
+        run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-7`" >> $GITHUB_ENV
+
+      - name: Telegram Notification (Start)
+        if: env.TELEGRAM_BOT_TOKEN != ''
+        run: |
+          MESSAGE="<b>📦 Whatsapp Toolkit Build</b>%0A%0A"
+          MESSAGE+="<b>SHA:</b> <code>${{ env.SHORT_SHA }}</code>%0A"
+          MESSAGE+="<b>Author:</b> ${{ github.actor }}%0A"
+          MESSAGE+="<b>Status:</b> 🏗️ Initializing...%0A"
+          
+          RESPONSE=$(curl -s -X POST "https://api.telegram.org/bot${{ env.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            -d "chat_id=${{ env.MESSAGE_ID }}" \
+            -d "text=$MESSAGE" \
+            -d "parse_mode=HTML")
+          
+          MSG_ID=$(echo $RESPONSE | python3 -c "import sys, json; print(json.load(sys.stdin)['result']['message_id'])")
+          echo "MSG_ID=$MSG_ID" >> $GITHUB_ENV
+
       - name: set up JDK 17
         uses: actions/setup-java@v5
         with:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Update Telegram (Java Setup)
+        if: env.TELEGRAM_BOT_TOKEN != '' && env.MSG_ID != ''
+        run: |
+          MESSAGE="<b>📦 Whatsapp Toolkit Build</b>%0A%0A"
+          MESSAGE+="<b>SHA:</b> <code>${{ env.SHORT_SHA }}</code>%0A"
+          MESSAGE+="<b>Author:</b> ${{ github.actor }}%0A"
+          MESSAGE+="<b>Status:</b> ☕ Java 17 Ready%0A"
+          
+          curl -s -X POST "https://api.telegram.org/bot${{ env.TELEGRAM_BOT_TOKEN }}/editMessageText" \
+            -d "chat_id=${{ env.MESSAGE_ID }}" \
+            -d "message_id=${{ env.MSG_ID }}" \
+            -d "text=$MESSAGE" \
+            -d "parse_mode=HTML"
+
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
+
+      - name: Update Telegram (Gradle Setup)
+        if: env.TELEGRAM_BOT_TOKEN != '' && env.MSG_ID != ''
+        run: |
+          MESSAGE="<b>📦 Whatsapp Toolkit Build</b>%0A%0A"
+          MESSAGE+="<b>SHA:</b> <code>${{ env.SHORT_SHA }}</code>%0A"
+          MESSAGE+="<b>Author:</b> ${{ github.actor }}%0A"
+          MESSAGE+="<b>Status:</b> 🐘 Gradle Ready%0A"
+          
+          curl -s -X POST "https://api.telegram.org/bot${{ env.TELEGRAM_BOT_TOKEN }}/editMessageText" \
+            -d "chat_id=${{ env.MESSAGE_ID }}" \
+            -d "message_id=${{ env.MSG_ID }}" \
+            -d "text=$MESSAGE" \
+            -d "parse_mode=HTML"
 
       - name: Write key
         if: github.event_name != 'pull_request'
@@ -43,24 +90,37 @@ jobs:
 
       - name: Build all flavor variants
         run: |
-          ./gradlew assembleWhatsappDebug assembleBusinessDebug -Pminify=true --parallel --configuration-cache --no-daemon
-
-      - name: Get short SHA
-        run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-7`" >> $GITHUB_ENV
+          MESSAGE="<b>📦 Whatsapp Toolkit Build</b>%0A%0A"
+          MESSAGE+="<b>SHA:</b> <code>${{ env.SHORT_SHA }}</code>%0A"
+          MESSAGE+="<b>Author:</b> ${{ github.actor }}%0A"
+          MESSAGE+="<b>Status:</b> 🛠️ Building APKs...%0A"
+          
+          if [ ! -z "${{ env.MSG_ID }}" ]; then
+            curl -s -X POST "https://api.telegram.org/bot${{ env.TELEGRAM_BOT_TOKEN }}/editMessageText" \
+              -d "chat_id=${{ env.MESSAGE_ID }}" \
+              -d "message_id=${{ env.MSG_ID }}" \
+              -d "text=$MESSAGE" \
+              -d "parse_mode=HTML"
+          fi
+          
+          ./gradlew assembleWhatsappDebug assembleBusinessDebug -Pminify=true --parallel --configuration-cache --no-daemon 2>&1 | tee log.txt
 
       - name: Upload WhatsApp flavor artifacts
+        if: success()
         uses: actions/upload-artifact@v5
         with:
           name: whatsapp-debug-app-${{ env.SHORT_SHA }}
           path: app/build/outputs/apk/whatsapp/debug/app-whatsapp-debug.apk
 
       - name: Upload Business flavor artifacts
+        if: success()
         uses: actions/upload-artifact@v5
         with:
           name: business-debug-app-${{ env.SHORT_SHA }}
           path: app/build/outputs/apk/business/debug/app-business-debug.apk
 
       - name: Upload to GitHub release
+        if: success()
         uses: softprops/action-gh-release@v2
         with:
           token: ${{ env.GH_TOKEN }}
@@ -72,39 +132,66 @@ jobs:
           tag_name: debug-${{ env.SHORT_SHA }}
 
       - name: Read changelog
-        if: ${{ success() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/experimental' || github.ref == 'refs/heads/beta') && github.ref_type != 'tag' && env.TELEGRAM_BOT_TOKEN != '' }}
+        if: ${{ always() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/experimental' || github.ref == 'refs/heads/beta') && github.ref_type != 'tag' && env.TELEGRAM_BOT_TOKEN != '' }}
         id: changelog
         run: |
-          CHANGELOG=$(cat changelog.txt)
+          if [ -f changelog.txt ]; then
+            CHANGELOG=$(cat changelog.txt)
+          else
+            CHANGELOG="No changelog found"
+          fi
           echo "content<<EOF" >> $GITHUB_OUTPUT
           echo "$CHANGELOG" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Post to Telegram
-        if: ${{ success() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/experimental' || github.ref == 'refs/heads/beta') && github.ref_type != 'tag' && env.TELEGRAM_BOT_TOKEN != '' }}
+      - name: Post to Telegram (Success/Failure)
+        if: ${{ always() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/experimental' || github.ref == 'refs/heads/beta') && github.ref_type != 'tag' && env.TELEGRAM_BOT_TOKEN != '' && env.MSG_ID != '' }}
         run: |
+          if [ "${{ job.status }}" == "success" ]; then
+            STATUS="✅ Build Succeeded!"
+          else
+            STATUS="❌ Build Failed!"
+          fi
+          
           MESSAGE="<b>📦 Whatsapp Toolkit Build</b>%0A%0A"
           MESSAGE+="<b>SHA:</b> <code>${{ env.SHORT_SHA }}</code>%0A"
           MESSAGE+="<b>Author:</b> ${{ github.actor }}%0A"
-          MESSAGE+="<b>Commit:</b> ${{ github.event.head_commit.message }}%0A%0A"
+          MESSAGE+="<b>Commit:</b> ${{ github.event.head_commit.message }}%0A"
+          MESSAGE+="<b>Status:</b> $STATUS%0A%0A"
           MESSAGE+="<b>Changelog:</b>%0A${{ steps.changelog.outputs.content }}%0A%0A"
-          MESSAGE+="<b>Release:</b> <a href='https://github.com/${{ github.repository }}/releases/tag/debug-${{ env.SHORT_SHA }}'>View on GitHub</a>"
           
-          # Send message
-          curl -s -X POST "https://api.telegram.org/bot${{ env.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+          if [ "${{ job.status }}" == "success" ]; then
+            MESSAGE+="<b>Release:</b> <a href='https://github.com/${{ github.repository }}/releases/tag/debug-${{ env.SHORT_SHA }}'>View on GitHub</a>"
+          else
+            MESSAGE+="<b>Check logs below</b>"
+          fi
+          
+          curl -s -X POST "https://api.telegram.org/bot${{ env.TELEGRAM_BOT_TOKEN }}/editMessageText" \
             -d "chat_id=${{ env.MESSAGE_ID }}" \
+            -d "message_id=${{ env.MSG_ID }}" \
             -d "text=$MESSAGE" \
             -d "parse_mode=HTML" \
             -d "disable_web_page_preview=true"
             
-          # Upload WhatsApp APK
-          curl -s -X POST "https://api.telegram.org/bot${{ env.TELEGRAM_BOT_TOKEN }}/sendDocument" \
-            -F "chat_id=${{ env.MESSAGE_ID }}" \
-            -F "document=@app/build/outputs/apk/whatsapp/debug/app-whatsapp-debug.apk" \
-            -F "caption=WhatsApp Flavor - ${{ env.SHORT_SHA }}"
-            
-          # Upload Business APK
-          curl -s -X POST "https://api.telegram.org/bot${{ env.TELEGRAM_BOT_TOKEN }}/sendDocument" \
-            -F "chat_id=${{ env.MESSAGE_ID }}" \
-            -F "document=@app/build/outputs/apk/business/debug/app-business-debug.apk" \
-            -F "caption=Business Flavor - ${{ env.SHORT_SHA }}"
+          if [ "${{ job.status }}" == "success" ]; then
+            # Upload WhatsApp APK
+            curl -s -X POST "https://api.telegram.org/bot${{ env.TELEGRAM_BOT_TOKEN }}/sendDocument" \
+              -F "chat_id=${{ env.MESSAGE_ID }}" \
+              -F "document=@app/build/outputs/apk/whatsapp/debug/app-whatsapp-debug.apk" \
+              -F "caption=WhatsApp Flavor - ${{ env.SHORT_SHA }}"
+              
+            # Upload Business APK
+            curl -s -X POST "https://api.telegram.org/bot${{ env.TELEGRAM_BOT_TOKEN }}/sendDocument" \
+              -F "chat_id=${{ env.MESSAGE_ID }}" \
+              -F "document=@app/build/outputs/apk/business/debug/app-business-debug.apk" \
+              -F "caption=Business Flavor - ${{ env.SHORT_SHA }}"
+          else
+            # Upload log.txt if exists
+            if [ -f log.txt ]; then
+              curl -s -X POST "https://api.telegram.org/bot${{ env.TELEGRAM_BOT_TOKEN }}/sendDocument" \
+                -F "chat_id=${{ env.MESSAGE_ID }}" \
+                -F "document=@log.txt" \
+                -F "caption=Build Log - ${{ env.SHORT_SHA }}"
+            fi
+          fi
+
