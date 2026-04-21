@@ -101,7 +101,7 @@ class App : Application() {
 
         @JvmStatic
         fun isOriginalPackage(): Boolean {
-            return BuildConfig.APPLICATION_ID == "com.wa.toolkit"
+            return BuildConfig.APPLICATION_ID.startsWith("com.wa.toolkit")
         }
     }
 

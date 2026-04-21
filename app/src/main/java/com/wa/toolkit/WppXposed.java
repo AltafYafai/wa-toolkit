@@ -56,9 +56,37 @@ public class WppXposed implements IXposedHookLoadPackage, IXposedHookInitPackage
                         return true;
                     }
                 });
+
+                // Also hook the Companion method just in case
+                try {
+                    Class<?> companion = XposedHelpers.findClass("com.wa.toolkit.MainActivity$Companion", lpparam.classLoader);
+                    XposedHelpers.findAndHookMethod(companion, "isXposedEnabled", new XC_MethodReplacement() {
+                        @Override
+                        protected Object replaceHookedMethod(MethodHookParam param) {
+                            return true;
+                        }
+                    });
+                } catch (Throwable ignored) {}
+
                 XposedBridge.log("[✓] isXposedEnabled hooked successfully");
                 
-                XposedHelpers.findAndHookMethod(PreferenceManager.class.getName(), lpparam.classLoader, "getDefaultSharedPreferencesMode", XC_MethodReplacement.returnConstant(ContextWrapper.MODE_WORLD_READABLE));
+                String prefManager = PreferenceManager.class.getName();
+                XC_MethodReplacement worldReadable = XC_MethodReplacement.returnConstant(ContextWrapper.MODE_WORLD_READABLE);
+                
+                XposedHelpers.findAndHookMethod(prefManager, lpparam.classLoader, "getDefaultSharedPreferencesMode", worldReadable);
+                XposedHelpers.findAndHookMethod(prefManager, lpparam.classLoader, "getSharedPreferencesMode", worldReadable);
+
+                // Force MODE_WORLD_READABLE at Context level
+                XposedHelpers.findAndHookMethod("android.app.ContextImpl", lpparam.classLoader, "getSharedPreferences", String.class, int.class, new XC_MethodHook() {
+                    @Override
+                    protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                        String name = (String) param.args[0];
+                        if (name.contains("preferences") || name.contains(BuildConfig.APPLICATION_ID)) {
+                            param.args[1] = ContextWrapper.MODE_WORLD_READABLE;
+                        }
+                    }
+                });
+                
             } catch (Throwable t) {
                 XposedBridge.log("[!] Error hooking toolkit app: " + t.getMessage());
                 XposedBridge.log(t);

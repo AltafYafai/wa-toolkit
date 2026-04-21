@@ -84,8 +84,12 @@ class MainActivity : ComponentActivity() {
     }
 
     companion object {
+        @androidx.annotation.Keep
         @JvmStatic
-        fun isXposedEnabled(): Boolean = false
+        fun isXposedEnabled(): Boolean {
+            android.util.Log.d("WAE", "isXposedEnabled called")
+            return false
+        }
     }
 }
 
