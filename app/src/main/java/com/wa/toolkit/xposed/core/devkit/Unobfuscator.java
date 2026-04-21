@@ -438,8 +438,8 @@ public class Unobfuscator {
         });
     }
 
-    public synchronized static Class<?> loadConversationClass(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getClass(loader, "Conversation", () -> {
+    public synchronized static Class<?> loadConversationActivityClass(ClassLoader loader) throws Exception {
+        return UnobfuscatorCache.getInstance().getClass(loader, "ConversationActivity", () -> {
             Class<?> clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "Conversation/onResume");
             if (clazz == null) {
                 clazz = XposedHelpers.findClassIfExists("com.whatsapp.Conversation", loader);
@@ -470,14 +470,27 @@ public class Unobfuscator {
         });
     }
 
-    public synchronized static Class<?> loadConversationActivityClass(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getClass(loader, "ConversationActivity", () -> {
-            Class<?> clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "Conversation/onResume");
+    public synchronized static Class<?> loadJobClass(ClassLoader loader) throws Exception {
+        return UnobfuscatorCache.getInstance().getClass(loader, "JobClass", () -> {
+            Class<?> clazz = XposedHelpers.findClassIfExists("org.whispersystems.jobqueue.Job", loader);
             if (clazz == null) {
-                clazz = XposedHelpers.findClassIfExists("com.whatsapp.Conversation", loader);
+                clazz = findFirstClassUsingName(loader, StringMatchType.EndsWith, "jobqueue.Job");
             }
             if (clazz == null) {
-                throw new Exception("Conversation class not found");
+                throw new Exception("Job class not found");
+            }
+            return clazz;
+        });
+    }
+
+    public synchronized static Class<?> loadCallConfirmationFragmentClass(ClassLoader loader) throws Exception {
+        return UnobfuscatorCache.getInstance().getClass(loader, "CallConfirmationFragment", () -> {
+            Class<?> clazz = XposedHelpers.findClassIfExists("com.whatsapp.calling.fragment.CallConfirmationFragment", loader);
+            if (clazz == null) {
+                clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "CallConfirmationFragment/onResume");
+            }
+            if (clazz == null) {
+                throw new Exception("CallConfirmationFragment class not found");
             }
             return clazz;
         });
@@ -1399,7 +1412,7 @@ public class Unobfuscator {
     public synchronized static Method loadBlueOnReplayWaJobManagerMethod(ClassLoader loader) throws Exception {
         return UnobfuscatorCache.getInstance().getMethod(loader, () -> {
             var result = findFirstClassUsingStrings(loader, StringMatchType.Contains, "WaJobManager/start");
-            var job = XposedHelpers.findClass("org.whispersystems.jobqueue.Job", loader);
+            var job = loadJobClass(loader);
             if (result == null)
                 throw new Exception("BlueOnReplayWaJobManager method not found");
             var method = Arrays.stream(result.getMethods())
@@ -1563,7 +1576,7 @@ public class Unobfuscator {
     public synchronized static Method loadBlueOnReplayCreateMenuConversationMethod(ClassLoader loader)
             throws Exception {
         return UnobfuscatorCache.getInstance().getMethod(loader, () -> {
-            var conversationClass = XposedHelpers.findClass("com.whatsapp.Conversation", loader);
+            var conversationClass = loadConversationActivityClass(loader);
             if (conversationClass == null)
                 throw new RuntimeException("BlueOnReplayCreateMenuConversation class not found");
             var method = Arrays.stream(conversationClass.getDeclaredMethods())
@@ -1979,8 +1992,7 @@ public class Unobfuscator {
 
     public synchronized static Method loadMaterialAlertDialog(ClassLoader loader) throws Exception {
         return UnobfuscatorCache.getInstance().getMethod(loader, () -> {
-            var callConfirmationFragment = XposedHelpers
-                    .findClass("com.whatsapp.calling.fragment.CallConfirmationFragment", loader);
+            var callConfirmationFragment = loadCallConfirmationFragmentClass(loader);
             var method = ReflectionUtils.findMethodUsingFilter(callConfirmationFragment,
                     m -> m.getParameterCount() == 1 && m.getParameterTypes()[0].equals(android.os.Bundle.class));
             var methodData = dexkit.getMethodData(method);
@@ -2122,7 +2134,7 @@ public class Unobfuscator {
                     .matcher(new MethodMatcher().addInvoke(DexSignUtil.getMethodDescriptor(constructor))));
             if (methods.isEmpty())
                 throw new RuntimeException("FilterInit method not found");
-            var cFrag = XposedHelpers.findClass("com.whatsapp.conversationslist.ConversationsFragment", loader);
+            var cFrag = loadConversationsFragmentClass(loader);
             var method = methods.stream().filter(m -> Arrays.asList(1, 2).contains(m.getParamCount())
                     && m.getParamTypes().get(0).getName().equals(cFrag.getName())).findFirst().orElse(null);
             if (method == null)
