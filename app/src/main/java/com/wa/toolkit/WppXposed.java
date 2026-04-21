@@ -76,12 +76,6 @@ public class WppXposed implements IXposedHookLoadPackage, IXposedHookInitPackage
                 } catch (Throwable ignored) {}
 
                 XposedBridge.log("[WAE] isXposedEnabled hooked successfully");
-                
-                String prefManager = PreferenceManager.class.getName();
-                XC_MethodReplacement worldReadable = XC_MethodReplacement.returnConstant(ContextWrapper.MODE_WORLD_READABLE);
-                
-                XposedHelpers.findAndHookMethod(prefManager, lpparam.classLoader, "getDefaultSharedPreferencesMode", worldReadable);
-                XposedHelpers.findAndHookMethod(prefManager, lpparam.classLoader, "getSharedPreferencesMode", worldReadable);
 
                 // Force MODE_WORLD_READABLE at Context level
                 XposedHelpers.findAndHookMethod("android.app.ContextImpl", lpparam.classLoader, "getSharedPreferences", String.class, int.class, new XC_MethodHook() {
@@ -98,6 +92,12 @@ public class WppXposed implements IXposedHookLoadPackage, IXposedHookInitPackage
                 XposedBridge.log("[WAE] Error hooking toolkit app: " + t.getMessage());
                 XposedBridge.log(t);
             }
+            return;
+        }
+
+        if (packageName.equals("android") || packageName.equals("com.android.providers.settings")) {
+            Patch.handleLoadPackage(lpparam, getPref());
+            ScopeHook.hook(lpparam);
             return;
         }
 
