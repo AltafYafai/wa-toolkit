@@ -350,9 +350,32 @@ public class SeparateGroup extends Feature {
 
         private boolean checkGroup(Object chat) {
             try {
-                var jidField = Unobfuscator.loadChatJidField(chat.getClass().getClassLoader());
-                var jid = ReflectionUtils.getObjectField(jidField, chat);
+                Object jid = null;
+                try {
+                    var jidField = Unobfuscator.loadChatJidField(chat.getClass().getClassLoader());
+                    jid = ReflectionUtils.getObjectField(jidField, chat);
+                } catch (Exception ignored) {}
+
+                if (jid == null) {
+                    var jidClass = Unobfuscator.loadJidClass(chat.getClass().getClassLoader());
+                    for (var field : chat.getClass().getDeclaredFields()) {
+                        if (jidClass.isAssignableFrom(field.getType())) {
+                            field.setAccessible(true);
+                            jid = field.get(chat);
+                            if (jid != null) break;
+                        }
+                    }
+                }
+
                 if (jid == null) return true;
+
+                if (XposedHelpers.findMethodExactIfExists(jid.getClass(), "getServer") != null) {
+                    var server = (String) XposedHelpers.callMethod(jid, "getServer");
+                    if (isGroup)
+                        return server.equals("broadcast") || server.equals("g.us");
+                    return server.equals("s.whatsapp.net") || server.equals("lid");
+                }
+
                 FMessageWpp.UserJid userJid = new FMessageWpp.UserJid(jid);
                 if (isGroup)
                     return userJid.isBroadcast() || userJid.isGroup();
