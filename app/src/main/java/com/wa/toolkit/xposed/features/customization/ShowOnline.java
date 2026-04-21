@@ -191,7 +191,8 @@ public class ShowOnline extends Feature {
 
                     var tokenDBInstance = fieldTokenDBInstance.get(mInstancePresence);
                     var tokenData = ReflectionUtils.callMethod(tcTokenMethod, tokenDBInstance, userJid.userJid);
-                    var tokenObj = tokenClass.getConstructors()[0].newInstance(tokenData == null ? null : XposedHelpers.getObjectField(tokenData, "A01"));
+                    var tokenField = Unobfuscator.loadTcTokenField(classLoader);
+                    var tokenObj = tokenClass.getConstructors()[0].newInstance(tokenData == null ? null : tokenField.get(tokenData));
                     sendPresenceMethod.invoke(null, userJid.userJid, null, tokenObj, mInstancePresence);
                     var status = (String) ReflectionUtils.callMethod(getStatusUser, mStatusUser, waContact.getObject(), false);
                     setStatus(status, csDot, lastSeenText);

@@ -23,12 +23,13 @@ public class StatusTweaks extends Feature {
     public void doHook() throws Exception {
         if (!prefs.getBoolean("autonext_status", false)) return;
 
-        Class<?> StatusPlaybackContactFragmentClass = Unobfuscator.findFirstClassUsingName(classLoader, StringMatchType.EndsWith, "StatusPlaybackContactFragment");
+        Class<?> StatusPlaybackContactFragmentClass = Unobfuscator.loadStatusPlaybackContactFragmentClass(classLoader);
         var runNextStatusMethod = Unobfuscator.loadNextStatusRunMethod(classLoader);
         XposedBridge.hookMethod(runNextStatusMethod, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                var obj = XposedHelpers.getObjectField(param.thisObject, "A01");
+                var field = Unobfuscator.loadNextStatusFragmentField(classLoader);
+                var obj = field.get(param.thisObject);
                 if (StatusPlaybackContactFragmentClass.isInstance(obj)) {
                     param.setResult(null);
                 }

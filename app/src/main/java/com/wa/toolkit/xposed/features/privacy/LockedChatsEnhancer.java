@@ -68,7 +68,8 @@ public class LockedChatsEnhancer extends Feature {
         XposedBridge.hookMethod(loadedContacts, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                var list = (List) XposedHelpers.getObjectField(param.args[0], "A01");
+                var field = Unobfuscator.loadLoadedContactsListField(classLoader);
+                var list = (List) field.get(param.args[0]);
                 HashSet<?> lockedChats = (HashSet<?>) lockedChatsFields[1].get(chatCache);
                 var lockedNumbers = lockedChats.stream().map(userjid -> new FMessageWpp.UserJid(userjid).getPhoneNumber()).collect(Collectors.toList());
                 list.removeIf(item -> {

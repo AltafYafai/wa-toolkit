@@ -161,7 +161,8 @@ public class MediaQuality extends Feature {
                                     height = intParams.get(intParams.size() - 2).second;
                                     rotationAngle = intParams.get(intParams.size() - 1).second;
                                 } else {
-                                    JSONObject mediaFields = (JSONObject) XposedHelpers.callMethod(param.args[0], "A00");
+                                    var method = Unobfuscator.loadMediaFieldsMethod(classLoader);
+                                    JSONObject mediaFields = (JSONObject) method.invoke(param.args[0]);
                                     width = mediaFields.getInt("widthPx");
                                     height = mediaFields.getInt("heightPx");
                                     rotationAngle = mediaFields.getInt("rotationAngle");

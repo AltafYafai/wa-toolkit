@@ -92,7 +92,8 @@ public class ContactBlockedVerify extends Feature {
             var callbackInterface = verifyKeyClass.getDeclaredConstructors()[0].getParameterTypes()[0];
             VerifyKeyInvoker invoker = (proxyInstance, jids) -> {
                 var instance = XposedHelpers.newInstance(verifyKeyClass, proxyInstance, jids);
-                XposedHelpers.callMethod(instance, "A00", 1);
+                var method = Unobfuscator.loadVerifyKeyMethod(classLoader);
+                method.invoke(instance, 1);
             };
             return new VerifyKeyStrategy(callbackInterface, invoker);
         } catch (Exception ignored) {

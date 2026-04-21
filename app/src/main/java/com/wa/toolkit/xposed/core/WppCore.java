@@ -574,8 +574,7 @@ public class WppCore {
         if (mCurrentActivity == null)
             return null;
         try {
-            Class<?> conversation = XposedHelpers.findClass("com.whatsapp.Conversation",
-                    mCurrentActivity.getClassLoader());
+            Class<?> conversation = Unobfuscator.loadConversationClass(mCurrentActivity.getClassLoader());
             if (conversation.isInstance(mCurrentActivity))
                 return mCurrentActivity;
 

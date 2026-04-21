@@ -32,8 +32,13 @@ public class ChatFilters extends Feature {
                     var argResult = list.get(0);
                     var newList = new ArrayList<Object>(argResult.second);
                     newList.removeIf(item -> {
-                        var name = XposedHelpers.getObjectField(item, "A01");
-                        return name == null || name == "CONTACTS_FILTER" || name == "GROUP_FILTER";
+                        try {
+                            var field = Unobfuscator.loadFilterItemNameField(classLoader);
+                            var name = field.get(item);
+                            return name == null || name.equals("CONTACTS_FILTER") || name.equals("GROUP_FILTER");
+                        } catch (Exception e) {
+                            return false;
+                        }
                     });
                     param.args[argResult.first] = newList;
                 }

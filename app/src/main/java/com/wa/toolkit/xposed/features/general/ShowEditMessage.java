@@ -63,7 +63,8 @@ public class ShowEditMessage extends Feature {
                 var editMessage = getEditMessage.invoke(null, param.args[0]);
                 if (editMessage == null) return;
                 var invoked = callerMessageEditMethod.invoke(null, param.args[0]);
-                long timestamp = XposedHelpers.getLongField(invoked, "A00");
+                var timestampField = Unobfuscator.loadMessageEditTimestampField(classLoader);
+                long timestamp = timestampField.getLong(invoked);
                 var fMessage = new FMessageWpp(param.args[0]);
                 long id = fMessage.getRowId();
                 var origMessage = MessageStore.getInstance().getCurrentMessageByID(id);

@@ -438,6 +438,19 @@ public class Unobfuscator {
         });
     }
 
+    public synchronized static Class<?> loadConversationClass(ClassLoader loader) throws Exception {
+        return UnobfuscatorCache.getInstance().getClass(loader, "Conversation", () -> {
+            Class<?> clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "Conversation/onResume");
+            if (clazz == null) {
+                clazz = XposedHelpers.findClassIfExists("com.whatsapp.Conversation", loader);
+            }
+            if (clazz == null) {
+                throw new Exception("Conversation class not found");
+            }
+            return clazz;
+        });
+    }
+
     public synchronized static Class<?> loadConversationsFragmentClass(ClassLoader loader) throws Exception {
         return UnobfuscatorCache.getInstance().getClass(loader, "ConversationsFragment", () -> {
             Class<?> clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "ConversationsFragment/onViewCreated");
@@ -849,6 +862,16 @@ public class Unobfuscator {
             if (method == null)
                 throw new Exception("MediaQualityVideo method not found");
             return method;
+        });
+    }
+
+    public synchronized static Method loadMediaFieldsMethod(ClassLoader loader) throws Exception {
+        return UnobfuscatorCache.getInstance().getMethod(loader, "MediaFields", () -> {
+            var videoMethod = loadMediaQualityVideoMethod2(loader);
+            var mediaClass = videoMethod.getParameterTypes()[0];
+            var methods = ReflectionUtils.findAllMethodsUsingFilter(mediaClass, m -> m.getReturnType() == JSONObject.class && m.getParameterCount() == 0);
+            if (!methods.isEmpty()) return methods.get(0);
+            return XposedHelpers.findMethodExact(mediaClass, "A00");
         });
     }
 
@@ -1701,6 +1724,16 @@ public class Unobfuscator {
         });
     }
 
+    public synchronized static Field loadMessageEditTimestampField(ClassLoader loader) throws Exception {
+        return UnobfuscatorCache.getInstance().getField(loader, "MessageEditTimestamp", () -> {
+            var method = loadCallerMessageEditMethod(loader);
+            var clazz = method.getReturnType();
+            var fields = ReflectionUtils.getFieldsByType(clazz, long.class);
+            if (!fields.isEmpty()) return fields.get(0);
+            return XposedHelpers.findField(clazz, "A00");
+        });
+    }
+
     public synchronized static Method loadGetEditMessageMethod(ClassLoader loader) throws Exception {
         return UnobfuscatorCache.getInstance().getMethod(loader, () -> {
             var method = findFirstMethodUsingStrings(loader, StringMatchType.Contains,
@@ -2151,6 +2184,19 @@ public class Unobfuscator {
             if (methodList.isEmpty())
                 throw new RuntimeException("RunNextStatus method not found");
             return methodList.get(0).getMethodInstance(classLoader);
+        });
+    }
+
+    public synchronized static Field loadNextStatusFragmentField(ClassLoader loader) throws Exception {
+        return UnobfuscatorCache.getInstance().getField(loader, "NextStatusFragment", () -> {
+            var runMethod = loadNextStatusRunMethod(loader);
+            var clazz = runMethod.getDeclaringClass();
+            var targetClass = loadStatusPlaybackContactFragmentClass(loader);
+            var field = ReflectionUtils.getFieldByType(clazz, targetClass);
+            if (field == null) {
+                return XposedHelpers.findField(clazz, "A01");
+            }
+            return field;
         });
     }
 
@@ -2667,6 +2713,15 @@ public class Unobfuscator {
         });
     }
 
+    public synchronized static Field loadFilterItemNameField(ClassLoader loader) throws Exception {
+        return UnobfuscatorCache.getInstance().getField(loader, "FilterItemName", () -> {
+            var clazz = loadFilterItemClass(loader);
+            var fields = ReflectionUtils.getFieldsByType(clazz, String.class);
+            if (!fields.isEmpty()) return fields.get(0);
+            return XposedHelpers.findField(clazz, "A01");
+        });
+    }
+
     public static Class[] loadProximitySensorListenerClasses(ClassLoader classLoader) throws Exception {
         return UnobfuscatorCache.getInstance().getClasses(classLoader, () -> {
             var classDataList = dexkit.findClass(
@@ -2700,6 +2755,20 @@ public class Unobfuscator {
     public static Method loadTcTokenMethod(ClassLoader classLoader) throws Exception {
         return UnobfuscatorCache.getInstance().getMethod(classLoader, () -> findFirstMethodUsingStrings(classLoader,
                 StringMatchType.Contains, "GET_RECEIVED_TOKEN_AND_TIMESTAMP_BY_JID"));
+    }
+
+    public synchronized static Field loadTcTokenField(ClassLoader loader) throws Exception {
+        return UnobfuscatorCache.getInstance().getField(loader, "TcTokenField", () -> {
+            var tcTokenMethod = loadTcTokenMethod(loader);
+            var sendPresenceMethod = loadSendPresenceMethod(loader);
+            var tokenDataClass = tcTokenMethod.getReturnType();
+            var tokenClass = sendPresenceMethod.getParameterTypes()[2];
+            var constructor = tokenClass.getConstructors()[0];
+            var paramType = constructor.getParameterTypes()[0];
+            var fields = ReflectionUtils.getFieldsByType(tokenDataClass, paramType);
+            if (!fields.isEmpty()) return fields.get(0);
+            return XposedHelpers.findField(tokenDataClass, "A01");
+        });
     }
 
     public static Class<?> getClassByName(String className, ClassLoader classLoader) throws ClassNotFoundException {
@@ -2757,6 +2826,19 @@ public class Unobfuscator {
                                 .single().getMethodInstance(classLoader));
     }
 
+    public synchronized static Field loadHomePageIdField(ClassLoader loader) throws Exception {
+        return UnobfuscatorCache.getInstance().getField(loader, "HomePageId", () -> {
+            var homeActivity = loadHomeActivityClass(loader);
+            var fields = ReflectionUtils.getFieldsByType(homeActivity, int.class);
+            if (!fields.isEmpty()) {
+                for (var field : fields) {
+                    if (!Modifier.isStatic(field.getModifiers())) return field;
+                }
+            }
+            return XposedHelpers.findField(homeActivity, "A01");
+        });
+    }
+
     public static Method loadAddOptionSearchBarMethod(ClassLoader classLoader) throws Exception {
         return UnobfuscatorCache.getInstance().getMethod(classLoader, () -> {
             var classData = Objects.requireNonNull(dexkit.getClassData(WppCore.getHomeActivityClass(classLoader)));
@@ -2811,6 +2893,16 @@ public class Unobfuscator {
             if (classList == null)
                 throw new ClassNotFoundException("VerifyKey class not found");
             return classList.getInstance(classLoader);
+        });
+    }
+
+    public synchronized static Method loadVerifyKeyMethod(ClassLoader loader) throws Exception {
+        return UnobfuscatorCache.getInstance().getMethod(loader, "VerifyKeyMethod", () -> {
+            var methodMatcher = MethodMatcher.create().addUsingNumber(2966).paramCount(1).addParamType(int.class);
+            var result = dexkit.findMethod(FindMethod.create().matcher(methodMatcher));
+            if (result.isEmpty())
+                throw new RuntimeException("VerifyKey method not found");
+            return result.get(0).getMethodInstance(loader);
         });
     }
 
@@ -2959,6 +3051,16 @@ public class Unobfuscator {
             if (methods.isEmpty())
                 return null;
             return methods.get(0).getMethodInstance(classLoader);
+        });
+    }
+
+    public synchronized static Field loadLoadedContactsListField(ClassLoader loader) throws Exception {
+        return UnobfuscatorCache.getInstance().getField(loader, "LoadedContactsList", () -> {
+            var method = loadLoadedContactsMethod(loader);
+            var clazz = method.getParameterTypes()[0];
+            var fields = ReflectionUtils.getFieldsByType(clazz, List.class);
+            if (!fields.isEmpty()) return fields.get(0);
+            return XposedHelpers.findField(clazz, "A01");
         });
     }
 

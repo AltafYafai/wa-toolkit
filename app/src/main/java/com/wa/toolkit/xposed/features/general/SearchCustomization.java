@@ -79,7 +79,7 @@ public class SearchCustomization extends Feature {
                     if (Modifier.isStatic(param.method.getModifiers())) {
                         homeActivity = param.args[0];
                     }
-                    pageIdField = XposedHelpers.findField(homeActivity.getClass(), "A01");
+                    pageIdField = Unobfuscator.loadHomePageIdField(classLoader);
                     originPageId = 0;
                     if (pageIdField.getType() == int.class) {
                         originPageId = pageIdField.getInt(homeActivity);
