@@ -269,7 +269,7 @@ public class Unobfuscator {
             var method = loadReceiptMethod(classLoader);
             if (method == null)
                 throw new Exception("Receipt method not found");
-            var classData = dexkit.getClassData(method.getDeclaringClass());
+            var classData = dexkit.getClassData(method.getDeclaringClass().getName());
             if (classData == null)
                 throw new Exception("Receipt method not found");
             var methodResult = classData
@@ -1203,7 +1203,7 @@ public class Unobfuscator {
             MethodData method = dexkit.findMethod(FindMethod.create()
                     .searchInClass(
                             Collections.singletonList(
-                                    dexkit.getClassData(homeClass)))
+                                    dexkit.getClassData(homeClass.getName())))
                     .matcher(MethodMatcher.create().returnType(convFragment))).singleOrNull();
             if (method == null)
                 throw new Exception("HomeConversationFragmentMethod not found");
@@ -1461,7 +1461,7 @@ public class Unobfuscator {
 
             // for 19.xx, the current implementation returns wrong method
             if (method.getParameterCount() < 6) {
-                ClassData declaringClassData = dexkit.getClassData(method.getDeclaringClass());
+                ClassData declaringClassData = dexkit.getClassData(method.getDeclaringClass().getName());
                 if (declaringClassData == null)
                     throw new Exception("OnChangeStatus method not found");
 
@@ -1638,7 +1638,7 @@ public class Unobfuscator {
                     .filter(m -> m.getReturnType().equals(long.class) && Modifier.isStatic(m.getModifiers()))
                     .findFirst().orElse(null);
             if (method == null) {
-                var methodList = Objects.requireNonNull(dexkit.getClassData(clazz))
+                var methodList = Objects.requireNonNull(dexkit.getClassData(clazz.getName()))
                         .findMethod(new FindMethod().matcher(new MethodMatcher().opCodes(new OpCodesMatcher().opNames(
                                 List.of("invoke-static",
                                         "move-result-wide", "iget-wide", "const-wide/16", "cmp-long",
@@ -1789,7 +1789,7 @@ public class Unobfuscator {
             var method = findFirstMethodUsingStrings(loader, StringMatchType.Contains, "CoreMessageStore/updateCheckoutMessageWithTransactionInfo");
             if (method == null)
                 method = findFirstMethodUsingStrings(loader, StringMatchType.Contains, "UPDATE_MESSAGE_ADD_ON_FLAGS_MAIN_SQL");
-            var classData = dexkit.getClassData(loadFMessageClass(loader));
+            var classData = dexkit.getClassData(loadFMessageClass(loader).getName());
             var methodData = dexkit.getMethodData(DexSignUtil.getMethodDescriptor(method));
             var usingFields = methodData.getUsingFields();
             for (var f : usingFields) {
@@ -1959,7 +1959,7 @@ public class Unobfuscator {
         return UnobfuscatorCache.getInstance().getConstructor(loader, () -> {
 
             var commentClass = findFirstClassUsingName(loader, StringMatchType.EndsWith, "CommentTextView");
-            var commentClassData = dexkit.getClassData(commentClass);
+            var commentClassData = dexkit.getClassData(commentClass.getName());
             var methods = commentClassData.getMethods();
             var arrayList = new ArrayList<ClassData>();
             methods.forEach((methodData -> {
@@ -2546,7 +2546,7 @@ public class Unobfuscator {
                     FindMethod.create().matcher(MethodMatcher.create().addUsingString("conversation/refresh")));
             if (methodData.isEmpty())
                 throw new RuntimeException("MediaType: aux method not found");
-            var fclass = dexkit.getClassData(loadFMessageClass(classLoader));
+            var fclass = dexkit.getClassData(loadFMessageClass(classLoader).getName());
             var usingFields = methodData.get(0).getUsingFields();
             for (var f : usingFields) {
                 var field = f.getField();
@@ -2858,7 +2858,7 @@ public class Unobfuscator {
 
     public static Method loadAddOptionSearchBarMethod(ClassLoader classLoader) throws Exception {
         return UnobfuscatorCache.getInstance().getMethod(classLoader, () -> {
-            var classData = Objects.requireNonNull(dexkit.getClassData(WppCore.getHomeActivityClass(classLoader)));
+            var classData = Objects.requireNonNull(dexkit.getClassData(WppCore.getHomeActivityClass(classLoader).getName()));
             MethodDataList methodData = classData.findMethod(FindMethod.create()
                     .matcher(MethodMatcher.create().addUsingNumber(Utils.getID("menuitem_search", "id"))
                             .addUsingNumber(200)
