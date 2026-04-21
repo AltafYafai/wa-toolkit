@@ -27,6 +27,10 @@ import com.wa.toolkit.ui.screens.DashboardScreen
 import com.wa.toolkit.ui.screens.PrivacyScreen
 import com.wa.toolkit.ui.screens.MediaScreen
 import com.wa.toolkit.ui.screens.SearchScreen
+import com.wa.toolkit.ui.screens.StatusScreen
+import com.wa.toolkit.ui.screens.CallsScreen
+import com.wa.toolkit.ui.screens.ToolsScreen
+import com.wa.toolkit.ui.screens.CustomizationScreen
 import com.wa.toolkit.ui.theme.AppTheme
 import com.wa.toolkit.model.SearchableFeature
 
@@ -111,6 +115,11 @@ fun MainScreen(
                         when (id) {
                             1 -> navController.navigate("privacy")
                             3 -> navController.navigate("media")
+                            5 -> navController.navigate("tools")
+                            6 -> navController.navigate("status")
+                            7 -> navController.navigate("calls")
+                            8 -> navController.navigate("customization")
+                            else -> {}
                         }
                     },
                     onNavigateToSearch = { navController.navigate("search") }
@@ -123,7 +132,12 @@ fun MainScreen(
                         when (feature.fragmentType) {
                             SearchableFeature.FragmentType.PRIVACY -> navController.navigate("privacy")
                             SearchableFeature.FragmentType.MEDIA -> navController.navigate("media")
-                            // Add more as screens are implemented
+                            SearchableFeature.FragmentType.STATUS -> navController.navigate("status")
+                            SearchableFeature.FragmentType.CALLS -> navController.navigate("calls")
+                            SearchableFeature.FragmentType.CUSTOMIZATION -> navController.navigate("customization")
+                            SearchableFeature.FragmentType.GENERAL_HOME -> navController.navigate("tools")
+                            SearchableFeature.FragmentType.GENERAL_HOMESCREEN -> navController.navigate("tools")
+                            SearchableFeature.FragmentType.GENERAL_CONVERSATION -> navController.navigate("tools")
                             else -> navController.navigate("dashboard")
                         }
                     },
@@ -139,6 +153,31 @@ fun MainScreen(
             composable("media") {
                 MediaScreen(
                     viewModel = settingsViewModel,
+                    onBack = { navController.popBackStack() }
+                )
+            }
+            composable("status") {
+                StatusScreen(
+                    viewModel = settingsViewModel,
+                    onBack = { navController.popBackStack() }
+                )
+            }
+            composable("calls") {
+                CallsScreen(
+                    viewModel = settingsViewModel,
+                    onBack = { navController.popBackStack() }
+                )
+            }
+            composable("tools") {
+                ToolsScreen(
+                    viewModel = settingsViewModel,
+                    onBack = { navController.popBackStack() }
+                )
+            }
+            composable("customization") {
+                CustomizationScreen(
+                    viewModel = settingsViewModel,
+                    onNavigateToThemeManager = { /* TODO: Navigate to Theme Manager */ },
                     onBack = { navController.popBackStack() }
                 )
             }
