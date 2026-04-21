@@ -956,18 +956,20 @@ public class Unobfuscator {
     public synchronized static Field loadMessageKeyIdField(ClassLoader loader) throws Exception {
         return UnobfuscatorCache.getInstance().getField(loader, "MessageKeyId", () -> {
             Class<?> keyClass = loadMessageKeyClass(loader);
-            Field field = ReflectionUtils.findFieldUsingFilter(keyClass, f -> f.getType() == String.class);
-            if (field == null) throw new Exception("MessageKey ID field not found");
-            return field;
+            for (Field f : keyClass.getDeclaredFields()) {
+                if (f.getType() == String.class) return f;
+            }
+            throw new Exception("MessageKey ID field not found");
         });
     }
 
     public synchronized static Field loadMessageKeyFromMeField(ClassLoader loader) throws Exception {
         return UnobfuscatorCache.getInstance().getField(loader, "MessageKeyFromMe", () -> {
             Class<?> keyClass = loadMessageKeyClass(loader);
-            Field field = ReflectionUtils.findFieldUsingFilter(keyClass, f -> f.getType() == boolean.class);
-            if (field == null) throw new Exception("MessageKey fromMe field not found");
-            return field;
+            for (Field f : keyClass.getDeclaredFields()) {
+                if (f.getType() == boolean.class) return f;
+            }
+            throw new Exception("MessageKey fromMe field not found");
         });
     }
 
@@ -975,19 +977,20 @@ public class Unobfuscator {
         return UnobfuscatorCache.getInstance().getField(loader, "MessageKeyRemoteJid", () -> {
             Class<?> keyClass = loadMessageKeyClass(loader);
             Class<?> jidClass = findFirstClassUsingName(loader, StringMatchType.EndsWith, "jid.Jid");
-            Field field = ReflectionUtils.findFieldUsingFilter(keyClass, f -> jidClass.isAssignableFrom(f.getType()));
-            if (field == null) throw new Exception("MessageKey remoteJid field not found");
-            return field;
+            for (Field f : keyClass.getDeclaredFields()) {
+                if (jidClass.isAssignableFrom(f.getType())) return f;
+            }
+            throw new Exception("MessageKey remoteJid field not found");
         });
     }
 
     public synchronized static Field loadFMessageIdField(ClassLoader loader) throws Exception {
         return UnobfuscatorCache.getInstance().getField(loader, "FMessageId", () -> {
             Class<?> fMessageClass = loadFMessageClass(loader);
-            // Typically fMessage has a String field for ID which is same as in Key
-            Field field = ReflectionUtils.findFieldUsingFilter(fMessageClass, f -> f.getType() == String.class && Modifier.isPublic(f.getModifiers()));
-            if (field == null) throw new Exception("FMessage ID field not found");
-            return field;
+            for (Field f : fMessageClass.getDeclaredFields()) {
+                if (f.getType() == String.class && Modifier.isPublic(f.getModifiers())) return f;
+            }
+            throw new Exception("FMessage ID field not found");
         });
     }
 

@@ -19,6 +19,7 @@ import com.wa.toolkit.xposed.utils.Utils;
 
 import org.luckypray.dexkit.query.enums.StringMatchType;
 
+import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
@@ -58,21 +59,28 @@ public class StatusAnalytics extends Feature {
         }
         var jidClass = Unobfuscator.findFirstClassUsingName(classLoader, StringMatchType.EndsWith, "jid.Jid");
         for (var messageStatusUpdateReceipt : collection) {
-            var fieldByType = ReflectionUtils.getFieldByType(messageStatusUpdateReceipt.getClass(), int.class);
-            var fieldId = ReflectionUtils.getFieldByType(messageStatusUpdateReceipt.getClass(), long.class);
-            var fieldByUserJid = ReflectionUtils.getFieldByExtendType(messageStatusUpdateReceipt.getClass(), jidClass);
-            var fieldMessage = ReflectionUtils.getFieldByExtendType(messageStatusUpdateReceipt.getClass(), FMessageWpp.TYPE);
+            Field fieldByType = ReflectionUtils.getFieldByType(messageStatusUpdateReceipt.getClass(), int.class);
+            Field fieldId = ReflectionUtils.getFieldByType(messageStatusUpdateReceipt.getClass(), long.class);
+            Field fieldByUserJid = ReflectionUtils.getFieldByExtendType(messageStatusUpdateReceipt.getClass(), jidClass);
+            Field fieldMessage = ReflectionUtils.getFieldByExtendType(messageStatusUpdateReceipt.getClass(), FMessageWpp.TYPE);
             
+            if (fieldByType == null || fieldId == null || fieldByUserJid == null) continue;
+
             int type = fieldByType.getInt(messageStatusUpdateReceipt);
             long id = fieldId.getLong(messageStatusUpdateReceipt);
             
             if (type != 13) continue; // 13 is status view receipt
             
-            var userJid = new FMessageWpp.UserJid(fieldByUserJid.get(messageStatusUpdateReceipt));
+            Object jidObj = fieldByUserJid.get(messageStatusUpdateReceipt);
+            if (jidObj == null) continue;
+            var userJid = new FMessageWpp.UserJid(jidObj);
+            
             AtomicReference<Object> fmessage = new AtomicReference<>();
-            try {
-                fmessage.set(fieldMessage.get(messageStatusUpdateReceipt));
-            } catch (Exception ignored) {
+            if (fieldMessage != null) {
+                try {
+                    fmessage.set(fieldMessage.get(messageStatusUpdateReceipt));
+                } catch (Exception ignored) {
+                }
             }
 
             CompletableFuture.runAsync(() -> {
