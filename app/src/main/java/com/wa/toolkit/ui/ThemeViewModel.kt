@@ -118,15 +118,15 @@ class ThemeViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun saveThemeContent(name: String, content: String) {
+    fun saveThemeContent(themeName: String, content: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val cssFile = File(rootDirectory, "$name/style.css")
+            val cssFile = File(rootDirectory, "$themeName/style.css")
             cssFile.writeText(content, Charset.defaultCharset())
             
             // If this is the active theme, update custom_css preference too
             val currentThemeName = repository.getStringValue("folder_theme", "Default Theme")
-            if (name == currentThemeName) {
-                repository.setString(name = "custom_css", value = content)
+            if (themeName == currentThemeName) {
+                repository.setString("custom_css", content)
             }
             withContext(Dispatchers.Main) {
                 loadThemes()
