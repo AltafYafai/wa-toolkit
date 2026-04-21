@@ -93,9 +93,9 @@ public class StatusDownload extends Feature {
                 Intent intent = new Intent();
                 Class clazz;
                 try {
-                    clazz = Unobfuscator.getClassByName("TextStatusComposerActivity", classLoader);
+                    clazz = Unobfuscator.loadTextStatusComposerActivityClass(classLoader);
                 } catch (Exception ignored) {
-                    clazz = Unobfuscator.getClassByName("ConsolidatedStatusComposerActivity", classLoader);
+                    clazz = Unobfuscator.loadConsolidatedStatusComposerActivityClass(classLoader);
                     intent.putExtra("status_composer_mode", 2);
                 }
                 intent.setClassName(Utils.getApplication().getPackageName(), clazz.getName());

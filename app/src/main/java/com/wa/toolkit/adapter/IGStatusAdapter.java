@@ -81,7 +81,7 @@ public class IGStatusAdapter extends ArrayAdapter {
                 tabdialog.setTitle(activity.getString(ResId.string.select_status_type));
                 tabdialog.addTab(UnobfuscatorCache.getInstance().getString("mystatus"), DesignUtils.getIconByName("ic_status", true), (view) -> {
                     try {
-                        var clazz = Unobfuscator.getClassByName("MyStatusesActivity", getContext().getClassLoader());
+                        var clazz = Unobfuscator.loadMyStatusesActivityClass(getContext().getClassLoader());
                         var intent = new Intent(WppCore.getCurrentActivity(), clazz);
                         WppCore.getCurrentActivity().startActivity(intent);
                     } catch (Exception e) {
@@ -96,7 +96,7 @@ public class IGStatusAdapter extends ArrayAdapter {
                 tabdialog.addTab(activity.getString(ResId.string.open_camera), iconCamera, (view) -> {
                     try {
                         Intent intent = new Intent();
-                        var clazz = Unobfuscator.getClassByName("CameraActivity", getContext().getClassLoader());
+                        var clazz = Unobfuscator.loadCameraActivityClass(getContext().getClassLoader());
                         intent.setClassName(activity.getPackageName(), clazz.getName());
                         intent.putExtra("jid", "status@broadcast");
                         intent.putExtra("camera_origin", 4);
@@ -119,9 +119,9 @@ public class IGStatusAdapter extends ArrayAdapter {
                         Intent intent = new Intent();
                         Class clazz;
                         try {
-                            clazz = Unobfuscator.getClassByName("TextStatusComposerActivity", activity.getClassLoader());
+                            clazz = Unobfuscator.loadTextStatusComposerActivityClass(activity.getClassLoader());
                         } catch (Exception ignored) {
-                            clazz = Unobfuscator.getClassByName("ConsolidatedStatusComposerActivity", getContext().getClassLoader());
+                            clazz = Unobfuscator.loadConsolidatedStatusComposerActivityClass(getContext().getClassLoader());
                             intent.putExtra("status_composer_mode", 2);
                         }
                         intent.setClassName(activity.getPackageName(), clazz.getName());
@@ -136,7 +136,7 @@ public class IGStatusAdapter extends ArrayAdapter {
                 return;
             }
             try {
-                var clazz = Unobfuscator.getClassByName("StatusPlaybackActivity", getContext().getClassLoader());
+                var clazz = Unobfuscator.loadStatusPlaybackActivityClass(getContext().getClassLoader());
                 var intent = new Intent(WppCore.getCurrentActivity(), clazz);
                 intent.putExtra("jid", holder.userJid.getPhoneRawString());
                 WppCore.getCurrentActivity().startActivity(intent);
