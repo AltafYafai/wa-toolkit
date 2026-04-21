@@ -86,7 +86,7 @@ fun SliderSetting(
     range: ClosedFloatingPointRange<Float>,
     defaultValue: Int
 ) {
-    val value by viewModel.getInt(prefKey, defaultValue).collectAsState()
+    val value by viewModel.getInt(prefKey, defaultValue).collectAsState(initial = defaultValue)
 
     Surface(
         shape = MaterialTheme.shapes.medium,
