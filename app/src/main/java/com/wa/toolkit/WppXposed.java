@@ -46,10 +46,18 @@ public class WppXposed implements IXposedHookLoadPackage, IXposedHookInitPackage
         var packageName = lpparam.packageName;
         var classLoader = lpparam.classLoader;
 
-        if (packageName.equals(BuildConfig.APPLICATION_ID)) {
+        if (packageName.contains("com.wa.toolkit")) {
             XposedBridge.log("[•] Hooking toolkit app: " + packageName);
-            XposedHelpers.findAndHookMethod(MainActivity.class.getName(), lpparam.classLoader, "isXposedEnabled", XC_MethodReplacement.returnConstant(true));
-            XposedHelpers.findAndHookMethod(PreferenceManager.class.getName(), lpparam.classLoader, "getDefaultSharedPreferencesMode", XC_MethodReplacement.returnConstant(ContextWrapper.MODE_WORLD_READABLE));
+            try {
+                XposedHelpers.findAndHookMethod("com.wa.toolkit.MainActivity", lpparam.classLoader, "isXposedEnabled", XC_MethodReplacement.returnConstant(true));
+                XposedHelpers.findAndHookMethod(PreferenceManager.class.getName(), lpparam.classLoader, "getDefaultSharedPreferencesMode", XC_MethodReplacement.returnConstant(ContextWrapper.MODE_WORLD_READABLE));
+            } catch (Throwable t) {
+                XposedBridge.log("[!] Error hooking toolkit app: " + t.getMessage());
+            }
+            return;
+        }
+
+        if (!packageName.equals(FeatureLoader.PACKAGE_WPP) && !packageName.equals(FeatureLoader.PACKAGE_BUSINESS)) {
             return;
         }
 
