@@ -184,7 +184,7 @@ dependencies {
     implementation(libs.androidx.documentfile)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.fragment)
-    implementation("androidx.coordinatorlayout:coordinatorlayout:1.2.0")
+    implementation("androidx.coordinatorlayout:coordinatorlayout:1.3.0")
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
     implementation(libs.rikkax.appcompat)
