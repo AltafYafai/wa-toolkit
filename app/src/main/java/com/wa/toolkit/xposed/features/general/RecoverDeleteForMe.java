@@ -90,86 +90,31 @@ public class RecoverDeleteForMe extends Feature {
     private void saveOne(Context context, Object msg) throws Exception {
         if (msg == null)
             return;
-        Class<?> msgClass = msg.getClass();
-
-        // 1. Find Key Field
-        Object key = null;
-        if (FMessageWpp.Key.TYPE != null) {
-            key = getFirstNonNullFieldByType(msg, FMessageWpp.Key.TYPE);
-        }
-        if (key == null) {
-            Field keyField = findField(msgClass, "key");
-            if (keyField != null)
-                key = keyField.get(msg);
-        }
+        
+        FMessageWpp fMessage = new FMessageWpp(msg);
+        FMessageWpp.Key key = fMessage.getKey();
         if (key == null)
             return;
 
         // 2. Extract Message ID (Key ID)
-        String keyId = getStr(key, "id");
-        if (keyId == null)
-            keyId = getStr(key, "A01");
+        String keyId = key.messageID;
         if (keyId == null)
             return;
 
         // 3. Extract RemoteJid / ChatJid
-        String chatJid = null;
-        Object jidObj = getObj(key, "remoteJid");
-        if (jidObj == null)
-            jidObj = getObj(key, "chatJid");
-        if (jidObj == null)
-            jidObj = getObj(key, "A00");
-        if (jidObj != null) {
-            // Prefer getRawString() — WhatsApp JID object toString() may return display
-            // name,
-            // not the raw 'number@domain' form needed for the group filter query.
-            try {
-                Object rawStr = jidObj.getClass().getMethod("getRawString").invoke(jidObj);
-                if (rawStr instanceof String && !((String) rawStr).isEmpty()) {
-                    chatJid = (String) rawStr;
-                }
-            } catch (Throwable ignored) {
-            }
-            // Fallback to toString() if getRawString() unavailable
-            if (chatJid == null) {
-                chatJid = jidObj.toString();
-            }
-        }
+        String chatJid = key.remoteJid.getPhoneRawString();
         if (chatJid != null && (chatJid.equalsIgnoreCase("false") || chatJid.equalsIgnoreCase("true"))) {
             chatJid = null;
         }
 
         // 4. Extract isFromMe
-        boolean fromMe = false;
-        Field fmField = findField(key.getClass(), "fromMe");
-        if (fmField == null)
-            fmField = findField(key.getClass(), "isFromMe");
-        if (fmField == null)
-            fmField = findField(key.getClass(), "A02");
-        if (fmField != null) {
-            Object v = fmField.get(key);
-            if (v instanceof Boolean)
-                fromMe = (Boolean) v;
-        }
+        boolean fromMe = key.isFromMe;
 
-        // 5. Media Type (Moved up to prioritize detection)
-        int mediaType = -1;
-        Field mtf = findField(msgClass, "mediaType");
-        if (mtf == null)
-            mtf = findField(msgClass, "media_wa_type");
-        if (mtf != null) {
-            try {
-                mediaType = mtf.getInt(msg);
-            } catch (Exception ignored) {
-            }
-        }
+        // 5. Media Type
+        int mediaType = fMessage.getMediaType();
 
         // 6. Extract Text Body
-        String textContent = getStr(msg, "text");
-        if (textContent == null)
-            textContent = getStr(msg, "body");
-        if (textContent == null)
-            textContent = getStr(msg, "A0Q");
+        String textContent = fMessage.getMessageStr();
 
         // Safety check: If it's a media message, discard "text" if it looks like a URL
         // or Hash
@@ -182,7 +127,7 @@ public class RecoverDeleteForMe extends Feature {
         // Heuristic search: Only if text is null AND it's NOT a media message
         if (textContent == null && mediaType <= 0) {
             String bestCandidate = null;
-            Class<?> cls = msgClass;
+            Class<?> cls = msg.getClass();
             while (cls != null && cls != Object.class) {
                 for (Field f : cls.getDeclaredFields()) {
                     if (f.getType().equals(String.class)) {
@@ -216,11 +161,10 @@ public class RecoverDeleteForMe extends Feature {
         // For group chats: senderJid = the individual participant JID (not the group
         // JID).
         String senderJid = fromMe ? "Me" : null;
-        Object participant = getObj(msg, "participant");
+        Object participant = fMessage.getUserJid() != null ? fMessage.getUserJid().userJid : null;
         if (participant == null)
-            participant = getObj(msg, "senderJid");
-        if (participant == null)
-            participant = getObj(msg, "A0b");
+            participant = fMessage.getDeviceJid();
+        
         if (participant != null) {
             String val = null;
             // Try getRawString() first to get 'number@s.whatsapp.net'
@@ -245,18 +189,19 @@ public class RecoverDeleteForMe extends Feature {
 
         // 8. Media Details
         String mediaPath = null;
-        Object mf = getObj(msg, "mediaData");
-        if (mf == null)
-            mf = getObj(msg, "mediaFile");
-        if (mf instanceof File && ((File) mf).exists()) {
-            mediaPath = ((File) mf).getAbsolutePath();
+        File mf = fMessage.getMediaFile();
+        if (mf != null && mf.exists()) {
+            mediaPath = mf.getAbsolutePath();
         }
 
-        String mediaCaption = getStr(msg, "caption");
-        if (mediaCaption == null)
-            mediaCaption = getStr(msg, "mediaCaption");
-        if (mediaCaption == null)
-            mediaCaption = getStr(msg, "A03");
+        String mediaCaption = null;
+        try {
+            Field mcf = findField(msg.getClass(), "caption");
+            if (mcf == null) mcf = findField(msg.getClass(), "mediaCaption");
+            if (mcf != null) {
+                mediaCaption = (String) mcf.get(msg);
+            }
+        } catch (Exception ignored) {}
 
         long timestamp = System.currentTimeMillis();
 

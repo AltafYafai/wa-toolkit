@@ -316,82 +316,60 @@ public class WppCore {
     }
 
     public synchronized static Class getHomeActivityClass(@NonNull ClassLoader loader) {
-        Class oldHomeClass = XposedHelpers.findClassIfExists("com.whatsapp.HomeActivity", loader);
-
-        return oldHomeClass != null
-                ? oldHomeClass
-                : XposedHelpers.findClass("com.whatsapp.home.ui.HomeActivity", loader);
+        try {
+            return Unobfuscator.loadHomeActivityClass(loader);
+        } catch (Exception e) {
+            XposedBridge.log(e);
+            return null;
+        }
     }
 
     public synchronized static Class getTabsPagerClass(@NonNull ClassLoader loader) {
-        Class oldHomeClass = XposedHelpers.findClassIfExists("com.whatsapp.TabsPager", loader);
-
-        return oldHomeClass != null
-                ? oldHomeClass
-                : XposedHelpers.findClass("com.whatsapp.home.ui.TabsPager", loader);
+        try {
+            return Unobfuscator.loadTabsPagerClass(loader);
+        } catch (Exception e) {
+            XposedBridge.log(e);
+            return null;
+        }
     }
 
     public synchronized static Class getViewOnceViewerActivityClass(@NonNull ClassLoader loader) {
-        Class oldClass = XposedHelpers.findClassIfExists("com.whatsapp.messaging.ViewOnceViewerActivity", loader);
-
-        return oldClass != null
-                ? oldClass
-                : XposedHelpers.findClass("com.whatsapp.viewonce.ui.messaging.ViewOnceViewerActivity", loader);
+        try {
+            return Unobfuscator.loadViewOnceViewerActivityClass(loader);
+        } catch (Exception e) {
+            XposedBridge.log(e);
+            return null;
+        }
     }
 
     public synchronized static Class getAboutActivityClass(@NonNull ClassLoader loader) {
-        Class oldClass = XposedHelpers.findClassIfExists("com.whatsapp.settings.About", loader);
-
-        return oldClass != null
-                ? oldClass
-                : XposedHelpers.findClass("com.whatsapp.settings.ui.About", loader);
+        try {
+            return Unobfuscator.loadAboutActivityClass(loader);
+        } catch (Exception e) {
+            XposedBridge.log(e);
+            return null;
+        }
     }
 
     public synchronized static Class getDataUsageActivityClass(@NonNull ClassLoader loader) {
-        Class oldClass = XposedHelpers.findClassIfExists("com.whatsapp.settings.SettingsDataUsageActivity", loader);
-
-        return oldClass != null
-                ? oldClass
-                : XposedHelpers.findClass("com.whatsapp.settings.ui.SettingsDataUsageActivity", loader);
+        try {
+            return Unobfuscator.loadDataUsageActivityClass(loader);
+        } catch (Exception e) {
+            XposedBridge.log(e);
+            return null;
+        }
     }
 
     public synchronized static Class getTextStatusComposerFragmentClass(@NonNull ClassLoader loader) throws Exception {
-        var classes = new String[]{
-                "com.whatsapp.status.composer.TextStatusComposerFragment",
-                "com.whatsapp.statuscomposer.composer.TextStatusComposerFragment"
-        };
-        Class<?> result = null;
-        for (var clazz : classes) {
-            if ((result = XposedHelpers.findClassIfExists(clazz, loader)) != null)
-                return result;
-        }
-        throw new Exception("TextStatusComposerFragmentClass not found");
+        return Unobfuscator.loadTextStatusComposerFragmentClass(loader);
     }
 
     public synchronized static Class getVoipManagerClass(@NonNull ClassLoader loader) throws Exception {
-        var classes = new String[]{
-                "com.whatsapp.voipcalling.Voip",
-                "com.whatsapp.calling.voipcalling.Voip"
-        };
-        Class<?> result = null;
-        for (var clazz : classes) {
-            if ((result = XposedHelpers.findClassIfExists(clazz, loader)) != null)
-                return result;
-        }
-        throw new Exception("VoipManagerClass not found");
+        return Unobfuscator.loadVoipManagerClass(loader);
     }
 
     public synchronized static Class getVoipCallInfoClass(@NonNull ClassLoader loader) throws Exception {
-        var classes = new String[]{
-                "com.whatsapp.voipcalling.CallInfo",
-                "com.whatsapp.calling.infra.voipcalling.CallInfo"
-        };
-        Class<?> result = null;
-        for (var clazz : classes) {
-            if ((result = XposedHelpers.findClassIfExists(clazz, loader)) != null)
-                return result;
-        }
-        throw new Exception("VoipCallInfoClass not found");
+        return Unobfuscator.loadVoipCallInfoClass(loader);
     }
 
     // public static Activity getActivityBySimpleName(String name) {

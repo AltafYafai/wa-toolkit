@@ -499,6 +499,137 @@ public class Unobfuscator {
         });
     }
 
+    public synchronized static Class<?> loadHomeActivityClass(ClassLoader loader) throws Exception {
+        return UnobfuscatorCache.getInstance().getClass(loader, "HomeActivity", () -> {
+            Class<?> clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "HomeActivity/onCreate");
+            if (clazz == null) {
+                clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "HomeActivity/on_create");
+            }
+            if (clazz == null) {
+                clazz = XposedHelpers.findClassIfExists("com.whatsapp.HomeActivity", loader);
+            }
+            if (clazz == null) {
+                clazz = XposedHelpers.findClassIfExists("com.whatsapp.home.ui.HomeActivity", loader);
+            }
+            if (clazz == null) {
+                throw new Exception("HomeActivity class not found");
+            }
+            return clazz;
+        });
+    }
+
+    public synchronized static Class<?> loadTabsPagerClass(ClassLoader loader) throws Exception {
+        return UnobfuscatorCache.getInstance().getClass(loader, "TabsPager", () -> {
+            Class<?> clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "TabsPager/onCreate");
+            if (clazz == null) {
+                clazz = XposedHelpers.findClassIfExists("com.whatsapp.TabsPager", loader);
+            }
+            if (clazz == null) {
+                clazz = XposedHelpers.findClassIfExists("com.whatsapp.home.ui.TabsPager", loader);
+            }
+            if (clazz == null) {
+                throw new Exception("TabsPager class not found");
+            }
+            return clazz;
+        });
+    }
+
+    public synchronized static Class<?> loadViewOnceViewerActivityClass(ClassLoader loader) throws Exception {
+        return UnobfuscatorCache.getInstance().getClass(loader, "ViewOnceViewerActivity", () -> {
+            Class<?> clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "ViewOnceViewerActivity/onCreate");
+            if (clazz == null) {
+                clazz = XposedHelpers.findClassIfExists("com.whatsapp.messaging.ViewOnceViewerActivity", loader);
+            }
+            if (clazz == null) {
+                clazz = XposedHelpers.findClassIfExists("com.whatsapp.viewonce.ui.messaging.ViewOnceViewerActivity", loader);
+            }
+            if (clazz == null) {
+                throw new Exception("ViewOnceViewerActivity class not found");
+            }
+            return clazz;
+        });
+    }
+
+    public synchronized static Class<?> loadAboutActivityClass(ClassLoader loader) throws Exception {
+        return UnobfuscatorCache.getInstance().getClass(loader, "AboutActivity", () -> {
+            Class<?> clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "About/onCreate");
+            if (clazz == null) {
+                clazz = XposedHelpers.findClassIfExists("com.whatsapp.settings.About", loader);
+            }
+            if (clazz == null) {
+                clazz = XposedHelpers.findClassIfExists("com.whatsapp.settings.ui.About", loader);
+            }
+            if (clazz == null) {
+                throw new Exception("About class not found");
+            }
+            return clazz;
+        });
+    }
+
+    public synchronized static Class<?> loadDataUsageActivityClass(ClassLoader loader) throws Exception {
+        return UnobfuscatorCache.getInstance().getClass(loader, "DataUsageActivity", () -> {
+            Class<?> clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "SettingsDataUsageActivity/onCreate");
+            if (clazz == null) {
+                clazz = XposedHelpers.findClassIfExists("com.whatsapp.settings.SettingsDataUsageActivity", loader);
+            }
+            if (clazz == null) {
+                clazz = XposedHelpers.findClassIfExists("com.whatsapp.settings.ui.SettingsDataUsageActivity", loader);
+            }
+            if (clazz == null) {
+                throw new Exception("SettingsDataUsageActivity class not found");
+            }
+            return clazz;
+        });
+    }
+
+    public synchronized static Class<?> loadTextStatusComposerFragmentClass(ClassLoader loader) throws Exception {
+        return UnobfuscatorCache.getInstance().getClass(loader, "TextStatusComposerFragment", () -> {
+            Class<?> clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "TextStatusComposerFragment/onCreate");
+            if (clazz == null) {
+                clazz = XposedHelpers.findClassIfExists("com.whatsapp.status.composer.TextStatusComposerFragment", loader);
+            }
+            if (clazz == null) {
+                clazz = XposedHelpers.findClassIfExists("com.whatsapp.statuscomposer.composer.TextStatusComposerFragment", loader);
+            }
+            if (clazz == null) {
+                throw new Exception("TextStatusComposerFragment class not found");
+            }
+            return clazz;
+        });
+    }
+
+    public synchronized static Class<?> loadVoipManagerClass(ClassLoader loader) throws Exception {
+        return UnobfuscatorCache.getInstance().getClass(loader, "VoipManager", () -> {
+            Class<?> clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "Voip/onVoipActivityCreated");
+            if (clazz == null) {
+                clazz = XposedHelpers.findClassIfExists("com.whatsapp.voipcalling.Voip", loader);
+            }
+            if (clazz == null) {
+                clazz = XposedHelpers.findClassIfExists("com.whatsapp.calling.voipcalling.Voip", loader);
+            }
+            if (clazz == null) {
+                throw new Exception("Voip class not found");
+            }
+            return clazz;
+        });
+    }
+
+    public synchronized static Class<?> loadVoipCallInfoClass(ClassLoader loader) throws Exception {
+        return UnobfuscatorCache.getInstance().getClass(loader, "VoipCallInfo", () -> {
+            Class<?> clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "CallInfo/onCallStateChanged");
+            if (clazz == null) {
+                clazz = XposedHelpers.findClassIfExists("com.whatsapp.voipcalling.CallInfo", loader);
+            }
+            if (clazz == null) {
+                clazz = XposedHelpers.findClassIfExists("com.whatsapp.calling.infra.voipcalling.CallInfo", loader);
+            }
+            if (clazz == null) {
+                throw new Exception("CallInfo class not found");
+            }
+            return clazz;
+        });
+    }
+
     public synchronized static Class<?> loadStatusPlaybackActivityClass(ClassLoader loader) throws Exception {
         return UnobfuscatorCache.getInstance().getClass(loader, "StatusPlaybackActivity", () -> {
             Class<?> clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "StatusPlaybackActivity/onCreate");
