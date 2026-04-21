@@ -1,9 +1,9 @@
 # Whatsapp Toolkit TODO
 
 ## Phase 1: Core Refactoring & Resiliency
-- [ ] **Complete Unobfuscator Refactor:** Finish transitioning all hardcoded class and method lookups to the DexKit-based dynamic discovery system.
-- [ ] **Eliminate Hardcoded Obfuscated Names:** Identify and replace all remaining occurrences of `A00`, `A01`, etc., with dynamic logic in `Unobfuscator.java`.
-- [ ] **W4B (WhatsApp Business) Compatibility:** Exhaustively test and fix any remaining `ClassNotFoundException` issues specific to the WhatsApp Business variant.
+- [x] **Complete Unobfuscator Refactor:** Finish transitioning all hardcoded class and method lookups to the DexKit-based dynamic discovery system.
+- [x] **Eliminate Hardcoded Obfuscated Names:** Identify and replace all remaining occurrences of `A00`, `A01`, etc., with dynamic logic in `Unobfuscator.java`.
+- [x] **W4B (WhatsApp Business) Compatibility:** Exhaustively test and fix any remaining `ClassNotFoundException` issues specific to the WhatsApp Business variant.
 
 ## Phase 2: Feature Enhancements
 - [ ] **Smart Reply Updates:** Verify and update Smart Reply UI hooks to ensure they work across latest WA/WB versions.
