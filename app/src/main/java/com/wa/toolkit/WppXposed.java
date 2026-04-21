@@ -3,13 +3,11 @@ package com.wa.toolkit;
 import android.annotation.SuppressLint;
 import android.content.ContextWrapper;
 import android.content.res.XModuleResources;
-import android.view.Window;
-import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
 
-import com.wa.toolkit.activities.MainActivity;
+import com.wa.toolkit.MainActivity;
 import com.wa.toolkit.xposed.AntiUpdater;
 import com.wa.toolkit.xposed.bridge.ScopeHook;
 import com.wa.toolkit.xposed.core.FeatureLoader;
@@ -36,8 +34,14 @@ public class WppXposed implements IXposedHookLoadPackage, IXposedHookInitPackage
     @NonNull
     public static XSharedPreferences getPref() {
         if (pref == null) {
-            pref = new XSharedPreferences(BuildConfig.APPLICATION_ID, BuildConfig.APPLICATION_ID + "_preferences");
-            pref.makeWorldReadable();
+            String prefName = BuildConfig.APPLICATION_ID + "_preferences";
+            pref = new XSharedPreferences(BuildConfig.APPLICATION_ID, prefName);
+            boolean readable = pref.makeWorldReadable();
+            XposedBridge.log("[WAE] XSharedPreferences initialized for " + BuildConfig.APPLICATION_ID + " / " + prefName);
+            XposedBridge.log("[WAE] makeWorldReadable result: " + readable);
+            XposedBridge.log("[WAE] Pref file: " + pref.getFile().getAbsolutePath());
+            XposedBridge.log("[WAE] Pref file exists: " + pref.getFile().exists());
+            XposedBridge.log("[WAE] Pref file readable: " + pref.getFile().canRead());
             pref.reload();
         }
         return pref;
@@ -49,11 +53,59 @@ public class WppXposed implements IXposedHookLoadPackage, IXposedHookInitPackage
         var packageName = lpparam.packageName;
         var classLoader = lpparam.classLoader;
 
-        if (packageName.equals(BuildConfig.APPLICATION_ID)) {
-            XposedHelpers.findAndHookMethod(MainActivity.class.getName(), lpparam.classLoader, "isXposedEnabled", XC_MethodReplacement.returnConstant(true));
-            XposedHelpers.findAndHookMethod(PreferenceManager.class.getName(), lpparam.classLoader, "getDefaultSharedPreferencesMode", XC_MethodReplacement.returnConstant(ContextWrapper.MODE_WORLD_READABLE));
+        if (packageName.contains("com.wa.toolkit")) {
+            XposedBridge.log("[WAE] Hooking toolkit app: " + packageName);
+            try {
+                Class<?> mainActivity = XposedHelpers.findClass("com.wa.toolkit.MainActivity", lpparam.classLoader);
+                XposedHelpers.findAndHookMethod(mainActivity, "isXposedEnabled", new XC_MethodReplacement() {
+                    @Override
+                    protected Object replaceHookedMethod(MethodHookParam param) {
+                        return true;
+                    }
+                });
+
+                // Also hook the Companion method just in case
+                try {
+                    Class<?> companion = XposedHelpers.findClass("com.wa.toolkit.MainActivity$Companion", lpparam.classLoader);
+                    XposedHelpers.findAndHookMethod(companion, "isXposedEnabled", new XC_MethodReplacement() {
+                        @Override
+                        protected Object replaceHookedMethod(MethodHookParam param) {
+                            return true;
+                        }
+                    });
+                } catch (Throwable ignored) {}
+
+                XposedBridge.log("[WAE] isXposedEnabled hooked successfully");
+
+                // Force MODE_WORLD_READABLE at Context level
+                XposedHelpers.findAndHookMethod("android.app.ContextImpl", lpparam.classLoader, "getSharedPreferences", String.class, int.class, new XC_MethodHook() {
+                    @Override
+                    protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                        String name = (String) param.args[0];
+                        if (name.contains("preferences") || name.contains("com.wa.toolkit")) {
+                            param.args[1] = ContextWrapper.MODE_WORLD_READABLE;
+                        }
+                    }
+                });
+                
+            } catch (Throwable t) {
+                XposedBridge.log("[WAE] Error hooking toolkit app: " + t.getMessage());
+                XposedBridge.log(t);
+            }
             return;
         }
+
+        if (packageName.equals("android") || packageName.equals("com.android.providers.settings")) {
+            Patch.handleLoadPackage(lpparam, getPref());
+            ScopeHook.hook(lpparam);
+            return;
+        }
+
+        if (!packageName.equals(FeatureLoader.PACKAGE_WPP) && !packageName.equals(FeatureLoader.PACKAGE_BUSINESS)) {
+            return;
+        }
+
+        XposedBridge.log("[WAE] Detected target package: " + packageName);
 
         AntiUpdater.hookSession(lpparam);
 
@@ -62,13 +114,19 @@ public class WppXposed implements IXposedHookLoadPackage, IXposedHookInitPackage
         ScopeHook.hook(lpparam);
 
         //  AndroidPermissions.hook(lpparam); in tests
-        if ((packageName.equals(FeatureLoader.PACKAGE_WPP) && App.isOriginalPackage()) || packageName.equals(FeatureLoader.PACKAGE_BUSINESS)) {
-            XposedBridge.log("[•] This package: " + lpparam.packageName);
+        boolean isWpp = packageName.equals(FeatureLoader.PACKAGE_WPP);
+        boolean isBusiness = packageName.equals(FeatureLoader.PACKAGE_BUSINESS);
+        boolean isOriginal = App.isOriginalPackage();
+        
+        XposedBridge.log("[WAE] isWpp: " + isWpp + ", isBusiness: " + isBusiness + ", isOriginal: " + isOriginal);
+
+        if ((isWpp && isOriginal) || isBusiness) {
+            XposedBridge.log("[WAE] Loading features for: " + packageName);
 
             // Load features
-            FeatureLoader.start(classLoader, getPref(), lpparam.appInfo.sourceDir);
-
-            disableSecureFlag();
+            FeatureLoader.start(classLoader, getPref(), lpparam.appInfo.sourceDir, MODULE_PATH);
+        } else {
+            XposedBridge.log("[WAE] Skipping feature load for " + packageName + " (isOriginal=" + isOriginal + ")");
         }
     }
 
@@ -83,70 +141,12 @@ public class WppXposed implements IXposedHookLoadPackage, IXposedHookInitPackage
         ResParam = resparam;
 
         XposedBridge.log("[•] Mirroring resources for " + packageName);
-
-        for (var field : ResId.drawable.class.getDeclaredFields()) {
-            if (field.getName().equals("INSTANCE") || field.getName().equals("$stable")) continue;
-            try {
-                var field1 = R.drawable.class.getField(field.getName());
-                int resId = resparam.res.addResource(modRes, field1.getInt(null));
-                field.setAccessible(true);
-                field.set(null, resId);
-                XposedBridge.log("[•] Mirrored drawable: " + field.getName() + " -> " + Integer.toHexString(resId));
-            } catch (Exception e) {
-                XposedBridge.log("[•] Failed to mirror drawable: " + field.getName() + " - " + e.getMessage());
-            }
-        }
-
-        for (var field : ResId.string.class.getDeclaredFields()) {
-            if (field.getName().equals("INSTANCE") || field.getName().equals("$stable")) continue;
-            try {
-                var field1 = R.string.class.getField(field.getName());
-                int resId = resparam.res.addResource(modRes, field1.getInt(null));
-                field.setAccessible(true);
-                field.set(null, resId);
-            } catch (Exception e) {
-                XposedBridge.log("[•] Failed to mirror string: " + field.getName() + " - " + e.getMessage());
-            }
-        }
-
-        for (var field : ResId.array.class.getDeclaredFields()) {
-            if (field.getName().equals("INSTANCE") || field.getName().equals("$stable")) continue;
-            try {
-                var field1 = R.array.class.getField(field.getName());
-                int resId = resparam.res.addResource(modRes, field1.getInt(null));
-                field.setAccessible(true);
-                field.set(null, resId);
-            } catch (Exception e) {
-                XposedBridge.log("[•] Failed to mirror array: " + field.getName() + " - " + e.getMessage());
-            }
-        }
-
+        com.wa.toolkit.xposed.utils.ResourceMirror.INSTANCE.mirror(resparam, modRes);
     }
 
     @Override
     public void initZygote(StartupParam startupParam) throws Throwable {
         MODULE_PATH = startupParam.modulePath;
-    }
-
-
-    public void disableSecureFlag() {
-        XposedHelpers.findAndHookMethod(Window.class, "setFlags", int.class, int.class, new XC_MethodHook() {
-            @Override
-            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                param.args[0] = (int) param.args[0] & ~WindowManager.LayoutParams.FLAG_SECURE;
-                param.args[1] = (int) param.args[1] & ~WindowManager.LayoutParams.FLAG_SECURE;
-            }
-        });
-
-        XposedHelpers.findAndHookMethod(Window.class, "addFlags", int.class, new XC_MethodHook() {
-            @Override
-            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                param.args[0] = (int) param.args[0] & ~WindowManager.LayoutParams.FLAG_SECURE;
-                if ((int) param.args[0] == 0) {
-                    param.setResult(null);
-                }
-            }
-        });
     }
 
 }

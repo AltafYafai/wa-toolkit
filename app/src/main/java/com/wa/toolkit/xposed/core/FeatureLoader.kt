@@ -50,14 +50,21 @@ object FeatureLoader {
     private val list = ArrayList<ErrorItem>()
     private var supportedVersions: List<String>? = null
     private var currentVersion: String? = null
+    private var modulePath: String? = null
 
     @JvmStatic
-    fun start(loader: ClassLoader, pref: XSharedPreferences, sourceDir: String) {
+    fun start(loader: ClassLoader, pref: XSharedPreferences, sourceDir: String, modulePath: String) {
+        XposedBridge.log("[WAE] FeatureLoader.start called with sourceDir: $sourceDir, modulePath: $modulePath")
+        this.modulePath = modulePath
         if (!Unobfuscator.initWithPath(sourceDir)) {
-            XposedBridge.log("Can't init dexkit")
+            XposedBridge.log("[WAE] Can't init dexkit")
             return
         }
+        XposedBridge.log("[WAE] DexKit initialized successfully")
+        
         Feature.DEBUG = pref.getBoolean("enablelogs", true)
+        XposedBridge.log("[WAE] Feature.DEBUG: ${Feature.DEBUG}")
+        
         Utils.xprefs = pref
 
         XposedHelpers.findAndHookMethod(Instrumentation::class.java, "callApplicationOnCreate", Application::class.java,
@@ -66,18 +73,22 @@ object FeatureLoader {
                 override fun beforeHookedMethod(param: MethodHookParam) {
                     val app = param.args[0] as Application
                     mApp = app
+                    XposedBridge.log("[WAE] callApplicationOnCreate before: ${app.packageName}")
 
                     // Inject Bootloader Spoofer
                     if (pref.getBoolean("bootloader_spoofer", false)) {
                         HookBL.hook(loader, pref)
-                        XposedBridge.log("Bootloader Spoofer is Injected")
+                        XposedBridge.log("[WAE] Bootloader Spoofer is Injected")
                     }
 
                     val packageManager = app.packageManager
-                    pref.registerOnSharedPreferenceChangeListener { _, _ -> pref.reload() }
+                    pref.registerOnSharedPreferenceChangeListener { _, _ -> 
+                        XposedBridge.log("[WAE] Preferences changed, reloading...")
+                        pref.reload() 
+                    }
                     
                     val packageInfo = packageManager.getPackageInfo(app.packageName, 0)
-                    XposedBridge.log(packageInfo.versionName)
+                    XposedBridge.log("[WAE] WhatsApp Version: ${packageInfo.versionName}")
                     currentVersion = packageInfo.versionName
                     
                     val resIdArray = if (app.packageName == PACKAGE_WPP) ResId.array.supported_versions_wpp else ResId.array.supported_versions_business
@@ -88,6 +99,7 @@ object FeatureLoader {
                     
                     try {
                         val startTime = System.currentTimeMillis()
+                        XposedBridge.log("[WAE] Initializing components...")
                         UnobfuscatorCache.init(app)
                         SharedPreferencesWrapper.hookInit(app.classLoader)
                         ReflectionUtils.initCache(app)
@@ -96,7 +108,10 @@ object FeatureLoader {
                             packageInfo.versionName?.startsWith(s.replace(".xx", "")) == true
                         } ?: false
                         
+                        XposedBridge.log("[WAE] isSupported: $isSupported")
+
                         if (!isSupported) {
+                            XposedBridge.log("[WAE] Version not supported, disabling expiration...")
                             disableExpirationVersion(app.classLoader)
                             if (!pref.getBoolean("bypass_version_check", false)) {
                                 val msg = "Unsupported version: ${packageInfo.versionName}\nOnly the function of ignoring the expiration of the WhatsApp version has been applied!"
@@ -104,13 +119,15 @@ object FeatureLoader {
                             }
                         }
                         
+                        XposedBridge.log("[WAE] Loading components and plugins...")
                         initComponents(loader, pref)
                         plugins(loader, pref, packageInfo.versionName ?: "")
                         sendEnabledBroadcast(app)
                         
                         val loadTime = System.currentTimeMillis() - startTime
-                        XposedBridge.log("Loaded Hooks in ${loadTime}ms")
+                        XposedBridge.log("[WAE] Loaded Hooks in ${loadTime}ms")
                     } catch (e: Throwable) {
+                        XposedBridge.log("[WAE] Error loading features: ${e.message}")
                         XposedBridge.log(e)
                         val error = ErrorItem().apply {
                             pluginName = "MainFeatures[Critical]"
@@ -255,104 +272,13 @@ object FeatureLoader {
     }
 
     private fun plugins(loader: ClassLoader, pref: XSharedPreferences, versionWpp: String) {
-        val classes = arrayOf(
-            DebugFeature::class.java,
-            ContactItemListener::class.java,
-            ConversationItemListener::class.java,
-            MenuStatusListener::class.java,
-            ShowEditMessage::class.java,
-            AntiRevoke::class.java,
-            CustomToolbar::class.java,
-            SeenTick::class.java,
-            CallPrivacy::class.java,
-            ActivityController::class.java,
-            ChatLimit::class.java,
-            SeparateGroup::class.java,
-            ShowOnline::class.java,
-            DndMode::class.java,
-            FreezeLastSeen::class.java,
-            TypingPrivacy::class.java,
-            HideChat::class.java,
-            HideReceipt::class.java,
-            HideSeen::class.java,
-            HideSeenView::class.java,
-            TagMessage::class.java,
-            HideTabs::class.java,
-            IGStatus::class.java,
-            LiteMode::class.java,
-            MediaQuality::class.java,
-            NewChat::class.java,
-            Others::class.java,
-            PinnedLimit::class.java,
-            CustomTime::class.java,
-            ShareLimit::class.java,
-            StatusDownload::class.java,
-            ViewOnce::class.java,
-            CallType::class.java,
-            MediaPreview::class.java,
-            FilterGroups::class.java,
-            Tasker::class.java,
-            DeleteStatus::class.java,
-            DownloadViewOnce::class.java,
-            Channels::class.java,
-            DownloadProfile::class.java,
-            ChatFilters::class.java,
-            GroupAdmin::class.java,
-            Stickers::class.java,
-            CopyStatus::class.java,
-            TextStatusComposer::class.java,
-            ToastViewer::class.java,
-            MenuHome::class.java,
-            AntiWa::class.java,
-            CustomPrivacy::class.java,
-            AudioTranscript::class.java,
-            GoogleTranslate::class.java,
-            ContactBlockedVerify::class.java,
-            LockedChatsEnhancer::class.java,
-            CallRecording::class.java,
-            BackupRestore::class.java,
-            Spy::class.java,
-            RecoverDeleteForMe::class.java
-        )
-        
-        XposedBridge.log("Loading Plugins")
-        val executorService = Executors.newWorkStealingPool(minOf(Runtime.getRuntime().availableProcessors(), 4))
-        val times = Vector<String>()
-        
-        for (clazz in classes) {
-            CompletableFuture.runAsync({
-                val startTime = System.currentTimeMillis()
-                try {
-                    val constructor = clazz.getConstructor(ClassLoader::class.java, XSharedPreferences::class.java)
-                    val plugin = constructor.newInstance(loader, pref) as Feature
-                    plugin.doHook()
-                } catch (e: Throwable) {
-                    XposedBridge.log(e)
-                    val error = ErrorItem().apply {
-                        pluginName = clazz.simpleName
-                        whatsAppVersion = versionWpp
-                        moduleVersion = BuildConfig.VERSION_NAME
-                        message = e.message
-                        this.error = e.stackTrace
-                            .filter { !it.className.startsWith("android") && !it.className.startsWith("com.android") }
-                            .joinToString(prefix = "[", postfix = "]") { it.toString() }
-                    }
-                    list.add(error)
-                }
-                val loadTime = System.currentTimeMillis() - startTime
-                times.add("* Loaded Plugin ${clazz.simpleName} in ${loadTime}ms")
-            }, executorService)
-        }
-        
-        executorService.shutdown()
-        executorService.awaitTermination(15, TimeUnit.SECONDS)
-        
-        if (Feature.DEBUG) {
-            times.forEach { XposedBridge.log(it) }
-        }
-    }
+        XposedBridge.log("Discovering Plugins")
+        modulePath?.let { FeatureManager.discoverFeatures(it, FeatureLoader::class.java.classLoader) }
 
-    private class ErrorItem {
+        XposedBridge.log("Loading Plugins")
+        list.addAll(FeatureManager.loadAll(loader, pref, versionWpp))
+    }
+    class ErrorItem {
         var pluginName: String? = null
         var whatsAppVersion: String? = null
         var error: String? = null

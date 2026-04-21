@@ -86,6 +86,20 @@ public class Tasker extends Feature {
             }
         });
 
+        // Hook for contact presence (Online status)
+        var checkOnlineMethod = Unobfuscator.loadCheckOnlineMethod(classLoader);
+        XposedBridge.hookMethod(checkOnlineMethod, new XC_MethodHook() {
+            @Override
+            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                var userJid = new FMessageWpp.UserJid(param.args[0]);
+                if (userJid.isNull() || userJid.isGroup()) return;
+                
+                var name = WppCore.getContactName(userJid);
+                if (TextUtils.isEmpty(name)) name = userJid.getPhoneNumber();
+                
+                sendTaskerEvent(name, userJid.getPhoneNumber(), "online");
+            }
+        });
     }
 
     public static class SenderMessageBroadcastReceiver extends BroadcastReceiver {

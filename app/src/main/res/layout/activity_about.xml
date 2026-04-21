@@ -3,12 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorSurface">
+        android:background="?attr/colorSurface"
+        app:liftOnScroll="true">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
@@ -30,13 +32,13 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- App Logo & Branding -->
+            <!-- App Logo & Branding (Expressive Card) -->
             <com.google.android.material.card.MaterialCardView
                 style="?attr/materialCardViewFilledStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="28dp"
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="32dp"
                 app:strokeWidth="0dp">
 
                 <LinearLayout
@@ -44,13 +46,13 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="32dp">
+                    android:padding="40dp">
 
                     <com.google.android.material.card.MaterialCardView
-                        android:layout_width="96dp"
-                        android:layout_height="96dp"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         app:cardBackgroundColor="?attr/colorPrimaryContainer"
-                        app:cardCornerRadius="24dp"
+                        app:cardCornerRadius="28dp"
                         app:cardElevation="0dp"
                         app:strokeWidth="0dp">
 
@@ -66,9 +68,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="The Emerald Hub"
-                        android:textAppearance="?attr/textAppearanceHeadlineSmall"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/app_name"
+                        android:textAppearance="?attr/textAppearanceHeadlineMedium"
                         android:textStyle="bold" />
 
                     <TextView
@@ -77,19 +79,19 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:alpha="0.7"
-                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textAppearance="?attr/textAppearanceBodyLarge"
                         tools:text="Version 1.0.0" />
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Links Section -->
+            <!-- Actions Section -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="12dp"
                 android:layout_marginBottom="8dp"
-                android:text="Community &amp; Support"
+                android:text="System"
                 android:textAppearance="?attr/textAppearanceLabelLarge"
                 android:textColor="?attr/colorPrimary"
                 android:textStyle="bold" />
@@ -98,7 +100,49 @@
                 style="?attr/materialCardViewFilledStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="24dp"
+                app:strokeWidth="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_check_update"
+                        style="?attr/borderlessButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="72dp"
+                        android:gravity="start|center_vertical"
+                        android:paddingHorizontal="20dp"
+                        android:text="Check for Updates"
+                        android:textAllCaps="false"
+                        android:textAppearance="?attr/textAppearanceTitleMedium"
+                        app:icon="@drawable/ic_round_update_24"
+                        app:iconPadding="16dp"
+                        app:iconSize="24dp"
+                        app:iconTint="?attr/colorPrimary" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Community & Support -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginBottom="8dp"
+                android:text="Connect"
+                android:textAppearance="?attr/textAppearanceLabelLarge"
+                android:textColor="?attr/colorPrimary"
+                android:textStyle="bold" />
+
+            <com.google.android.material.card.MaterialCardView
+                style="?attr/materialCardViewFilledStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
                 app:cardCornerRadius="24dp"
                 app:strokeWidth="0dp">
 
@@ -113,18 +157,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="64dp"
                         android:gravity="start|center_vertical"
-                        android:paddingHorizontal="16dp"
+                        android:paddingHorizontal="20dp"
                         android:text="Telegram Group"
                         android:textAllCaps="false"
-                        app:icon="@drawable/about"
+                        app:icon="@drawable/ic_telegram"
                         app:iconPadding="16dp"
                         app:iconTint="?attr/colorPrimary" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginHorizontal="16dp"
-                        android:alpha="0.1"
+                        android:layout_marginHorizontal="20dp"
+                        android:alpha="0.05"
                         android:background="?attr/colorOnSurface" />
 
                     <com.google.android.material.button.MaterialButton
@@ -133,17 +177,37 @@
                         android:layout_width="match_parent"
                         android:layout_height="64dp"
                         android:gravity="start|center_vertical"
-                        android:paddingHorizontal="16dp"
+                        android:paddingHorizontal="20dp"
                         android:text="GitHub Repository"
                         android:textAllCaps="false"
                         app:icon="@drawable/ic_github"
                         app:iconPadding="16dp"
                         app:iconTint="?attr/colorPrimary" />
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:alpha="0.05"
+                        android:background="?attr/colorOnSurface" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_support"
+                        style="?attr/borderlessButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="64dp"
+                        android:gravity="start|center_vertical"
+                        android:paddingHorizontal="20dp"
+                        android:text="Support Development"
+                        android:textAllCaps="false"
+                        app:icon="@drawable/about"
+                        app:iconPadding="16dp"
+                        app:iconTint="?attr/colorPrimary" />
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Credits Card -->
+            <!-- Info Card -->
             <com.google.android.material.card.MaterialCardView
                 style="?attr/materialCardViewFilledStyle"
                 android:layout_width="match_parent"
@@ -155,20 +219,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="20dp">
+                    android:padding="24dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/about"
+                        android:text="About WhatsApp Toolkit"
                         android:textAppearance="?attr/textAppearanceTitleMedium"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="12dp"
                         android:alpha="0.7"
+                        android:lineSpacingExtra="4sp"
                         android:text="@string/app_desc"
                         android:textAppearance="?attr/textAppearanceBodyMedium" />
 

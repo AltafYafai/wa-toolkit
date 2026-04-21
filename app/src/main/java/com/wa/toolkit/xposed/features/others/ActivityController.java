@@ -59,7 +59,7 @@ public class ActivityController extends Feature {
             }
         });
 
-        XposedHelpers.findAndHookMethod("com.whatsapp.status.audienceselector.StatusTemporalRecipientsActivity", classLoader, "onCreate", Bundle.class, new XC_MethodHook() {
+        XposedHelpers.findAndHookMethod(Unobfuscator.loadStatusTemporalRecipientsActivityClass(classLoader), "onCreate", Bundle.class, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 var activity = (Activity) param.thisObject;
@@ -117,11 +117,11 @@ public class ActivityController extends Feature {
         activity.startActivityForResult(intent, REQUEST_FOLDER);
     }
 
-    private static void contactController(Intent intent, Activity activity, Class<?> statusDistribution) throws IllegalAccessException, InstantiationException, InvocationTargetException {
+    private static void contactController(Intent intent, Activity activity, Class<?> statusDistribution) throws Exception {
         Key = intent.getStringExtra("key");
         var contacts = intent.getStringArrayListExtra("contacts");
         var intent2 = new Intent();
-        intent2.setClassName(activity.getPackageName(), "com.whatsapp.status.audienceselector.StatusTemporalRecipientsActivity");
+        intent2.setClassName(activity.getPackageName(), Unobfuscator.loadStatusTemporalRecipientsActivityClass(activity.getClassLoader()).getName());
         intent2.putExtra("contact_mode", true);
         intent2.putExtra("is_black_list", false);
         List<Object> listContacts = new ArrayList<>();

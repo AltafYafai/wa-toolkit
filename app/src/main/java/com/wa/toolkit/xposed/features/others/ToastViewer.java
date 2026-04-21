@@ -111,13 +111,11 @@ public class ToastViewer extends Feature {
 
             var participantHash = result2.getString(result2.getColumnIndexOrThrow("participant_hash"));
             if (participantHash != null) {
-                if (toast_viewed_status) {
-                    Utils.showToast(Utils.getApplication().getString(ResId.string.viewed_your_status, contactName), Toast.LENGTH_LONG);
-                }
-                Tasker.sendTaskerEvent(contactName, WppCore.stripJID(rawJid), "viewed_status");
-                return;
+            if (toast_viewed_status) {
+                Utils.showToast(Utils.getApplication().getString(ResId.string.viewed_your_status, contactName), Toast.LENGTH_LONG);
             }
-
+            return;
+            }
             var userJid = WppCore.getCurrentUserJid();
 
             if (rawJid != null && userJid != null && Objects.equals(userJid.getPhoneRawString(), rawJid))

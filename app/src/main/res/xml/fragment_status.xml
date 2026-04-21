@@ -2,90 +2,51 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory
-        app:iconSpaceReserved="false"
-        android:title="@string/privacy">
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+        android:title="Status Interaction">
 
         <androidx.preference.SwitchPreferenceCompat
-            android:key="hidestatusview"
-            android:summary="@string/hidestatusview_sum"
-            android:title="@string/hidestatusview" />
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="toast_viewed_status"
-            android:summary="@string/toast_on_viewed_status_sum"
-            android:title="@string/toast_on_viewed_status" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        app:iconSpaceReserved="false"
-        android:title="Status Tweaks">
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="autonext_status"
-            android:summary="@string/disable_auto_status_sum"
-            android:title="@string/disable_auto_status" />
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="copystatus"
-            android:summary="@string/enable_copy_status_sum"
-            android:title="@string/enable_copy_status" />
-
-        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="false"
             android:key="downloadstatus"
-            android:summary="@string/statusdowload_sum"
-            android:title="@string/statusdowload" />
+            android:summary="Save any status directly to your local gallery"
+            android:title="Download Status"
+            app:icon="@drawable/download" />
 
         <androidx.preference.SwitchPreferenceCompat
-            android:key="enable_spy"
-            android:summary="@string/enable_spy_sum"
-            android:title="@string/enable_spy" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        app:iconSpaceReserved="false"
-        android:title="@string/perso">
+            android:defaultValue="false"
+            android:key="copystatus"
+            android:summary="One-tap to copy status text to clipboard"
+            android:title="Copy Status Caption"
+            app:icon="@drawable/edit2" />
 
         <androidx.preference.SwitchPreferenceCompat
-            android:key="igstatus"
-            android:summary="@string/igstatus_on_home_screen_sum"
-            android:title="@string/igstatus_on_home_screen" />
+            android:defaultValue="false"
+            android:key="statusseen"
+            android:summary="View statuses without sending a seen receipt"
+            android:title="Stealth Status View"
+            app:icon="@drawable/eye_enabled" />
+
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+        android:title="Status Playback">
 
         <androidx.preference.SwitchPreferenceCompat
-            android:key="channels"
-            android:summary="@string/disable_channels_sum"
-            android:title="@string/disable_channels" />
+            android:defaultValue="false"
+            android:key="autonext_status"
+            android:summary="Disable automatic transition to the next story"
+            android:title="Disable Auto-Next"
+            app:icon="@drawable/ic_pause" />
 
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="removechannel_rec"
-            android:summary="@string/remove_channel_recomendations_sum"
-            android:title="@string/remove_channel_recomendations" />
-
-        <ListPreference
+        <androidx.preference.ListPreference
             android:defaultValue="0"
             android:entries="@array/status_style_entries"
             android:entryValues="@array/status_style_values"
             android:key="status_style"
-            android:summary="@string/style_of_stories_status_sum"
-            android:title="@string/style_of_stories_status" />
+            android:summary="%s"
+            android:title="Status UI Style"
+            app:icon="@drawable/ic_round_settings_24" />
 
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="oldstatus"
-            android:summary="@string/old_statuses_sum"
-            android:title="@string/old_statuses" />
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="statuscomposer"
-            android:summary="@string/custom_colors_for_text_status_sum"
-            android:title="@string/custom_colors_for_text_status" />
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="vertical_status"
-            android:summary="@string/vertical_status_sum"
-            android:title="@string/vertical_status" />
-
-    </PreferenceCategory>
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
 </PreferenceScreen>

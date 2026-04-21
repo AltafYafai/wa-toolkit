@@ -85,6 +85,7 @@ public class AudioTranscript extends Feature {
                     totalLength += word.length() + 1;
                 }
                 ReflectionUtils.callMethod(onComplete, callback, fmessageObj, transcript, segments, 1);
+                VoiceToTask.processTranscript(transcript);
                 param.setResult(null);
             }
         });

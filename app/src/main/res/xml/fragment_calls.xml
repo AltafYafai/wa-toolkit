@@ -2,88 +2,41 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory
-        app:iconSpaceReserved="false"
-        android:title="@string/calls">
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="call_info"
-            android:summary="@string/additional_call_information_sum"
-            android:title="@string/additional_call_information" />
-
-        <ListPreference
-            android:entries="@array/call_blocker_buttons"
-            android:entryValues="@array/call_blocker_values"
-            android:key="call_privacy"
-            android:summary="@string/call_blocker_sum"
-            android:title="@string/call_blocker" />
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="block_unverified"
-            android:summary="Block calls from unverified business accounts"
-            android:title="@string/block_unverified" />
-
-        <ListPreference
-            android:entries="@array/call_type_buttons"
-            android:entryValues="@array/call_type_values"
-            android:key="call_type"
-            android:summary="@string/call_blocking_type_sum"
-            android:title="@string/call_blocking_type" />
-
-        <com.wa.toolkit.preference.ContactPickerPreference
-            android:key="call_block_contacts"
-            android:title="@string/contact_block_list"
-            app:summaryOff="@string/no_contacts_selected"
-            app:summaryOn="@string/contact_were_selected" />
-
-        <com.wa.toolkit.preference.ContactPickerPreference
-            android:key="call_white_contacts"
-            android:title="@string/contact_white_list"
-            app:summaryOff="@string/no_contacts_selected"
-            app:summaryOn="@string/contact_were_selected" />
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="calltype"
-            android:summary="@string/selection_of_call_type_sum"
-            android:title="@string/selection_of_call_type" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        app:iconSpaceReserved="false"
-        android:title="@string/call_recording_title">
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="call_recording_enable"
-            android:summary="@string/call_recording_enable_sum"
-            android:title="@string/call_recording_enable" />
-
-        <com.wa.toolkit.preference.FileSelectPreference
-            android:defaultValue="/sdcard/Music/WhatsappToolkit/Recordings"
-            android:dependency="call_recording_enable"
-            app:directory="true"
-            android:key="call_recording_path"
-            android:title="@string/call_recording_path" />
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+        android:title="Call Recording">
 
         <androidx.preference.SwitchPreferenceCompat
             android:defaultValue="false"
-            android:dependency="call_recording_enable"
-            android:key="call_recording_toast"
-            android:summary="@string/call_recording_toast_summary"
-            android:title="@string/call_recording_toast_title" />
+            android:key="call_recording"
+            android:summary="Record all incoming and outgoing voice calls"
+            android:title="Enable Call Recording"
+            app:icon="@drawable/ic_recording" />
 
-        <Preference
-            android:dependency="call_recording_enable"
-            android:key="call_recording_settings"
-            android:summary="@string/recording_mode_description"
-            android:title="@string/call_recording_settings" />
-
-        <Preference
+        <androidx.preference.Preference
             android:key="view_recordings"
-            android:icon="@drawable/ic_recording"
-            android:title="View Recordings"
-            android:summary="Manage and play your recorded calls" />
+            android:summary="Browse and play your recorded conversations"
+            android:title="Manage Recordings"
+            app:icon="@drawable/ic_play" />
 
-    </PreferenceCategory>
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+        android:title="Call Control">
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="call_privacy"
+            android:summary="Block specific contacts from calling you"
+            android:title="Call Blocker"
+            app:icon="@drawable/eye_disabled" />
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="call_info"
+            android:summary="Show caller location and technical details"
+            android:title="Caller Insights"
+            app:icon="@drawable/ic_round_warning_24" />
+
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
 </PreferenceScreen>

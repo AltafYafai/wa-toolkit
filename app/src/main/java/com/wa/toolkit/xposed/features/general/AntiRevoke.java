@@ -80,7 +80,7 @@ public class AntiRevoke extends Feature {
     }
 
     private static void persistRevokedMessage(FMessageWpp fMessage) {
-        var messageKey = (String) XposedHelpers.getObjectField(fMessage.getObject(), "A01");
+        var messageKey = fMessage.getKey().messageID;
         var stripJID = fMessage.getKey().remoteJid.getPhoneNumber();
         Set<String> messages = getRevokedMessagesForJid(fMessage);
         messages.add(messageKey);
@@ -121,13 +121,12 @@ public class AntiRevoke extends Feature {
                 var fMessage = new FMessageWpp(param.args[0]);
                 var messageKey = fMessage.getKey();
                 var deviceJid = fMessage.getDeviceJid();
-                var messageID = (String) XposedHelpers.getObjectField(fMessage.getObject(), "A01");
+                var messageID = messageKey.messageID;
 
                 if (WppCore.getPrivBoolean(messageID + "_delpass", false)) {
                     WppCore.removePrivKey(messageID + "_delpass");
                     var activity = WppCore.getCurrentActivity();
-                    Class<?> StatusPlaybackActivityClass = classLoader
-                            .loadClass("com.whatsapp.status.playback.StatusPlaybackActivity");
+                    Class<?> StatusPlaybackActivityClass = Unobfuscator.loadStatusPlaybackActivityClass(classLoader);
                     if (activity != null && StatusPlaybackActivityClass.isInstance(activity)) {
                         activity.finish();
                     }
@@ -238,7 +237,7 @@ public class AntiRevoke extends Feature {
         } catch (Exception e) {
             log(e);
         }
-        String messageKey = (String) XposedHelpers.getObjectField(fMessage.getObject(), "A01");
+        String messageKey = fMessage.getKey().messageID;
         String stripJID = fMessage.getKey().remoteJid.getPhoneNumber();
         int revokeboolean = stripJID.equals("status") ? Integer.parseInt(prefs.getString("antirevokestatus", "0"))
                 : Integer.parseInt(prefs.getString("antirevoke", "0"));

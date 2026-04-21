@@ -20,6 +20,10 @@ public abstract class Feature {
 
     public abstract void doHook() throws Throwable;
 
+    public void safeHook(java.lang.reflect.Member method, de.robv.android.xposed.XC_MethodHook callback) {
+        FeatureManager.INSTANCE.safeHookMethod(method, callback);
+    }
+
     @NonNull
     public abstract String getPluginName();
 
