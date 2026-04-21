@@ -3,7 +3,7 @@ name: Android CI
 on:
   workflow_dispatch: 
   push:
-    branches: [ "main", "master", "feature/*", "experimental" ]
+    branches: [ "main", "master", "feature/*", "experimental", "beta" ]
 
 jobs:
   build:
@@ -72,7 +72,7 @@ jobs:
           tag_name: debug-${{ env.SHORT_SHA }}
 
       - name: Read changelog
-        if: ${{ success() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/experimental') && github.ref_type != 'tag' && env.TELEGRAM_BOT_TOKEN != '' }}
+        if: ${{ success() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/experimental' || github.ref == 'refs/heads/beta') && github.ref_type != 'tag' && env.TELEGRAM_BOT_TOKEN != '' }}
         id: changelog
         run: |
           CHANGELOG=$(cat changelog.txt)
@@ -81,7 +81,7 @@ jobs:
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Post to Telegram
-        if: ${{ success() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/experimental') && github.ref_type != 'tag' && env.TELEGRAM_BOT_TOKEN != '' }}
+        if: ${{ success() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/experimental' || github.ref == 'refs/heads/beta') && github.ref_type != 'tag' && env.TELEGRAM_BOT_TOKEN != '' }}
         run: |
           MESSAGE="<b>📦 Whatsapp Toolkit Build</b>%0A%0A"
           MESSAGE+="<b>SHA:</b> <code>${{ env.SHORT_SHA }}</code>%0A"
