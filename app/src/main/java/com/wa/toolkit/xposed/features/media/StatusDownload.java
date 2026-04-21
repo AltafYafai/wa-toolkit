@@ -126,7 +126,7 @@ public class StatusDownload extends Feature {
             }
 
             Intent intent = new Intent();
-            var clazz = Unobfuscator.getClassByName("MediaComposerActivity", classLoader);
+            var clazz = Unobfuscator.loadMediaComposerActivityClass(classLoader);
             intent.setClassName(Utils.getApplication().getPackageName(), clazz.getName());
             intent.putExtra("jids", new ArrayList<>(Collections.singleton("status@broadcast")));
             intent.putExtra("android.intent.extra.STREAM", new ArrayList<>(Collections.singleton(mediaUri)));

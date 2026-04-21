@@ -7,7 +7,7 @@
 
 ## Phase 2: Feature Enhancements
 - [x] **Smart Reply Updates:** Verify and update Smart Reply UI hooks to ensure they work across latest WA/WB versions.
-- [ ] **Status Enhancements:** Review `StatusDownload` and related features for potential improvements using the new dynamic discovery logic.
+- [x] **Status Enhancements:** Review `StatusDownload` and related features for potential improvements using the new dynamic discovery logic.
 - [ ] **Separate Group Improvements:** Refine the tab filtering logic to handle edge cases in group/broadcast identification.
 
 ## Phase 3: Stability & Testing

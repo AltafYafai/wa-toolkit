@@ -57,7 +57,7 @@ public class StatusAnalytics extends Feature {
         } else {
             collection = (Collection) param.args[0];
         }
-        var jidClass = Unobfuscator.findFirstClassUsingName(classLoader, StringMatchType.EndsWith, "jid.Jid");
+        var jidClass = Unobfuscator.loadJidClass(classLoader);
         for (var messageStatusUpdateReceipt : collection) {
             Field fieldByType = ReflectionUtils.getFieldByType(messageStatusUpdateReceipt.getClass(), int.class);
             Field fieldId = ReflectionUtils.getFieldByType(messageStatusUpdateReceipt.getClass(), long.class);

@@ -34,7 +34,7 @@ public class DeleteStatus extends Feature {
 
         var fragmentloader = Unobfuscator.loadFragmentLoader(classLoader);
         var showDialogStatus = Unobfuscator.loadShowDialogStatusMethod(classLoader);
-        Class<?> StatusDeleteDialogFragmentClass = Unobfuscator.findFirstClassUsingName(classLoader, StringMatchType.EndsWith, ".StatusDeleteDialogFragment");
+        Class<?> StatusDeleteDialogFragmentClass = Unobfuscator.loadStatusDeleteDialogFragmentClass(classLoader);
         Field fieldBundle = ReflectionUtils.getFieldByType(fragmentloader, Bundle.class);
 
         var item = new MenuStatusListener.onMenuItemStatusListener() {

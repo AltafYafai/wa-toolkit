@@ -65,8 +65,6 @@ public class Unobfuscator {
     private static final String TAG = "Unobfuscator";
     private static DexKitBridge dexkit;
 
-    public static final HashMap<String, Class<?>> cacheClasses = new HashMap<>();
-
     static {
         System.loadLibrary("dexkit");
     }
@@ -1248,7 +1246,7 @@ public class Unobfuscator {
     public synchronized static Field loadChatJidField(ClassLoader loader) throws Exception {
         return UnobfuscatorCache.getInstance().getField(loader, () -> {
             Class<?> chatClass = loadChatClass(loader);
-            Class<?> jidClass = findFirstClassUsingName(loader, StringMatchType.EndsWith, "jid.Jid");
+            Class<?> jidClass = loadJidClass(loader);
             var field = ReflectionUtils.getFieldByExtendType(chatClass, jidClass);
             if (field == null) throw new Exception("ChatJid field not found");
             return field;
@@ -1258,7 +1256,7 @@ public class Unobfuscator {
     public synchronized static Field loadUserJidConversationDelegate(ClassLoader loader) throws Exception {
         return UnobfuscatorCache.getInstance().getField(loader, () -> {
             Class<?> chatClass = findFirstClassUsingStrings(loader, StringMatchType.Contains, "conversation/createconversation");
-            Class<?> jidClass = Unobfuscator.findFirstClassUsingName(loader, StringMatchType.EndsWith, "jid.Jid");
+            Class<?> jidClass = loadJidClass(loader);
             Field field = ReflectionUtils.getFieldByExtendType(chatClass, jidClass);
             if (field == null) throw new Exception("UserJidConversationDelegate field not found");
             return field;
@@ -1333,7 +1331,7 @@ public class Unobfuscator {
             @Override
             public Field call() throws Exception {
                 Class<?> keyClass = loadMessageKeyClass(loader);
-                Class<?> jidClass = findFirstClassUsingName(loader, StringMatchType.EndsWith, "jid.Jid");
+                Class<?> jidClass = loadJidClass(loader);
                 for (Field f : keyClass.getDeclaredFields()) {
                     if (jidClass.isAssignableFrom(f.getType())) return f;
                 }
@@ -2788,16 +2786,52 @@ public class Unobfuscator {
         });
     }
 
-    public static Class<?> getClassByName(String className, ClassLoader classLoader) throws ClassNotFoundException {
-        if (cacheClasses.containsKey(className))
-            return cacheClasses.get(className);
-        var classDataList = dexkit.findClass(
-                FindClass.create().matcher(ClassMatcher.create().className(className, StringMatchType.EndsWith)));
-        if (classDataList.isEmpty())
-            throw new RuntimeException("Class " + className + " not found!");
-        var clazz = classDataList.get(0).getInstance(classLoader);
-        cacheClasses.put(className, clazz);
-        return clazz;
+    public static Class<?> loadTextStatusComposerActivityClass(ClassLoader classLoader) throws Exception {
+        return UnobfuscatorCache.getInstance().getClass(classLoader, () -> {
+            var clazz = findFirstClassUsingName(classLoader, StringMatchType.EndsWith, "TextStatusComposerActivity");
+            if (clazz == null) throw new ClassNotFoundException("TextStatusComposerActivity not found");
+            return clazz;
+        });
+    }
+
+    public static Class<?> loadConsolidatedStatusComposerActivityClass(ClassLoader classLoader) throws Exception {
+        return UnobfuscatorCache.getInstance().getClass(classLoader, () -> {
+            var clazz = findFirstClassUsingName(classLoader, StringMatchType.EndsWith, "ConsolidatedStatusComposerActivity");
+            if (clazz == null) throw new ClassNotFoundException("ConsolidatedStatusComposerActivity not found");
+            return clazz;
+        });
+    }
+
+    public static Class<?> loadMediaComposerActivityClass(ClassLoader classLoader) throws Exception {
+        return UnobfuscatorCache.getInstance().getClass(classLoader, () -> {
+            var clazz = findFirstClassUsingName(classLoader, StringMatchType.EndsWith, "MediaComposerActivity");
+            if (clazz == null) throw new ClassNotFoundException("MediaComposerActivity not found");
+            return clazz;
+        });
+    }
+
+    public static Class<?> loadJidClass(ClassLoader classLoader) throws Exception {
+        return UnobfuscatorCache.getInstance().getClass(classLoader, () -> {
+            var clazz = findFirstClassUsingName(classLoader, StringMatchType.EndsWith, "jid.Jid");
+            if (clazz == null) throw new ClassNotFoundException("Jid class not found");
+            return clazz;
+        });
+    }
+
+    public static Class<?> loadStatusDeleteDialogFragmentClass(ClassLoader classLoader) throws Exception {
+        return UnobfuscatorCache.getInstance().getClass(classLoader, () -> {
+            var clazz = findFirstClassUsingName(classLoader, StringMatchType.EndsWith, ".StatusDeleteDialogFragment");
+            if (clazz == null) throw new ClassNotFoundException("StatusDeleteDialogFragment not found");
+            return clazz;
+        });
+    }
+
+    public static Class<?> loadWDSProfilePhotoClass(ClassLoader classLoader) throws Exception {
+        return UnobfuscatorCache.getInstance().getClass(classLoader, () -> {
+            var clazz = findFirstClassUsingName(classLoader, StringMatchType.EndsWith, ".WDSProfilePhoto");
+            if (clazz == null) throw new ClassNotFoundException("WDSProfilePhoto not found");
+            return clazz;
+        });
     }
 
     public static Class loadVoipManager(ClassLoader classLoader) throws Exception {
