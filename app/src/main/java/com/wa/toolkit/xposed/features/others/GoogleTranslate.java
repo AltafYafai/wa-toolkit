@@ -49,7 +49,7 @@ public class GoogleTranslate extends Feature {
             }
         });
 
-        Class<?> translatorClazz = XposedHelpers.findClass("com.whatsapp.messagetranslation.UnityMessageTranslation", classLoader);
+        Class<?> translatorClazz = Unobfuscator.loadUnityMessageTranslationClass(classLoader);
 
         var pre21Method = XposedHelpers.findMethodExactIfExists(translatorClazz, "translate", String.class);
         if (pre21Method != null) {

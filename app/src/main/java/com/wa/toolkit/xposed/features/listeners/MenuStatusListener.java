@@ -36,9 +36,10 @@ public class MenuStatusListener extends Feature {
         logDebug("MenuStatus method: " + menuStatusMethod.getName());
         var menuManagerClass = Unobfuscator.loadMenuManagerClass(classLoader);
 
-        Class<?> StatusPlaybackBaseFragmentClass = classLoader.loadClass("com.whatsapp.status.playback.fragment.StatusPlaybackBaseFragment");
-        Class<?> StatusPlaybackContactFragmentClass = classLoader.loadClass("com.whatsapp.status.playback.fragment.StatusPlaybackContactFragment");
-        var listStatusField = ReflectionUtils.getFieldsByExtendType(StatusPlaybackContactFragmentClass, List.class).get(0);
+        Class<?> StatusPlaybackBaseFragmentClass = Unobfuscator.loadStatusPlaybackBaseFragmentClass(classLoader);
+        Class<?> StatusPlaybackContactFragmentClass = Unobfuscator.loadStatusPlaybackContactFragmentClass(classLoader);
+        var listStatusField = Unobfuscator.loadStatusListField(classLoader);
+        var indexField = Unobfuscator.loadStatusIndexField(classLoader);
 
         XposedBridge.hookMethod(menuStatusMethod, new XC_MethodHook() {
             @Override
@@ -60,7 +61,7 @@ public class MenuStatusListener extends Feature {
                     menu = (Menu) ReflectionUtils.getObjectField(menuField, menuManager);
                 }
 
-                var index = (int) XposedHelpers.getObjectField(fragmentInstance, "A00");
+                var index = (int) ReflectionUtils.getObjectField(indexField, fragmentInstance);
                 var listStatus = (List) listStatusField.get(fragmentInstance);
                 var object = listStatus.get(index);
                 if (object == null) return;

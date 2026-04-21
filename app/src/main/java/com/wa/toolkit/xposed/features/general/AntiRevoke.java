@@ -126,8 +126,7 @@ public class AntiRevoke extends Feature {
                 if (WppCore.getPrivBoolean(messageID + "_delpass", false)) {
                     WppCore.removePrivKey(messageID + "_delpass");
                     var activity = WppCore.getCurrentActivity();
-                    Class<?> StatusPlaybackActivityClass = classLoader
-                            .loadClass("com.whatsapp.status.playback.StatusPlaybackActivity");
+                    Class<?> StatusPlaybackActivityClass = Unobfuscator.loadStatusPlaybackActivityClass(classLoader);
                     if (activity != null && StatusPlaybackActivityClass.isInstance(activity)) {
                         activity.finish();
                     }

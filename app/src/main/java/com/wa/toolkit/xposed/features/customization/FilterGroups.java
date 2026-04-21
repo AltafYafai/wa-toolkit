@@ -64,7 +64,7 @@ public class FilterGroups extends Feature {
             }
         });
 
-        var cFrag = XposedHelpers.findClass("com.whatsapp.conversationslist.ConversationsFragment", classLoader);
+        var cFrag = Unobfuscator.loadConversationsFragmentClass(classLoader);
 
         XposedBridge.hookAllConstructors(cFrag, new XC_MethodHook() {
             @Override

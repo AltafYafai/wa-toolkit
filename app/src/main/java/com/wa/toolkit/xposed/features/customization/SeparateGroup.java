@@ -47,7 +47,7 @@ public class SeparateGroup extends Feature {
 
     public void doHook() throws Exception {
 
-        var cFragClass = XposedHelpers.findClass("com.whatsapp.conversationslist.ConversationsFragment", classLoader);
+        var cFragClass = Unobfuscator.loadConversationsFragmentClass(classLoader);
         var homeActivityClass = WppCore.getHomeActivityClass(classLoader);
 
         if (!prefs.getBoolean("separategroups", false)) return;
@@ -348,14 +348,26 @@ public class SeparateGroup extends Feature {
         }
 
         private boolean checkGroup(Object chat) {
-            var jid = getObjectField(chat, "A00");
-            if (jid == null) jid = getObjectField(chat, "A01");
-            if (jid == null) return true;
-            if (XposedHelpers.findMethodExactIfExists(jid.getClass(), "getServer") != null) {
-                var server = (String) callMethod(jid, "getServer");
-                if (isGroup)
-                    return server.equals("broadcast") || server.equals("g.us");
-                return server.equals("s.whatsapp.net") || server.equals("lid");
+            try {
+                var jidField = Unobfuscator.loadChatJidField(chat.getClass().getClassLoader());
+                var jid = ReflectionUtils.getObjectField(jidField, chat);
+                if (jid == null) return true;
+                if (XposedHelpers.findMethodExactIfExists(jid.getClass(), "getServer") != null) {
+                    var server = (String) callMethod(jid, "getServer");
+                    if (isGroup)
+                        return server.equals("broadcast") || server.equals("g.us");
+                    return server.equals("s.whatsapp.net") || server.equals("lid");
+                }
+            } catch (Exception e) {
+                var jid = getObjectField(chat, "A00");
+                if (jid == null) jid = getObjectField(chat, "A01");
+                if (jid == null) return true;
+                if (XposedHelpers.findMethodExactIfExists(jid.getClass(), "getServer") != null) {
+                    var server = (String) callMethod(jid, "getServer");
+                    if (isGroup)
+                        return server.equals("broadcast") || server.equals("g.us");
+                    return server.equals("s.whatsapp.net") || server.equals("lid");
+                }
             }
             return true;
         }

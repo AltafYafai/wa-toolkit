@@ -33,7 +33,7 @@ public class SmartReply extends Feature {
     public void doHook() throws Throwable {
         if (!prefs.getBoolean("smart_reply", false)) return;
 
-        Class<?> conversationFragmentClass = classLoader.loadClass("com.whatsapp.ConversationFragment");
+        Class<?> conversationFragmentClass = com.wa.toolkit.xposed.core.devkit.Unobfuscator.loadConversationFragmentClass(classLoader);
 
         XposedBridge.hookAllMethods(conversationFragmentClass, "onViewCreated", new XC_MethodHook() {
             @Override
