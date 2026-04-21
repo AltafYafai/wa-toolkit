@@ -5,6 +5,24 @@ import android.content.ContextWrapper;
 import android.content.res.XModuleResources;
 
 import androidx.annotation.NonNull;
+import androidx.preference.PreferenceManager;
+
+import com.wa.toolkit.activities.MainActivity;
+import com.wa.toolkit.xposed.AntiUpdater;
+import com.wa.toolkit.xposed.bridge.ScopeHook;
+import com.wa.toolkit.xposed.core.FeatureLoader;
+import com.wa.toolkit.xposed.downgrade.Patch;
+import com.wa.toolkit.xposed.utils.ResId;
+
+import de.robv.android.xposed.IXposedHookInitPackageResources;
+import de.robv.android.xposed.IXposedHookLoadPackage;
+import de.robv.android.xposed.IXposedHookZygoteInit;
+import de.robv.android.xposed.XC_MethodReplacement;
+import de.robv.android.xposed.XSharedPreferences;
+import de.robv.android.xposed.XposedBridge;
+import de.robv.android.xposed.XposedHelpers;
+import de.robv.android.xposed.callbacks.XC_InitPackageResources;
+import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 public class WppXposed implements IXposedHookLoadPackage, IXposedHookInitPackageResources, IXposedHookZygoteInit {
 
