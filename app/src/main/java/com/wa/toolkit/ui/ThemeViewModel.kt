@@ -45,20 +45,22 @@ class ThemeViewModel(application: Application) : AndroidViewModel(application) {
 
     fun loadThemes() {
         viewModelScope.launch {
-            val currentThemeName = repository.getString("folder_theme", "Default Theme").value
-            val folderList = rootDirectory.listFiles { file -> file.isDirectory }?.map { folder ->
-                val cssFile = File(folder, "style.css")
-                var author: String? = null
-                if (cssFile.exists()) {
-                    val code = cssFile.readText(Charset.defaultCharset())
-                    author = Utils.getAuthorFromCss(code)
-                }
-                ThemeItem(
-                    name = folder.name,
-                    author = author,
-                    isActive = folder.name == currentThemeName
-                )
-            } ?: emptyList()
+            val currentThemeName = repository.getStringValue("folder_theme", "Default Theme")
+            val folderList = withContext(Dispatchers.IO) {
+                rootDirectory.listFiles { file -> file.isDirectory }?.map { folder ->
+                    val cssFile = File(folder, "style.css")
+                    var author: String? = null
+                    if (cssFile.exists()) {
+                        val code = cssFile.readText(Charset.defaultCharset())
+                        author = Utils.getAuthorFromCss(code)
+                    }
+                    ThemeItem(
+                        name = folder.name,
+                        author = author,
+                        isActive = folder.name == currentThemeName
+                    )
+                } ?: emptyList()
+            }
 
             val allThemes = mutableListOf(
                 ThemeItem(
@@ -122,11 +124,13 @@ class ThemeViewModel(application: Application) : AndroidViewModel(application) {
             cssFile.writeText(content, Charset.defaultCharset())
             
             // If this is the active theme, update custom_css preference too
-            val currentThemeName = repository.getString("folder_theme", "Default Theme").value
+            val currentThemeName = repository.getStringValue("folder_theme", "Default Theme")
             if (name == currentThemeName) {
-                repository.setString("custom_css", content)
+                repository.setString(name = "custom_css", value = content)
             }
-            loadThemes()
+            withContext(Dispatchers.Main) {
+                loadThemes()
+            }
         }
     }
 

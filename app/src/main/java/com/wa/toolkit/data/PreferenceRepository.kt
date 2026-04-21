@@ -35,6 +35,10 @@ class PreferenceRepository(private val context: Context) {
         awaitClose { sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener) }
     }
 
+    fun getStringValue(key: String, defaultValue: String): String {
+        return sharedPreferences.getString(key, defaultValue) ?: defaultValue
+    }
+
     fun getInt(key: String, defaultValue: Int): Flow<Int> = callbackFlow {
         val listener = SharedPreferences.OnSharedPreferenceChangeListener { prefs, k ->
             if (k == key) {
