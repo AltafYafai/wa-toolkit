@@ -418,7 +418,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Class<?> loadConversationFragmentClass(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getClass(loader, "ConversationFragment", () -> {
+        return UnobfuscatorCache.getInstance().getClass(loader, () -> {
             Class<?> clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "ConversationFragment/onViewCreated");
             if (clazz == null) {
                 clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "ConversationFragment/onResume");
@@ -440,7 +440,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Class<?> loadConversationActivityClass(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getClass(loader, "ConversationActivity", () -> {
+        return UnobfuscatorCache.getInstance().getClass(loader, () -> {
             Class<?> clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "Conversation/onResume");
             if (clazz == null) {
                 clazz = XposedHelpers.findClassIfExists("com.whatsapp.Conversation", loader);
@@ -457,7 +457,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Class<?> loadConversationsFragmentClass(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getClass(loader, "ConversationsFragment", () -> {
+        return UnobfuscatorCache.getInstance().getClass(loader, () -> {
             Class<?> clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "ConversationsFragment/onViewCreated");
             if (clazz == null) {
                 clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "ConversationsFragment/onResume");
@@ -476,7 +476,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Class<?> loadJobClass(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getClass(loader, "JobClass", () -> {
+        return UnobfuscatorCache.getInstance().getClass(loader, () -> {
             Class<?> clazz = XposedHelpers.findClassIfExists("org.whispersystems.jobqueue.Job", loader);
             if (clazz == null) {
                 clazz = findFirstClassUsingName(loader, StringMatchType.EndsWith, "jobqueue.Job");
@@ -489,7 +489,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Class<?> loadCallConfirmationFragmentClass(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getClass(loader, "CallConfirmationFragment", () -> {
+        return UnobfuscatorCache.getInstance().getClass(loader, () -> {
             Class<?> clazz = XposedHelpers.findClassIfExists("com.whatsapp.calling.fragment.CallConfirmationFragment", loader);
             if (clazz == null) {
                 clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "CallConfirmationFragment/onResume");
@@ -502,7 +502,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Class<?> loadStatusPlaybackContactFragmentClass(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getClass(loader, "StatusPlaybackContactFragment", () -> {
+        return UnobfuscatorCache.getInstance().getClass(loader, () -> {
             Class<?> clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "StatusPlaybackContactFragment/onViewCreated");
             if (clazz == null) {
                 clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "StatusPlaybackContactFragment/onResume");
@@ -518,7 +518,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Class<?> loadStatusPlaybackBaseFragmentClass(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getClass(loader, "StatusPlaybackBaseFragment", () -> {
+        return UnobfuscatorCache.getInstance().getClass(loader, () -> {
             Class<?> clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "StatusPlaybackBaseFragment/onViewCreated");
             if (clazz == null) {
                 clazz = XposedHelpers.findClassIfExists("com.whatsapp.status.playback.fragment.StatusPlaybackBaseFragment", loader);
@@ -531,7 +531,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Class<?> loadHomeActivityClass(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getClass(loader, "HomeActivity", () -> {
+        return UnobfuscatorCache.getInstance().getClass(loader, () -> {
             Class<?> clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "HomeActivity/onCreate");
             if (clazz == null) {
                 clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "HomeActivity/on_create");
@@ -550,7 +550,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Class<?> loadTabsPagerClass(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getClass(loader, "TabsPager", () -> {
+        return UnobfuscatorCache.getInstance().getClass(loader, () -> {
             Class<?> clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "TabsPager/onCreate");
             if (clazz == null) {
                 clazz = XposedHelpers.findClassIfExists("com.whatsapp.TabsPager", loader);
@@ -566,7 +566,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Class<?> loadViewOnceViewerActivityClass(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getClass(loader, "ViewOnceViewerActivity", () -> {
+        return UnobfuscatorCache.getInstance().getClass(loader, () -> {
             Class<?> clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "ViewOnceViewerActivity/onCreate");
             if (clazz == null) {
                 clazz = XposedHelpers.findClassIfExists("com.whatsapp.messaging.ViewOnceViewerActivity", loader);
@@ -582,7 +582,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Class<?> loadAboutActivityClass(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getClass(loader, "AboutActivity", () -> {
+        return UnobfuscatorCache.getInstance().getClass(loader, () -> {
             Class<?> clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "About/onCreate");
             if (clazz == null) {
                 clazz = XposedHelpers.findClassIfExists("com.whatsapp.settings.About", loader);
@@ -598,7 +598,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Class<?> loadDataUsageActivityClass(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getClass(loader, "DataUsageActivity", () -> {
+        return UnobfuscatorCache.getInstance().getClass(loader, () -> {
             Class<?> clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "SettingsDataUsageActivity/onCreate");
             if (clazz == null) {
                 clazz = XposedHelpers.findClassIfExists("com.whatsapp.settings.SettingsDataUsageActivity", loader);
@@ -614,7 +614,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Class<?> loadTextStatusComposerFragmentClass(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getClass(loader, "TextStatusComposerFragment", () -> {
+        return UnobfuscatorCache.getInstance().getClass(loader, () -> {
             Class<?> clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "TextStatusComposerFragment/onCreate");
             if (clazz == null) {
                 clazz = XposedHelpers.findClassIfExists("com.whatsapp.status.composer.TextStatusComposerFragment", loader);
@@ -630,7 +630,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Class<?> loadVoipManagerClass(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getClass(loader, "VoipManager", () -> {
+        return UnobfuscatorCache.getInstance().getClass(loader, () -> {
             Class<?> clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "Voip/onVoipActivityCreated");
             if (clazz == null) {
                 clazz = XposedHelpers.findClassIfExists("com.whatsapp.voipcalling.Voip", loader);
@@ -646,7 +646,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Class<?> loadVoipCallInfoClass(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getClass(loader, "VoipCallInfo", () -> {
+        return UnobfuscatorCache.getInstance().getClass(loader, () -> {
             Class<?> clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "CallInfo/onCallStateChanged");
             if (clazz == null) {
                 clazz = XposedHelpers.findClassIfExists("com.whatsapp.voipcalling.CallInfo", loader);
@@ -662,7 +662,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Class<?> loadStatusPlaybackActivityClass(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getClass(loader, "StatusPlaybackActivity", () -> {
+        return UnobfuscatorCache.getInstance().getClass(loader, () -> {
             Class<?> clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "StatusPlaybackActivity/onCreate");
             if (clazz == null) {
                 clazz = XposedHelpers.findClassIfExists("com.whatsapp.status.playback.StatusPlaybackActivity", loader);
@@ -675,7 +675,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Class<?> loadStatusTemporalRecipientsActivityClass(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getClass(loader, "StatusTemporalRecipientsActivity", () -> {
+        return UnobfuscatorCache.getInstance().getClass(loader, () -> {
             Class<?> clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "StatusTemporalRecipientsActivity/onCreate");
             if (clazz == null) {
                 clazz = XposedHelpers.findClassIfExists("com.whatsapp.status.audienceselector.StatusTemporalRecipientsActivity", loader);
@@ -688,7 +688,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Class<?> loadUnityMessageTranslationClass(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getClass(loader, "UnityMessageTranslation", () -> {
+        return UnobfuscatorCache.getInstance().getClass(loader, () -> {
             Class<?> clazz = XposedHelpers.findClassIfExists("com.whatsapp.messagetranslation.UnityMessageTranslation", loader);
             if (clazz == null) {
                 clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "messagetranslation/");
@@ -701,7 +701,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Class<?> loadStatusDistributionClass(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getClass(loader, "StatusDistribution", () -> {
+        return UnobfuscatorCache.getInstance().getClass(loader, () -> {
             Class<?> clazz = XposedHelpers.findClassIfExists("com.whatsapp.contact.picker.StatusDistribution", loader);
             if (clazz == null) {
                 clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "status_distribution");
@@ -1039,7 +1039,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Field loadStatusIndexField(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getField(loader, "StatusIndex", () -> {
+        return UnobfuscatorCache.getInstance().getField(loader, () -> {
             var method = loadStatusActivePage(loader);
             var methodData = dexkit.getMethodData(DexSignUtil.getMethodDescriptor(method));
             var usingFields = methodData.getUsingFields();
@@ -1055,7 +1055,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Field loadStatusListField(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getField(loader, "StatusList", () -> {
+        return UnobfuscatorCache.getInstance().getField(loader, () -> {
             var clazz = loadStatusPlaybackContactFragmentClass(loader);
             var fields = ReflectionUtils.getFieldsByExtendType(clazz, List.class);
             if (!fields.isEmpty()) return fields.get(0);
@@ -1238,7 +1238,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Class<?> loadChatClass(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getClass(loader, "ChatClass", () -> {
+        return UnobfuscatorCache.getInstance().getClass(loader, () -> {
             var clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "conversation/createconversation");
             if (clazz == null) throw new Exception("Chat class not found");
             return clazz;
@@ -1246,7 +1246,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Field loadChatJidField(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getField(loader, "ChatJid", () -> {
+        return UnobfuscatorCache.getInstance().getField(loader, () -> {
             Class<?> chatClass = loadChatClass(loader);
             Class<?> jidClass = findFirstClassUsingName(loader, StringMatchType.EndsWith, "jid.Jid");
             var field = ReflectionUtils.getFieldByExtendType(chatClass, jidClass);
@@ -1293,7 +1293,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Class<?> loadMessageKeyClass(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getClass(loader, "MessageKey", () -> {
+        return UnobfuscatorCache.getInstance().getClass(loader, () -> {
             var classList = dexkit.findClass(new FindClass().matcher(new ClassMatcher().fieldCount(3)
                     .addMethod(new MethodMatcher().addUsingString("Key").name("toString"))));
             if (classList.isEmpty())
@@ -1303,7 +1303,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Field loadMessageKeyIdField(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getField(loader, "MessageKeyId", new UnobfuscatorCache.FunctionCall<Field>() {
+        return UnobfuscatorCache.getInstance().getField(loader, new UnobfuscatorCache.FunctionCall<Field>() {
             @Override
             public Field call() throws Exception {
                 Class<?> keyClass = loadMessageKeyClass(loader);
@@ -1316,7 +1316,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Field loadMessageKeyFromMeField(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getField(loader, "MessageKeyFromMe", new UnobfuscatorCache.FunctionCall<Field>() {
+        return UnobfuscatorCache.getInstance().getField(loader, new UnobfuscatorCache.FunctionCall<Field>() {
             @Override
             public Field call() throws Exception {
                 Class<?> keyClass = loadMessageKeyClass(loader);
@@ -1329,7 +1329,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Field loadMessageKeyRemoteJidField(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getField(loader, "MessageKeyRemoteJid", new UnobfuscatorCache.FunctionCall<Field>() {
+        return UnobfuscatorCache.getInstance().getField(loader, new UnobfuscatorCache.FunctionCall<Field>() {
             @Override
             public Field call() throws Exception {
                 Class<?> keyClass = loadMessageKeyClass(loader);
@@ -1343,7 +1343,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Field loadFMessageIdField(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getField(loader, "FMessageId", new UnobfuscatorCache.FunctionCall<Field>() {
+        return UnobfuscatorCache.getInstance().getField(loader, new UnobfuscatorCache.FunctionCall<Field>() {
             @Override
             public Field call() throws Exception {
                 Class<?> fMessageClass = loadFMessageClass(loader);
@@ -1743,7 +1743,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Field loadMessageEditTimestampField(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getField(loader, "MessageEditTimestamp", () -> {
+        return UnobfuscatorCache.getInstance().getField(loader, () -> {
             var method = loadCallerMessageEditMethod(loader);
             var clazz = method.getReturnType();
             var fields = ReflectionUtils.getFieldsByType(clazz, long.class);
@@ -2205,7 +2205,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Field loadNextStatusFragmentField(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getField(loader, "NextStatusFragment", () -> {
+        return UnobfuscatorCache.getInstance().getField(loader, () -> {
             var runMethod = loadNextStatusRunMethod(loader);
             var clazz = runMethod.getDeclaringClass();
             var targetClass = loadStatusPlaybackContactFragmentClass(loader);
@@ -2731,7 +2731,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Field loadFilterItemNameField(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getField(loader, "FilterItemName", () -> {
+        return UnobfuscatorCache.getInstance().getField(loader, () -> {
             var clazz = loadFilterItemClass(loader);
             var fields = ReflectionUtils.getFieldsByType(clazz, String.class);
             if (!fields.isEmpty()) return fields.get(0);
@@ -2775,7 +2775,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Field loadTcTokenField(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getField(loader, "TcTokenField", () -> {
+        return UnobfuscatorCache.getInstance().getField(loader, () -> {
             var tcTokenMethod = loadTcTokenMethod(loader);
             var sendPresenceMethod = loadSendPresenceMethod(loader);
             var tokenDataClass = tcTokenMethod.getReturnType();
@@ -2844,7 +2844,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Field loadHomePageIdField(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getField(loader, "HomePageId", () -> {
+        return UnobfuscatorCache.getInstance().getField(loader, () -> {
             var homeActivity = loadHomeActivityClass(loader);
             var fields = ReflectionUtils.getFieldsByType(homeActivity, int.class);
             if (!fields.isEmpty()) {
@@ -3072,7 +3072,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Field loadLoadedContactsListField(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getField(loader, "LoadedContactsList", () -> {
+        return UnobfuscatorCache.getInstance().getField(loader, () -> {
             var method = loadLoadedContactsMethod(loader);
             var clazz = method.getParameterTypes()[0];
             var fields = ReflectionUtils.getFieldsByType(clazz, List.class);
