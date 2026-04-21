@@ -22,10 +22,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.wa.toolkit.ui.MainViewModel
 import com.wa.toolkit.ui.SettingsViewModel
+import com.wa.toolkit.ui.SearchViewModel
 import com.wa.toolkit.ui.screens.DashboardScreen
 import com.wa.toolkit.ui.screens.PrivacyScreen
 import com.wa.toolkit.ui.screens.MediaScreen
+import com.wa.toolkit.ui.screens.SearchScreen
 import com.wa.toolkit.ui.theme.AppTheme
+import com.wa.toolkit.model.SearchableFeature
 
 class MainActivity : ComponentActivity() {
 
@@ -38,6 +41,7 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+    private val searchViewModel: SearchViewModel by viewModels()
     private var statusReceiver: BroadcastReceiver? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +53,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             AppTheme {
-                MainScreen(viewModel, settingsViewModel)
+                MainScreen(viewModel, settingsViewModel, searchViewModel)
             }
         }
     }
@@ -87,7 +91,11 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainScreen(viewModel: MainViewModel, settingsViewModel: SettingsViewModel) {
+fun MainScreen(
+    viewModel: MainViewModel,
+    settingsViewModel: SettingsViewModel,
+    searchViewModel: SearchViewModel
+) {
     val navController = rememberNavController()
     
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -104,7 +112,22 @@ fun MainScreen(viewModel: MainViewModel, settingsViewModel: SettingsViewModel) {
                             1 -> navController.navigate("privacy")
                             3 -> navController.navigate("media")
                         }
-                    }
+                    },
+                    onNavigateToSearch = { navController.navigate("search") }
+                )
+            }
+            composable("search") {
+                SearchScreen(
+                    viewModel = searchViewModel,
+                    onNavigateToFeature = { feature ->
+                        when (feature.fragmentType) {
+                            SearchableFeature.FragmentType.PRIVACY -> navController.navigate("privacy")
+                            SearchableFeature.FragmentType.MEDIA -> navController.navigate("media")
+                            // Add more as screens are implemented
+                            else -> navController.navigate("dashboard")
+                        }
+                    },
+                    onBack = { navController.popBackStack() }
                 )
             }
             composable("privacy") {

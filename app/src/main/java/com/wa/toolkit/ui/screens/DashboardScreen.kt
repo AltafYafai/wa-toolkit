@@ -41,7 +41,8 @@ data class DashboardItem(
 @Composable
 fun DashboardScreen(
     mainViewModel: MainViewModel,
-    onNavigateToCategory: (Int) -> Unit
+    onNavigateToCategory: (Int) -> Unit,
+    onNavigateToSearch: () -> Unit
 ) {
     val context = LocalContext.current
     val wppVersion by mainViewModel.wppVersion.collectAsState()
@@ -71,7 +72,7 @@ fun DashboardScreen(
                 isWppActive = isWppActive,
                 onSearchClick = {
                     HapticUtil.playClick(context)
-                    Toast.makeText(context, "Search coming soon", Toast.LENGTH_SHORT).show()
+                    onNavigateToSearch()
                 },
                 onBackupClick = { HapticUtil.playClick(context); ConfigUtil.exportConfigs(context) },
                 onRestoreClick = { HapticUtil.playClick(context); ConfigUtil.importConfigs(context) },
