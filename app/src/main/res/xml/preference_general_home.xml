@@ -91,4 +91,46 @@
 
     </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+        android:title="@string/font_engine">
+
+        <com.wa.toolkit.preference.FileSelectPreference
+            android:key="custom_font_path"
+            android:summary="@string/custom_font_sum"
+            android:title="@string/custom_font"
+            app:icon="@drawable/edit2" />
+
+        <com.wa.toolkit.preference.FloatSeekBarPreference
+            android:defaultValue="1.0"
+            android:key="custom_font_scale"
+            app:maxValue="2.0"
+            app:minValue="0.5"
+            android:title="@string/font_scale"
+            app:icon="@drawable/ic_round_settings_24" />
+
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+        android:title="@string/tab_architect">
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="hide_channels_tab"
+            android:title="@string/hide_channels"
+            app:icon="@drawable/ic_home_black_24dp" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="hide_communities_tab"
+            android:title="@string/hide_communities"
+            app:icon="@drawable/ic_groups" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="hide_status_tab"
+            android:title="@string/hide_status"
+            app:icon="@drawable/online" />
+
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+
 </PreferenceScreen>

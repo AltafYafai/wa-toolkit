@@ -138,45 +138,6 @@
             android:summary="@string/manage_theme_sum"
             android:title="@string/theme_manager" />
 
-        <androidx.preference.PreferenceCategory
-            android:title="@string/font_engine">
-
-            <com.wa.toolkit.preference.FileSelectPreference
-                android:key="custom_font_path"
-                android:summary="@string/custom_font_sum"
-                android:title="@string/custom_font" />
-
-            <SeekBarPreference
-                android:defaultValue="100"
-                android:key="custom_font_scale"
-                android:max="200"
-                app:min="50"
-                app:showSeekBarValue="true"
-                android:summary="@string/font_scale_sum"
-                android:title="@string/font_scale" />
-
-        </androidx.preference.PreferenceCategory>
-
-        <androidx.preference.PreferenceCategory
-            android:title="@string/tab_architect">
-
-            <androidx.preference.SwitchPreferenceCompat
-                android:defaultValue="false"
-                android:key="hide_channels_tab"
-                android:title="@string/hide_channels" />
-
-            <androidx.preference.SwitchPreferenceCompat
-                android:defaultValue="false"
-                android:key="hide_communities_tab"
-                android:title="@string/hide_communities" />
-
-            <androidx.preference.SwitchPreferenceCompat
-                android:defaultValue="false"
-                android:key="hide_status_tab"
-                android:title="@string/hide_status" />
-
-        </androidx.preference.PreferenceCategory>
-
         <ListPreference
             android:entries="@array/animations_names"
             android:defaultValue="default"

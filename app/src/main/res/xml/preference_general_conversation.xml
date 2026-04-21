@@ -129,4 +129,23 @@
 
     </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+        android:title="AI Intelligence">
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="smart_reply"
+            android:summary="@string/smart_reply_sum"
+            android:title="@string/smart_reply"
+            app:icon="@drawable/ic_dashboard_black_24dp" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="chat_summarization"
+            android:summary="@string/chat_summarization_sum"
+            android:title="@string/chat_summarization"
+            app:icon="@drawable/about" />
+
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+
 </PreferenceScreen>

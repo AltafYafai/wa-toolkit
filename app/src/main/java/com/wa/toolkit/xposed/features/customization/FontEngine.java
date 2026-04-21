@@ -27,7 +27,7 @@ public class FontEngine extends Feature {
     @Override
     public void doHook() throws Throwable {
         String fontPath = prefs.getString("custom_font_path", "");
-        fontScale = prefs.getFloat("custom_font_scale", 100f) / 100f;
+        fontScale = prefs.getFloat("custom_font_scale", 1.0f);
         
         if (fontPath.isEmpty()) return;
 
@@ -53,7 +53,11 @@ public class FontEngine extends Feature {
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 if (fontScale != 1.0f) {
                     TextView textView = (TextView) param.thisObject;
-                    textView.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, textView.getTextSize() * fontScale);
+                    Float scaled = (Float) textView.getTag(ResId.string.app_name); // Use app_name as a unique tag key
+                    if (scaled == null || scaled != fontScale) {
+                        textView.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, textView.getTextSize() * fontScale);
+                        textView.setTag(ResId.string.app_name, fontScale);
+                    }
                 }
             }
         });
@@ -70,7 +74,11 @@ public class FontEngine extends Feature {
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 if (fontScale != 1.0f) {
                     TextView textView = (TextView) param.thisObject;
-                    textView.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, textView.getTextSize() * fontScale);
+                    Float scaled = (Float) textView.getTag(ResId.string.app_name);
+                    if (scaled == null || scaled != fontScale) {
+                        textView.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, textView.getTextSize() * fontScale);
+                        textView.setTag(ResId.string.app_name, fontScale);
+                    }
                 }
             }
         });
