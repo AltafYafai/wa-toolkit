@@ -194,7 +194,7 @@ public class SeparateGroup extends Feature {
 
         var recreateFragmentMethod = Unobfuscator.loadRecreateFragmentConstructor(classLoader);
 
-        var pattern = Pattern.compile("android:switcher:\d+:(\d+)");
+        var pattern = Pattern.compile("android:switcher:\\d+:(\\d+)");
 
         Class<?> FragmentClass = Unobfuscator.loadFragmentClass(classLoader);
 
