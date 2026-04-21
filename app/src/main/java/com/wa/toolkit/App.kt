@@ -15,12 +15,17 @@ import androidx.core.app.ActivityCompat
 import androidx.preference.PreferenceManager
 import com.google.android.material.color.DynamicColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.wa.toolkit.data.PreferenceRepository
 import java.io.File
 import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 class App : Application() {
+
+    val preferenceRepository: PreferenceRepository by lazy {
+        PreferenceRepository(this)
+    }
 
     companion object {
         private var instance: App? = null

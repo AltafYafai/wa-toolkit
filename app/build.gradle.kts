@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.materialthemebuilder)
     alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.compose.compiler)
 }
 
 abstract class GitHashValueSource : ValueSource<String, ValueSourceParameters.None> {
@@ -132,8 +133,8 @@ android {
         viewBinding = true
         buildConfig = true
         aidl = true
+        compose = true
     }
-
 
     lint {
         disable += "SelectedPhotoAccess"
@@ -169,6 +170,15 @@ dependencies {
     implementation(files("libs/dexkit-android.aar"))
     implementation(libs.flatbuffers)
     compileOnly(libs.libxposed.legacy)
+
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
     implementation(libs.androidx.activity)
     implementation(libs.androidx.documentfile)
