@@ -1,6 +1,6 @@
 package com.wa.toolkit.xposed.utils
 
-import android.content.res.XModuleResources
+import de.robv.android.xposed.res.XModuleResources
 import com.wa.toolkit.R
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.callbacks.XC_InitPackageResources
