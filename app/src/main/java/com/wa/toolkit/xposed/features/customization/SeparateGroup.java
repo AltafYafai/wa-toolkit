@@ -369,17 +369,20 @@ public class SeparateGroup extends Feature {
 
                 if (jid == null) return true;
 
-                if (XposedHelpers.findMethodExactIfExists(jid.getClass(), "getServer") != null) {
-                    var server = (String) XposedHelpers.callMethod(jid, "getServer");
-                    if (isGroup)
-                        return server.equals("broadcast") || server.equals("g.us");
-                    return server.equals("s.whatsapp.net") || server.equals("lid");
+                String rawJid = null;
+                try {
+                    rawJid = (String) XposedHelpers.callMethod(jid, "getRawString");
+                } catch (Throwable ignored) {}
+
+                if (rawJid != null) {
+                    if (isGroup) {
+                        return rawJid.endsWith("@g.us") || rawJid.endsWith("@broadcast");
+                    } else {
+                        return rawJid.endsWith("@s.whatsapp.net") || rawJid.endsWith("@lid");
+                    }
                 }
 
-                FMessageWpp.UserJid userJid = new FMessageWpp.UserJid(jid);
-                if (isGroup)
-                    return userJid.isBroadcast() || userJid.isGroup();
-                return userJid.isContact();
+                return true;
             } catch (Exception e) {
                 return true;
             }
