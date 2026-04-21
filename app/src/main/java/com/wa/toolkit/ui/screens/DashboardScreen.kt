@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.wa.toolkit.R
 import com.wa.toolkit.ui.MainViewModel
+import com.wa.toolkit.ui.SettingsViewModel
 import com.wa.toolkit.utils.HapticUtil
 import com.wa.toolkit.activities.AboutActivity
 import com.wa.toolkit.App
