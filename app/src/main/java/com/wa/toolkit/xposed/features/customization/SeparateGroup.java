@@ -111,9 +111,9 @@ public class SeparateGroup extends Feature {
                             var cursor1 = db.rawQuery(sql2, new String[]{String.valueOf(jid)});
                             if (!cursor1.moveToFirst()) continue;
                             var server = cursor1.getString(cursor1.getColumnIndex("server"));
-                            if (server.equals("g.us")) {
+                            if (server.equals("g.us") || server.equals("broadcast")) {
                                 groupCount++;
-                            } else {
+                            } else if (server.equals("s.whatsapp.net") || server.equals("lid")) {
                                 chatCount++;
                             }
                             cursor1.close();
