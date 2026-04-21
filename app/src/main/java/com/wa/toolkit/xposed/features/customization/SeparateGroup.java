@@ -367,7 +367,11 @@ public class SeparateGroup extends Feature {
                     }
                 }
 
-                if (jid == null) return true;
+                if (jid == null) {
+                    // If JID is still null after all attempts, we cannot classify.
+                    // Return false to filter it out and prevent it from appearing in both tabs.
+                    return false;
+                }
 
                 String rawJid = null;
                 try {
@@ -375,16 +379,19 @@ public class SeparateGroup extends Feature {
                 } catch (Throwable ignored) {}
 
                 if (rawJid != null) {
-                    if (isGroup) {
+                    if (isGroup)
                         return rawJid.endsWith("@g.us") || rawJid.endsWith("@broadcast");
-                    } else {
-                        return rawJid.endsWith("@s.whatsapp.net") || rawJid.endsWith("@lid");
-                    }
+                    return rawJid.endsWith("@s.whatsapp.net") || rawJid.endsWith("@lid");
                 }
 
-                return true;
+                // If rawJid is also null, and getServer() wasn't available, we cannot classify.
+                // Return false to filter it out.
+                return false;
             } catch (Exception e) {
-                return true;
+                // If any exception occurs during classification, log it and return false to filter it out.
+                XposedBridge.log("WAE SeparateGroup checkGroup exception: " + e.getMessage());
+                e.printStackTrace();
+                return false;
             }
         }
     }
