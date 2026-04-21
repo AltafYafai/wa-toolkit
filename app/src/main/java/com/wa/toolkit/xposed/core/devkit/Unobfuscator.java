@@ -2802,14 +2802,6 @@ public class Unobfuscator {
         });
     }
 
-    public static Class<?> loadStatusPlaybackActivityClass(ClassLoader classLoader) throws Exception {
-        return UnobfuscatorCache.getInstance().getClass(classLoader, () -> {
-            var clazz = findFirstClassUsingName(classLoader, StringMatchType.EndsWith, "StatusPlaybackActivity");
-            if (clazz == null) throw new ClassNotFoundException("StatusPlaybackActivity not found");
-            return clazz;
-        });
-    }
-
     public static Class<?> loadTextStatusComposerActivityClass(ClassLoader classLoader) throws Exception {
         return UnobfuscatorCache.getInstance().getClass(classLoader, () -> {
             var clazz = findFirstClassUsingName(classLoader, StringMatchType.EndsWith, "TextStatusComposerActivity");
