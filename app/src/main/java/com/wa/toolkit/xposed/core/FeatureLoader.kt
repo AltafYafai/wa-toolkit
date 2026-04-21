@@ -53,11 +53,16 @@ object FeatureLoader {
 
     @JvmStatic
     fun start(loader: ClassLoader, pref: XSharedPreferences, sourceDir: String) {
+        XposedBridge.log("[WAE] FeatureLoader.start called with sourceDir: $sourceDir")
         if (!Unobfuscator.initWithPath(sourceDir)) {
-            XposedBridge.log("Can't init dexkit")
+            XposedBridge.log("[WAE] Can't init dexkit")
             return
         }
+        XposedBridge.log("[WAE] DexKit initialized successfully")
+        
         Feature.DEBUG = pref.getBoolean("enablelogs", true)
+        XposedBridge.log("[WAE] Feature.DEBUG: ${Feature.DEBUG}")
+        
         Utils.xprefs = pref
 
         XposedHelpers.findAndHookMethod(Instrumentation::class.java, "callApplicationOnCreate", Application::class.java,
@@ -66,18 +71,22 @@ object FeatureLoader {
                 override fun beforeHookedMethod(param: MethodHookParam) {
                     val app = param.args[0] as Application
                     mApp = app
+                    XposedBridge.log("[WAE] callApplicationOnCreate before: ${app.packageName}")
 
                     // Inject Bootloader Spoofer
                     if (pref.getBoolean("bootloader_spoofer", false)) {
                         HookBL.hook(loader, pref)
-                        XposedBridge.log("Bootloader Spoofer is Injected")
+                        XposedBridge.log("[WAE] Bootloader Spoofer is Injected")
                     }
 
                     val packageManager = app.packageManager
-                    pref.registerOnSharedPreferenceChangeListener { _, _ -> pref.reload() }
+                    pref.registerOnSharedPreferenceChangeListener { _, _ -> 
+                        XposedBridge.log("[WAE] Preferences changed, reloading...")
+                        pref.reload() 
+                    }
                     
                     val packageInfo = packageManager.getPackageInfo(app.packageName, 0)
-                    XposedBridge.log(packageInfo.versionName)
+                    XposedBridge.log("[WAE] WhatsApp Version: ${packageInfo.versionName}")
                     currentVersion = packageInfo.versionName
                     
                     val resIdArray = if (app.packageName == PACKAGE_WPP) ResId.array.supported_versions_wpp else ResId.array.supported_versions_business
@@ -88,6 +97,7 @@ object FeatureLoader {
                     
                     try {
                         val startTime = System.currentTimeMillis()
+                        XposedBridge.log("[WAE] Initializing components...")
                         UnobfuscatorCache.init(app)
                         SharedPreferencesWrapper.hookInit(app.classLoader)
                         ReflectionUtils.initCache(app)
@@ -96,7 +106,10 @@ object FeatureLoader {
                             packageInfo.versionName?.startsWith(s.replace(".xx", "")) == true
                         } ?: false
                         
+                        XposedBridge.log("[WAE] isSupported: $isSupported")
+
                         if (!isSupported) {
+                            XposedBridge.log("[WAE] Version not supported, disabling expiration...")
                             disableExpirationVersion(app.classLoader)
                             if (!pref.getBoolean("bypass_version_check", false)) {
                                 val msg = "Unsupported version: ${packageInfo.versionName}\nOnly the function of ignoring the expiration of the WhatsApp version has been applied!"
@@ -104,13 +117,15 @@ object FeatureLoader {
                             }
                         }
                         
+                        XposedBridge.log("[WAE] Loading components and plugins...")
                         initComponents(loader, pref)
                         plugins(loader, pref, packageInfo.versionName ?: "")
                         sendEnabledBroadcast(app)
                         
                         val loadTime = System.currentTimeMillis() - startTime
-                        XposedBridge.log("Loaded Hooks in ${loadTime}ms")
+                        XposedBridge.log("[WAE] Loaded Hooks in ${loadTime}ms")
                     } catch (e: Throwable) {
+                        XposedBridge.log("[WAE] Error loading features: ${e.message}")
                         XposedBridge.log(e)
                         val error = ErrorItem().apply {
                             pluginName = "MainFeatures[Critical]"

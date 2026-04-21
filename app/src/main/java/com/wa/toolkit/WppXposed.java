@@ -34,8 +34,14 @@ public class WppXposed implements IXposedHookLoadPackage, IXposedHookInitPackage
     @NonNull
     public static XSharedPreferences getPref() {
         if (pref == null) {
-            pref = new XSharedPreferences(BuildConfig.APPLICATION_ID, BuildConfig.APPLICATION_ID + "_preferences");
-            pref.makeWorldReadable();
+            String prefName = BuildConfig.APPLICATION_ID + "_preferences";
+            pref = new XSharedPreferences(BuildConfig.APPLICATION_ID, prefName);
+            boolean readable = pref.makeWorldReadable();
+            XposedBridge.log("[WAE] XSharedPreferences initialized for " + BuildConfig.APPLICATION_ID + " / " + prefName);
+            XposedBridge.log("[WAE] makeWorldReadable result: " + readable);
+            XposedBridge.log("[WAE] Pref file: " + pref.getFile().getAbsolutePath());
+            XposedBridge.log("[WAE] Pref file exists: " + pref.getFile().exists());
+            XposedBridge.log("[WAE] Pref file readable: " + pref.getFile().canRead());
             pref.reload();
         }
         return pref;
@@ -48,7 +54,7 @@ public class WppXposed implements IXposedHookLoadPackage, IXposedHookInitPackage
         var classLoader = lpparam.classLoader;
 
         if (packageName.contains("com.wa.toolkit")) {
-            XposedBridge.log("[•] Hooking toolkit app: " + packageName);
+            XposedBridge.log("[WAE] Hooking toolkit app: " + packageName);
             try {
                 Class<?> mainActivity = XposedHelpers.findClass("com.wa.toolkit.MainActivity", lpparam.classLoader);
                 XposedHelpers.findAndHookMethod(mainActivity, "isXposedEnabled", new XC_MethodReplacement() {
@@ -69,7 +75,7 @@ public class WppXposed implements IXposedHookLoadPackage, IXposedHookInitPackage
                     });
                 } catch (Throwable ignored) {}
 
-                XposedBridge.log("[✓] isXposedEnabled hooked successfully");
+                XposedBridge.log("[WAE] isXposedEnabled hooked successfully");
                 
                 String prefManager = PreferenceManager.class.getName();
                 XC_MethodReplacement worldReadable = XC_MethodReplacement.returnConstant(ContextWrapper.MODE_WORLD_READABLE);
@@ -82,14 +88,14 @@ public class WppXposed implements IXposedHookLoadPackage, IXposedHookInitPackage
                     @Override
                     protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                         String name = (String) param.args[0];
-                        if (name.contains("preferences") || name.contains(BuildConfig.APPLICATION_ID)) {
+                        if (name.contains("preferences") || name.contains("com.wa.toolkit")) {
                             param.args[1] = ContextWrapper.MODE_WORLD_READABLE;
                         }
                     }
                 });
                 
             } catch (Throwable t) {
-                XposedBridge.log("[!] Error hooking toolkit app: " + t.getMessage());
+                XposedBridge.log("[WAE] Error hooking toolkit app: " + t.getMessage());
                 XposedBridge.log(t);
             }
             return;
@@ -99,6 +105,8 @@ public class WppXposed implements IXposedHookLoadPackage, IXposedHookInitPackage
             return;
         }
 
+        XposedBridge.log("[WAE] Detected target package: " + packageName);
+
         AntiUpdater.hookSession(lpparam);
 
         Patch.handleLoadPackage(lpparam, getPref());
@@ -106,11 +114,19 @@ public class WppXposed implements IXposedHookLoadPackage, IXposedHookInitPackage
         ScopeHook.hook(lpparam);
 
         //  AndroidPermissions.hook(lpparam); in tests
-        if ((packageName.equals(FeatureLoader.PACKAGE_WPP) && App.isOriginalPackage()) || packageName.equals(FeatureLoader.PACKAGE_BUSINESS)) {
-            XposedBridge.log("[•] This package: " + lpparam.packageName);
+        boolean isWpp = packageName.equals(FeatureLoader.PACKAGE_WPP);
+        boolean isBusiness = packageName.equals(FeatureLoader.PACKAGE_BUSINESS);
+        boolean isOriginal = App.isOriginalPackage();
+        
+        XposedBridge.log("[WAE] isWpp: " + isWpp + ", isBusiness: " + isBusiness + ", isOriginal: " + isOriginal);
+
+        if ((isWpp && isOriginal) || isBusiness) {
+            XposedBridge.log("[WAE] Loading features for: " + packageName);
 
             // Load features
             FeatureLoader.start(classLoader, getPref(), lpparam.appInfo.sourceDir);
+        } else {
+            XposedBridge.log("[WAE] Skipping feature load for " + packageName + " (isOriginal=" + isOriginal + ")");
         }
     }
 
