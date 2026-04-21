@@ -8,7 +8,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.wa.toolkit.R
 import com.wa.toolkit.ui.SettingsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -51,6 +53,14 @@ fun MediaScreen(
                     summary = "Enable downloading of contact profile pictures",
                     viewModel = viewModel,
                     prefKey = "download_profile"
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.status_analytics),
+                    summary = stringResource(R.string.status_analytics_sum),
+                    viewModel = viewModel,
+                    prefKey = "status_analytics"
                 )
             }
 

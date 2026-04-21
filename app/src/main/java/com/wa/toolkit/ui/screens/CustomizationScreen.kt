@@ -7,7 +7,9 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.wa.toolkit.R
 import com.wa.toolkit.ui.SettingsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,6 +56,22 @@ fun CustomizationScreen(
                 )
             }
             item {
+                SwitchSetting(
+                    title = stringResource(R.string.colors_customization),
+                    summary = stringResource(R.string.colors_customization_sum),
+                    viewModel = viewModel,
+                    prefKey = "changecolor"
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.custom_appearance),
+                    summary = stringResource(R.string.custom_filters_sum),
+                    viewModel = viewModel,
+                    prefKey = "custom_filters"
+                )
+            }
+            item {
                 Surface(
                     onClick = onNavigateToThemeManager,
                     shape = MaterialTheme.shapes.medium,
@@ -93,6 +111,22 @@ fun CustomizationScreen(
                     summary = "Show special icon for group admins",
                     viewModel = viewModel,
                     prefKey = "admin_grp"
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.new_context_menu_ui),
+                    summary = stringResource(R.string.new_context_menu_ui_sum),
+                    viewModel = viewModel,
+                    prefKey = "floatingmenu"
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.animation_emojis),
+                    summary = stringResource(R.string.animation_emojis_sum),
+                    viewModel = viewModel,
+                    prefKey = "animation_emojis"
                 )
             }
             item {

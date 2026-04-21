@@ -7,7 +7,9 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.wa.toolkit.R
 import com.wa.toolkit.ui.SettingsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -106,6 +108,30 @@ fun ChatScreen(
                     prefKey = "revokeallmessages"
                 )
             }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.remove_see_more_button),
+                    summary = stringResource(R.string.remove_see_more_button_),
+                    viewModel = viewModel,
+                    prefKey = "removeseemore"
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.show_admin_group_icon),
+                    summary = stringResource(R.string.show_admin_group_icon_sum),
+                    viewModel = viewModel,
+                    prefKey = "show_admin_group_icon"
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.animation_emojis),
+                    summary = stringResource(R.string.animation_emojis_sum),
+                    viewModel = viewModel,
+                    prefKey = "animation_emojis"
+                )
+            }
 
             item { Spacer(Modifier.height(16.dp)) }
             item { CategoryHeader("Interactions & Tools") }
@@ -128,10 +154,26 @@ fun ChatScreen(
             }
             item {
                 SwitchSetting(
+                    title = stringResource(R.string.stamp_copied_messages),
+                    summary = stringResource(R.string.stamp_copied_messages_sum),
+                    viewModel = viewModel,
+                    prefKey = "stamp_copied_message"
+                )
+            }
+            item {
+                SwitchSetting(
                     title = "Smart Reply",
                     summary = "AI-powered quick reply suggestions",
                     viewModel = viewModel,
                     prefKey = "smart_reply"
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.chat_summarization),
+                    summary = stringResource(R.string.chat_summarization_sum),
+                    viewModel = viewModel,
+                    prefKey = "chat_summarization"
                 )
             }
         }

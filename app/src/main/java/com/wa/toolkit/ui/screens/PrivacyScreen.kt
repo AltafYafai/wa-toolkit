@@ -9,7 +9,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.wa.toolkit.R
 import com.wa.toolkit.ui.SettingsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,6 +56,30 @@ fun PrivacyScreen(
                     prefKey = "toastdeleted"
                 )
             }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.metadata_stripper),
+                    summary = stringResource(R.string.metadata_stripper_sum),
+                    viewModel = viewModel,
+                    prefKey = "metadata_stripper"
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.panic_mode),
+                    summary = stringResource(R.string.panic_mode_sum),
+                    viewModel = viewModel,
+                    prefKey = "panic_mode"
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.disable_secure_flag),
+                    summary = stringResource(R.string.disable_secure_flag_sum),
+                    viewModel = viewModel,
+                    prefKey = "disable_secure_flag"
+                )
+            }
             
             item { Spacer(Modifier.height(16.dp)) }
             item { CategoryHeader("Presence Control") }
@@ -76,6 +102,14 @@ fun PrivacyScreen(
 
             item { Spacer(Modifier.height(16.dp)) }
             item { CategoryHeader("Interactive Privacy") }
+            item {
+                SwitchSetting(
+                    title = "Double-Tap to React",
+                    summary = "Double-tap a message to react with a custom emoji",
+                    viewModel = viewModel,
+                    prefKey = "doubletap2like"
+                )
+            }
             item {
                 SwitchSetting(
                     title = "Stealth View Once",
