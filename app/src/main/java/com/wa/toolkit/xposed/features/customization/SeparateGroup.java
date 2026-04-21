@@ -194,7 +194,7 @@ public class SeparateGroup extends Feature {
 
         var recreateFragmentMethod = Unobfuscator.loadRecreateFragmentConstructor(classLoader);
 
-        var pattern = Pattern.compile("android:switcher:\\d+:(\\d+)");
+        var pattern = Pattern.compile("android:switcher:\d+:(\d+)");
 
         Class<?> FragmentClass = Unobfuscator.loadFragmentClass(classLoader);
 
@@ -355,17 +355,6 @@ public class SeparateGroup extends Feature {
                     var jidField = Unobfuscator.loadChatJidField(chat.getClass().getClassLoader());
                     jid = ReflectionUtils.getObjectField(jidField, chat);
                 } catch (Exception ignored) {}
-
-                if (jid == null) {
-                    var jidClass = Unobfuscator.loadJidClass(chat.getClass().getClassLoader());
-                    for (var field : chat.getClass().getDeclaredFields()) {
-                        if (jidClass.isAssignableFrom(field.getType())) {
-                            field.setAccessible(true);
-                            jid = field.get(chat);
-                            if (jid != null) break;
-                        }
-                    }
-                }
 
                 if (jid == null) {
                     // If JID is still null after all attempts, we cannot classify.
