@@ -872,8 +872,9 @@ public class Unobfuscator {
             var methodData = dexkit.getMethodData(DexSignUtil.getMethodDescriptor(method));
             var usingFields = methodData.getUsingFields();
             for (var fieldData : usingFields) {
-                if (fieldData.getTypeName().equals("int")) {
-                    return fieldData.getFieldInstance(loader);
+                var field = fieldData.getField();
+                if (field.getType().getName().equals("int")) {
+                    return field.getFieldInstance(loader);
                 }
             }
             var clazz = loadStatusPlaybackContactFragmentClass(loader);
@@ -2511,16 +2512,6 @@ public class Unobfuscator {
                 }
             }
             throw new RuntimeException("FMessage Timestamp method not found");
-        });
-    }
-
-    public static Class<?> loadStatusDistributionClass(ClassLoader classLoader) throws Exception {
-        return UnobfuscatorCache.getInstance().getClass(classLoader, () -> {
-            var clazz = findFirstClassUsingStrings(classLoader, StringMatchType.Equals,
-                    "Only set a valid status distribution mode");
-            if (clazz == null)
-                throw new RuntimeException("StatusDistribution not found!");
-            return clazz;
         });
     }
 
