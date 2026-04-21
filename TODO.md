@@ -6,7 +6,7 @@
 - [x] **W4B (WhatsApp Business) Compatibility:** Exhaustively test and fix any remaining `ClassNotFoundException` issues specific to the WhatsApp Business variant.
 
 ## Phase 2: Feature Enhancements
-- [ ] **Smart Reply Updates:** Verify and update Smart Reply UI hooks to ensure they work across latest WA/WB versions.
+- [x] **Smart Reply Updates:** Verify and update Smart Reply UI hooks to ensure they work across latest WA/WB versions.
 - [ ] **Status Enhancements:** Review `StatusDownload` and related features for potential improvements using the new dynamic discovery logic.
 - [ ] **Separate Group Improvements:** Refine the tab filtering logic to handle edge cases in group/broadcast identification.
 

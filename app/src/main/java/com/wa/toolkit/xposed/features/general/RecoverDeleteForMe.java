@@ -91,6 +91,7 @@ public class RecoverDeleteForMe extends Feature {
         if (msg == null)
             return;
         
+        Class<?> msgClass = msg.getClass();
         FMessageWpp fMessage = new FMessageWpp(msg);
         FMessageWpp.Key key = fMessage.getKey();
         if (key == null)

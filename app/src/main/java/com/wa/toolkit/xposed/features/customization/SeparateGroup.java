@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import com.wa.toolkit.xposed.core.Feature;
 import com.wa.toolkit.xposed.core.WppCore;
 import com.wa.toolkit.xposed.core.db.MessageStore;
+import com.wa.toolkit.xposed.core.components.FMessageWpp;
 import com.wa.toolkit.xposed.core.devkit.Unobfuscator;
 import com.wa.toolkit.xposed.core.devkit.UnobfuscatorCache;
 import com.wa.toolkit.xposed.utils.ResId;

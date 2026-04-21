@@ -21,6 +21,7 @@ import com.wa.toolkit.xposed.core.components.FMessageWpp;
 import com.wa.toolkit.xposed.utils.ReflectionUtils;
 import com.wa.toolkit.xposed.utils.Utils;
 
+import org.json.JSONObject;
 import org.luckypray.dexkit.DexKitBridge;
 import org.luckypray.dexkit.query.FindClass;
 import org.luckypray.dexkit.query.FindMethod;
@@ -451,6 +452,10 @@ public class Unobfuscator {
         });
     }
 
+    public synchronized static Class<?> loadConversationClass(ClassLoader loader) throws Exception {
+        return loadConversationActivityClass(loader);
+    }
+
     public synchronized static Class<?> loadConversationsFragmentClass(ClassLoader loader) throws Exception {
         return UnobfuscatorCache.getInstance().getClass(loader, "ConversationsFragment", () -> {
             Class<?> clazz = findFirstClassUsingStrings(loader, StringMatchType.Contains, "ConversationsFragment/onViewCreated");
@@ -879,11 +884,11 @@ public class Unobfuscator {
     }
 
     public synchronized static Method loadMediaFieldsMethod(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getMethod(loader, "MediaFields", () -> {
+        return UnobfuscatorCache.getInstance().getMethod(loader, () -> {
             var videoMethod = loadMediaQualityVideoMethod2(loader);
             var mediaClass = videoMethod.getParameterTypes()[0];
             var methods = ReflectionUtils.findAllMethodsUsingFilter(mediaClass, m -> m.getReturnType() == JSONObject.class && m.getParameterCount() == 0);
-            if (!methods.isEmpty()) return methods.get(0);
+            if (methods.length > 0) return methods[0];
             return XposedHelpers.findMethodExact(mediaClass, "A00");
         });
     }
@@ -2909,7 +2914,7 @@ public class Unobfuscator {
     }
 
     public synchronized static Method loadVerifyKeyMethod(ClassLoader loader) throws Exception {
-        return UnobfuscatorCache.getInstance().getMethod(loader, "VerifyKeyMethod", () -> {
+        return UnobfuscatorCache.getInstance().getMethod(loader, () -> {
             var methodMatcher = MethodMatcher.create().addUsingNumber(2966).paramCount(1).addParamType(int.class);
             var result = dexkit.findMethod(FindMethod.create().matcher(methodMatcher));
             if (result.isEmpty())
