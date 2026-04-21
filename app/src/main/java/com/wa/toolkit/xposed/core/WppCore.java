@@ -67,74 +67,80 @@ public class WppCore {
     private static Object meManagerInstance;
 
     public static void Initialize(ClassLoader loader, XSharedPreferences pref) throws Exception {
-        privPrefs = Utils.getApplication().getSharedPreferences("WaGlobal", Context.MODE_PRIVATE);
+        try {
+            privPrefs = Utils.getApplication().getSharedPreferences("WaGlobal", Context.MODE_PRIVATE);
 
 
-        // init UserJID
-        var companionField = FMessageWpp.UserJid.TYPE_JID.getDeclaredField("Companion");
-        mGenJidMethod = ReflectionUtils.findMethodUsingFilter(companionField.getType(), m -> m.getParameterCount() == 1 && String.class.equals(m.getParameterTypes()[0]) && FMessageWpp.UserJid.TYPE_JID.equals(m.getReturnType()));
+            // init UserJID
+            var companionField = FMessageWpp.UserJid.TYPE_JID.getDeclaredField("Companion");
+            mGenJidMethod = ReflectionUtils.findMethodUsingFilter(companionField.getType(), m -> m.getParameterCount() == 1 && String.class.equals(m.getParameterTypes()[0]) && FMessageWpp.UserJid.TYPE_JID.equals(m.getReturnType()));
 
-        // Bottom Dialog
-        bottomDialog = Unobfuscator.loadDialogViewClass(loader);
+            // Bottom Dialog
+            bottomDialog = Unobfuscator.loadDialogViewClass(loader);
 
-        conversationDelegateField = Unobfuscator.loadConversationDelegateField(loader);
-        conversationJidField = Unobfuscator.loadUserJidConversationDelegate(loader);
+            conversationDelegateField = Unobfuscator.loadConversationDelegateField(loader);
+            conversationJidField = Unobfuscator.loadUserJidConversationDelegate(loader);
 
-        // StartUpPrefs
-        var startPrefsConfig = Unobfuscator.loadStartPrefsConfig(loader);
-        XposedBridge.hookMethod(startPrefsConfig, new XC_MethodHook() {
-            @Override
-            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                mStartUpConfig = param.thisObject;
+            // StartUpPrefs
+            var startPrefsConfig = Unobfuscator.loadStartPrefsConfig(loader);
+            XposedBridge.hookMethod(startPrefsConfig, new XC_MethodHook() {
+                @Override
+                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                    mStartUpConfig = param.thisObject;
+                }
+            });
+
+            // ActionUser
+            actionUser = Unobfuscator.loadActionUser(loader);
+            XposedBridge.log("ActionUser: " + actionUser.getName());
+            XposedBridge.hookAllConstructors(actionUser, new XC_MethodHook() {
+                @Override
+                protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                    mActionUser = param.thisObject;
+                }
+            });
+
+            // CachedMessageStore
+            cachedMessageStoreKey = Unobfuscator.loadCachedMessageStoreKey(loader);
+            XposedBridge.hookAllConstructors(cachedMessageStoreKey.getDeclaringClass(), new XC_MethodHook() {
+                @Override
+                protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                    mCachedMessageStore = param.thisObject;
+                }
+            });
+
+            // WaJidMap
+            convertLidToJid = Unobfuscator.loadConvertLidToJid(loader);
+            convertJidToLid = Unobfuscator.loadConvertJidToLid(loader);
+            XposedBridge.hookAllConstructors(convertLidToJid.getDeclaringClass(), new XC_MethodHook() {
+                @Override
+                protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                    mWaJidMapRepository = param.thisObject;
+                }
+            });
+
+            // load me current PhoneJid
+
+            Class<?> meManagerClass = Unobfuscator.loadMeManagerClass(loader);
+            meManagerPhoneJidField = ReflectionUtils.getFieldByType(meManagerClass, FMessageWpp.UserJid.TYPE_PHONEUSERJID);
+            XposedBridge.hookAllConstructors(meManagerClass, new XC_MethodHook() {
+                @Override
+                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                    meManagerInstance = param.thisObject;
+                }
+            });
+
+
+            // Load wa database
+            loadWADatabase();
+
+            if (!pref.getBoolean("lite_mode", false)) {
+                initBridge(Utils.getApplication());
             }
-        });
-
-        // ActionUser
-        actionUser = Unobfuscator.loadActionUser(loader);
-        XposedBridge.log("ActionUser: " + actionUser.getName());
-        XposedBridge.hookAllConstructors(actionUser, new XC_MethodHook() {
-            @Override
-            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                mActionUser = param.thisObject;
-            }
-        });
-
-        // CachedMessageStore
-        cachedMessageStoreKey = Unobfuscator.loadCachedMessageStoreKey(loader);
-        XposedBridge.hookAllConstructors(cachedMessageStoreKey.getDeclaringClass(), new XC_MethodHook() {
-            @Override
-            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                mCachedMessageStore = param.thisObject;
-            }
-        });
-
-        // WaJidMap
-        convertLidToJid = Unobfuscator.loadConvertLidToJid(loader);
-        convertJidToLid = Unobfuscator.loadConvertJidToLid(loader);
-        XposedBridge.hookAllConstructors(convertLidToJid.getDeclaringClass(), new XC_MethodHook() {
-            @Override
-            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                mWaJidMapRepository = param.thisObject;
-            }
-        });
-
-        // load me current PhoneJid
-
-        Class<?> meManagerClass = Unobfuscator.loadMeManagerClass(loader);
-        meManagerPhoneJidField = ReflectionUtils.getFieldByType(meManagerClass, FMessageWpp.UserJid.TYPE_PHONEUSERJID);
-        XposedBridge.hookAllConstructors(meManagerClass, new XC_MethodHook() {
-            @Override
-            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                meManagerInstance = param.thisObject;
-            }
-        });
-
-
-        // Load wa database
-        loadWADatabase();
-
-        if (!pref.getBoolean("lite_mode", false)) {
-            initBridge(Utils.getApplication());
+        } catch (Throwable t) {
+            XposedBridge.log("[WAE] Critical error during WppCore initialization:");
+            XposedBridge.log(t);
+            throw t;
         }
 
     }
@@ -480,7 +486,10 @@ public class WppCore {
         if (rawjid == null)
             return null;
         try {
-            return mGenJidMethod.invoke(null, rawjid);
+            var companionField = FMessageWpp.UserJid.TYPE_JID.getDeclaredField("Companion");
+            companionField.setAccessible(true);
+            Object companionInstance = companionField.get(null);
+            return mGenJidMethod.invoke(companionInstance, rawjid);
         } catch (Exception e) {
             XposedBridge.log(e);
         }
