@@ -127,11 +127,6 @@
             android:title="@string/stamp_copied_messages"
             app:icon="@drawable/edit2" />
 
-    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
-
-    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
-        android:title="AI Intelligence">
-
         <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
             android:key="smart_reply"

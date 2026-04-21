@@ -85,7 +85,7 @@ object FeatureManager {
                 val startTime = System.currentTimeMillis()
                 try {
                     val constructor = clazz.getConstructor(ClassLoader::class.java, XSharedPreferences::class.java)
-                    val feature = constructor.newInstance(loader, pref)
+                    val feature = constructor.newInstance(loader, pref) as Feature
                     feature.doHook()
                 } catch (e: Throwable) {
                     XposedBridge.log(e)

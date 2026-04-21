@@ -1,6 +1,6 @@
 package com.wa.toolkit.xposed.utils
 
-import android.content.res.XModuleResources
+import de.robv.android.xposed.res.XModuleResources
 import com.wa.toolkit.R
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.callbacks.XC_InitPackageResources
@@ -26,10 +26,17 @@ object ResourceMirror {
         }.toTypedArray()
     }
 
+    private val idFields: Array<Field> by lazy {
+        ResId.id::class.java.declaredFields.filter { 
+            it.name != "INSTANCE" && it.name != "\$stable" 
+        }.toTypedArray()
+    }
+
     fun mirror(resParam: XC_InitPackageResources.InitPackageResourcesParam, modRes: XModuleResources) {
         mirrorFields(resParam, modRes, drawableFields, R.drawable::class.java, "drawable")
         mirrorFields(resParam, modRes, stringFields, R.string::class.java, "string")
         mirrorFields(resParam, modRes, arrayFields, R.array::class.java, "array")
+        mirrorFields(resParam, modRes, idFields, R.id::class.java, "id")
     }
 
     private fun mirrorFields(

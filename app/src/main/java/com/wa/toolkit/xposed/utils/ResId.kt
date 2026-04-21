@@ -114,6 +114,10 @@ object ResId {
         @JvmField var contact_probably_not_added: Int = 0
     }
 
+    object id {
+        @JvmField var tag_font_scale: Int = 0
+    }
+
     object array {
         @JvmField var supported_versions_wpp: Int = 0
         @JvmField var supported_versions_business: Int = 0

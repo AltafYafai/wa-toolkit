@@ -2,7 +2,6 @@ package com.wa.toolkit;
 
 import android.annotation.SuppressLint;
 import android.content.ContextWrapper;
-import android.content.res.XModuleResources;
 
 import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
@@ -23,6 +22,7 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_InitPackageResources;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
+import de.robv.android.xposed.res.XModuleResources;
 
 public class WppXposed implements IXposedHookLoadPackage, IXposedHookInitPackageResources, IXposedHookZygoteInit {
 

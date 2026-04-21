@@ -72,28 +72,6 @@
             android:title="@string/verbose_logs"
             app:icon="@drawable/edit" />
 
-    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
-
-    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
-        android:title="@string/category_advanced_tweaks">
-
-        <rikka.material.preference.MaterialSwitchPreference
-            android:summary="@string/bootloader_spoofer_sum"
-            android:title="@string/bootloader_spoofer"
-            android:key="bootloader_spoofer"
-            app:icon="@drawable/ic_round_warning_24" />
-
-        <rikka.material.preference.MaterialSwitchPreference
-            android:key="tasker"
-            android:summary="@string/enable_tasker_automation_sum"
-            android:title="@string/enable_tasker_automation"
-            app:icon="@drawable/ic_round_settings_24" />
-
-    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
-
-    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
-        android:title="@string/font_engine">
-
         <com.wa.toolkit.preference.FileSelectPreference
             android:key="custom_font_path"
             android:summary="@string/custom_font_sum"
@@ -107,11 +85,6 @@
             app:minValue="0.5"
             android:title="@string/font_scale"
             app:icon="@drawable/ic_round_settings_24" />
-
-    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
-
-    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
-        android:title="@string/tab_architect">
 
         <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
@@ -130,6 +103,23 @@
             android:key="hide_status_tab"
             android:title="@string/hide_status"
             app:icon="@drawable/online" />
+
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+        android:title="@string/category_advanced_tweaks">
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:summary="@string/bootloader_spoofer_sum"
+            android:title="@string/bootloader_spoofer"
+            android:key="bootloader_spoofer"
+            app:icon="@drawable/ic_round_warning_24" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:key="tasker"
+            android:summary="@string/enable_tasker_automation_sum"
+            android:title="@string/enable_tasker_automation"
+            app:icon="@drawable/ic_round_settings_24" />
 
     </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
