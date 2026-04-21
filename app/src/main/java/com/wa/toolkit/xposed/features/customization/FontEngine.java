@@ -53,10 +53,11 @@ public class FontEngine extends Feature {
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 if (fontScale != 1.0f) {
                     TextView textView = (TextView) param.thisObject;
-                    Float scaled = (Float) textView.getTag(ResId.id.tag_font_scale);
-                    if (scaled == null || scaled != fontScale) {
-                        textView.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, textView.getTextSize() * fontScale);
-                        textView.setTag(ResId.id.tag_font_scale, fontScale);
+                    Object tag = textView.getTag(com.wa.toolkit.R.id.tag_font_scale);
+                    if (tag == null) {
+                        float originalSize = textView.getTextSize();
+                        textView.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, originalSize * fontScale);
+                        textView.setTag(com.wa.toolkit.R.id.tag_font_scale, fontScale);
                     }
                 }
             }
@@ -74,10 +75,11 @@ public class FontEngine extends Feature {
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 if (fontScale != 1.0f) {
                     TextView textView = (TextView) param.thisObject;
-                    Float scaled = (Float) textView.getTag(ResId.id.tag_font_scale);
-                    if (scaled == null || scaled != fontScale) {
-                        textView.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, textView.getTextSize() * fontScale);
-                        textView.setTag(ResId.id.tag_font_scale, fontScale);
+                    Object tag = textView.getTag(com.wa.toolkit.R.id.tag_font_scale);
+                    if (tag == null) {
+                        float originalSize = textView.getTextSize();
+                        textView.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, originalSize * fontScale);
+                        textView.setTag(com.wa.toolkit.R.id.tag_font_scale, fontScale);
                     }
                 }
             }
