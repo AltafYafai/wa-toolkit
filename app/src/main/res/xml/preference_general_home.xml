@@ -3,32 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.wa.toolkit.ui.preferences.CardPreferenceCategory
-        android:title="@string/category_app_management">
-
-        <rikka.material.preference.MaterialSwitchPreference
-            android:key="update_check"
-            android:defaultValue="true"
-            android:summary="@string/update_check_sum"
-            android:title="@string/update_check"
-            app:icon="@drawable/ic_round_update_24" />
-
-        <rikka.material.preference.MaterialSwitchPreference
-            android:defaultValue="false"
-            android:key="disable_expiration"
-            android:summary="@string/disable_whatsapp_expiration_sum"
-            android:title="@string/disable_whatsapp_expiration"
-            app:icon="@drawable/airplane_disabled" />
-
-        <rikka.material.preference.MaterialSwitchPreference
-            android:defaultValue="false"
-            android:key="bypass_version_check"
-            android:summary="@string/disable_version_check_sum"
-            android:title="@string/disable_version_check"
-            app:icon="@drawable/ic_round_bug_report_24" />
-
-    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
-
-    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         app:iconSpaceReserved="false"
         android:title="@string/font_engine">
 
