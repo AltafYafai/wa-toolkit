@@ -12,6 +12,6 @@
 
 ## Phase 3: Stability & Testing
 - [/] **Unit Tests for DexKit Logic:** Implemented testing infrastructure and base test suite using Mockito. (Local execution blocked by build env issues).
-- [ ] **Build Pipeline Optimization:** Investigate and resolve build environment issues (e.g., native class registration errors) to ensure consistent local and CI builds.
+- [x] **Build Pipeline Optimization:** Resolved 'Native registration unable to find class PerfettoTrace' error using dummy interceptor libraries in `build-fix/`.
 - [x] **Performance Audit:** Analyzed and optimized initialization time by eliminating stack trace lookups in `UnobfuscatorCache`.
 
