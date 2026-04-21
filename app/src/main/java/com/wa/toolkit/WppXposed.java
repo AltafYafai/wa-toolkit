@@ -7,7 +7,7 @@ import android.content.res.XModuleResources;
 import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
 
-import com.wa.toolkit.activities.MainActivity;
+import com.wa.toolkit.MainActivity;
 import com.wa.toolkit.xposed.AntiUpdater;
 import com.wa.toolkit.xposed.bridge.ScopeHook;
 import com.wa.toolkit.xposed.core.FeatureLoader;

@@ -93,31 +93,6 @@
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".activities.TextEditorActivity"
-            android:theme="@style/AppTheme" />
-
-        <activity
-            android:name=".activities.CallRecordingSettingsActivity"
-            android:theme="@style/Theme.Material3.DynamicColors.DayNight.NoActionBar"
-            android:parentActivityName=".activities.MainActivity" />
-
-        <activity
-            android:name=".activities.SearchActivity"
-            android:theme="@style/AppTheme"
-            android:parentActivityName=".activities.MainActivity"
-            android:windowSoftInputMode="adjustResize" />
-
-        <activity
-            android:name=".activities.DeletedMessagesActivity"
-            android:theme="@style/AppTheme"
-            android:parentActivityName=".activities.MainActivity" />
-
-        <activity
-            android:name=".activities.MessageListActivity"
-            android:theme="@style/AppTheme"
-            android:parentActivityName=".activities.DeletedMessagesActivity" />
-
-        <activity
             android:name=".activities.ForceStartActivity"
             android:excludeFromRecents="true"
             android:exported="true"

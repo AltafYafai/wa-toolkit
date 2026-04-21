@@ -79,6 +79,11 @@ class MainActivity : ComponentActivity() {
         statusReceiver?.let { unregisterReceiver(it) }
         super.onDestroy()
     }
+
+    companion object {
+        @JvmStatic
+        fun isXposedEnabled(): Boolean = false
+    }
 }
 
 @Composable

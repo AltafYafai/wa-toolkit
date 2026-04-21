@@ -133,11 +133,12 @@ fun DashboardHeader(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
+            val isXposedEnabled = com.wa.toolkit.MainActivity.isXposedEnabled()
             StatusCard(
                 title = "LSPosed Status",
-                subtitle = "Active", // For simplicity, assuming active if module is running
-                icon = R.drawable.ic_round_check_circle_24,
-                iconTint = Color(0xFF4CAF50),
+                subtitle = if (isXposedEnabled) "Active" else "Inactive",
+                icon = if (isXposedEnabled) R.drawable.ic_round_check_circle_24 else R.drawable.ic_round_error_outline_24,
+                iconTint = if (isXposedEnabled) Color(0xFF4CAF50) else Color(0xFFF44336),
                 modifier = Modifier.weight(1f)
             )
             StatusCard(
