@@ -78,15 +78,15 @@
         <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
             android:key="smart_reply"
-            android:summary="Suggest context-aware quick replies"
-            android:title="Smart Reply"
+            android:summary="@string/smart_reply_sum"
+            android:title="@string/smart_reply"
             app:icon="@drawable/ic_dashboard_black_24dp" />
 
         <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
             android:key="chat_summarization"
-            android:summary="Summarize long unread group messages"
-            android:title="Chat Summarization"
+            android:summary="@string/chat_summarization_sum"
+            android:title="@string/chat_summarization"
             app:icon="@drawable/about" />
 
     </com.wa.toolkit.ui.preferences.CardPreferenceCategory>

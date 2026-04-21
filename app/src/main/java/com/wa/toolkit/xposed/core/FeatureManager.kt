@@ -2,18 +2,18 @@ package com.wa.toolkit.xposed.core
 
 import android.content.Context
 import com.wa.toolkit.BuildConfig
-import de.robv.android.xposed.XSharedPreferences
-import de.robv.android.xposed.XposedBridge
 import dalvik.system.DexFile
 import java.io.File
+import java.util.*
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
-import java.util.Vector
-
-import de.robv.android.xposed.XC_MethodHook
-import java.lang.reflect.Member
 import java.util.concurrent.ConcurrentHashMap
+import java.lang.reflect.Member
+import java.lang.reflect.Modifier
+import de.robv.android.xposed.XC_MethodHook
+import de.robv.android.xposed.XSharedPreferences
+import de.robv.android.xposed.XposedBridge
 
 object FeatureManager {
     private val features = mutableListOf<Class<out Feature>>()

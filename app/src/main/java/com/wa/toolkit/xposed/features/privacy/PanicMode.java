@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 
 import com.wa.toolkit.xposed.core.Feature;
 import com.wa.toolkit.xposed.core.WppCore;
-import com.wa.toolkit.utils.Utils;
 
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XSharedPreferences;

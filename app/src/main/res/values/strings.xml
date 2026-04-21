@@ -501,4 +501,29 @@
     <!-- Compatibility Strings -->
     <string name="disable_ads">Disable Ads</string>
     <string name="disable_ads_sum">Completely remove all advertisements from WhatsApp</string>
+
+    <!-- 2026 Features -->
+    <string name="metadata_stripper">Metadata Stripper</string>
+    <string name="metadata_stripper_sum">Strip GPS and device metadata from media before sending</string>
+    <string name="panic_mode">Panic Mode</string>
+    <string name="panic_mode_sum">Kill app instantly by holding Volume Up + Down for 3s</string>
+    <string name="disable_secure_flag">Bypass Screenshot Protection</string>
+    <string name="disable_secure_flag_sum">Allow taking screenshots in all WhatsApp screens</string>
+    <string name="font_engine">Font Engine</string>
+    <string name="custom_font">Custom Font</string>
+    <string name="custom_font_sum">Select a .ttf or .otf file from storage</string>
+    <string name="font_scale">Font Scale</string>
+    <string name="font_scale_sum">Scale custom font size (Default: 100%)</string>
+    <string name="tab_architect">Tab Architect</string>
+    <string name="hide_channels">Hide Channels Tab</string>
+    <string name="hide_communities">Hide Communities Tab</string>
+    <string name="hide_status">Hide Status Tab</string>
+    <string name="status_analytics">Status View Analytics</string>
+    <string name="status_analytics_sum">Log persistent history of status views in local DB</string>
+    <string name="unlimited_file_size">Unlimited File Size</string>
+    <string name="unlimited_file_size_sum">Bypass 2GB limit (Supports up to 10GB)</string>
+    <string name="smart_reply">Smart Reply</string>
+    <string name="smart_reply_sum">Suggest context-aware quick replies</string>
+    <string name="chat_summarization">Chat Summarization</string>
+    <string name="chat_summarization_sum">Summarize long unread group messages</string>
 </resources>

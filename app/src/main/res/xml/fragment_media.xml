@@ -22,8 +22,8 @@
         <androidx.preference.SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="status_analytics"
-            android:summary="Log persistent history of status views in local DB"
-            android:title="Status View Analytics"
+            android:summary="@string/status_analytics_sum"
+            android:title="@string/status_analytics"
             app:icon="@drawable/eye_enabled" />
 
     </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
@@ -34,8 +34,8 @@
         <androidx.preference.SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="unlimited_file_size"
-            android:summary="Bypass 2GB limit (Supports up to 10GB)"
-            android:title="Unlimited File Size"
+            android:summary="@string/unlimited_file_size_sum"
+            android:title="@string/unlimited_file_size"
             app:icon="@drawable/ic_dashboard_black_24dp" />
 
         <androidx.preference.ListPreference
