@@ -110,6 +110,7 @@ fun MainScreen(
                     onNavigateToCategory = { id ->
                         when (id) {
                             1 -> navController.navigate("privacy")
+                            2 -> navController.navigate("chat")
                             3 -> navController.navigate("media")
                             5 -> navController.navigate("tools")
                             6 -> navController.navigate("status")
@@ -119,6 +120,12 @@ fun MainScreen(
                         }
                     },
                     onNavigateToSearch = { navController.navigate("search") }
+                )
+            }
+            composable("chat") {
+                ChatScreen(
+                    viewModel = settingsViewModel,
+                    onBack = { navController.popBackStack() }
                 )
             }
             composable("search") {
@@ -133,7 +140,7 @@ fun MainScreen(
                             SearchableFeature.FragmentType.CUSTOMIZATION -> navController.navigate("customization")
                             SearchableFeature.FragmentType.GENERAL_HOME -> navController.navigate("tools")
                             SearchableFeature.FragmentType.GENERAL_HOMESCREEN -> navController.navigate("tools")
-                            SearchableFeature.FragmentType.GENERAL_CONVERSATION -> navController.navigate("tools")
+                            SearchableFeature.FragmentType.GENERAL_CONVERSATION -> navController.navigate("chat")
                             else -> navController.navigate("dashboard")
                         }
                     },
