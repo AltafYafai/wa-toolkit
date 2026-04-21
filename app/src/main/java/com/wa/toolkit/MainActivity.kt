@@ -5,10 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,8 +27,9 @@ import com.wa.toolkit.ui.ThemeViewModel
 import com.wa.toolkit.ui.screens.*
 import com.wa.toolkit.ui.theme.AppTheme
 import com.wa.toolkit.model.SearchableFeature
+import com.wa.toolkit.utils.FilePicker
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()
     private val settingsViewModel: SettingsViewModel by viewModels {
@@ -46,6 +47,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        
+        FilePicker.registerFilePicker(this)
         
         setupStatusReceiver()
         checkWpp()

@@ -124,7 +124,7 @@ public class WppXposed implements IXposedHookLoadPackage, IXposedHookInitPackage
             XposedBridge.log("[WAE] Loading features for: " + packageName);
 
             // Load features
-            FeatureLoader.start(classLoader, getPref(), lpparam.appInfo.sourceDir);
+            FeatureLoader.start(classLoader, getPref(), lpparam.appInfo.sourceDir, MODULE_PATH);
         } else {
             XposedBridge.log("[WAE] Skipping feature load for " + packageName + " (isOriginal=" + isOriginal + ")");
         }

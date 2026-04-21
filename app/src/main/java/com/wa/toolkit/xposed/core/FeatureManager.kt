@@ -48,16 +48,15 @@ object FeatureManager {
         }
     }
 
-    fun discoverFeatures(context: Context) {
+    fun discoverFeatures(path: String, loader: ClassLoader) {
         try {
-            val apkPath = context.applicationInfo.sourceDir
-            val dexFile = DexFile(apkPath)
+            val dexFile = DexFile(path)
             val entries = dexFile.entries()
             while (entries.hasMoreElements()) {
                 val className = entries.nextElement()
                 if (className.startsWith("com.wa.toolkit.xposed.features.")) {
                     try {
-                        val clazz = Class.forName(className, false, context.classLoader)
+                        val clazz = Class.forName(className, false, loader)
                         if (Feature::class.java.isAssignableFrom(clazz) && !java.lang.reflect.Modifier.isAbstract(clazz.modifiers)) {
                             @Suppress("UNCHECKED_CAST")
                             register(clazz as Class<out Feature>)

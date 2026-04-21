@@ -50,10 +50,12 @@ object FeatureLoader {
     private val list = ArrayList<ErrorItem>()
     private var supportedVersions: List<String>? = null
     private var currentVersion: String? = null
+    private var modulePath: String? = null
 
     @JvmStatic
-    fun start(loader: ClassLoader, pref: XSharedPreferences, sourceDir: String) {
-        XposedBridge.log("[WAE] FeatureLoader.start called with sourceDir: $sourceDir")
+    fun start(loader: ClassLoader, pref: XSharedPreferences, sourceDir: String, modulePath: String) {
+        XposedBridge.log("[WAE] FeatureLoader.start called with sourceDir: $sourceDir, modulePath: $modulePath")
+        this.modulePath = modulePath
         if (!Unobfuscator.initWithPath(sourceDir)) {
             XposedBridge.log("[WAE] Can't init dexkit")
             return
@@ -271,12 +273,11 @@ object FeatureLoader {
 
     private fun plugins(loader: ClassLoader, pref: XSharedPreferences, versionWpp: String) {
         XposedBridge.log("Discovering Plugins")
-        mApp?.let { FeatureManager.discoverFeatures(it) }
-        
+        modulePath?.let { FeatureManager.discoverFeatures(it, FeatureLoader::class.java.classLoader) }
+
         XposedBridge.log("Loading Plugins")
         list.addAll(FeatureManager.loadAll(loader, pref, versionWpp))
     }
-
     class ErrorItem {
         var pluginName: String? = null
         var whatsAppVersion: String? = null
