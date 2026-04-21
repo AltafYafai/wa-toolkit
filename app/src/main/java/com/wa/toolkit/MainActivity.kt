@@ -23,14 +23,8 @@ import androidx.navigation.compose.rememberNavController
 import com.wa.toolkit.ui.MainViewModel
 import com.wa.toolkit.ui.SettingsViewModel
 import com.wa.toolkit.ui.SearchViewModel
-import com.wa.toolkit.ui.screens.DashboardScreen
-import com.wa.toolkit.ui.screens.PrivacyScreen
-import com.wa.toolkit.ui.screens.MediaScreen
-import com.wa.toolkit.ui.screens.SearchScreen
-import com.wa.toolkit.ui.screens.StatusScreen
-import com.wa.toolkit.ui.screens.CallsScreen
-import com.wa.toolkit.ui.screens.ToolsScreen
-import com.wa.toolkit.ui.screens.CustomizationScreen
+import com.wa.toolkit.ui.ThemeViewModel
+import com.wa.toolkit.ui.screens.*
 import com.wa.toolkit.ui.theme.AppTheme
 import com.wa.toolkit.model.SearchableFeature
 
@@ -46,6 +40,7 @@ class MainActivity : ComponentActivity() {
         }
     }
     private val searchViewModel: SearchViewModel by viewModels()
+    private val themeViewModel: ThemeViewModel by viewModels()
     private var statusReceiver: BroadcastReceiver? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,7 +52,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             AppTheme {
-                MainScreen(viewModel, settingsViewModel, searchViewModel)
+                MainScreen(viewModel, settingsViewModel, searchViewModel, themeViewModel)
             }
         }
     }
@@ -98,7 +93,8 @@ class MainActivity : ComponentActivity() {
 fun MainScreen(
     viewModel: MainViewModel,
     settingsViewModel: SettingsViewModel,
-    searchViewModel: SearchViewModel
+    searchViewModel: SearchViewModel,
+    themeViewModel: ThemeViewModel
 ) {
     val navController = rememberNavController()
     
@@ -177,7 +173,25 @@ fun MainScreen(
             composable("customization") {
                 CustomizationScreen(
                     viewModel = settingsViewModel,
-                    onNavigateToThemeManager = { /* TODO: Navigate to Theme Manager */ },
+                    onNavigateToThemeManager = { navController.navigate("themes") },
+                    onBack = { navController.popBackStack() }
+                )
+            }
+            composable("themes") {
+                ThemeScreen(
+                    viewModel = themeViewModel,
+                    onEditTheme = { themeName -> navController.navigate("theme_editor/$themeName") },
+                    onBack = { navController.popBackStack() }
+                )
+            }
+            composable(
+                "theme_editor/{themeName}",
+                arguments = listOf(androidx.navigation.navArgument("themeName") { type = androidx.navigation.NavType.StringType })
+            ) { backStackEntry ->
+                val themeName = backStackEntry.arguments?.getString("themeName") ?: ""
+                ThemeEditorScreen(
+                    themeName = themeName,
+                    viewModel = themeViewModel,
                     onBack = { navController.popBackStack() }
                 )
             }
