@@ -25,11 +25,11 @@ import androidx.compose.ui.unit.sp
 import com.wa.toolkit.R
 import com.wa.toolkit.ui.MainViewModel
 import com.wa.toolkit.utils.HapticUtil
-import com.wa.toolkit.activities.SearchActivity
 import com.wa.toolkit.activities.AboutActivity
 import com.wa.toolkit.App
 import com.wa.toolkit.xposed.core.FeatureLoader
 import com.wa.toolkit.utils.ConfigUtil
+import android.widget.Toast
 
 data class DashboardItem(
     val id: Int,
@@ -71,7 +71,7 @@ fun DashboardScreen(
                 isWppActive = isWppActive,
                 onSearchClick = {
                     HapticUtil.playClick(context)
-                    context.startActivity(Intent(context, SearchActivity::class.java))
+                    Toast.makeText(context, "Search coming soon", Toast.LENGTH_SHORT).show()
                 },
                 onBackupClick = { HapticUtil.playClick(context); ConfigUtil.exportConfigs(context) },
                 onRestoreClick = { HapticUtil.playClick(context); ConfigUtil.importConfigs(context) },

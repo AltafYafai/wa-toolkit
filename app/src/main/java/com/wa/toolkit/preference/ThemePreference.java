@@ -26,7 +26,6 @@ import androidx.preference.PreferenceManager;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.wa.toolkit.App;
 import com.wa.toolkit.R;
-import com.wa.toolkit.activities.TextEditorActivity;
 import com.wa.toolkit.utils.FilePicker;
 import com.wa.toolkit.xposed.utils.Utils;
 
@@ -122,10 +121,7 @@ public class ThemePreference extends Preference implements FilePicker.OnUriPicke
                 editButton.setVisibility(View.INVISIBLE);
             } else {
                 editButton.setOnClickListener(v -> {
-                    Intent intent = new Intent(context, TextEditorActivity.class);
-                    intent.putExtra("folder_name", folder);
-                    intent.putExtra("key", getKey());
-                    ContextCompat.startActivity(context, intent, null);
+                    Toast.makeText(context, "Theme editor coming soon", Toast.LENGTH_SHORT).show();
                 });
             }
             folderListContainer.addView(itemView);
