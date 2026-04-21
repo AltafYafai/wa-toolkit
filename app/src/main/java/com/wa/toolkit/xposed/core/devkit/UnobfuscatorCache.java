@@ -222,16 +222,19 @@ public class UnobfuscatorCache {
     }
 
     public Field[] getFields(ClassLoader loader, FunctionCall<Field[]> functionCall) throws Exception {
-        var methodName = getKeyName();
-        String value = sPrefsCacheHooks.getString(methodName, null);
+        return getFields(loader, getKeyName(), functionCall);
+    }
+
+    public Field[] getFields(ClassLoader loader, String key, FunctionCall<Field[]> functionCall) throws Exception {
+        String value = sPrefsCacheHooks.getString(key, null);
         if (value == null) {
             try {
                 Field[] result = functionCall.call();
                 if (result == null) throw new NoSuchFieldException("Fields is null");
-                saveFields(methodName, result);
+                saveFields(key, result);
                 return result;
             } catch (Exception e) {
-                throw new Exception("Error getting fields " + methodName + ": " + e.getMessage(), e);
+                throw new Exception("Error getting fields " + key + ": " + e.getMessage(), e);
             }
         }
         ArrayList<Field> fields = new ArrayList<>();
@@ -245,32 +248,38 @@ public class UnobfuscatorCache {
     }
 
     public Method getMethod(ClassLoader loader, FunctionCall<Method> functionCall) throws Exception {
-        var methodName = getKeyName();
-        String value = sPrefsCacheHooks.getString(methodName, null);
+        return getMethod(loader, getKeyName(), functionCall);
+    }
+
+    public Method getMethod(ClassLoader loader, String key, FunctionCall<Method> functionCall) throws Exception {
+        String value = sPrefsCacheHooks.getString(key, null);
         if (value == null) {
             try {
                 Method result = functionCall.call();
                 if (result == null) throw new NoSuchMethodException("Method is null");
-                saveMethod(methodName, result);
+                saveMethod(key, result);
                 return result;
             } catch (Exception e) {
-                throw new Exception("Error getting method " + methodName + ": " + e.getMessage(), e);
+                throw new Exception("Error getting method " + key + ": " + e.getMessage(), e);
             }
         }
         return getMethodFromString(loader, value);
     }
 
     public Method[] getMethods(ClassLoader loader, FunctionCall<Method[]> functionCall) throws Exception {
-        var methodName = getKeyName();
-        String value = sPrefsCacheHooks.getString(methodName, null);
+        return getMethods(loader, getKeyName(), functionCall);
+    }
+
+    public Method[] getMethods(ClassLoader loader, String key, FunctionCall<Method[]> functionCall) throws Exception {
+        String value = sPrefsCacheHooks.getString(key, null);
         if (value == null) {
             try {
                 Method[] result = functionCall.call();
                 if (result == null) throw new NoSuchMethodException("Methods is null");
-                saveMethods(methodName, result);
+                saveMethods(key, result);
                 return result;
             } catch (Exception e) {
-                throw new Exception("Error getting methods " + methodName + ": " + e.getMessage(), e);
+                throw new Exception("Error getting methods " + key + ": " + e.getMessage(), e);
             }
         }
         var methodStrings = value.split("&");
@@ -315,16 +324,19 @@ public class UnobfuscatorCache {
     }
 
     public Class<?>[] getClasses(ClassLoader loader, FunctionCall<Class<?>[]> functionCall) throws Exception {
-        var methodName = getKeyName();
-        String value = sPrefsCacheHooks.getString(methodName, null);
+        return getClasses(loader, getKeyName(), functionCall);
+    }
+
+    public Class<?>[] getClasses(ClassLoader loader, String key, FunctionCall<Class<?>[]> functionCall) throws Exception {
+        String value = sPrefsCacheHooks.getString(key, null);
         if (value == null) {
             try {
                 Class<?>[] result = functionCall.call();
                 if (result == null) throw new ClassNotFoundException("Classes is null");
-                saveClasses(methodName, result);
+                saveClasses(key, result);
                 return result;
             } catch (Exception e) {
-                throw new Exception("Error getting classes " + methodName + ": " + e.getMessage(), e);
+                throw new Exception("Error getting classes " + key + ": " + e.getMessage(), e);
             }
         }
         String[] classStrings = value.split("&");
@@ -457,18 +469,26 @@ public class UnobfuscatorCache {
     }
 
     private String getKeyName() {
-        AtomicReference<String> keyName = new AtomicReference<>("");
-        Arrays.stream(Thread.currentThread().getStackTrace()).filter(stackTraceElement -> stackTraceElement.getClassName().equals(Unobfuscator.class.getName())).findFirst().ifPresent(stackTraceElement -> keyName.set(stackTraceElement.getMethodName()));
-        return keyName.get();
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        String unobfuscatorClass = Unobfuscator.class.getName();
+        for (StackTraceElement element : stackTrace) {
+            if (element.getClassName().equals(unobfuscatorClass)) {
+                return element.getMethodName();
+            }
+        }
+        return "";
     }
 
     public Constructor getConstructor(ClassLoader loader, FunctionCall functionCall) throws Exception {
-        var methodName = getKeyName();
-        String value = sPrefsCacheHooks.getString(methodName, null);
+        return getConstructor(loader, getKeyName(), functionCall);
+    }
+
+    public Constructor getConstructor(ClassLoader loader, String key, FunctionCall functionCall) throws Exception {
+        String value = sPrefsCacheHooks.getString(key, null);
         if (value == null) {
             var result = (Constructor) functionCall.call();
             if (result == null) throw new Exception("Class is null");
-            saveConstructor(methodName, result);
+            saveConstructor(key, result);
             return result;
         }
         String[] classAndName = value.split(":");
@@ -491,16 +511,19 @@ public class UnobfuscatorCache {
     }
 
     public Number getNumber(ClassLoader loader, FunctionCall<Number> functionCall) throws Exception {
-        var methodName = getKeyName();
-        String value = sPrefsCacheHooks.getString(methodName, null);
+        return getNumber(loader, getKeyName(), functionCall);
+    }
+
+    public Number getNumber(ClassLoader loader, String key, FunctionCall<Number> functionCall) throws Exception {
+        String value = sPrefsCacheHooks.getString(key, null);
         if (value == null) {
             try {
                 Number result = functionCall.call();
                 if (result == null) throw new Exception("Number is null");
-                saveNumber(methodName, result);
+                saveNumber(key, result);
                 return result;
             } catch (Exception e) {
-                throw new Exception("Error getting number " + methodName + ": " + e.getMessage(), e);
+                throw new Exception("Error getting number " + key + ": " + e.getMessage(), e);
             }
         }
         return loadNumber(value);

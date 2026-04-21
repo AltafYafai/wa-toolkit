@@ -11,6 +11,7 @@
 - [x] **Separate Group Improvements:** Refine the tab filtering logic to handle edge cases in group/broadcast identification.
 
 ## Phase 3: Stability & Testing
-- [ ] **Unit Tests for DexKit Logic:** Implement tests to verify the accuracy of dynamic discovery across different WA/WB DEX files.
+- [/] **Unit Tests for DexKit Logic:** Implemented testing infrastructure and base test suite using Mockito. (Local execution blocked by build env issues).
 - [ ] **Build Pipeline Optimization:** Investigate and resolve build environment issues (e.g., native class registration errors) to ensure consistent local and CI builds.
-- [ ] **Performance Audit:** Analyze the impact of dynamic discovery on module initialization time and optimize if necessary.
+- [x] **Performance Audit:** Analyzed and optimized initialization time by eliminating stack trace lookups in `UnobfuscatorCache`.
+

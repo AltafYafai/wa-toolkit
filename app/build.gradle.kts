@@ -200,6 +200,12 @@ dependencies {
     implementation(libs.bcpkix.jdk18on)
     implementation(libs.arscblamer)
     implementation(libs.markwon.core)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.libxposed.legacy)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.espresso.core)
 }
 
 configurations.all {
