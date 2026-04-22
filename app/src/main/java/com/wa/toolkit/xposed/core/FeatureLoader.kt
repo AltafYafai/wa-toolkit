@@ -53,6 +53,59 @@ object FeatureLoader {
     private var modulePath: String? = null
 
     @JvmStatic
+    fun startModern(loader: ClassLoader, pref: XSharedPreferences, sourceDir: String, modulePath: String, framework: io.github.libxposed.XposedInterface) {
+        XposedBridge.log("[WAE] FeatureLoader.startModern called")
+        this.modulePath = modulePath
+        if (!Unobfuscator.initWithPath(sourceDir)) {
+            XposedBridge.log("[WAE] Can't init dexkit")
+            return
+        }
+        
+        Feature.DEBUG = pref.getBoolean("enablelogs", true)
+        Utils.xprefs = pref
+
+        try {
+            val instrumentationClass = Instrumentation::class.java
+            val callApplicationOnCreate = instrumentationClass.getDeclaredMethod("callApplicationOnCreate", Application::class.java)
+            framework.hookMethod(callApplicationOnCreate) { chain ->
+                val app = chain.args[0] as Application
+                mApp = app
+                
+                // Inject Bootloader Spoofer
+                if (pref.getBoolean("bootloader_spoofer", false)) {
+                    HookBL.hook(loader, pref)
+                }
+
+                val packageManager = app.packageManager
+                val packageInfo = packageManager.getPackageInfo(app.packageName, 0)
+                currentVersion = packageInfo.versionName
+                
+                val resIdArray = if (app.packageName == PACKAGE_WPP) ResId.array.supported_versions_wpp else ResId.array.supported_versions_business
+                supportedVersions = app.resources.getStringArray(resIdArray).toList()
+                
+                app.registerActivityLifecycleCallbacks(WaCallback())
+                registerReceivers()
+                
+                try {
+                    UnobfuscatorCache.init(app)
+                    SharedPreferencesWrapper.hookInit(app.classLoader)
+                    ReflectionUtils.initCache(app)
+                    
+                    initComponents(loader, pref)
+                    plugins(loader, pref, packageInfo.versionName ?: "")
+                    sendEnabledBroadcast(app)
+                } catch (e: Throwable) {
+                    XposedBridge.log("[WAE] Error loading features: ${e.message}")
+                    XposedBridge.log(e)
+                }
+                chain.proceed()
+            }
+        } catch (e: Throwable) {
+            XposedBridge.log("[WAE] Error in startModern: ${e.message}")
+        }
+    }
+
+    @JvmStatic
     fun start(loader: ClassLoader, pref: XSharedPreferences, sourceDir: String, modulePath: String) {
         XposedBridge.log("[WAE] FeatureLoader.start called with sourceDir: $sourceDir, modulePath: $modulePath")
         this.modulePath = modulePath

@@ -25,6 +25,47 @@ public class ScopeHook {
 
     private static Set<XC_MethodHook.Unhook> hook;
 
+    public static void handlePackage(io.github.libxposed.XposedModule.PackageReadyParam param, io.github.libxposed.XposedInterface framework) {
+        String packageName = param.getPackageName();
+        if ("android".equals(packageName)) {
+            // Hook ServiceManager.addService (simplified for migration)
+            try {
+                Class<?> serviceManager = param.getClassLoader().loadClass("android.os.ServiceManager");
+                for (Method m : serviceManager.getDeclaredMethods()) {
+                    if (m.getName().equals("addService")) {
+                        framework.hookMethod(m, chain -> {
+                            String service = (String) chain.getArgs()[0];
+                            if (Objects.equals(service, "package")) {
+                                // hookScope logic here or call it
+                            }
+                            return chain.proceed();
+                        });
+                    }
+                }
+            } catch (Exception e) {
+                XposedBridge.log(e);
+            }
+        } else if ("com.android.providers.settings".equals(packageName)) {
+            // Hook SettingsProvider.call
+            try {
+                Class<?> clsSet = param.getClassLoader().loadClass("com.android.providers.settings.SettingsProvider");
+                Method mCall = clsSet.getDeclaredMethod("call", String.class, String.class, Bundle.class);
+                framework.hookMethod(mCall, chain -> {
+                    String method = (String) chain.getArgs()[0];
+                    String arg = (String) chain.getArgs()[1];
+                    if ("WhatsappToolkit".equals(method)) {
+                        if ("getHookBinder".equals(arg)) {
+                            // ... logic same as legacy but using chain.proceed() or custom result ...
+                        }
+                    }
+                    return chain.proceed();
+                });
+            } catch (Exception e) {
+                XposedBridge.log(e);
+            }
+        }
+    }
+
     public static void hook(XC_LoadPackage.LoadPackageParam lpparam) {
         try {
             if ("android".equals(lpparam.packageName) && "android".equals(lpparam.processName) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
