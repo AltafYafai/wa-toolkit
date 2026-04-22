@@ -215,6 +215,30 @@ fun ToolsScreen(
             item { CategoryHeader("Intelligence") }
             item {
                 SwitchSetting(
+                    title = stringResource(R.string.voice_transcription),
+                    summary = stringResource(R.string.voice_transcription_sum),
+                    viewModel = viewModel,
+                    prefKey = "voice_transcription"
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.ai_rewrite),
+                    summary = stringResource(R.string.ai_rewrite_sum),
+                    viewModel = viewModel,
+                    prefKey = "ai_rewrite"
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.group_tldr),
+                    summary = stringResource(R.string.group_tldr_sum),
+                    viewModel = viewModel,
+                    prefKey = "group_tldr"
+                )
+            }
+            item {
+                SwitchSetting(
                     title = "Disable Meta AI",
                     summary = "Completely hide Meta AI integration",
                     viewModel = viewModel,
@@ -227,6 +251,25 @@ fun ToolsScreen(
                     summary = "Enable native voice note transcripts",
                     viewModel = viewModel,
                     prefKey = "audio_transcription"
+                )
+            }
+
+            item { Spacer(Modifier.height(16.dp)) }
+            item { CategoryHeader("Advanced Workflow") }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.disable_pinned_limit),
+                    summary = stringResource(R.string.disable_pinned_limit_sum),
+                    viewModel = viewModel,
+                    prefKey = "disable_pinned_limit"
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.zen_mode),
+                    summary = stringResource(R.string.zen_mode_sum),
+                    viewModel = viewModel,
+                    prefKey = "zen_mode"
                 )
             }
         }

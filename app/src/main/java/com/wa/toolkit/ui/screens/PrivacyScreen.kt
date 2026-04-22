@@ -104,6 +104,30 @@ fun PrivacyScreen(
             item { CategoryHeader("Interactive Privacy") }
             item {
                 SwitchSetting(
+                    title = stringResource(R.string.stealth_typing),
+                    summary = stringResource(R.string.stealth_typing_sum),
+                    viewModel = viewModel,
+                    prefKey = "stealth_typing"
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.blueonreply),
+                    summary = stringResource(R.string.blueonreply_sum),
+                    viewModel = viewModel,
+                    prefKey = "blueonreply"
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.local_vault),
+                    summary = stringResource(R.string.local_vault_sum),
+                    viewModel = viewModel,
+                    prefKey = "local_vault"
+                )
+            }
+            item {
+                SwitchSetting(
                     title = "Double-Tap to React",
                     summary = "Double-tap a message to react with a custom emoji",
                     viewModel = viewModel,

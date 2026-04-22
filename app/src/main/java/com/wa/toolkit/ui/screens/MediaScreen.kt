@@ -68,6 +68,14 @@ fun MediaScreen(
             item { CategoryHeader("Quality & Size") }
             item {
                 SwitchSetting(
+                    title = stringResource(R.string.lossless_status),
+                    summary = stringResource(R.string.lossless_status_sum),
+                    viewModel = viewModel,
+                    prefKey = "lossless_status"
+                )
+            }
+            item {
+                SwitchSetting(
                     title = "Unlimited File Size",
                     summary = "Remove restrictions on outgoing file sizes",
                     viewModel = viewModel,
@@ -82,6 +90,25 @@ fun MediaScreen(
                     prefKey = "video_limit_size",
                     range = 30f..90f,
                     defaultValue = 40
+                )
+            }
+
+            item { Spacer(Modifier.height(16.dp)) }
+            item { CategoryHeader("Enhanced Media") }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.auto_ocr),
+                    summary = stringResource(R.string.auto_ocr_sum),
+                    viewModel = viewModel,
+                    prefKey = "auto_ocr"
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.voice_changer),
+                    summary = stringResource(R.string.voice_changer_sum),
+                    viewModel = viewModel,
+                    prefKey = "voice_changer"
                 )
             }
         }
