@@ -142,28 +142,21 @@
             android:exported="true"
             tools:ignore="ExportedContentProvider" />
 
-
-        <meta-data
-            android:name="xposedmodule"
-            android:value="true" />
-        <meta-data
-            android:name="xposeddescription"
-            android:value="@string/app_desc" />
-        <meta-data
-            android:name="xposedminversion"
-            android:value="93" />
-        <meta-data
-            android:name="xposedsharedprefs"
-            android:value="true" />
-        <meta-data
-            android:name="xposedscope"
-            android:resource="@array/scope" />
-
         <receiver
             android:name=".receivers.WAFReceiver"
             android:exported="true"
             tools:ignore="ExportedReceiver">
             <intent-filter>
+                <action android:name="com.facebook.GET_PHONE_ID" />
+                <action android:name="android.support.customtabs.action.CustomTabsService"/>
+            </intent-filter>
+        </receiver>
+
+
+    </application>
+
+
+</manifest>ent-filter>
                 <action android:name="com.facebook.GET_PHONE_ID" />
                 <action android:name="android.support.customtabs.action.CustomTabsService"/>
             </intent-filter>
