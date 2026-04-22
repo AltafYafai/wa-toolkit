@@ -40,25 +40,34 @@ object FeatureManager {
             try {
                 XposedBridge.log("Using Modern Hook for ${method.name}")
                 val hook = module.hook(method).intercept { chain ->
-                    val param = XC_MethodHook.MethodHookParam()
+                    val param = XposedHelpers.newInstance(XC_MethodHook.MethodHookParam::class.java) as XC_MethodHook.MethodHookParam
                     param.method = method
                     param.thisObject = chain.thisObject
                     param.args = chain.args.toTypedArray()
 
-                    callback.beforeHookedMethod(param)
+                    // Call beforeHookedMethod via reflection since it's protected
+                    val beforeMethod = XC_MethodHook::class.java.getDeclaredMethod("beforeHookedMethod", XC_MethodHook.MethodHookParam::class.java)
+                    beforeMethod.isAccessible = true
+                    beforeMethod.invoke(callback, param)
 
                     if (param.hasThrowable()) {
                         throw param.throwable
                     }
 
-                    if (param.returnEarly) {
+                    // Check for early return
+                    val returnEarlyField = XC_MethodHook.MethodHookParam::class.java.getDeclaredField("returnEarly")
+                    returnEarlyField.isAccessible = true
+                    if (returnEarlyField.getBoolean(param)) {
                         return@intercept param.result
                     }
 
                     val result = chain.proceed()
                     param.result = result
 
-                    callback.afterHookedMethod(param)
+                    // Call afterHookedMethod via reflection
+                    val afterMethod = XC_MethodHook::class.java.getDeclaredMethod("afterHookedMethod", XC_MethodHook.MethodHookParam::class.java)
+                    afterMethod.isAccessible = true
+                    afterMethod.invoke(callback, param)
 
                     if (param.hasThrowable()) {
                         throw param.throwable
