@@ -169,7 +169,7 @@ dependencies {
     implementation(libs.colorpicker)
     implementation(files("libs/dexkit-android.aar"))
     implementation(libs.flatbuffers)
-    implementation(libs.libxposed.api)
+    compileOnly(libs.libxposed.api)
     compileOnly(libs.libxposed.legacy)
 
     implementation(platform(libs.androidx.compose.bom))
@@ -251,4 +251,6 @@ afterEvaluate {
             }
         }
     }
+}
+
 }
