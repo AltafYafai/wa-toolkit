@@ -60,7 +60,7 @@ public class Channels extends Feature {
                 }
             });
 
-            XposedBridge.hookAllConstructors(removeChannelRecClass, new XC_MethodHook() {
+            com.wa.toolkit.xposed.core.FeatureManager.safeHookAllConstructors(removeChannelRecClass, new XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                     var pairs = ReflectionUtils.findInstancesOfType(param.args, List.class);

@@ -53,7 +53,7 @@ public class GroupAdmin extends Feature {
                     iconAdmin = new ImageView(context);
                     var size = Utils.dipToPixels(16);
                     iconAdmin.setLayoutParams(new LinearLayout.LayoutParams(size, size));
-                    iconAdmin.setImageResource(R.drawable.admin);
+                    iconAdmin.setImageResource(com.wa.toolkit.xposed.utils.ResId.drawable.admin);
                     iconAdmin.setTag("admin_icon");
                     nameGroup.removeView(nametv);
                     view1.addView(nametv);

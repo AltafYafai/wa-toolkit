@@ -356,10 +356,12 @@ public class SeparateGroup extends Feature {
                     jid = ReflectionUtils.getObjectField(jidField, chat);
                 } catch (Exception ignored) {}
 
-                if (jid == null) {
-                    // If JID is still null after all attempts, we cannot classify.
-                    // Return false to filter it out and prevent it from appearing in both tabs.
-                    return false;
+                if (jid == null) return true;
+
+                if (XposedHelpers.findMethodExactIfExists(jid.getClass(), "getServer") != null) {
+                    var server = (String) callMethod(jid, "getServer");
+                    if (isGroup) return server.equals("broadcast") || server.equals("g.us");
+                    return server.equals("s.whatsapp.net") || server.equals("lid");
                 }
 
                 String rawJid = null;
@@ -373,14 +375,10 @@ public class SeparateGroup extends Feature {
                     return rawJid.endsWith("@s.whatsapp.net") || rawJid.endsWith("@lid");
                 }
 
-                // If rawJid is also null, and getServer() wasn't available, we cannot classify.
-                // Return false to filter it out.
-                return false;
+                return true;
             } catch (Exception e) {
-                // If any exception occurs during classification, log it and return false to filter it out.
                 XposedBridge.log("WAE SeparateGroup checkGroup exception: " + e.getMessage());
-                e.printStackTrace();
-                return false;
+                return true;
             }
         }
     }

@@ -101,8 +101,21 @@ object FeatureLoader {
             UnobfuscatorCache.init(app)
             SharedPreferencesWrapper.hookInit(app.classLoader)
             ReflectionUtils.initCache(app)
-            
+
+            val isSupported = supportedVersions?.any { s -> packageInfo.versionName.startsWith(s.replace(".xx", "")) } ?: false
+            if (!isSupported) {
+                disableExpirationVersion(app.classLoader)
+                XposedBridge.log("[WAE] Unsupported version detected. Disabling expiration as fallback.")
+                if (!pref.getBoolean("bypass_version_check", false)) {
+                    throw Exception("Unsupported version: ${packageInfo.versionName}\nOnly expiration bypass applied.")
+                }
+            } else if (pref.getBoolean("disable_whatsapp_expiration", false)) {
+                disableExpirationVersion(app.classLoader)
+                XposedBridge.log("[WAE] Manually disabling WhatsApp expiration.")
+            }
+
             initComponents(loader, pref)
+
             plugins(loader, pref, packageInfo.versionName ?: "")
 
             // Hook HomeActivity

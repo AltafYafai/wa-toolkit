@@ -114,7 +114,8 @@ public class UnobfuscatorCache {
                 try {
                     int keyHexValue = entry.getKey();
                     int result = baseValue << 16 | keyHexValue;
-                    String resourceString = pool.getString(entry.getValue().value().data()).toLowerCase().replaceAll("\\s", "");
+                    String resourceString = pool.getString(entry.getValue().value().data()).toLowerCase().replaceAll("\\\\s", "");
+                    if (reverseResourceMap.containsKey(resourceString)) continue;
                     reverseResourceMap.put(resourceString, String.valueOf(result));
                 } catch (Exception ignored) {
                 }
@@ -154,7 +155,9 @@ public class UnobfuscatorCache {
                         for (int i = threadStartId; i <= threadEndId; i++) {
                             try {
                                 String resourceString = resources.getString(i);
-                                reverseResourceMap.put(resourceString.toLowerCase().replaceAll("\\s", ""), String.valueOf(i));
+                                String key = resourceString.toLowerCase().replaceAll("\\\\s", "");
+                                if (reverseResourceMap.containsKey(key)) continue;
+                                reverseResourceMap.put(key, String.valueOf(i));
                             } catch (Resources.NotFoundException ignored) {
                             }
                         }

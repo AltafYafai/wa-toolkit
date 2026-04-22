@@ -114,6 +114,13 @@ public class SystemProperties extends Feature {
         propsBoolean.put(0x32ca, true);
         propsBoolean.put(0x32cb, true);
 
+        // Additional flags from WaEnhancer Others.java
+        propsBoolean.put(14022, true); // Enable voice note transcription
+        propsBoolean.put(15128, true); // Enable new chat lock UI
+        propsBoolean.put(13542, true); // Enable screen sharing
+        propsBoolean.put(15234, true); // Enable community tabs
+        propsBoolean.put(11234, true); // Enable passkeys
+
         if (disableMetaAI) {
             propsInteger.put(15535, 0);
             propsBoolean.put(8025, false);
