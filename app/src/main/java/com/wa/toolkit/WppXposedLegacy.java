@@ -63,7 +63,7 @@ public class WppXposedLegacy implements IXposedHookLoadPackage, IXposedHookInitP
         }
 
         if (packageName.equals("android") || packageName.equals("com.android.providers.settings")) {
-            com.wa.toolkit.xposed.downgrade.Patch.handleLoadPackage(lpparam, WppXposed.getPref());
+            com.wa.toolkit.xposed.downgrade.Patch.handleLoadPackage(lpparam, com.wa.toolkit.xposed.utils.PrefUtils.getPref());
             com.wa.toolkit.xposed.bridge.ScopeHook.hook(lpparam);
             return;
         }
@@ -73,7 +73,7 @@ public class WppXposedLegacy implements IXposedHookLoadPackage, IXposedHookInitP
         }
         
         com.wa.toolkit.xposed.AntiUpdater.hookSession(lpparam);
-        com.wa.toolkit.xposed.downgrade.Patch.handleLoadPackage(lpparam, WppXposed.getPref());
+        com.wa.toolkit.xposed.downgrade.Patch.handleLoadPackage(lpparam, com.wa.toolkit.xposed.utils.PrefUtils.getPref());
         com.wa.toolkit.xposed.bridge.ScopeHook.hook(lpparam);
 
         boolean isWpp = packageName.equals(com.wa.toolkit.xposed.core.FeatureLoader.PACKAGE_WPP);
@@ -81,13 +81,13 @@ public class WppXposedLegacy implements IXposedHookLoadPackage, IXposedHookInitP
 
 
         if (isWpp || isBusiness) {
-            com.wa.toolkit.xposed.core.FeatureLoader.start(classLoader, WppXposed.getPref(), lpparam.appInfo.sourceDir, MODULE_PATH);
+            com.wa.toolkit.xposed.core.FeatureLoader.start(classLoader, com.wa.toolkit.xposed.utils.PrefUtils.getPref(), lpparam.appInfo.sourceDir, MODULE_PATH);
         }
     }
 
     @Override
     public void handleInitPackageResources(XC_InitPackageResources.InitPackageResourcesParam resparam) throws Throwable {
-        WppXposed.ResParam = resparam;
+        com.wa.toolkit.xposed.utils.PrefUtils.ResParam = resparam;
         String packageName = resparam.packageName;
         if (!packageName.equals(com.wa.toolkit.xposed.core.FeatureLoader.PACKAGE_WPP) && !packageName.equals(com.wa.toolkit.xposed.core.FeatureLoader.PACKAGE_BUSINESS)) {
             return;

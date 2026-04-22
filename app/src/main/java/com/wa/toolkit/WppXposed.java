@@ -11,35 +11,20 @@ import com.wa.toolkit.xposed.bridge.ScopeHook;
 import com.wa.toolkit.xposed.core.FeatureLoader;
 import com.wa.toolkit.xposed.core.FeatureLoaderBridge;
 import com.wa.toolkit.xposed.downgrade.Patch;
+import com.wa.toolkit.xposed.utils.PrefUtils;
 
 import java.lang.reflect.Method;
 import java.util.Objects;
 
 import de.robv.android.xposed.XSharedPreferences;
-import de.robv.android.xposed.callbacks.XC_InitPackageResources;
 import io.github.libxposed.api.XposedModule;
 
 public class WppXposed extends XposedModule {
 
-    private static XSharedPreferences pref;
     private String MODULE_PATH;
-    
-    @Deprecated
-    public static XC_InitPackageResources.InitPackageResourcesParam ResParam = null;
 
     public WppXposed() {
         super();
-    }
-
-    @NonNull
-    public static XSharedPreferences getPref() {
-        if (pref == null) {
-            String prefName = BuildConfig.APPLICATION_ID + "_preferences";
-            pref = new XSharedPreferences(BuildConfig.APPLICATION_ID, prefName);
-            pref.makeWorldReadable();
-            pref.reload();
-        }
-        return pref;
     }
 
     @Override
@@ -80,7 +65,7 @@ public class WppXposed extends XposedModule {
         }
 
         if (packageName.equals("android") || packageName.equals("com.android.providers.settings")) {
-            Patch.handlePackage(param, getPref(), this);
+            Patch.handlePackage(param, PrefUtils.getPref(), this);
             ScopeHook.handlePackage(param, this);
             return;
         }
@@ -91,7 +76,7 @@ public class WppXposed extends XposedModule {
 
         AntiUpdater.hookPackage(param, this);
 
-        Patch.handlePackage(param, getPref(), this);
+        Patch.handlePackage(param, PrefUtils.getPref(), this);
 
         ScopeHook.handlePackage(param, this);
 
@@ -100,7 +85,7 @@ public class WppXposed extends XposedModule {
         
         if (isWpp || isBusiness) {
             ApplicationInfo appInfo = param.getApplicationInfo();
-            FeatureLoaderBridge.startModern(classLoader, getPref(), appInfo.sourceDir, MODULE_PATH, this);
+            FeatureLoaderBridge.startModern(classLoader, PrefUtils.getPref(), appInfo.sourceDir, MODULE_PATH, this);
         }
     }
 }

@@ -173,7 +173,7 @@ object DesignUtils {
 
     @JvmStatic
     fun setReplacementDrawable(name: String, replacement: Drawable) {
-        val resParam = WppXposed.ResParam ?: return
+        val resParam = PrefUtils.ResParam ?: return
         resParam.res.setReplacement(Utils.getApplication().packageName, "drawable", name,
             object : XResources.DrawableLoader() {
                 override fun newDrawable(res: XResources, id: Int): Drawable {
@@ -314,5 +314,8 @@ object DesignUtils {
         icon.setBounds(0, 0, canvas.width, canvas.height)
         icon.draw(canvas)
         return BitmapDrawable(Utils.getApplication().resources, bitmap)
+    }
+}
+map)
     }
 }

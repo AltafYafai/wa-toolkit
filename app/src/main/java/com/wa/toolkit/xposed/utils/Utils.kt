@@ -142,7 +142,7 @@ object Utils {
             getURIFolderByName(wppFolder, name, true) ?: throw Exception("Folder not found!")
             return "$folder/WhatsApp/$name"
         }
-        val folder = WppXposed.getPref().getString("download_local", "/sdcard/Download") ?: "/sdcard/Download"
+        val folder = PrefUtils.getPref().getString("download_local", "/sdcard/Download") ?: "/sdcard/Download"
         val waFolder = File(folder, "WhatsApp")
         val filePath = File(waFolder, name)
         try {
@@ -340,5 +340,8 @@ object Utils {
     fun openLink(mActivity: Activity, url: String) {
         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         mActivity.startActivity(browserIntent)
+    }
+}
+ent)
     }
 }
