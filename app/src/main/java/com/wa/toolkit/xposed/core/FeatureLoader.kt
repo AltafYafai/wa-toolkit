@@ -102,7 +102,8 @@ object FeatureLoader {
             SharedPreferencesWrapper.hookInit(app.classLoader)
             ReflectionUtils.initCache(app)
 
-            val isSupported = supportedVersions?.any { s -> packageInfo.versionName.startsWith(s.replace(".xx", "")) } ?: false
+            val isSupported = supportedVersions?.any { s -> packageInfo.versionName?.startsWith(s.replace(".xx", "")) == true } ?: false
+
             if (!isSupported) {
                 disableExpirationVersion(app.classLoader)
                 XposedBridge.log("[WAE] Unsupported version detected. Disabling expiration as fallback.")
