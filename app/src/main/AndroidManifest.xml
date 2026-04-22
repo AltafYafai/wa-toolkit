@@ -148,6 +148,15 @@
         <meta-data
             android:name="xposeddescription"
             android:value="@string/app_desc" />
+        <meta-data
+            android:name="xposedminversion"
+            android:value="93" />
+        <meta-data
+            android:name="xposedsharedprefs"
+            android:value="true" />
+        <meta-data
+            android:name="xposedscope"
+            android:resource="@array/scope" />
 
         <receiver
             android:name=".receivers.WAFReceiver"
