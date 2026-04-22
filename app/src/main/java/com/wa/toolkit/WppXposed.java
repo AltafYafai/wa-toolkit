@@ -18,7 +18,6 @@ import java.util.Objects;
 import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.callbacks.XC_InitPackageResources;
 import io.github.libxposed.api.XposedModule;
-import io.github.libxposed.api.XposedInterface;
 
 public class WppXposed extends XposedModule {
 
@@ -56,19 +55,17 @@ public class WppXposed extends XposedModule {
             try {
                 Class<?> mainActivity = classLoader.loadClass("com.wa.toolkit.MainActivity");
                 Method isXposedEnabled = mainActivity.getDeclaredMethod("isXposedEnabled");
-                // Base class XposedModule has getInterface() which returns XposedInterface
-                getInterface().hookMethod(isXposedEnabled, chain -> true);
+                hook(isXposedEnabled).intercept(chain -> true);
 
                 try {
                     Class<?> companion = classLoader.loadClass("com.wa.toolkit.MainActivity$Companion");
                     Method isXposedEnabledCompanion = companion.getDeclaredMethod("isXposedEnabled");
-                    getInterface().hookMethod(isXposedEnabledCompanion, chain -> true);
+                    hook(isXposedEnabledCompanion).intercept(chain -> true);
                 } catch (Throwable ignored) {}
 
-                // Force MODE_WORLD_READABLE at Context level
                 Class<?> contextImpl = classLoader.loadClass("android.app.ContextImpl");
                 Method getSharedPreferences = contextImpl.getDeclaredMethod("getSharedPreferences", String.class, int.class);
-                getInterface().hookMethod(getSharedPreferences, chain -> {
+                hook(getSharedPreferences).intercept(chain -> {
                     String name = (String) chain.getArgs().get(0);
                     if (name.contains("preferences") || name.contains("com.wa.toolkit")) {
                         chain.getArgs().set(1, ContextWrapper.MODE_WORLD_READABLE);
@@ -83,8 +80,8 @@ public class WppXposed extends XposedModule {
         }
 
         if (packageName.equals("android") || packageName.equals("com.android.providers.settings")) {
-            Patch.handlePackage(param, getPref(), getInterface());
-            ScopeHook.handlePackage(param, getInterface());
+            Patch.handlePackage(param, getPref(), this);
+            ScopeHook.handlePackage(param, this);
             return;
         }
 
@@ -92,18 +89,18 @@ public class WppXposed extends XposedModule {
             return;
         }
 
-        AntiUpdater.hookPackage(param, getInterface());
+        AntiUpdater.hookPackage(param, this);
 
-        Patch.handlePackage(param, getPref(), getInterface());
+        Patch.handlePackage(param, getPref(), this);
 
-        ScopeHook.handlePackage(param, getInterface());
+        ScopeHook.handlePackage(param, this);
 
         boolean isWpp = packageName.equals(FeatureLoader.PACKAGE_WPP);
         boolean isBusiness = packageName.equals(FeatureLoader.PACKAGE_BUSINESS);
         
         if (isWpp || isBusiness) {
             ApplicationInfo appInfo = param.getApplicationInfo();
-            FeatureLoaderBridge.startModern(classLoader, getPref(), appInfo.sourceDir, MODULE_PATH, getInterface());
+            FeatureLoaderBridge.startModern(classLoader, getPref(), appInfo.sourceDir, MODULE_PATH, this);
         }
     }
 }

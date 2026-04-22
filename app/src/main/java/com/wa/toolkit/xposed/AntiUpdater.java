@@ -7,15 +7,14 @@ import com.wa.toolkit.xposed.core.FeatureLoader;
 import java.io.IOException;
 import java.lang.reflect.Method;
 
-import io.github.libxposed.api.XposedInterface;
 import io.github.libxposed.api.XposedModule;
 
 public class AntiUpdater {
 
-    public static void hookPackage(XposedModule.PackageReadyParam param, XposedInterface framework) {
+    public static void hookPackage(XposedModule.PackageReadyParam param, XposedModule module) {
         try {
             Method createSession = PackageInstaller.class.getDeclaredMethod("createSession", PackageInstaller.SessionParams.class);
-            framework.hookMethod(createSession, chain -> {
+            module.hook(createSession).intercept(chain -> {
                 PackageInstaller.SessionParams session = (PackageInstaller.SessionParams) chain.getArgs().get(0);
                 java.lang.reflect.Field field = PackageInstaller.SessionParams.class.getDeclaredField("appPackageName");
                 field.setAccessible(true);

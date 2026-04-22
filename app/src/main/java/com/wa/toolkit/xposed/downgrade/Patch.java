@@ -10,24 +10,12 @@ import java.util.List;
 import java.util.Objects;
 
 import de.robv.android.xposed.XSharedPreferences;
-import io.github.libxposed.api.XposedInterface;
 import io.github.libxposed.api.XposedModule;
 
 public class Patch {
-    public static void handlePackage(XposedModule.PackageReadyParam param, XSharedPreferences prefs, XposedInterface framework) {
+    public static void handlePackage(XposedModule.PackageReadyParam param, XSharedPreferences prefs, XposedModule module) {
         if (!("android".equals(param.getPackageName())))
             return;
-
-        XposedInterface.Hooker<Method, XposedInterface.MethodHookParam> hookDowngradeObject = chain -> {
-            Object pkgObj = chain.getArgs().get(0);
-            try {
-                Method getPackageName = pkgObj.getClass().getMethod("getPackageName");
-                String pkg = (String) getPackageName.invoke(pkgObj);
-                if (Objects.equals(pkg, FeatureLoader.PACKAGE_WPP) || Objects.equals(pkg, FeatureLoader.PACKAGE_BUSINESS))
-                    return null;
-            } catch (Exception ignored) {}
-            return chain.proceed();
-        };
 
         try {
             ClassLoader classLoader = param.getClassLoader();
@@ -39,14 +27,32 @@ public class Patch {
                     Method checkDowngrade = utils.getDeclaredMethod("checkDowngrade", 
                         classLoader.loadClass("com.android.server.pm.pkg.AndroidPackage"),
                         classLoader.loadClass("android.content.pm.PackageInfoLite"));
-                    framework.hookMethod(checkDowngrade, hookDowngradeObject);
+                    module.hook(checkDowngrade).intercept(chain -> {
+                        Object pkgObj = chain.getArgs().get(0);
+                        try {
+                            Method getPackageName = pkgObj.getClass().getMethod("getPackageName");
+                            String pkg = (String) getPackageName.invoke(pkgObj);
+                            if (Objects.equals(pkg, FeatureLoader.PACKAGE_WPP) || Objects.equals(pkg, FeatureLoader.PACKAGE_BUSINESS))
+                                return null;
+                        } catch (Exception ignored) {}
+                        return chain.proceed();
+                    });
                     break;
                 case 33:
                     Class<?> utils33 = classLoader.loadClass("com.android.server.pm.PackageManagerServiceUtils");
                     Method checkDowngrade33 = utils33.getDeclaredMethod("checkDowngrade",
                         classLoader.loadClass("com.android.server.pm.parsing.pkg.AndroidPackage"),
                         classLoader.loadClass("android.content.pm.PackageInfoLite"));
-                    framework.hookMethod(checkDowngrade33, hookDowngradeObject);
+                    module.hook(checkDowngrade33).intercept(chain -> {
+                        Object pkgObj = chain.getArgs().get(0);
+                        try {
+                            Method getPackageName = pkgObj.getClass().getMethod("getPackageName");
+                            String pkg = (String) getPackageName.invoke(pkgObj);
+                            if (Objects.equals(pkg, FeatureLoader.PACKAGE_WPP) || Objects.equals(pkg, FeatureLoader.PACKAGE_BUSINESS))
+                                return null;
+                        } catch (Exception ignored) {}
+                        return chain.proceed();
+                    });
                     break;
                 default:
                     break;

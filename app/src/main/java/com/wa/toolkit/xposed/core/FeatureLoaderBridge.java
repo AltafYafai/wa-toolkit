@@ -9,11 +9,11 @@ import java.lang.reflect.Method;
 
 import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
-import io.github.libxposed.api.XposedInterface;
+import io.github.libxposed.api.XposedModule;
 
 public class FeatureLoaderBridge {
 
-    public static void startModern(ClassLoader loader, XSharedPreferences pref, String sourceDir, String modulePath, XposedInterface framework) {
+    public static void startModern(ClassLoader loader, XSharedPreferences pref, String sourceDir, String modulePath, XposedModule module) {
         XposedBridge.log("[WAE] FeatureLoaderBridge.startModern called");
         
         if (!Unobfuscator.initWithPath(sourceDir)) {
@@ -23,7 +23,7 @@ public class FeatureLoaderBridge {
 
         try {
             Method callApplicationOnCreate = Instrumentation.class.getDeclaredMethod("callApplicationOnCreate", Application.class);
-            framework.hookMethod(callApplicationOnCreate, chain -> {
+            module.hook(callApplicationOnCreate).intercept(chain -> {
                 Application app = (Application) chain.getArgs().get(0);
                 
                 FeatureLoader.initFromBridge(app, loader, pref, modulePath);
