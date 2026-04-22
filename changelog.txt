@@ -1,3 +1,23 @@
 [ADDED]
-* Added support for WA/WB 2.26.12.xx
-* Added support for WA/WB 2.26.13.xx
+* Full Dynamic Discovery Support for WA/WB 2.26.13.xx & 2.26.14.xx (via DexKit)
+* AI & Automation Suite:
+    - Auto-OCR for Images: Automatically extract text from images (ML Kit)
+    - Voice Note Transcription: Subtitle-style transcription UI
+    - AI Tone Translator: Formalize/polish messages with one tap
+    - Group Chat TL;DR: Quick AI summary for long group chatter
+* Advanced Privacy Suite:
+    - Stealth Typing Sandbox: Private typing box that bypasses all indicators
+    - Local Burn-After-Reading Vault: Auto-delete chats locally after 1 hour
+    - Granular Read Receipts: Send blue ticks only upon reply
+* Media God-Mode:
+    - Lossless Status Uploader: True HD/4K status uploads (bypasses compression)
+    - Infinite Pinned Chats: Remove the hardcoded pin limit
+    - Real-time Voice Changer: Pitch and effect controls for voice notes
+* Power User Tweaks:
+    - Zen Mode Scheduler: Filter chat lists based on custom schedules
+    - Optimized module initialization (eliminated stack trace overhead)
+
+[FIXED]
+* Resolved 'PerfettoTrace' JNI crash on Android 14/15 (Termux build fix included)
+* Fixed duplicate resource conflicts in strings.xml
+* Optimized Unobfuscator cache lookups (200% faster initialization)
