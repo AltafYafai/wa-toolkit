@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import com.wa.toolkit.xposed.core.Feature;
 import com.wa.toolkit.xposed.core.devkit.Unobfuscator;
 import com.wa.toolkit.xposed.utils.ReflectionUtils;
+import com.wa.toolkit.xposed.utils.Utils;
 
 import java.util.Objects;
 
