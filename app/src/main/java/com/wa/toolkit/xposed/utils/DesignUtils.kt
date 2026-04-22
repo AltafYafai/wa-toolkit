@@ -316,4 +316,3 @@ object DesignUtils {
         return BitmapDrawable(Utils.getApplication().resources, bitmap)
     }
 }
-}
