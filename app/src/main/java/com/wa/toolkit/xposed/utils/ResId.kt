@@ -1,5 +1,8 @@
 package com.wa.toolkit.xposed.utils
 
+import android.content.Context
+import android.content.res.Resources
+
 object ResId {
 
     object drawable {
@@ -116,6 +119,11 @@ object ResId {
 
     object id {
         @JvmField var tag_font_scale: Int = 0
+    }
+
+    object array {
+        @JvmField var supported_versions_wpp: Int = 0
+        @JvmField var supported_versions_business: Int = 0
     }
 
     @JvmStatic
