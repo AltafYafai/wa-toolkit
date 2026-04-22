@@ -72,7 +72,7 @@ public class MediaQuality extends Feature {
             });
         }
 
-        if (videoQuality) {
+        if (videoQuality || prefs.getBoolean("lossless_status", false)) {
             SystemProperties.propsBoolean.put(5549, true);
 
             var ProcessVideoQualityClass = Unobfuscator.loadProcessVideoQualityClass(classLoader);
@@ -85,14 +85,17 @@ public class MediaQuality extends Feature {
                     var fieldvideoMaxBitrate = processVideoQualityFields.get("videoMaxBitrate");
                     var fieldvideoMaxEdge = processVideoQualityFields.get("videoMaxEdge");
                     var fieldvideoLimitMb = processVideoQualityFields.get("videoLimitMb");
+                    
+                    boolean isLossless = prefs.getBoolean("lossless_status", false);
+
                     if (fieldvideoLimitMb != null) {
-                        fieldvideoLimitMb.setInt(processVideoQuality, maxSize);
+                        fieldvideoLimitMb.setInt(processVideoQuality, isLossless ? 2048 : maxSize);
                     }
                     if (fieldvideoMaxEdge != null) {
-                        fieldvideoMaxEdge.setInt(processVideoQuality, 3840);
+                        fieldvideoMaxEdge.setInt(processVideoQuality, isLossless ? 3840 : 1920);
                     }
                     if (fieldvideoMaxBitrate != null) {
-                        int bitrateBps = 24000 * 1000;
+                        int bitrateBps = (isLossless ? 50000 : 24000) * 1000;
                         fieldvideoMaxBitrate.setInt(processVideoQuality, bitrateBps);
                     }
                 }

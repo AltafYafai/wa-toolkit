@@ -33,6 +33,13 @@
 
         <androidx.preference.SwitchPreferenceCompat
             android:defaultValue="false"
+            android:key="lossless_status"
+            android:summary="@string/lossless_status_sum"
+            android:title="@string/lossless_status"
+            app:icon="@drawable/ic_status" />
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="false"
             android:key="unlimited_file_size"
             android:summary="@string/unlimited_file_size_sum"
             android:title="@string/unlimited_file_size"
@@ -55,6 +62,25 @@
             android:title="Video Size Limit (MB)"
             app:icon="@drawable/ic_dashboard_black_24dp"
             app:valueSpacing="10" />
+
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+        android:title="Enhanced Media">
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="auto_ocr"
+            android:summary="@string/auto_ocr_sum"
+            android:title="@string/auto_ocr"
+            app:icon="@drawable/ic_image" />
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="voice_changer"
+            android:summary="@string/voice_changer_sum"
+            android:title="@string/voice_changer"
+            app:icon="@drawable/ic_recording" />
 
     </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 

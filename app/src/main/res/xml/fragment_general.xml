@@ -63,17 +63,50 @@
 
         <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
+            android:key="voice_transcription"
+            android:summary="@string/voice_transcription_sum"
+            android:title="@string/voice_transcription"
+            app:icon="@drawable/ic_recording" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="ai_rewrite"
+            android:summary="@string/ai_rewrite_sum"
+            android:title="@string/ai_rewrite"
+            app:icon="@drawable/ic_privacy" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="group_tldr"
+            android:summary="@string/group_tldr_sum"
+            android:title="@string/group_tldr"
+            app:icon="@drawable/ic_home_black_24dp" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
             android:key="metaai"
             android:summary="Completely hide Meta AI integration"
             android:title="Disable Meta AI"
             app:icon="@drawable/ic_round_bug_report_24" />
 
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+        android:title="Advanced Workflow">
+
         <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
-            android:key="audio_transcription"
-            android:summary="Enable native voice note transcripts"
-            android:title="Audio Transcription"
-            app:icon="@drawable/ic_recording" />
+            android:key="disable_pinned_limit"
+            android:summary="@string/disable_pinned_limit_sum"
+            android:title="@string/disable_pinned_limit"
+            app:icon="@drawable/ic_dashboard_black_24dp" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="zen_mode"
+            android:summary="@string/zen_mode_sum"
+            android:title="@string/zen_mode"
+            app:icon="@drawable/eye_disabled" />
 
     </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 

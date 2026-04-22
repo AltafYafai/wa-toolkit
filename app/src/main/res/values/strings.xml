@@ -526,4 +526,32 @@
     <string name="smart_reply_sum">Suggest context-aware quick replies</string>
     <string name="chat_summarization">Chat Summarization</string>
     <string name="chat_summarization_sum">Summarize long unread group messages</string>
+
+    <!-- Advanced Features Phase 1 -->
+    <string name="stealth_typing">Stealth Typing Sandbox</string>
+    <string name="stealth_typing_sum">Type privately in a floating box; text is sent only when you hit Send, bypassing \"Typing...\" indicators</string>
+    <string name="local_vault">Local Burn-After-Reading Vault</string>
+    <string name="local_vault_sum">Auto-delete messages and media from marked chats locally after 1 hour</string>
+    <string name="blueonreply">Send Blue Ticks upon Reply</string>
+    <string name="blueonreply_sum">Sends blue ticks after replying to a message (Must have \"Hide Blue Ticks\" active)</string>
+
+    <!-- Advanced Features Phase 2 -->
+    <string name="voice_changer">Voice Changer</string>
+    <string name="voice_changer_sum">Apply real-time effects (Pitch, Deep, Robot) to your voice notes</string>
+    <string name="auto_ocr">Auto-OCR for Images</string>
+    <string name="auto_ocr_sum">Automatically extract text from received images and make it searchable</string>
+    <string name="lossless_status">Lossless Status Uploader</string>
+    <string name="lossless_status_sum">Bypass WhatsApp compression for true HD status uploads</string>
+    <string name="disable_pinned_limit">Infinite Pinned Chats</string>
+    <string name="disable_pinned_limit_sum">Remove the limit of 3 pinned chats and allow infinite pinning</string>
+
+    <!-- Advanced Features Phase 3 -->
+    <string name="zen_mode">Zen Mode Scheduler</string>
+    <string name="zen_mode_sum">Completely hide Work/Personal chats based on a custom schedule</string>
+    <string name="voice_transcription">Voice Note Transcription</string>
+    <string name="voice_transcription_sum">Read voice notes without playing them using on-device transcription</string>
+    <string name="ai_rewrite">AI Tone Translator</string>
+    <string name="ai_rewrite_sum">Tap a button to rewrite your message to be more professional or polite before sending</string>
+    <string name="group_tldr">Group Chat TL;DR</string>
+    <string name="group_tldr_sum">Get a quick bullet-point summary of unread messages in noisy groups</string>
 </resources>
