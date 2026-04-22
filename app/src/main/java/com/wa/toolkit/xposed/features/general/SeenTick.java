@@ -148,7 +148,7 @@ public class SeenTick extends Feature {
         hookOnSendMessages();
 
         // Send Seen functions
-        var ticktype = Integer.parseInt(prefs.getString("seentick", "0"));
+        var ticktype = Integer.parseInt(Utils.getSafeString(prefs, "seentick", "0"));
         if (ticktype == 0) return;
 
         // hook current status

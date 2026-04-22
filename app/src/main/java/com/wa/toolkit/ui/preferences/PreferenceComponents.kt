@@ -68,14 +68,21 @@ fun SwitchSetting(
 }
 
 @Composable
-fun ActionSetting(
+fun StringSwitchSetting(
     title: String,
     summary: String,
-    onClick: () -> Unit,
+    viewModel: SettingsViewModel,
+    prefKey: String,
+    trueValue: String = "1",
+    falseValue: String = "0",
+    defaultValue: String = "0",
     icon: Int? = null
 ) {
+    val currentValue by viewModel.getString(prefKey, defaultValue).collectAsState(initial = defaultValue)
+    val checked = currentValue == trueValue
+
     ElevatedCard(
-        onClick = onClick,
+        onClick = { viewModel.setString(prefKey, if (checked) falseValue else trueValue) },
         shape = MaterialTheme.shapes.medium,
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -98,7 +105,91 @@ fun ActionSetting(
                 Text(title, style = MaterialTheme.typography.titleMedium)
                 Text(summary, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
+            Switch(
+                checked = checked,
+                onCheckedChange = { viewModel.setString(prefKey, if (it) trueValue else falseValue) }
+            )
         }
+    }
+}
+
+@Composable
+fun ColorPickerSetting(
+    title: String,
+    summary: String,
+    viewModel: SettingsViewModel,
+    prefKey: String,
+    defaultValue: String = "#FF1B8755",
+    icon: Int? = null
+) {
+    val currentValue by viewModel.getString(prefKey, defaultValue).collectAsState(initial = defaultValue)
+    var showDialog by remember { mutableStateOf(false) }
+    var textValue by remember(currentValue) { mutableStateOf(currentValue) }
+
+    ElevatedCard(
+        onClick = { showDialog = true },
+        shape = MaterialTheme.shapes.medium,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            if (icon != null) {
+                Icon(
+                    painter = painterResource(icon),
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(24.dp)
+                )
+                Spacer(Modifier.width(16.dp))
+            }
+            Column(modifier = Modifier.weight(1f)) {
+                Text(title, style = MaterialTheme.typography.titleMedium)
+                Text(summary, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+            
+            // Color preview circle
+            Surface(
+                modifier = Modifier.size(32.dp),
+                shape = androidx.compose.foundation.shape.CircleShape,
+                color = try { Color(android.graphics.Color.parseColor(currentValue)) } catch (e: Exception) { Color.Gray },
+                border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
+            ) {}
+        }
+    }
+
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            title = { Text("Set Color (Hex)") },
+            text = {
+                OutlinedTextField(
+                    value = textValue,
+                    onValueChange = { textValue = it },
+                    label = { Text("Hex Color (e.g. #FF0000)") },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    if (textValue.startsWith("#") && (textValue.length == 7 || textValue.length == 9)) {
+                        viewModel.setString(prefKey, textValue)
+                        showDialog = false
+                    }
+                }) {
+                    Text("OK")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDialog = false }) {
+                    Text("Cancel")
+                }
+            }
+        )
     }
 }
 

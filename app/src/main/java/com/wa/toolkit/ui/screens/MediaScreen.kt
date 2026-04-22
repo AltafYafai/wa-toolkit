@@ -179,11 +179,12 @@ fun MediaScreen(
                 )
             }
             item {
-                SwitchSetting(
+                StringSwitchSetting(
                     title = stringResource(R.string.send_audio_as_voice_audio_note),
                     summary = stringResource(R.string.send_audio_as_voice_audio_note_sum),
                     viewModel = viewModel,
                     prefKey = "audio_type",
+                    trueValue = "2", // Default to Voice Note when toggled
                     icon = R.drawable.ic_recording
                 )
             }

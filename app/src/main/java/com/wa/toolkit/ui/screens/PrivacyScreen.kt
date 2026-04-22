@@ -85,7 +85,7 @@ fun PrivacyScreen(
                 )
             }
             item {
-                SwitchSetting(
+                StringSwitchSetting(
                     title = stringResource(R.string.hide_archived_chat),
                     summary = stringResource(R.string.hide_archived_chat_sum),
                     viewModel = viewModel,
@@ -199,7 +199,7 @@ fun PrivacyScreen(
                 )
             }
             item {
-                SwitchSetting(
+                StringSwitchSetting(
                     title = stringResource(R.string.custom_privacy_per_contact),
                     summary = stringResource(R.string.custom_privacy_per_contact_sum),
                     viewModel = viewModel,
@@ -244,7 +244,7 @@ fun PrivacyScreen(
                 )
             }
             item {
-                SwitchSetting(
+                StringSwitchSetting(
                     title = stringResource(R.string.show_button_to_send_blue_tick),
                     summary = stringResource(R.string.show_button_to_send_blue_tick_sum),
                     viewModel = viewModel,

@@ -300,10 +300,12 @@ public class CustomThemeV2 extends Feature {
         var primaryColorInt = prefs.getInt("primary_color", 0);
         var textColorInt = prefs.getInt("text_color", 0);
         var backgroundColorInt = prefs.getInt("background_color", 0);
+        
         var changeColorEnabled = prefs.getBoolean("changecolor", false);
-        var changeColorMode = prefs.getString("changecolor_mode", "manual");
-        var useMonetColors = changeColorEnabled && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
-                && Objects.equals(changeColorMode, "monet");
+        var colorMode = prefs.getString("wae_color_mode", "preset");
+        var colorPreset = prefs.getString("wae_color_preset", "green");
+        
+        var useMonetColors = colorMode.equals("monet") && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S;
 
         if (useMonetColors) {
             var primaryMonetColor = resolveMonetColor(
@@ -319,14 +321,16 @@ public class CustomThemeV2 extends Feature {
                 textColorInt = textMonetColor;
             if (backgroundMonetColor != 0)
                 backgroundColorInt = backgroundMonetColor;
-
+        } else if (colorMode.equals("preset")) {
+            primaryColorInt = getPresetColor(colorPreset, DesignUtils.isNightMode());
+            // Text and background colors for presets can be default or fixed
         }
 
         var primaryColor = DesignUtils.checkSystemColor(properties.getProperty("primary_color", "0"));
         var textColor = DesignUtils.checkSystemColor(properties.getProperty("text_color", "0"));
         var backgroundColor = DesignUtils.checkSystemColor(properties.getProperty("background_color", "0"));
 
-        if (changeColorEnabled) {
+        if (changeColorEnabled || colorMode.equals("monet") || colorMode.equals("preset")) {
             primaryColor = primaryColorInt == 0 ? "0" : IColors.toString(primaryColorInt);
             textColor = textColorInt == 0 ? "0" : IColors.toString(textColorInt);
             backgroundColor = backgroundColorInt == 0 ? "0" : IColors.toString(backgroundColorInt);
@@ -389,6 +393,18 @@ public class CustomThemeV2 extends Feature {
             backgroundColors.put("ffffff", "ffffff");
         }
 
+    }
+
+    private int getPresetColor(String preset, boolean dark) {
+        return switch (preset) {
+            case "blue" -> dark ? 0xFF90CAF9 : 0xFF2196F3;
+            case "cyan" -> dark ? 0xFF80DEEA : 0xFF00BCD4;
+            case "purple" -> dark ? 0xFFCE93D8 : 0xFF9C27B0;
+            case "orange" -> dark ? 0xFFFFCC80 : 0xFFFF9800;
+            case "red" -> dark ? 0xFFEF9A9A : 0xFFF44336;
+            case "pink" -> dark ? 0xFFF48FB1 : 0xFFE91E63;
+            default -> dark ? 0xFF81C784 : 0xFF1B8755; // green
+        };
     }
 
     private int resolveMonetColor(String resourceName) {

@@ -35,8 +35,8 @@ public class BubbleColors extends Feature {
         if (!bubbleColor && !Objects.equals(properties.getProperty("bubble_colors"), "true"))
             return;
 
-        int bubbleLeftColor = bubbleColor ? prefs.getInt("bubble_left", 0) : Color.parseColor(DesignUtils.checkSystemColor(properties.getProperty("bubble_left", "#00000000")));
-        int bubbleRightColor = bubbleColor ? prefs.getInt("bubble_right", 0) : Color.parseColor(DesignUtils.checkSystemColor(properties.getProperty("bubble_right", "#00000000")));
+        int bubbleLeftColor = bubbleColor ? Utils.parseColor(prefs.getString("bubble_left", "#FF1B8755"), 0) : Color.parseColor(DesignUtils.checkSystemColor(properties.getProperty("bubble_left", "#00000000")));
+        int bubbleRightColor = bubbleColor ? Utils.parseColor(prefs.getString("bubble_right", "#FF1B8755"), 0) : Color.parseColor(DesignUtils.checkSystemColor(properties.getProperty("bubble_right", "#00000000")));
 
         var dateWrapper = Unobfuscator.loadBallonDateDrawable(classLoader);
 

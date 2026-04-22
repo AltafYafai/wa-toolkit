@@ -337,6 +337,34 @@ object Utils {
     }
 
     @JvmStatic
+    fun getSafeString(prefs: XSharedPreferences, key: String, defaultValue: String): String {
+        return try {
+            prefs.getString(key, defaultValue) ?: defaultValue
+        } catch (e: Exception) {
+            try {
+                if (prefs.getBoolean(key, false)) "1" else "0"
+            } catch (e2: Exception) {
+                defaultValue
+            }
+        }
+    }
+
+    @JvmStatic
+    fun parseColor(colorStr: String, defaultColor: Int): Int {
+        if (colorStr.isEmpty()) return defaultColor
+        return try {
+            android.graphics.Color.parseColor(colorStr)
+        } catch (e: Exception) {
+            try {
+                // Try as integer
+                colorStr.toInt()
+            } catch (e2: Exception) {
+                defaultColor
+            }
+        }
+    }
+
+    @JvmStatic
     fun openLink(mActivity: Activity, url: String) {
         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         mActivity.startActivity(browserIntent)

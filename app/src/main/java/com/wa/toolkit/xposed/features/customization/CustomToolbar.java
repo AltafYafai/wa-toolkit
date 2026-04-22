@@ -57,7 +57,7 @@ public class CustomToolbar extends Feature {
     public void doHook() throws Exception {
         var showName = prefs.getBoolean("shownamehome", false);
         var showBio = prefs.getBoolean("showbiohome", false);
-        var typeArchive = prefs.getString("typearchive", "0");
+        var typeArchive = Utils.getSafeString(prefs, "typearchive", "0");
 
         onMenuItemSelected = Unobfuscator.loadOnMenuItemSelected(classLoader);
 

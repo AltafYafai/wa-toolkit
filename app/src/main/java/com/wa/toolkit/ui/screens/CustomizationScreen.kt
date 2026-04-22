@@ -258,18 +258,22 @@ fun CustomizationScreen(
                 )
             }
             item {
-                ActionSetting(
+                ColorPickerSetting(
                     title = stringResource(R.string.bubble_left),
-                    summary = "Pick color for received messages",
-                    onClick = { /* Color picker not implemented in compose yet */ },
+                    summary = "Received message bubble color",
+                    viewModel = viewModel,
+                    prefKey = "bubble_left",
+                    defaultValue = "#FF1B8755",
                     icon = R.drawable.edit2
                 )
             }
             item {
-                ActionSetting(
+                ColorPickerSetting(
                     title = stringResource(R.string.bubble_right),
-                    summary = "Pick color for sent messages",
-                    onClick = { /* Color picker not implemented in compose yet */ },
+                    summary = "Sent message bubble color",
+                    viewModel = viewModel,
+                    prefKey = "bubble_right",
+                    defaultValue = "#FF1B8755",
                     icon = R.drawable.edit2
                 )
             }

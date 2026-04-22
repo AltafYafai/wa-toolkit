@@ -49,14 +49,14 @@ public class CustomPrivacy extends Feature {
     }
 
     public static JSONObject getJSON(String number) {
-        if (Objects.equals(Utils.xprefs.getString("custom_privacy_type", "0"), "0") || TextUtils.isEmpty(number))
+        if (Objects.equals(Utils.getSafeString(Utils.xprefs, "custom_privacy_type", "0"), "0") || TextUtils.isEmpty(number))
             return new JSONObject();
         return WppCore.getPrivJSON(number + "_privacy", new JSONObject());
     }
 
     @Override
     public void doHook() throws Throwable {
-        if (Objects.equals(Utils.xprefs.getString("custom_privacy_type", "0"), "0")) return;
+        if (Objects.equals(Utils.getSafeString(prefs, "custom_privacy_type", "0"), "0")) return;
 
         Class<?> ContactInfoActivityClass = Unobfuscator.findFirstClassUsingName(classLoader, StringMatchType.EndsWith, ".ContactInfoActivity");
         Class<?> GroupInfoActivityClass = Unobfuscator.findFirstClassUsingName(classLoader, StringMatchType.EndsWith, ".GroupChatInfoActivity");
@@ -66,7 +66,7 @@ public class CustomPrivacy extends Feature {
         chatUserJidMethod = ReflectionUtils.findMethodUsingFilter(ContactInfoActivityClass, method -> method.getParameterCount() == 0 && userJidClass.isAssignableFrom(method.getReturnType()));
         groupUserJidMethod = ReflectionUtils.findMethodUsingFilter(GroupInfoActivityClass, method -> method.getParameterCount() == 0 && groupJidClass.isAssignableFrom(method.getReturnType()));
 
-        var type = Integer.parseInt(Utils.xprefs.getString("custom_privacy_type", "0"));
+        var type = Integer.parseInt(Utils.getSafeString(prefs, "custom_privacy_type", "0"));
 
         if (type == 1) {
             var hooker = new WppCore.ActivityChangeState() {

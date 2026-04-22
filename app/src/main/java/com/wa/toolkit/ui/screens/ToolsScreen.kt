@@ -13,12 +13,34 @@ import com.wa.toolkit.R
 import com.wa.toolkit.ui.SettingsViewModel
 import com.wa.toolkit.ui.preferences.*
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import android.net.Uri
+import android.widget.Toast
+import androidx.compose.ui.platform.LocalContext
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ToolsScreen(
     viewModel: SettingsViewModel,
     onBack: () -> Unit
 ) {
+    val context = LocalContext.current
+    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        uri?.let {
+            try {
+                val inputStream = context.contentResolver.openInputStream(it)
+                val content = inputStream?.bufferedReader()?.use { it.readText() }
+                if (content != null) {
+                    viewModel.setString("bootloader_spoofer_xml", content)
+                    Toast.makeText(context, "Keybox XML loaded successfully", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(context, "Error loading XML: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -106,8 +128,26 @@ fun ToolsScreen(
                     icon = R.drawable.ic_privacy
                 )
             }
+            item {
+                SwitchSetting(
+                    title = "Use Custom Keybox",
+                    summary = "Use your own bootloader attestation keys",
+                    viewModel = viewModel,
+                    prefKey = "bootloader_spoofer_custom",
+                    icon = R.drawable.ic_round_settings_24
+                )
+            }
+            item {
+                ActionSetting(
+                    title = "Import Keybox XML",
+                    summary = "Select an .xml file containing attestation keys",
+                    onClick = { launcher.launch("text/xml") },
+                    icon = R.drawable.ic_round_check_circle_24
+                )
+            }
 
-            item { CategoryHeader("Intelligence & AI") }
+            item { CategoryHeader("System & Maintenance") }
+
             item {
                 SwitchSetting(
                     title = stringResource(R.string.voice_transcription),

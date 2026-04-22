@@ -54,7 +54,13 @@ class MainActivity : AppCompatActivity() {
         checkWpp()
 
         setContent {
-            AppTheme {
+            val colorMode by settingsViewModel.colorMode.collectAsState()
+            val colorPreset by settingsViewModel.colorPreset.collectAsState()
+
+            AppTheme(
+                colorMode = colorMode,
+                colorPreset = colorPreset
+            ) {
                 MainScreen(viewModel, settingsViewModel, searchViewModel, themeViewModel)
             }
         }

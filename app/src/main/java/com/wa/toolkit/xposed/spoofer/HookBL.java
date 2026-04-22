@@ -505,10 +505,10 @@ public final class HookBL {
                 SharedPreferencesClass = app.getSharedPreferences("settings", Context.MODE_PRIVATE).getClass();
             }
 
-            FeatureManager.INSTANCE.safeFindAndHookMethod(PackageManagerClass, "hasSystemFeature", String.class, systemFeatureHook);
-            FeatureManager.INSTANCE.safeFindAndHookMethod(PackageManagerClass, "hasSystemFeature", String.class, int.class, systemFeatureHook);
+            FeatureManager.safeFindAndHookMethod(PackageManagerClass, "hasSystemFeature", String.class, systemFeatureHook);
+            FeatureManager.safeFindAndHookMethod(PackageManagerClass, "hasSystemFeature", String.class, int.class, systemFeatureHook);
 
-            FeatureManager.INSTANCE.safeFindAndHookMethod(SharedPreferencesClass, "getBoolean", String.class, boolean.class, new XC_MethodHook() {
+            FeatureManager.safeFindAndHookMethod(SharedPreferencesClass, "getBoolean", String.class, boolean.class, new XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) {
                     String key = (String) param.args[0];
@@ -521,7 +521,7 @@ public final class HookBL {
         }
 
         try {
-            FeatureManager.INSTANCE.safeFindAndHookMethod(KeyGenParameterSpec.Builder.class, "setAttestationChallenge", byte[].class, new XC_MethodHook() {
+            FeatureManager.safeFindAndHookMethod(KeyGenParameterSpec.Builder.class, "setAttestationChallenge", byte[].class, new XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) {
                     attestationChallengeBytes = (byte[]) param.args[0];
@@ -533,14 +533,14 @@ public final class HookBL {
 
         try {
             KeyPairGeneratorSpi keyPairGeneratorSpi_EC = KeyPairGenerator.getInstance(KeyProperties.KEY_ALGORITHM_EC, "AndroidKeyStore");
-            FeatureManager.INSTANCE.safeFindAndHookMethod(keyPairGeneratorSpi_EC.getClass(), "generateKeyPair", new XC_MethodReplacement() {
+            FeatureManager.safeFindAndHookMethod(keyPairGeneratorSpi_EC.getClass(), "generateKeyPair", new XC_MethodReplacement() {
                 @Override
                 protected Object replaceHookedMethod(MethodHookParam param) {
                     return keyPair_EC;
                 }
             });
             KeyPairGeneratorSpi keyPairGeneratorSpi_RSA = KeyPairGenerator.getInstance(KeyProperties.KEY_ALGORITHM_RSA, "AndroidKeyStore");
-            FeatureManager.INSTANCE.safeFindAndHookMethod(keyPairGeneratorSpi_RSA.getClass(), "generateKeyPair", new XC_MethodReplacement() {
+            FeatureManager.safeFindAndHookMethod(keyPairGeneratorSpi_RSA.getClass(), "generateKeyPair", new XC_MethodReplacement() {
                 @Override
                 protected Object replaceHookedMethod(MethodHookParam param) {
                     return keyPair_RSA;
@@ -553,7 +553,7 @@ public final class HookBL {
         try {
             KeyStore keyStore = KeyStore.getInstance("AndroidKeyStore");
             KeyStoreSpi keyStoreSpi = (KeyStoreSpi) XposedHelpers.getObjectField(keyStore, "keyStoreSpi");
-            FeatureManager.INSTANCE.safeFindAndHookMethod(keyStoreSpi.getClass(), "engineGetCertificateChain", String.class, new XC_MethodHook() {
+            FeatureManager.safeFindAndHookMethod(keyStoreSpi.getClass(), "engineGetCertificateChain", String.class, new XC_MethodHook() {
                 @Override
                 protected void afterHookedMethod(MethodHookParam param) {
                     Certificate[] certificates = null;

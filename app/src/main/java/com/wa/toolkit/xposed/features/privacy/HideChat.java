@@ -23,7 +23,7 @@ public class HideChat extends Feature {
     @Override
     public void doHook() throws Throwable {
 
-        if (!Objects.equals(prefs.getString("typearchive", "0"), "0")) {
+        if (!Objects.equals(Utils.getSafeString(prefs, "typearchive", "0"), "0")) {
 
             var loadArchiveChatClass = Unobfuscator.loadArchiveChatClass(classLoader);
 

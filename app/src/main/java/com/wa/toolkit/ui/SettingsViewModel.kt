@@ -25,6 +25,12 @@ class SettingsViewModel(private val repository: PreferenceRepository) : ViewMode
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), defaultValue)
     }
 
+    val colorMode = repository.getString("wae_color_mode", "preset")
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "preset")
+        
+    val colorPreset = repository.getString("wae_color_preset", "green")
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "green")
+
     fun toggleBoolean(key: String, currentValue: Boolean) {
         viewModelScope.launch {
             repository.setBoolean(key, !currentValue)

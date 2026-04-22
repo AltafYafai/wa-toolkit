@@ -18,7 +18,7 @@ public class AudioTypeTweaks extends Feature {
 
     @Override
     public void doHook() throws Exception {
-        var audio_type = Integer.parseInt(prefs.getString("audio_type", "0"));
+        var audio_type = Integer.parseInt(Utils.getSafeString(prefs, "audio_type", "0"));
         if (audio_type <= 0) return;
 
         var sendAudioTypeMethod = Unobfuscator.loadSendAudioTypeMethod(classLoader);
