@@ -28,7 +28,7 @@ import java.util.*
 @Composable
 fun RecordingsScreen(onBack: () -> Unit) {
     val context = LocalContext.current
-    var recordings by remember { mutableStateOf(loadRecordings()) }
+    var recordings by remember { mutableStateOf(loadRecordings(context)) }
 
     Scaffold(
         topBar = {
@@ -65,7 +65,7 @@ fun RecordingsScreen(onBack: () -> Unit) {
                         onPlay = { playRecording(context, it) },
                         onDelete = {
                             deleteRecording(it)
-                            recordings = loadRecordings()
+                            recordings = loadRecordings(context)
                         }
                     )
                 }
@@ -91,9 +91,9 @@ fun RecordingItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(modifier = Modifier.weight(1f)) {
-                Text(recording.fileName, style = MaterialTheme.typography.titleMedium)
+                Text(recording.contactName, style = MaterialTheme.typography.titleMedium)
                 Text(
-                    formatDate(recording.timestamp),
+                    "${formatDate(recording.date)} • ${recording.formattedDuration} • ${recording.formattedSize}",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -108,25 +108,19 @@ fun RecordingItem(
     }
 }
 
-private fun loadRecordings(): List<Recording> {
+private fun loadRecordings(context: Context): List<Recording> {
     val dir = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "WhatsappToolkit/Recordings")
     if (!dir.exists()) return emptyList()
 
     return dir.listFiles { file -> file.isFile && (file.extension == "m4a" || file.extension == "wav") }
-        ?.map { file ->
-            Recording(
-                fileName = file.name,
-                filePath = file.absolutePath,
-                timestamp = file.lastModified()
-            )
-        }
-        ?.sortedByDescending { it.timestamp }
+        ?.map { file -> Recording(file, context) }
+        ?.sortedByDescending { it.date }
         ?: emptyList()
 }
 
 private fun playRecording(context: Context, recording: Recording) {
     try {
-        val file = File(recording.filePath)
+        val file = recording.file
         val uri = FileProvider.getUriForFile(context, "${BuildConfig.APPLICATION_ID}.fileprovider", file)
         val intent = Intent(Intent.ACTION_VIEW).apply {
             setDataAndType(uri, "audio/*")
@@ -139,7 +133,7 @@ private fun playRecording(context: Context, recording: Recording) {
 }
 
 private fun deleteRecording(recording: Recording) {
-    File(recording.filePath).delete()
+    recording.file.delete()
 }
 
 private fun formatDate(timestamp: Long): String {

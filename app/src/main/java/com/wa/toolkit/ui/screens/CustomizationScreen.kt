@@ -250,8 +250,8 @@ fun CustomizationScreen(
             item { CategoryHeader("Message Bubbles") }
             item {
                 SwitchSetting(
-                    title = stringResource(R.string.custom_bubble_color),
-                    summary = stringResource(R.string.custom_bubble_color_sum),
+                    title = stringResource(R.string.change_bubble_colors),
+                    summary = "Customize colors for incoming and outgoing messages",
                     viewModel = viewModel,
                     prefKey = "bubble_color",
                     icon = R.drawable.ic_round_check_circle_24
