@@ -152,18 +152,6 @@
             </intent-filter>
         </receiver>
 
-
     </application>
-
-
-</manifest>ent-filter>
-                <action android:name="com.facebook.GET_PHONE_ID" />
-                <action android:name="android.support.customtabs.action.CustomTabsService"/>
-            </intent-filter>
-        </receiver>
-
-
-    </application>
-
 
 </manifest>
