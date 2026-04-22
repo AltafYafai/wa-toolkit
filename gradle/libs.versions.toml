@@ -38,6 +38,7 @@ filepicker = { module = "io.github.tutorialsandroid:filepicker", version.ref = "
 flatbuffers = { module = "com.google.flatbuffers:flatbuffers-java", version.ref = "flatbuffers" }
 jstyleparser = { module = "net.sf.cssbox:jstyleparser", version.ref = "jstyleparser" }
 libxposed-legacy = { group = "de.robv.android.xposed", name = "api", version.ref = "xposed-legacy" }
+libxposed-api = { group = "io.github.libxposed", name = "api", version.ref = "libxposed" }
 
 androidx-activity = { module = "androidx.activity:activity", version = "1.9.3" }
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version = "2.1.4" }
@@ -69,4 +70,3 @@ androidApplication = { id = "com.android.application", version.ref = "agp" }
 materialthemebuilder = { id = "dev.rikka.tools.materialthemebuilder", version = "1.5.1" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
