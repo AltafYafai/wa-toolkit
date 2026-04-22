@@ -57,6 +57,9 @@ object FeatureLoader {
         mApp = app
         this.modulePath = modulePath
         
+        // Early discovery signal
+        sendEnabledBroadcast(app)
+        
         Feature.DEBUG = pref.getBoolean("enablelogs", true)
         Utils.xprefs = pref
 
@@ -111,6 +114,9 @@ object FeatureLoader {
                     val app = param.args[0] as Application
                     mApp = app
                     XposedBridge.log("[WAE] callApplicationOnCreate before: ${app.packageName}")
+                    
+                    // Early discovery signal
+                    sendEnabledBroadcast(app)
 
                     // Inject Bootloader Spoofer
                     if (pref.getBoolean("bootloader_spoofer", false)) {

@@ -78,7 +78,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkWpp() {
         val checkWpp = Intent("${BuildConfig.APPLICATION_ID}.CHECK_WPP")
-        sendBroadcast(checkWpp)
+        // Send to standard WhatsApp
+        sendBroadcast(checkWpp.apply { setPackage("com.whatsapp") })
+        // Send to WhatsApp Business
+        sendBroadcast(checkWpp.apply { setPackage("com.whatsapp.w4b") })
     }
 
     override fun onDestroy() {
