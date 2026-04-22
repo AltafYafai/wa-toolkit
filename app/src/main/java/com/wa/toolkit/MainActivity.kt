@@ -25,6 +25,8 @@ import com.wa.toolkit.ui.SettingsViewModel
 import com.wa.toolkit.ui.SearchViewModel
 import com.wa.toolkit.ui.ThemeViewModel
 import com.wa.toolkit.ui.screens.*
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import com.wa.toolkit.ui.theme.AppTheme
 import com.wa.toolkit.model.SearchableFeature
 import com.wa.toolkit.utils.FilePicker

@@ -11,7 +11,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.wa.toolkit.R
 import com.wa.toolkit.ui.SettingsViewModel
-import com.wa.toolkit.ui.preferences.*
+import com.wa.toolkit.ui.preferences.SwitchSetting
+import com.wa.toolkit.ui.preferences.ActionSetting
+import com.wa.toolkit.ui.preferences.CategoryHeader
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
