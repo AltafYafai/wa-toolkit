@@ -98,7 +98,7 @@ public class WppXposed extends XposedModule {
         
         if (isWpp || isBusiness) {
             ApplicationInfo appInfo = param.getApplicationInfo();
-            FeatureLoader.startModern(classLoader, getPref(), appInfo.sourceDir, MODULE_PATH, getFramework());
+            com.wa.toolkit.xposed.core.FeatureLoaderBridge.startModern(classLoader, getPref(), appInfo.sourceDir, MODULE_PATH, getFramework());
         }
     }
 }
