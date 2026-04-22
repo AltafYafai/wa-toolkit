@@ -114,7 +114,90 @@ fun CustomizationScreen(
                 )
             }
 
-            item { CategoryHeader("Layout Customization") }
+            item { CategoryHeader("Toolbar & Navigation") }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.show_menu_buttons_as_icons),
+                    summary = stringResource(R.string.show_menu_buttons_as_icons_sum),
+                    viewModel = viewModel,
+                    prefKey = "buttonaction",
+                    icon = R.drawable.ic_round_settings_24
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.showname),
+                    summary = stringResource(R.string.showname_sum),
+                    viewModel = viewModel,
+                    prefKey = "shownamehome",
+                    icon = R.drawable.ic_person
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.showbio),
+                    summary = stringResource(R.string.showbio_sum),
+                    viewModel = viewModel,
+                    prefKey = "showbiohome",
+                    icon = R.drawable.ic_person
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.show_dnd_button),
+                    summary = stringResource(R.string.show_dnd_button_sum),
+                    viewModel = viewModel,
+                    prefKey = "show_dndmode",
+                    icon = R.drawable.ic_round_warning_24
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.enable_new_chat_button),
+                    summary = stringResource(R.string.enable_new_chat_button_sum),
+                    viewModel = viewModel,
+                    prefKey = "newchat",
+                    icon = R.drawable.ic_contacts
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.enable_restart_button),
+                    summary = stringResource(R.string.enable_restart_button_sum),
+                    viewModel = viewModel,
+                    prefKey = "restartbutton",
+                    icon = R.drawable.ic_round_settings_24
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.enable_wa_enhancer_button),
+                    summary = stringResource(R.string.enable_wa_enhancer_button_sum),
+                    viewModel = viewModel,
+                    prefKey = "open_wae",
+                    icon = R.drawable.ic_round_settings_24
+                )
+            }
+
+            item { CategoryHeader("Conversation List") }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.show_online_dot_in_conversation_list),
+                    summary = stringResource(R.string.show_online_dot_in_conversation_list_sum),
+                    viewModel = viewModel,
+                    prefKey = "dotonline",
+                    icon = R.drawable.online
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.show_online_last_seen_in_conversation_list),
+                    summary = stringResource(R.string.show_online_last_seen_in_conversation_list_sum),
+                    viewModel = viewModel,
+                    prefKey = "showonlinetext",
+                    icon = R.drawable.online
+                )
+            }
             item {
                 SwitchSetting(
                     title = stringResource(R.string.show_chat_broadcast_icon),
@@ -154,6 +237,42 @@ fun CustomizationScreen(
                     icon = R.drawable.preview_eye
                 )
             }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.enable_facebook_style_for_status),
+                    summary = stringResource(R.string.enable_facebook_style_for_status_sum),
+                    viewModel = viewModel,
+                    prefKey = "facebook_style_status",
+                    icon = R.drawable.preview_eye
+                )
+            }
+
+            item { CategoryHeader("Message Bubbles") }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.custom_bubble_color),
+                    summary = stringResource(R.string.custom_bubble_color_sum),
+                    viewModel = viewModel,
+                    prefKey = "bubble_color",
+                    icon = R.drawable.ic_round_check_circle_24
+                )
+            }
+            item {
+                ActionSetting(
+                    title = stringResource(R.string.bubble_left),
+                    summary = "Pick color for received messages",
+                    onClick = { /* Color picker not implemented in compose yet */ },
+                    icon = R.drawable.edit2
+                )
+            }
+            item {
+                ActionSetting(
+                    title = stringResource(R.string.bubble_right),
+                    summary = "Pick color for sent messages",
+                    onClick = { /* Color picker not implemented in compose yet */ },
+                    icon = R.drawable.edit2
+                )
+            }
 
             item { CategoryHeader("Visual Effects") }
             item {
@@ -185,16 +304,6 @@ fun CustomizationScreen(
                     entryValues = context.resources.getStringArray(R.array.animations_values),
                     defaultValue = "default",
                     icon = R.drawable.ic_dashboard_black_24dp
-                )
-            }
-            item {
-                SwitchSetting(
-                    title = stringResource(R.string.double_click_to_react),
-                    summary = stringResource(R.string.double_click_to_like_sum),
-                    viewModel = viewModel,
-                    prefKey = "doubletap2like",
-                    defaultValue = true,
-                    icon = R.drawable.ic_round_check_circle_24
                 )
             }
         }

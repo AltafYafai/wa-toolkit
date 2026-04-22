@@ -44,8 +44,8 @@ fun MediaScreen(
             item { CategoryHeader("Download & Capture") }
             item {
                 SwitchSetting(
-                    title = "Download Status",
-                    summary = "Save any status directly to your local gallery",
+                    title = stringResource(R.string.statusdowload),
+                    summary = stringResource(R.string.statusdowload_sum),
                     viewModel = viewModel,
                     prefKey = "downloadstatus",
                     icon = R.drawable.download
@@ -71,8 +71,8 @@ fun MediaScreen(
             }
             item {
                 SwitchSetting(
-                    title = "Profile Picture Downloader",
-                    summary = "Enable downloading of contact profile pictures",
+                    title = "Download Profile Picture",
+                    summary = "Add a download button when viewing profile pictures",
                     viewModel = viewModel,
                     prefKey = "download_profile",
                     icon = R.drawable.ic_person
@@ -80,15 +80,51 @@ fun MediaScreen(
             }
             item {
                 SwitchSetting(
-                    title = stringResource(R.string.call_recording_enable),
-                    summary = stringResource(R.string.call_recording_enable_sum),
+                    title = stringResource(R.string.local_download),
+                    summary = "Save downloads to a specific local folder",
                     viewModel = viewModel,
-                    prefKey = "call_recording_enable",
-                    icon = R.drawable.ic_recording
+                    prefKey = "download_local",
+                    icon = R.drawable.ic_dashboard_black_24dp
                 )
             }
 
-            item { CategoryHeader("Quality & Resolution") }
+            item { CategoryHeader("Image & Video Quality") }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.imagequality),
+                    summary = stringResource(R.string.imagequality_sum),
+                    viewModel = viewModel,
+                    prefKey = "imagequality",
+                    icon = R.drawable.ic_image
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.videoquality),
+                    summary = stringResource(R.string.videoquality_sum),
+                    viewModel = viewModel,
+                    prefKey = "videoquality",
+                    icon = R.drawable.ic_media
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.send_video_in_real_resolution),
+                    summary = stringResource(R.string.send_video_in_real_resolution_sum),
+                    viewModel = viewModel,
+                    prefKey = "video_real_resolution",
+                    icon = R.drawable.ic_media
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.send_video_in_60fps),
+                    summary = stringResource(R.string.send_video_in_60fps_sum),
+                    viewModel = viewModel,
+                    prefKey = "video_maxfps",
+                    icon = R.drawable.ic_media
+                )
+            }
             item {
                 SwitchSetting(
                     title = stringResource(R.string.lossless_status),
@@ -132,11 +168,67 @@ fun MediaScreen(
                 )
             }
 
+            item { CategoryHeader("Voice Notes & Audio") }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.call_recording_enable),
+                    summary = stringResource(R.string.call_recording_enable_sum),
+                    viewModel = viewModel,
+                    prefKey = "call_recording_enable",
+                    icon = R.drawable.ic_recording
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.send_audio_as_voice_audio_note),
+                    summary = stringResource(R.string.send_audio_as_voice_audio_note_sum),
+                    viewModel = viewModel,
+                    prefKey = "audio_type",
+                    icon = R.drawable.ic_recording
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.audio_transcription),
+                    summary = stringResource(R.string.audio_transcription_sum),
+                    viewModel = viewModel,
+                    prefKey = "audio_transcription",
+                    icon = R.drawable.edit2
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.voice_changer),
+                    summary = stringResource(R.string.voice_changer_sum),
+                    viewModel = viewModel,
+                    prefKey = "voice_changer",
+                    icon = R.drawable.ic_recording
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.disable_the_proximity_sensor),
+                    summary = stringResource(R.string.disable_the_proximity_sensor_sum),
+                    viewModel = viewModel,
+                    prefKey = "disable_sensor_proximity",
+                    icon = R.drawable.ic_privacy
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.disable_audio_sensor),
+                    summary = stringResource(R.string.disable_audio_sensor_sum),
+                    viewModel = viewModel,
+                    prefKey = "proximity_audios",
+                    icon = R.drawable.ic_privacy
+                )
+            }
+
             item { CategoryHeader("Enhanced Experience") }
             item {
                 SwitchSetting(
-                    title = "Media Preview",
-                    summary = "Preview images and videos before downloading",
+                    title = stringResource(R.string.enable_media_preview),
+                    summary = stringResource(R.string.enable_media_preview_sum),
                     viewModel = viewModel,
                     prefKey = "media_preview",
                     defaultValue = true,
@@ -159,15 +251,6 @@ fun MediaScreen(
                     viewModel = viewModel,
                     prefKey = "status_analytics",
                     icon = R.drawable.eye_enabled
-                )
-            }
-            item {
-                SwitchSetting(
-                    title = stringResource(R.string.voice_changer),
-                    summary = stringResource(R.string.voice_changer_sum),
-                    viewModel = viewModel,
-                    prefKey = "voice_changer",
-                    icon = R.drawable.ic_recording
                 )
             }
             item {

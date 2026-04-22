@@ -84,8 +84,44 @@ fun PrivacyScreen(
                     icon = R.drawable.ic_round_warning_24
                 )
             }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.hide_archived_chat),
+                    summary = stringResource(R.string.hide_archived_chat_sum),
+                    viewModel = viewModel,
+                    prefKey = "typearchive",
+                    icon = R.drawable.ic_privacy
+                )
+            }
 
-            item { CategoryHeader("Presence & Alerts") }
+            item { CategoryHeader("Stealth & Ghost Mode") }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.ghost_mode_title),
+                    summary = stringResource(R.string.ghost_mode_sum),
+                    viewModel = viewModel,
+                    prefKey = "ghostmode",
+                    icon = R.drawable.eye_disabled
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.ghostmode),
+                    summary = stringResource(R.string.ghostmode_sum),
+                    viewModel = viewModel,
+                    prefKey = "ghostmode_t",
+                    icon = R.drawable.ic_privacy
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.ghostmode_r),
+                    summary = stringResource(R.string.ghostmode_sum_r),
+                    viewModel = viewModel,
+                    prefKey = "ghostmode_r",
+                    icon = R.drawable.ic_recording
+                )
+            }
             item {
                 SwitchSetting(
                     title = stringResource(R.string.freezelastseen),
@@ -95,6 +131,17 @@ fun PrivacyScreen(
                     icon = R.drawable.eye_disabled
                 )
             }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.show_freezeLastSeen_button),
+                    summary = stringResource(R.string.show_freezeLastSeen_sum),
+                    viewModel = viewModel,
+                    prefKey = "show_freezeLastSeen",
+                    icon = R.drawable.ic_round_settings_24
+                )
+            }
+
+            item { CategoryHeader("Alerts & Indicators") }
             item {
                 SwitchSetting(
                     title = stringResource(R.string.always_online),
@@ -141,23 +188,23 @@ fun PrivacyScreen(
                 )
             }
 
-            item { CategoryHeader("Interactive Privacy") }
+            item { CategoryHeader("Advanced Privacy") }
             item {
                 SwitchSetting(
-                    title = stringResource(R.string.stealth_typing),
-                    summary = stringResource(R.string.stealth_typing_sum),
+                    title = stringResource(R.string.lockedchats_enhancer),
+                    summary = stringResource(R.string.lockedchats_enhancer_sum),
                     viewModel = viewModel,
-                    prefKey = "stealth_typing",
+                    prefKey = "lockedchats_enhancer",
                     icon = R.drawable.ic_privacy
                 )
             }
             item {
                 SwitchSetting(
-                    title = stringResource(R.string.blueonreply),
-                    summary = stringResource(R.string.blueonreply_sum),
+                    title = stringResource(R.string.custom_privacy_per_contact),
+                    summary = stringResource(R.string.custom_privacy_per_contact_sum),
                     viewModel = viewModel,
-                    prefKey = "blueonreply",
-                    icon = R.drawable.eye_enabled
+                    prefKey = "custom_privacy_type",
+                    icon = R.drawable.ic_person
                 )
             }
             item {
@@ -171,11 +218,38 @@ fun PrivacyScreen(
             }
             item {
                 SwitchSetting(
-                    title = stringResource(R.string.hide_audio_seen),
-                    summary = stringResource(R.string.hide_audio_seen_sum),
+                    title = stringResource(R.string.hideread_group),
+                    summary = stringResource(R.string.hideread_group_sum),
                     viewModel = viewModel,
-                    prefKey = "hide_audio_seen",
-                    icon = R.drawable.ic_recording
+                    prefKey = "hideread_group",
+                    icon = R.drawable.eye_disabled
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.hidereceipt),
+                    summary = stringResource(R.string.hidereceipt_sum),
+                    viewModel = viewModel,
+                    prefKey = "hidereceipt",
+                    icon = R.drawable.ic_round_check_circle_24
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.view_seen_tick),
+                    summary = stringResource(R.string.view_seen_tick_sum),
+                    viewModel = viewModel,
+                    prefKey = "hide_seen_view",
+                    icon = R.drawable.eye_enabled
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.show_button_to_send_blue_tick),
+                    summary = stringResource(R.string.show_button_to_send_blue_tick_sum),
+                    viewModel = viewModel,
+                    prefKey = "seentick",
+                    icon = R.drawable.ic_round_check_circle_24
                 )
             }
             item {
@@ -189,20 +263,20 @@ fun PrivacyScreen(
             }
             item {
                 SwitchSetting(
+                    title = stringResource(R.string.hide_audio_seen),
+                    summary = stringResource(R.string.hide_audio_seen_sum),
+                    viewModel = viewModel,
+                    prefKey = "hide_audio_seen",
+                    icon = R.drawable.ic_recording
+                )
+            }
+            item {
+                SwitchSetting(
                     title = stringResource(R.string.local_vault),
                     summary = stringResource(R.string.local_vault_sum),
                     viewModel = viewModel,
                     prefKey = "local_vault",
                     icon = R.drawable.ic_delete
-                )
-            }
-            item {
-                SwitchSetting(
-                    title = stringResource(R.string.call_blocker),
-                    summary = stringResource(R.string.call_blocker_sum),
-                    viewModel = viewModel,
-                    prefKey = "call_privacy",
-                    icon = R.drawable.eye_disabled
                 )
             }
 

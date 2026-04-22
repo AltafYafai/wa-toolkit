@@ -38,6 +38,75 @@ fun ToolsScreen(
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
+            item { CategoryHeader("Appearance & Display") }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.theme_mode),
+                    summary = stringResource(R.string.theme_mode_sum),
+                    viewModel = viewModel,
+                    prefKey = "thememode",
+                    icon = R.drawable.ic_round_settings_24
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.change_default_dpi),
+                    summary = stringResource(R.string.change_default_dpi_sum),
+                    viewModel = viewModel,
+                    prefKey = "change_dpi",
+                    icon = R.drawable.ic_dashboard_black_24dp
+                )
+            }
+
+            item { CategoryHeader("Time & Formatting") }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.ampm),
+                    summary = "Use 12-hour format for message timestamps",
+                    viewModel = viewModel,
+                    prefKey = "ampm",
+                    icon = R.drawable.ic_round_settings_24
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.segundosnahora),
+                    summary = stringResource(R.string.segundosnahora_sum),
+                    viewModel = viewModel,
+                    prefKey = "segundos",
+                    icon = R.drawable.ic_round_settings_24
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.textonahora),
+                    summary = stringResource(R.string.textonahora_sum),
+                    viewModel = viewModel,
+                    prefKey = "secondstotime",
+                    icon = R.drawable.ic_round_settings_24
+                )
+            }
+
+            item { CategoryHeader("Automation & Integration") }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.enable_tasker_automation),
+                    summary = stringResource(R.string.enable_tasker_automation_sum),
+                    viewModel = viewModel,
+                    prefKey = "tasker",
+                    icon = R.drawable.ic_round_settings_24
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.bootloader_spoofer),
+                    summary = stringResource(R.string.bootloader_spoofer_sum),
+                    viewModel = viewModel,
+                    prefKey = "bootloader_spoofer",
+                    icon = R.drawable.ic_privacy
+                )
+            }
+
             item { CategoryHeader("Intelligence & AI") }
             item {
                 SwitchSetting(
@@ -68,67 +137,11 @@ fun ToolsScreen(
             }
             item {
                 SwitchSetting(
-                    title = stringResource(R.string.google_translate),
-                    summary = stringResource(R.string.google_translate_sum),
-                    viewModel = viewModel,
-                    prefKey = "google_translate",
-                    icon = R.drawable.ic_privacy
-                )
-            }
-            item {
-                SwitchSetting(
                     title = stringResource(R.string.disable_metaai),
                     summary = stringResource(R.string.disable_metaai_sum),
                     viewModel = viewModel,
                     prefKey = "metaai",
                     icon = R.drawable.ic_round_bug_report_24
-                )
-            }
-
-            item { CategoryHeader("Advanced Tweaks") }
-            item {
-                SwitchSetting(
-                    title = stringResource(R.string.disable_pinned_limit),
-                    summary = stringResource(R.string.disable_pinned_limit_sum),
-                    viewModel = viewModel,
-                    prefKey = "pinnedlimit",
-                    icon = R.drawable.ic_dashboard_black_24dp
-                )
-            }
-            item {
-                SwitchSetting(
-                    title = stringResource(R.string.removeforwardlimit),
-                    summary = stringResource(R.string.removeforwardlimit_sum),
-                    viewModel = viewModel,
-                    prefKey = "removeforwardlimit",
-                    icon = R.drawable.ic_round_check_circle_24
-                )
-            }
-            item {
-                SwitchSetting(
-                    title = stringResource(R.string.zen_mode),
-                    summary = stringResource(R.string.zen_mode_sum),
-                    viewModel = viewModel,
-                    prefKey = "zen_mode",
-                    icon = R.drawable.eye_disabled
-                )
-            }
-            item {
-                SwitchSetting(
-                    title = stringResource(R.string.bootloader_spoofer),
-                    summary = stringResource(R.string.bootloader_spoofer_sum),
-                    viewModel = viewModel,
-                    prefKey = "bootloader_spoofer",
-                    icon = R.drawable.ic_privacy
-                )
-            }
-            item {
-                SwitchSetting(
-                    title = stringResource(R.string.enable_tasker_automation),
-                    summary = stringResource(R.string.enable_tasker_automation_sum),
-                    viewModel = viewModel,
-                    prefKey = "tasker",
-                    icon = R.drawable.ic_round_settings_24
                 )
             }
 
@@ -182,20 +195,11 @@ fun ToolsScreen(
             }
             item {
                 SwitchSetting(
-                    title = stringResource(R.string.ampm),
-                    summary = "Use 12-hour format",
+                    title = stringResource(R.string.enable_spy),
+                    summary = stringResource(R.string.enable_spy_sum),
                     viewModel = viewModel,
-                    prefKey = "ampm",
-                    icon = R.drawable.ic_round_settings_24
-                )
-            }
-            item {
-                SwitchSetting(
-                    title = stringResource(R.string.segundosnahora),
-                    summary = stringResource(R.string.segundosnahora_sum),
-                    viewModel = viewModel,
-                    prefKey = "segundos",
-                    icon = R.drawable.ic_round_settings_24
+                    prefKey = "enable_spy",
+                    icon = R.drawable.ic_round_bug_report_24
                 )
             }
             item {

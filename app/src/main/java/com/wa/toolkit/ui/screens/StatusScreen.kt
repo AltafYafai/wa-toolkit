@@ -69,6 +69,24 @@ fun StatusScreen(
                     icon = R.drawable.eye_enabled
                 )
             }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.toast_on_viewed_status),
+                    summary = stringResource(R.string.toast_on_viewed_status_sum),
+                    viewModel = viewModel,
+                    prefKey = "toast_viewed_status",
+                    icon = R.drawable.eye_enabled
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.status_analytics),
+                    summary = stringResource(R.string.status_analytics_sum),
+                    viewModel = viewModel,
+                    prefKey = "status_analytics",
+                    icon = R.drawable.eye_enabled
+                )
+            }
 
             item { CategoryHeader("Status Playback") }
             item {
@@ -78,6 +96,15 @@ fun StatusScreen(
                     viewModel = viewModel,
                     prefKey = "autonext_status",
                     icon = R.drawable.ic_pause
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.old_statuses),
+                    summary = stringResource(R.string.old_statuses_sum),
+                    viewModel = viewModel,
+                    prefKey = "oldstatus",
+                    icon = R.drawable.ic_dashboard_black_24dp
                 )
             }
             item {
@@ -99,6 +126,35 @@ fun StatusScreen(
                     viewModel = viewModel,
                     prefKey = "vertical_status",
                     icon = R.drawable.ic_dashboard_black_24dp
+                )
+            }
+
+            item { CategoryHeader("Privacy & Appearance") }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.disable_status_in_the_profile_photo),
+                    summary = stringResource(R.string.disable_status_in_the_profile_photo_sum),
+                    viewModel = viewModel,
+                    prefKey = "disable_profile_status",
+                    icon = R.drawable.ic_person
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.enable_facebook_style_for_status),
+                    summary = stringResource(R.string.enable_facebook_style_for_status_sum),
+                    viewModel = viewModel,
+                    prefKey = "facebook_style_status",
+                    icon = R.drawable.preview_eye
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.custom_colors_for_text_status),
+                    summary = stringResource(R.string.custom_colors_for_text_status_sum),
+                    viewModel = viewModel,
+                    prefKey = "statuscomposer",
+                    icon = R.drawable.edit2
                 )
             }
         }

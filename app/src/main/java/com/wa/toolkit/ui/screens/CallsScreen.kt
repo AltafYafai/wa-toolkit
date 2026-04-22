@@ -17,6 +17,7 @@ import com.wa.toolkit.ui.preferences.*
 @Composable
 fun CallsScreen(
     viewModel: SettingsViewModel,
+    onNavigateToRecordings: () -> Unit,
     onBack: () -> Unit
 ) {
     Scaffold(
@@ -52,7 +53,7 @@ fun CallsScreen(
                 ActionSetting(
                     title = "Manage Recordings",
                     summary = "Browse and play your recorded conversations",
-                    onClick = { /* TODO */ },
+                    onClick = onNavigateToRecordings,
                     icon = R.drawable.ic_play
                 )
             }

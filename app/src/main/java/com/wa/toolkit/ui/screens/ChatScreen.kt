@@ -75,8 +75,35 @@ fun ChatScreen(
                     icon = R.drawable.ic_round_check_circle_24
                 )
             }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.disable_default_emojis),
+                    summary = stringResource(R.string.disable_default_emojis_sum),
+                    viewModel = viewModel,
+                    prefKey = "disable_defemojis",
+                    icon = R.drawable.ic_round_settings_24
+                )
+            }
 
-            item { CategoryHeader("Safety & Controls") }
+            item { CategoryHeader("Limits & Controls") }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.disable_pinned_limit),
+                    summary = stringResource(R.string.disable_pinned_limit_sum),
+                    viewModel = viewModel,
+                    prefKey = "pinnedlimit",
+                    icon = R.drawable.ic_dashboard_black_24dp
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.removeforwardlimit),
+                    summary = stringResource(R.string.removeforwardlimit_sum),
+                    viewModel = viewModel,
+                    prefKey = "removeforwardlimit",
+                    icon = R.drawable.ic_round_check_circle_24
+                )
+            }
             item {
                 SwitchSetting(
                     title = stringResource(R.string.enable_confirmation_to_send_sticker),
@@ -88,12 +115,32 @@ fun ChatScreen(
             }
             item {
                 SwitchSetting(
+                    title = stringResource(R.string.force_english),
+                    summary = "Override system language for WhatsApp UI",
+                    viewModel = viewModel,
+                    prefKey = "force_english",
+                    icon = R.drawable.ic_round_settings_24
+                )
+            }
+
+            item { CategoryHeader("Safety & Interaction") }
+            item {
+                SwitchSetting(
                     title = stringResource(R.string.double_click_to_react),
                     summary = stringResource(R.string.double_click_to_like_sum),
                     viewModel = viewModel,
                     prefKey = "doubletap2like",
                     defaultValue = true,
                     icon = R.drawable.ic_round_check_circle_24
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.show_contact_blocked),
+                    summary = stringResource(R.string.show_contact_blocked_sum),
+                    viewModel = viewModel,
+                    prefKey = "verify_blocked_contact",
+                    icon = R.drawable.eye_disabled
                 )
             }
 

@@ -178,6 +178,12 @@ fun MainScreen(
             composable("calls") {
                 CallsScreen(
                     viewModel = settingsViewModel,
+                    onNavigateToRecordings = { navController.navigate("recordings") },
+                    onBack = { navController.popBackStack() }
+                )
+            }
+            composable("recordings") {
+                RecordingsScreen(
                     onBack = { navController.popBackStack() }
                 )
             }
