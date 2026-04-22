@@ -7,8 +7,8 @@ import com.wa.toolkit.xposed.core.FeatureLoader;
 import java.io.IOException;
 import java.lang.reflect.Method;
 
-import io.github.libxposed.XposedInterface;
-import io.github.libxposed.XposedModule;
+import io.github.libxposed.api.XposedInterface;
+import io.github.libxposed.api.XposedModule;
 
 public class AntiUpdater {
 
@@ -17,7 +17,6 @@ public class AntiUpdater {
             Method createSession = PackageInstaller.class.getDeclaredMethod("createSession", PackageInstaller.SessionParams.class);
             framework.hookMethod(createSession, chain -> {
                 PackageInstaller.SessionParams session = (PackageInstaller.SessionParams) chain.getArgs()[0];
-                // In API 101 we don't have XposedHelpers.getObjectField easily, but we can use reflection
                 java.lang.reflect.Field field = PackageInstaller.SessionParams.class.getDeclaredField("appPackageName");
                 field.setAccessible(true);
                 String packageName = (String) field.get(session);

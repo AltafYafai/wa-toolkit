@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import com.wa.toolkit.xposed.AntiUpdater;
 import com.wa.toolkit.xposed.bridge.ScopeHook;
 import com.wa.toolkit.xposed.core.FeatureLoader;
+import com.wa.toolkit.xposed.core.FeatureLoaderBridge;
 import com.wa.toolkit.xposed.downgrade.Patch;
 
 import java.lang.reflect.Method;
@@ -29,7 +30,7 @@ public class WppXposed extends XposedModule {
 
     public WppXposed(@NonNull XposedInterface base, @NonNull ModuleLoadedParam param) {
         super(base, param);
-        MODULE_PATH = param.getBundlePath();
+        MODULE_PATH = getModuleApplicationInfo().sourceDir;
     }
 
     @NonNull
@@ -98,7 +99,7 @@ public class WppXposed extends XposedModule {
         
         if (isWpp || isBusiness) {
             ApplicationInfo appInfo = param.getApplicationInfo();
-            com.wa.toolkit.xposed.core.FeatureLoaderBridge.startModern(classLoader, getPref(), appInfo.sourceDir, MODULE_PATH, getFramework());
+            FeatureLoaderBridge.startModern(classLoader, getPref(), appInfo.sourceDir, MODULE_PATH, getFramework());
         }
     }
 }
