@@ -24,7 +24,7 @@ public class FeatureLoaderBridge {
         try {
             Method callApplicationOnCreate = Instrumentation.class.getDeclaredMethod("callApplicationOnCreate", Application.class);
             framework.hookMethod(callApplicationOnCreate, chain -> {
-                Application app = (Application) chain.getArgs()[0];
+                Application app = (Application) chain.getArgs().get(0);
                 
                 FeatureLoader.initFromBridge(app, loader, pref, modulePath);
                 

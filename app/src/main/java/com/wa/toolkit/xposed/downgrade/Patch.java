@@ -6,6 +6,7 @@ import com.wa.toolkit.xposed.core.FeatureLoader;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Objects;
 
 import de.robv.android.xposed.XSharedPreferences;
