@@ -2,9 +2,8 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory
-        app:iconSpaceReserved="false"
-        android:title="@string/general">
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+        android:title="Interface &amp; Styles">
 
         <ListPreference
             android:defaultValue="monet"
@@ -12,7 +11,8 @@
             android:entryValues="@array/wae_color_mode_values"
             android:key="wae_color_mode"
             android:summary="%s"
-            android:title="@string/changecolor_mode" />
+            android:title="@string/changecolor_mode"
+            app:icon="@drawable/ic_round_settings_24" />
 
         <ListPreference
             android:defaultValue="green"
@@ -21,171 +21,115 @@
             android:entryValues="@array/wae_color_preset_values"
             android:key="wae_color_preset"
             android:summary="%s"
-            android:title="@string/wae_color_mode_preset" />
+            android:title="@string/wae_color_mode_preset"
+            app:icon="@drawable/ic_round_check_circle_24" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
             android:key="pure_black"
             android:summary="@string/pure_black_sum"
-            android:title="@string/pure_black" />
+            android:title="@string/pure_black"
+            app:icon="@drawable/ic_round_settings_24" />
 
-        <androidx.preference.SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:key="haptic_feedback"
-            android:summary="@string/haptic_feedback_sum"
-            android:title="@string/haptic_feedback" />
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="separategroups"
+            android:summary="@string/separate_groups_sum"
+            android:title="@string/separate_groups"
+            app:icon="@drawable/ic_groups" />
 
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="changecolor"
-            android:summary="@string/colors_customization_sum"
-            android:title="@string/colors_customization" />
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="floatingmenu"
+            android:summary="@string/new_context_menu_ui_sum"
+            android:title="@string/new_context_menu_ui"
+            app:icon="@drawable/ic_dashboard_black_24dp" />
 
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            app:cpv_showAlphaSlider="true"
-            android:dependency="changecolor"
-            android:key="primary_color"
-            android:summary="@string/default_color"
-            android:title="@string/primary_color" />
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="novaconfig"
+            android:summary="@string/novaconfig_sum"
+            android:title="@string/novaconfig"
+            app:icon="@drawable/ic_round_settings_24" />
 
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            app:cpv_showAlphaSlider="true"
-            android:dependency="changecolor"
-            android:key="background_color"
-            android:summary="@string/default_color"
-            android:title="@string/background_color" />
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            app:cpv_showAlphaSlider="true"
-            android:dependency="changecolor"
-            android:key="text_color"
-            android:summary="@string/default_color"
-            android:title="@string/text_color" />
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="wallpaper"
-            android:summary="@string/wallpaper_in_home_screen_sum"
-            android:title="@string/wallpaper_in_home_screen" />
-
-        <com.wa.toolkit.preference.FileSelectPreference
-            android:entryValues="@array/image_picker"
-            android:summary="@string/wallpaper_not_selected"
-            android:dependency="wallpaper"
-            android:key="wallpaper_file"
-            android:title="@string/select_wallpaper" />
-
-        <SeekBarPreference
-            android:defaultValue="60"
-            android:max="100"
-            android:dependency="wallpaper"
-            android:key="wallpaper_alpha"
-            app:min="0"
-            app:showSeekBarValue="true"
-            android:title="@string/wallpaper_transparency" />
-
-        <SeekBarPreference
-            android:defaultValue="75"
-            android:max="100"
-            android:dependency="wallpaper"
-            android:key="wallpaper_alpha_toolbar"
-            app:min="0"
-            app:showSeekBarValue="true"
-            android:title="@string/toolbar_transparency" />
-
-        <SeekBarPreference
-            android:defaultValue="15"
-            android:max="100"
-            android:dependency="wallpaper"
-            android:key="wallpaper_alpha_navigation"
-            app:min="0"
-            app:showSeekBarValue="true"
-            android:title="@string/navigation_transparency" />
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+        android:title="Layout Customization">
 
         <MultiSelectListPreference
             android:entries="@array/tabshide_contents"
             android:entryValues="@array/tabshide_values"
             android:key="hidetabs"
             android:summary="@string/hide_tabs_on_home_sum"
-            android:title="@string/hide_tabs_on_home" />
+            android:title="@string/hide_tabs_on_home"
+            app:icon="@drawable/ic_dashboard_black_24dp" />
 
-        <androidx.preference.SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:summary="@string/custom_filters_sum"
-            android:key="custom_filters"
-            android:title="@string/custom_appearance" />
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="broadcast_tag"
+            android:summary="@string/show_chat_broadcast_icon_sum"
+            android:title="@string/show_chat_broadcast_icon"
+            app:icon="@drawable/eye_enabled" />
 
-        <EditTextPreference
-            android:summary="@string/filter_items_by_id_sum"
-            android:dependency="custom_filters"
-            android:key="filter_items"
-            android:title="@string/filter_items_by_id" />
-
-        <EditTextPreference
-            android:summary="@string/custom_theme_css_sum"
-            android:dependency="custom_filters"
-            android:key="css_theme"
-            android:title="@string/custom_theme_css" />
-
-        <EditTextPreference
-            android:summary="@string/change_default_dpi_sum"
-            android:defaultValue="0"
-            android:dependency="custom_filters"
-            android:key="change_dpi"
-            android:title="@string/change_default_dpi" />
-
-        <com.wa.toolkit.preference.ThemePreference
-            android:key="folder_theme"
-            android:dependency="custom_filters"
-            android:summary="@string/manage_theme_sum"
-            android:title="@string/theme_manager" />
-
-        <ListPreference
-            android:entries="@array/animations_names"
-            android:defaultValue="default"
-            android:entryValues="@array/animations_values"
-            android:key="animation_list"
-            android:summary="@string/list_animations_home_screen_sum"
-            android:title="@string/list_animations_home_screen" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        app:iconSpaceReserved="false"
-        android:title="@string/conversation">
-
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
             android:key="admin_grp"
             android:summary="@string/show_admin_group_icon_sum"
-            android:title="@string/show_admin_group_icon" />
+            android:title="@string/show_admin_group_icon"
+            app:icon="@drawable/admin" />
 
-        <androidx.preference.SwitchPreferenceCompat
-            android:summary="@string/new_context_menu_ui_sum"
-            android:key="floatingmenu"
-            android:title="@string/new_context_menu_ui" />
+        <androidx.preference.ListPreference
+            android:defaultValue="2"
+            android:entries="@array/chatfilter_buttons"
+            android:entryValues="@array/chatfilter_values"
+            android:key="chatfilter"
+            android:summary="%s"
+            android:title="@string/novofiltro"
+            app:icon="@drawable/ic_home_black_24dp" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="igstatus_on_home_screen"
+            android:summary="@string/igstatus_on_home_screen_sum"
+            android:title="@string/igstatus_on_home_screen"
+            app:icon="@drawable/preview_eye" />
+
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+        android:title="Visual Effects">
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="menuwicon"
+            android:summary="@string/menuwicon_sum"
+            android:title="@string/menuwicon"
+            app:icon="@drawable/about" />
+
+        <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="true"
             android:key="animation_emojis"
             android:summary="@string/animation_emojis_sum"
-            android:title="@string/animation_emojis" />
+            android:title="@string/animation_emojis"
+            app:icon="@drawable/ic_round_check_circle_24" />
 
-        <androidx.preference.SwitchPreferenceCompat
-            android:key="bubble_color"
-            android:summary="@string/change_blubble_color_sum"
-            android:title="@string/change_bubble_colors" />
+        <ListPreference
+            android:defaultValue="default"
+            android:entries="@array/animations_names"
+            android:entryValues="@array/animations_values"
+            android:key="animation_list"
+            android:summary="@string/list_animations_home_screen_sum"
+            android:title="@string/list_animations_home_screen"
+            app:icon="@drawable/ic_dashboard_black_24dp" />
 
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            app:cpv_showAlphaSlider="true"
-            android:dependency="bubble_color"
-            android:key="bubble_left"
-            android:summary="@string/default_color"
-            android:title="@string/bubble_left" />
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="true"
+            android:key="doubletap2like"
+            android:summary="@string/double_click_to_like_sum"
+            android:title="@string/double_click_to_react"
+            app:icon="@drawable/ic_round_check_circle_24" />
 
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            app:cpv_showAlphaSlider="true"
-            android:dependency="bubble_color"
-            android:key="bubble_right"
-            android:summary="@string/default_color"
-            android:title="@string/bubble_right" />
-    </PreferenceCategory>
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
 </PreferenceScreen>

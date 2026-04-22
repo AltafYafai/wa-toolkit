@@ -11,6 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.wa.toolkit.R
 import com.wa.toolkit.ui.SettingsViewModel
+import com.wa.toolkit.ui.preferences.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -21,7 +22,7 @@ fun ToolsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Tools & UI Settings") },
+                title = { Text(stringResource(R.string.tools)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
@@ -35,190 +36,16 @@ fun ToolsScreen(
                 .fillMaxSize()
                 .padding(innerPadding),
             contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            item { CategoryHeader("Interface & Layout") }
-            item {
-                SwitchSetting(
-                    title = "Floating Home Menu",
-                    summary = "Modern centered action menu",
-                    viewModel = viewModel,
-                    prefKey = "floatingmenu"
-                )
-            }
-            item {
-                SwitchSetting(
-                    title = "Experimental Settings UI",
-                    summary = "Redesigned settings navigation",
-                    viewModel = viewModel,
-                    prefKey = "novaconfig"
-                )
-            }
-            item {
-                SwitchSetting(
-                    title = "Menu Icons",
-                    summary = "Show icons next to menu items",
-                    viewModel = viewModel,
-                    prefKey = "menuwicon"
-                )
-            }
-
-            item { Spacer(Modifier.height(16.dp)) }
-            item { CategoryHeader(stringResource(R.string.tab_architect)) }
-            item {
-                SwitchSetting(
-                    title = stringResource(R.string.hide_channels),
-                    summary = "Hide the Channels/Updates tab from home",
-                    viewModel = viewModel,
-                    prefKey = "hide_channels_tab"
-                )
-            }
-            item {
-                SwitchSetting(
-                    title = stringResource(R.string.hide_communities),
-                    summary = "Hide the Communities tab from home",
-                    viewModel = viewModel,
-                    prefKey = "hide_communities_tab"
-                )
-            }
-            item {
-                SwitchSetting(
-                    title = stringResource(R.string.hide_status),
-                    summary = "Hide the Status/Stories tab from home",
-                    viewModel = viewModel,
-                    prefKey = "hide_status_tab"
-                )
-            }
-
-            item { Spacer(Modifier.height(16.dp)) }
-            item { CategoryHeader("Profile & Home") }
-            item {
-                SwitchSetting(
-                    title = stringResource(R.string.showname),
-                    summary = stringResource(R.string.showname_sum),
-                    viewModel = viewModel,
-                    prefKey = "shownamehome"
-                )
-            }
-            item {
-                SwitchSetting(
-                    title = stringResource(R.string.showbio),
-                    summary = stringResource(R.string.showbio_sum),
-                    viewModel = viewModel,
-                    prefKey = "showbiohome"
-                )
-            }
-            item {
-                SwitchSetting(
-                    title = stringResource(R.string.disable_status_in_the_profile_photo),
-                    summary = stringResource(R.string.disable_status_in_the_profile_photo_sum),
-                    viewModel = viewModel,
-                    prefKey = "disable_profile_status"
-                )
-            }
-            item {
-                SwitchSetting(
-                    title = stringResource(R.string.separate_groups),
-                    summary = stringResource(R.string.separate_groups_sum),
-                    viewModel = viewModel,
-                    prefKey = "separategroups"
-                )
-            }
-            item {
-                SwitchSetting(
-                    title = stringResource(R.string.new_ui_group_filter),
-                    summary = stringResource(R.string.new_ui_group_filter_sum),
-                    viewModel = viewModel,
-                    prefKey = "filtergroups"
-                )
-            }
-
-            item { Spacer(Modifier.height(16.dp)) }
-            item { CategoryHeader("Indicators & Alerts") }
-            item {
-                SwitchSetting(
-                    title = stringResource(R.string.show_online_dot_in_conversation_list),
-                    summary = stringResource(R.string.show_online_dot_in_conversation_list_sum),
-                    viewModel = viewModel,
-                    prefKey = "dotonline"
-                )
-            }
-            item {
-                SwitchSetting(
-                    title = stringResource(R.string.show_online_last_seen_in_conversation_list),
-                    summary = stringResource(R.string.show_online_last_seen_in_conversation_list_sum),
-                    viewModel = viewModel,
-                    prefKey = "showonlinetext"
-                )
-            }
-            item {
-                SwitchSetting(
-                    title = stringResource(R.string.show_toast_on_contact_online),
-                    summary = stringResource(R.string.show_toast_on_contact_online_sum),
-                    viewModel = viewModel,
-                    prefKey = "show_toast_on_contact_online"
-                )
-            }
-            item {
-                SwitchSetting(
-                    title = stringResource(R.string.old_statuses),
-                    summary = stringResource(R.string.old_statuses_sum),
-                    viewModel = viewModel,
-                    prefKey = "oldstatus"
-                )
-            }
-
-            item { Spacer(Modifier.height(16.dp)) }
-            item { CategoryHeader("System Tweaks") }
-            item {
-                SwitchSetting(
-                    title = stringResource(R.string.lite_mode),
-                    summary = stringResource(R.string.lite_mode_sum),
-                    viewModel = viewModel,
-                    prefKey = "lite_mode"
-                )
-            }
-            item {
-                SwitchSetting(
-                    title = stringResource(R.string.enable_spy),
-                    summary = stringResource(R.string.enable_spy_sum),
-                    viewModel = viewModel,
-                    prefKey = "enable_spy"
-                )
-            }
-            item {
-                SwitchSetting(
-                    title = stringResource(R.string.bootloader_spoofer),
-                    summary = stringResource(R.string.bootloader_spoofer_sum),
-                    viewModel = viewModel,
-                    prefKey = "bootloader_spoofer"
-                )
-            }
-            item {
-                SwitchSetting(
-                    title = stringResource(R.string.enable_tasker_automation),
-                    summary = stringResource(R.string.enable_tasker_automation_sum),
-                    viewModel = viewModel,
-                    prefKey = "tasker"
-                )
-            }
-            item {
-                SwitchSetting(
-                    title = stringResource(R.string.verbose_logs),
-                    summary = "Enable detailed logging for debugging",
-                    viewModel = viewModel,
-                    prefKey = "enablelogs"
-                )
-            }
-
-            item { Spacer(Modifier.height(16.dp)) }
-            item { CategoryHeader("Intelligence") }
+            item { CategoryHeader("Intelligence & AI") }
             item {
                 SwitchSetting(
                     title = stringResource(R.string.voice_transcription),
                     summary = stringResource(R.string.voice_transcription_sum),
                     viewModel = viewModel,
-                    prefKey = "voice_transcription"
+                    prefKey = "voice_transcription",
+                    icon = R.drawable.ic_recording
                 )
             }
             item {
@@ -226,7 +53,8 @@ fun ToolsScreen(
                     title = stringResource(R.string.ai_rewrite),
                     summary = stringResource(R.string.ai_rewrite_sum),
                     viewModel = viewModel,
-                    prefKey = "ai_rewrite"
+                    prefKey = "ai_rewrite",
+                    icon = R.drawable.ic_privacy
                 )
             }
             item {
@@ -234,34 +62,46 @@ fun ToolsScreen(
                     title = stringResource(R.string.group_tldr),
                     summary = stringResource(R.string.group_tldr_sum),
                     viewModel = viewModel,
-                    prefKey = "group_tldr"
+                    prefKey = "group_tldr",
+                    icon = R.drawable.ic_home_black_24dp
                 )
             }
             item {
                 SwitchSetting(
-                    title = "Disable Meta AI",
-                    summary = "Completely hide Meta AI integration",
+                    title = stringResource(R.string.google_translate),
+                    summary = stringResource(R.string.google_translate_sum),
                     viewModel = viewModel,
-                    prefKey = "metaai"
+                    prefKey = "google_translate",
+                    icon = R.drawable.ic_privacy
                 )
             }
             item {
                 SwitchSetting(
-                    title = "Audio Transcription",
-                    summary = "Enable native voice note transcripts",
+                    title = stringResource(R.string.disable_metaai),
+                    summary = stringResource(R.string.disable_metaai_sum),
                     viewModel = viewModel,
-                    prefKey = "audio_transcription"
+                    prefKey = "metaai",
+                    icon = R.drawable.ic_round_bug_report_24
                 )
             }
 
-            item { Spacer(Modifier.height(16.dp)) }
-            item { CategoryHeader("Advanced Workflow") }
+            item { CategoryHeader("Advanced Tweaks") }
             item {
                 SwitchSetting(
                     title = stringResource(R.string.disable_pinned_limit),
                     summary = stringResource(R.string.disable_pinned_limit_sum),
                     viewModel = viewModel,
-                    prefKey = "disable_pinned_limit"
+                    prefKey = "pinnedlimit",
+                    icon = R.drawable.ic_dashboard_black_24dp
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.removeforwardlimit),
+                    summary = stringResource(R.string.removeforwardlimit_sum),
+                    viewModel = viewModel,
+                    prefKey = "removeforwardlimit",
+                    icon = R.drawable.ic_round_check_circle_24
                 )
             }
             item {
@@ -269,7 +109,102 @@ fun ToolsScreen(
                     title = stringResource(R.string.zen_mode),
                     summary = stringResource(R.string.zen_mode_sum),
                     viewModel = viewModel,
-                    prefKey = "zen_mode"
+                    prefKey = "zen_mode",
+                    icon = R.drawable.eye_disabled
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.bootloader_spoofer),
+                    summary = stringResource(R.string.bootloader_spoofer_sum),
+                    viewModel = viewModel,
+                    prefKey = "bootloader_spoofer",
+                    icon = R.drawable.ic_privacy
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.enable_tasker_automation),
+                    summary = stringResource(R.string.enable_tasker_automation_sum),
+                    viewModel = viewModel,
+                    prefKey = "tasker",
+                    icon = R.drawable.ic_round_settings_24
+                )
+            }
+
+            item { CategoryHeader("System & Maintenance") }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.update_check),
+                    summary = stringResource(R.string.update_check_sum),
+                    viewModel = viewModel,
+                    prefKey = "update_check",
+                    defaultValue = true,
+                    icon = R.drawable.ic_round_check_circle_24
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.disable_whatsapp_expiration),
+                    summary = stringResource(R.string.disable_whatsapp_expiration_sum),
+                    viewModel = viewModel,
+                    prefKey = "disable_expiration",
+                    icon = R.drawable.ic_round_warning_24
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.disable_version_check),
+                    summary = stringResource(R.string.disable_version_check_sum),
+                    viewModel = viewModel,
+                    prefKey = "bypass_version_check",
+                    icon = R.drawable.ic_round_bug_report_24
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.lite_mode),
+                    summary = stringResource(R.string.lite_mode_sum),
+                    viewModel = viewModel,
+                    prefKey = "lite_mode",
+                    icon = R.drawable.ic_dashboard_black_24dp
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.verbose_logs),
+                    summary = "Log technical details for debugging",
+                    viewModel = viewModel,
+                    prefKey = "enablelogs",
+                    defaultValue = true,
+                    icon = R.drawable.ic_round_bug_report_24
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.ampm),
+                    summary = "Use 12-hour format",
+                    viewModel = viewModel,
+                    prefKey = "ampm",
+                    icon = R.drawable.ic_round_settings_24
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.segundosnahora),
+                    summary = stringResource(R.string.segundosnahora_sum),
+                    viewModel = viewModel,
+                    prefKey = "segundos",
+                    icon = R.drawable.ic_round_settings_24
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.force_restore_backup),
+                    summary = stringResource(R.string.force_restore_backup_summary),
+                    viewModel = viewModel,
+                    prefKey = "force_restore_backup_feature",
+                    icon = R.drawable.ic_round_check_circle_24
                 )
             }
         }

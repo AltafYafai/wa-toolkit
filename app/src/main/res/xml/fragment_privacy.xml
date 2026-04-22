@@ -5,12 +5,19 @@
     <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         android:title="Anti-Revoke &amp; Security">
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
             android:key="antirevoke"
-            android:summary="Keep messages even after they are deleted for everyone"
-            android:title="Anti-Revoke"
+            android:summary="@string/antirevoke_sum"
+            android:title="@string/antirevoke"
             app:icon="@drawable/deleted" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="antirevokestatus"
+            android:summary="@string/antirevokestatus_sum"
+            android:title="@string/antirevokestatus"
+            app:icon="@drawable/ic_round_warning_24" />
 
         <androidx.preference.Preference
             android:key="open_deleted_messages"
@@ -18,99 +25,146 @@
             android:title="View Deleted Messages"
             app:icon="@drawable/ic_delete" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
-            android:key="toastdeleted"
-            android:summary="Show a real-time alert when a message is revoked"
-            android:title="Notify on Deletion"
-            app:icon="@drawable/ic_round_warning_24" />
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:defaultValue="false"
-            android:key="metadata_stripper"
-            android:summary="@string/metadata_stripper_sum"
-            android:title="@string/metadata_stripper"
+            android:key="antidisappearing"
+            android:summary="@string/antidisappearing_sum"
+            android:title="@string/antidisappearing"
             app:icon="@drawable/ic_privacy" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="revokeallmessages"
+            android:summary="@string/delete_for_everyone_all_messages_sum"
+            android:title="@string/delete_for_everyone_all_messages"
+            app:icon="@drawable/ic_round_check_circle_24" />
+
+        <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
             android:key="panic_mode"
             android:summary="@string/panic_mode_sum"
             android:title="@string/panic_mode"
             app:icon="@drawable/ic_round_warning_24" />
 
-        <androidx.preference.SwitchPreferenceCompat
-            android:defaultValue="false"
-            android:key="disable_secure_flag"
-            android:summary="@string/disable_secure_flag_sum"
-            android:title="@string/disable_secure_flag"
-            app:icon="@drawable/ic_privacy" />
-
     </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
     <com.wa.toolkit.ui.preferences.CardPreferenceCategory
-        android:title="Presence Control">
+        android:title="Presence &amp; Alerts">
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
             android:key="freezelastseen"
-            android:summary="Freeze your last seen timestamp at the current moment"
-            android:title="Freeze Last Seen"
+            android:summary="@string/freezelastseen_sum"
+            android:title="@string/freezelastseen"
             app:icon="@drawable/eye_disabled" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
             android:key="always_online"
-            android:summary="Show you as online even when WhatsApp is closed"
-            android:title="Always Online"
+            android:summary="@string/always_online_sum"
+            android:title="@string/always_online"
             app:icon="@drawable/online" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="showonline"
+            android:summary="@string/show_toast_on_contact_online_sum"
+            android:title="@string/show_toast_on_contact_online"
+            app:icon="@drawable/online" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="toastdeleted"
+            android:summary="@string/toast_on_delete_sum"
+            android:title="@string/toast_on_delete"
+            app:icon="@drawable/ic_round_warning_24" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="toast_viewed_message"
+            android:summary="@string/toast_on_viewed_message_sum"
+            android:title="@string/toast_on_viewed_message"
+            app:icon="@drawable/eye_enabled" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="verify_blocked_contact"
+            android:summary="@string/show_contact_blocked_sum"
+            android:title="@string/show_contact_blocked"
+            app:icon="@drawable/eye_disabled" />
 
     </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
     <com.wa.toolkit.ui.preferences.CardPreferenceCategory
         android:title="Interactive Privacy">
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
             android:key="stealth_typing"
             android:summary="@string/stealth_typing_sum"
             android:title="@string/stealth_typing"
             app:icon="@drawable/ic_privacy" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
             android:key="blueonreply"
             android:summary="@string/blueonreply_sum"
             android:title="@string/blueonreply"
             app:icon="@drawable/eye_enabled" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="hideread"
+            android:summary="@string/hideread_sum"
+            android:title="@string/hideread"
+            app:icon="@drawable/eye_disabled" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="hide_audio_seen"
+            android:summary="@string/hide_audio_seen_sum"
+            android:title="@string/hide_audio_seen"
+            app:icon="@drawable/ic_recording" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="hide_once_view_seen"
+            android:summary="@string/hide_once_view_seen_sum"
+            android:title="@string/hide_once_view_seen"
+            app:icon="@drawable/eye_enabled" />
+
+        <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
             android:key="local_vault"
             android:summary="@string/local_vault_sum"
             android:title="@string/local_vault"
             app:icon="@drawable/ic_delete" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
-            android:key="doubletap2like"
-            android:summary="Double-tap a message to react with a custom emoji"
-            android:title="Double-Tap to React"
-            app:icon="@drawable/ic_round_check_circle_24" />
+            android:key="call_privacy"
+            android:summary="@string/call_blocker_sum"
+            android:title="@string/call_blocker"
+            app:icon="@drawable/eye_disabled" />
 
-        <androidx.preference.SwitchPreferenceCompat
-            android:defaultValue="false"
-            android:key="hide_audio_seen"
-            android:summary="Play voice notes without showing the played receipt"
-            android:title="Hide Voice Note Seen"
-            app:icon="@drawable/ic_recording" />
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
-        <androidx.preference.SwitchPreferenceCompat
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+        android:title="Technical Protection">
+
+        <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
-            android:key="hide_once_view_seen"
-            android:summary="View 'View Once' media unlimited times privately"
-            android:title="Stealth View Once"
-            app:icon="@drawable/eye_enabled" />
+            android:key="metadata_stripper"
+            android:summary="@string/metadata_stripper_sum"
+            android:title="@string/metadata_stripper"
+            app:icon="@drawable/ic_privacy" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="disable_secure_flag"
+            android:summary="@string/disable_secure_flag_sum"
+            android:title="@string/disable_secure_flag"
+            app:icon="@drawable/ic_privacy" />
 
     </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 

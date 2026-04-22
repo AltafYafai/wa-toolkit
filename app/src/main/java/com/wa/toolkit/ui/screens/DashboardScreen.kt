@@ -30,14 +30,9 @@ import com.wa.toolkit.activities.AboutActivity
 import com.wa.toolkit.App
 import com.wa.toolkit.xposed.core.FeatureLoader
 import com.wa.toolkit.utils.ConfigUtil
+import com.wa.toolkit.ui.preferences.SwitchSetting
+import com.wa.toolkit.ui.preferences.CategoryHeader
 import android.widget.Toast
-
-data class DashboardItem(
-    val id: Int,
-    val title: String,
-    val summary: String,
-    val icon: Int
-)
 
 @Composable
 fun DashboardScreen(
@@ -50,13 +45,13 @@ fun DashboardScreen(
     val isWppActive by mainViewModel.isWppActive.collectAsState()
 
     val items = listOf(
-        DashboardItem(1, stringResource(R.string.privacy), "Ghost Mode and Protection", R.drawable.ic_privacy),
-        DashboardItem(3, stringResource(R.string.media), "HD Images, Video & Audio", R.drawable.ic_media),
-        DashboardItem(2, "Chat", stringResource(R.string.summary_chat), R.drawable.ic_telegram),
-        DashboardItem(8, stringResource(R.string.home_screen), stringResource(R.string.summary_home_screen), R.drawable.ic_home_black_24dp),
-        DashboardItem(5, "Tools", stringResource(R.string.summary_tools), R.drawable.ic_general),
-        DashboardItem(6, stringResource(R.string.status), "IG Style and Downloads", R.drawable.online),
-        DashboardItem(7, stringResource(R.string.calls), "Privacy and Call Recording", R.drawable.ic_contacts)
+        DashboardItem(1, stringResource(R.string.privacy), "Stealth, Ghost mode and Anti-Revoke", R.drawable.ic_privacy),
+        DashboardItem(3, stringResource(R.string.media), "HD Quality, Call Recording and Auto-OCR", R.drawable.ic_media),
+        DashboardItem(2, stringResource(R.string.chat), "AI Translation, Summaries and Enhancements", R.drawable.ic_telegram),
+        DashboardItem(8, "Interface", "Separate Groups, Tabs and Theme customization", R.drawable.ic_home_black_24dp),
+        DashboardItem(5, "System", "Bootloader Spoofer, Updates and Maintenance", R.drawable.ic_general),
+        DashboardItem(6, stringResource(R.string.status), "IG Style Status, Stealth and Downloads", R.drawable.online),
+        DashboardItem(7, stringResource(R.string.calls), "Call Blocker and Additional Insights", R.drawable.ic_contacts)
     )
 
     LazyVerticalGrid(
@@ -257,49 +252,6 @@ fun AboutCard(onClick: () -> Unit) {
                 Text("About Whatsapp Toolkit", style = MaterialTheme.typography.titleMedium)
                 Text("Emerald Hub v1.0.0-beta", style = MaterialTheme.typography.bodySmall)
             }
-        }
-    }
-}
-
-@Composable
-fun CategoryHeader(title: String) {
-    Text(
-        text = title,
-        style = MaterialTheme.typography.labelLarge,
-        color = MaterialTheme.colorScheme.primary,
-        modifier = Modifier.padding(vertical = 8.dp)
-    )
-}
-
-@Composable
-fun SwitchSetting(
-    title: String,
-    summary: String,
-    viewModel: SettingsViewModel,
-    prefKey: String,
-    defaultValue: Boolean = false
-) {
-    val checked by viewModel.getBoolean(prefKey, defaultValue).collectAsState(initial = defaultValue)
-
-    Surface(
-        onClick = { viewModel.toggleBoolean(prefKey, checked) },
-        shape = MaterialTheme.shapes.medium,
-        color = MaterialTheme.colorScheme.surface
-    ) {
-        Row(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column(modifier = Modifier.weight(1f)) {
-                Text(title, style = MaterialTheme.typography.titleMedium)
-                Text(summary, style = MaterialTheme.typography.bodySmall)
-            }
-            Switch(
-                checked = checked,
-                onCheckedChange = { viewModel.toggleBoolean(prefKey, checked) }
-            )
         }
     }
 }

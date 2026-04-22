@@ -3,47 +3,54 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.wa.toolkit.ui.preferences.CardPreferenceCategory
-        android:title="Media Download">
+        android:title="Download &amp; Capture">
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="downloadstatus"
+            android:summary="Download status media to your gallery"
+            android:title="Download Status"
+            app:icon="@drawable/download" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="copystatus"
+            android:summary="@string/enable_copy_status_sum"
+            android:title="@string/enable_copy_status"
+            app:icon="@drawable/edit2" />
+
+        <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
             android:key="downloadviewonce"
             android:summary="Automatically save 'View Once' media to gallery"
             android:title="Save View Once"
             app:icon="@drawable/download" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
             android:key="download_profile"
             android:summary="Enable downloading of contact profile pictures"
             android:title="Profile Picture Downloader"
             app:icon="@drawable/ic_person" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
-            android:key="status_analytics"
-            android:summary="@string/status_analytics_sum"
-            android:title="@string/status_analytics"
-            app:icon="@drawable/eye_enabled" />
+            android:key="call_recording_enable"
+            android:summary="@string/call_recording_enable_sum"
+            android:title="@string/call_recording_enable"
+            app:icon="@drawable/ic_recording" />
 
     </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
     <com.wa.toolkit.ui.preferences.CardPreferenceCategory
-        android:title="Quality &amp; Size">
+        android:title="Quality &amp; Resolution">
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
             android:key="lossless_status"
             android:summary="@string/lossless_status_sum"
             android:title="@string/lossless_status"
             app:icon="@drawable/eye_enabled" />
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:defaultValue="false"
-            android:key="unlimited_file_size"
-            android:summary="@string/unlimited_file_size_sum"
-            android:title="@string/unlimited_file_size"
-            app:icon="@drawable/ic_dashboard_black_24dp" />
 
         <androidx.preference.ListPreference
             android:defaultValue="0"
@@ -53,6 +60,13 @@
             android:summary="%s"
             android:title="Upload Resolution"
             app:icon="@drawable/ic_image" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="unlimited_file_size"
+            android:summary="@string/unlimited_file_size_sum"
+            android:title="@string/unlimited_file_size"
+            app:icon="@drawable/ic_dashboard_black_24dp" />
 
         <com.wa.toolkit.preference.FloatSeekBarPreference
             android:defaultValue="40"
@@ -66,21 +80,49 @@
     </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
     <com.wa.toolkit.ui.preferences.CardPreferenceCategory
-        android:title="Enhanced Media">
+        android:title="Enhanced Experience">
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="true"
+            android:key="media_preview"
+            android:summary="Preview images and videos before downloading"
+            android:title="Media Preview"
+            app:icon="@drawable/preview_eye" />
+
+        <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
             android:key="auto_ocr"
             android:summary="@string/auto_ocr_sum"
             android:title="@string/auto_ocr"
             app:icon="@drawable/ic_image" />
 
-        <androidx.preference.SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="status_analytics"
+            android:summary="@string/status_analytics_sum"
+            android:title="@string/status_analytics"
+            app:icon="@drawable/eye_enabled" />
+
+        <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
             android:key="voice_changer"
             android:summary="@string/voice_changer_sum"
             android:title="@string/voice_changer"
             app:icon="@drawable/ic_recording" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="autonext_status"
+            android:summary="@string/disable_auto_status_sum"
+            android:title="@string/disable_auto_status"
+            app:icon="@drawable/ic_pause" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="toast_viewed_status"
+            android:summary="@string/toast_on_viewed_status_sum"
+            android:title="@string/toast_on_viewed_status"
+            app:icon="@drawable/eye_enabled" />
 
     </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 

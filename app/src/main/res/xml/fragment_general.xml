@@ -3,63 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.wa.toolkit.ui.preferences.CardPreferenceCategory
-        android:title="Interface &amp; Layout">
-
-        <rikka.material.preference.MaterialSwitchPreference
-            android:defaultValue="false"
-            android:key="floatingmenu"
-            android:summary="Modern centered action menu"
-            android:title="Floating Home Menu"
-            app:icon="@drawable/ic_dashboard_black_24dp" />
-
-        <rikka.material.preference.MaterialSwitchPreference
-            android:defaultValue="false"
-            android:key="novaconfig"
-            android:summary="Redesigned settings navigation"
-            android:title="Experimental Settings UI"
-            app:icon="@drawable/ic_round_settings_24" />
-
-        <androidx.preference.ListPreference
-            android:defaultValue="2"
-            android:entries="@array/chatfilter_buttons"
-            android:entryValues="@array/chatfilter_values"
-            android:key="chatfilter"
-            android:summary="%s"
-            android:title="Home Filter Style"
-            app:icon="@drawable/ic_home_black_24dp" />
-
-    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
-
-    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
-        android:title="Visual Enhancements">
-
-        <rikka.material.preference.MaterialSwitchPreference
-            android:defaultValue="false"
-            android:key="menuwicon"
-            android:summary="Show icons next to menu items"
-            android:title="Menu Icons"
-            app:icon="@drawable/about" />
-
-        <rikka.material.preference.MaterialSwitchPreference
-            android:defaultValue="false"
-            android:key="animation_emojis"
-            android:summary="Smooth animated emoji interactions"
-            android:title="Animated Emojis"
-            app:icon="@drawable/ic_round_check_circle_24" />
-
-        <androidx.preference.ListPreference
-            android:defaultValue="default"
-            android:entries="@array/animations_names"
-            android:entryValues="@array/animations_values"
-            android:key="animation_list"
-            android:summary="%s"
-            android:title="List Animations"
-            app:icon="@drawable/ic_dashboard_black_24dp" />
-
-    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
-
-    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
-        android:title="Intelligence">
+        android:title="Intelligence &amp; AI">
 
         <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
@@ -84,22 +28,36 @@
 
         <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
+            android:key="google_translate"
+            android:summary="@string/google_translate_sum"
+            android:title="@string/google_translate"
+            app:icon="@drawable/ic_privacy" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
             android:key="metaai"
-            android:summary="Completely hide Meta AI integration"
-            android:title="Disable Meta AI"
+            android:summary="@string/disable_metaai_sum"
+            android:title="@string/disable_metaai"
             app:icon="@drawable/ic_round_bug_report_24" />
 
     </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
     <com.wa.toolkit.ui.preferences.CardPreferenceCategory
-        android:title="Advanced Workflow">
+        android:title="Advanced Tweaks">
 
         <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
-            android:key="disable_pinned_limit"
+            android:key="pinnedlimit"
             android:summary="@string/disable_pinned_limit_sum"
             android:title="@string/disable_pinned_limit"
             app:icon="@drawable/ic_dashboard_black_24dp" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="removeforwardlimit"
+            android:summary="@string/removeforwardlimit_sum"
+            android:title="@string/removeforwardlimit"
+            app:icon="@drawable/ic_round_check_circle_24" />
 
         <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
@@ -107,6 +65,78 @@
             android:summary="@string/zen_mode_sum"
             android:title="@string/zen_mode"
             app:icon="@drawable/eye_disabled" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="bootloader_spoofer"
+            android:summary="@string/bootloader_spoofer_sum"
+            android:title="@string/bootloader_spoofer"
+            app:icon="@drawable/ic_privacy" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="tasker"
+            android:summary="@string/enable_tasker_automation_sum"
+            android:title="@string/enable_tasker_automation"
+            app:icon="@drawable/ic_round_settings_24" />
+
+    </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
+
+    <com.wa.toolkit.ui.preferences.CardPreferenceCategory
+        android:title="System &amp; Maintenance">
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="true"
+            android:key="update_check"
+            android:summary="@string/update_check_sum"
+            android:title="@string/update_check"
+            app:icon="@drawable/ic_round_check_circle_24" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="disable_expiration"
+            android:summary="@string/disable_whatsapp_expiration_sum"
+            android:title="@string/disable_whatsapp_expiration"
+            app:icon="@drawable/ic_round_warning_24" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="bypass_version_check"
+            android:summary="@string/disable_version_check_sum"
+            android:title="@string/disable_version_check"
+            app:icon="@drawable/ic_round_bug_report_24" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="lite_mode"
+            android:summary="@string/lite_mode_sum"
+            android:title="@string/lite_mode"
+            app:icon="@drawable/ic_dashboard_black_24dp" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="true"
+            android:key="enablelogs"
+            android:summary="Log technical details for debugging"
+            android:title="@string/verbose_logs"
+            app:icon="@drawable/ic_round_bug_report_24" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:key="ampm"
+            android:title="@string/ampm"
+            app:icon="@drawable/ic_round_settings_24" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:key="segundos"
+            android:summary="@string/segundosnahora_sum"
+            android:title="@string/segundosnahora"
+            app:icon="@drawable/ic_round_settings_24" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="force_restore_backup_feature"
+            android:summary="@string/force_restore_backup_summary"
+            android:title="@string/force_restore_backup"
+            app:icon="@drawable/ic_round_check_circle_24" />
 
     </com.wa.toolkit.ui.preferences.CardPreferenceCategory>
 
