@@ -67,6 +67,15 @@ object FeatureLoader {
         }
         Utils.xprefs = pref
         
+        // Initialize module resources
+        try {
+            val moduleContext = app.createPackageContext(BuildConfig.APPLICATION_ID, Context.CONTEXT_IGNORE_SECURITY)
+            ResId.init(moduleContext)
+            XposedBridge.log("[WAE] ResId initialized via Module Context")
+        } catch (e: Throwable) {
+            XposedBridge.log("[WAE] Failed to initialize ResId: ${e.message}")
+        }
+
         // Inject Bootloader Spoofer
         if (pref.getBoolean("bootloader_spoofer", false)) {
             HookBL.hook(loader, pref)
@@ -77,7 +86,14 @@ object FeatureLoader {
         currentVersion = packageInfo.versionName
         
         val resIdArray = if (app.packageName == PACKAGE_WPP) ResId.array.supported_versions_wpp else ResId.array.supported_versions_business
-        supportedVersions = app.resources.getStringArray(resIdArray).toList()
+        
+        // Load supported versions using module context as fallback
+        try {
+            val moduleContext = app.createPackageContext(BuildConfig.APPLICATION_ID, Context.CONTEXT_IGNORE_SECURITY)
+            supportedVersions = moduleContext.resources.getStringArray(resIdArray).toList()
+        } catch (e: Throwable) {
+            XposedBridge.log("[WAE] Failed to load supportedVersions: ${e.message}")
+        }
         
         app.registerActivityLifecycleCallbacks(WaCallback())
         registerReceivers()
@@ -89,6 +105,37 @@ object FeatureLoader {
             
             initComponents(loader, pref)
             plugins(loader, pref, packageInfo.versionName ?: "")
+
+            // Hook HomeActivity
+            try {
+                val homeActivityClass = WppCore.getHomeActivityClass(loader)
+                XposedHelpers.findAndHookMethod(homeActivityClass, "onCreate", Bundle::class.java,
+                    object : XC_MethodHook() {
+                        @Throws(Throwable::class)
+                        override fun afterHookedMethod(param: MethodHookParam) {
+                            if (list.isNotEmpty()) {
+                                val activity = param.thisObject as Activity
+                                val msg = list.joinToString("\n") { "${it.pluginName} - ${it.message}" }
+
+                                AlertDialogWpp(activity)
+                                    .setTitle(activity.getString(ResId.string.error_detected))
+                                    .setMessage("${activity.getString(ResId.string.version_error)}$msg\n\nCurrent Version: $currentVersion\nSupported Versions:\n${supportedVersions?.joinToString("\n")}")
+                                    .setPositiveButton(activity.getString(ResId.string.copy_to_clipboard)) { dialog, _ ->
+                                        val clipboard = mApp?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
+                                        val clip = ClipData.newPlainText("text", list.joinToString("\n") { it.toString() })
+                                        clipboard?.setPrimaryClip(clip)
+                                        Toast.makeText(mApp, ResId.string.copied_to_clipboard, Toast.LENGTH_SHORT).show()
+                                        dialog.dismiss()
+                                    }
+                                    .show()
+                            }
+                        }
+                    }
+                )
+            } catch (e: Throwable) {
+                XposedBridge.log("[WAE] Failed to hook HomeActivity (Modern): ${e.message}")
+            }
+
             sendEnabledBroadcast(app)
         } catch (e: Throwable) {
             XposedBridge.log("[WAE] Error loading features: ${e.message}")
@@ -143,7 +190,22 @@ object FeatureLoader {
                     currentVersion = packageInfo.versionName
                     
                     val resIdArray = if (app.packageName == PACKAGE_WPP) ResId.array.supported_versions_wpp else ResId.array.supported_versions_business
-                    supportedVersions = app.resources.getStringArray(resIdArray).toList()
+                    
+                    // Initialize ResId via module context as fallback
+                    try {
+                        val moduleContext = app.createPackageContext(BuildConfig.APPLICATION_ID, Context.CONTEXT_IGNORE_SECURITY)
+                        if (ResId.string.app_name == 0) {
+                            ResId.init(moduleContext)
+                            XposedBridge.log("[WAE] ResId initialized via Module Context (Legacy Fallback)")
+                        }
+                        supportedVersions = moduleContext.resources.getStringArray(resIdArray).toList()
+                    } catch (e: Throwable) {
+                        XposedBridge.log("[WAE] Failed to load supportedVersions: ${e.message}")
+                        // Try app resources if mirrored
+                        try {
+                            supportedVersions = app.resources.getStringArray(resIdArray).toList()
+                        } catch (ignored: Throwable) {}
+                    }
                     
                     app.registerActivityLifecycleCallbacks(WaCallback())
                     registerReceivers()
@@ -177,6 +239,37 @@ object FeatureLoader {
                         
                         val loadTime = System.currentTimeMillis() - startTime
                         XposedBridge.log("[WAE] Loaded Hooks in ${loadTime}ms")
+
+                        // Hook HomeActivity after everything else is initialized
+                        try {
+                            val homeActivityClass = WppCore.getHomeActivityClass(loader)
+                            XposedHelpers.findAndHookMethod(homeActivityClass, "onCreate", Bundle::class.java,
+                                object : XC_MethodHook() {
+                                    @Throws(Throwable::class)
+                                    override fun afterHookedMethod(param: MethodHookParam) {
+                                        if (list.isNotEmpty()) {
+                                            val activity = param.thisObject as Activity
+                                            val msg = list.joinToString("\n") { "${it.pluginName} - ${it.message}" }
+
+                                            AlertDialogWpp(activity)
+                                                .setTitle(activity.getString(ResId.string.error_detected))
+                                                .setMessage("${activity.getString(ResId.string.version_error)}$msg\n\nCurrent Version: $currentVersion\nSupported Versions:\n${supportedVersions?.joinToString("\n")}")
+                                                .setPositiveButton(activity.getString(ResId.string.copy_to_clipboard)) { dialog, _ ->
+                                                    val clipboard = mApp?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
+                                                    val clip = ClipData.newPlainText("text", list.joinToString("\n") { it.toString() })
+                                                    clipboard?.setPrimaryClip(clip)
+                                                    Toast.makeText(mApp, ResId.string.copied_to_clipboard, Toast.LENGTH_SHORT).show()
+                                                    dialog.dismiss()
+                                                }
+                                                .show()
+                                        }
+                                    }
+                                }
+                            )
+                        } catch (e: Throwable) {
+                            XposedBridge.log("[WAE] Failed to hook HomeActivity: ${e.message}")
+                        }
+
                     } catch (e: Throwable) {
                         XposedBridge.log("[WAE] Error loading features: ${e.message}")
                         XposedBridge.log(e)
@@ -190,30 +283,6 @@ object FeatureLoader {
                                 .joinToString(prefix = "[", postfix = "]") { it.toString() }
                         }
                         list.add(error)
-                    }
-                }
-            }
-        )
-
-        XposedHelpers.findAndHookMethod(WppCore.getHomeActivityClass(loader), "onCreate", Bundle::class.java,
-            object : XC_MethodHook() {
-                @Throws(Throwable::class)
-                override fun afterHookedMethod(param: MethodHookParam) {
-                    if (list.isNotEmpty()) {
-                        val activity = param.thisObject as Activity
-                        val msg = list.joinToString("\n") { "${it.pluginName} - ${it.message}" }
-
-                        AlertDialogWpp(activity)
-                            .setTitle(activity.getString(ResId.string.error_detected))
-                            .setMessage("${activity.getString(ResId.string.version_error)}$msg\n\nCurrent Version: $currentVersion\nSupported Versions:\n${supportedVersions?.joinToString("\n")}")
-                            .setPositiveButton(activity.getString(ResId.string.copy_to_clipboard)) { dialog, _ ->
-                                val clipboard = mApp?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
-                                val clip = ClipData.newPlainText("text", list.joinToString("\n") { it.toString() })
-                                clipboard?.setPrimaryClip(clip)
-                                Toast.makeText(mApp, ResId.string.copied_to_clipboard, Toast.LENGTH_SHORT).show()
-                                dialog.dismiss()
-                            }
-                            .show()
                     }
                 }
             }

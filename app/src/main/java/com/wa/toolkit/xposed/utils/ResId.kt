@@ -118,8 +118,29 @@ object ResId {
         @JvmField var tag_font_scale: Int = 0
     }
 
-    object array {
-        @JvmField var supported_versions_wpp: Int = 0
-        @JvmField var supported_versions_business: Int = 0
+    @JvmStatic
+    fun init(context: Context) {
+        val packageName = context.packageName
+        val res = context.resources
+        
+        mirrorFields(drawable::class.java, packageName, res, "drawable")
+        mirrorFields(string::class.java, packageName, res, "string")
+        mirrorFields(id::class.java, packageName, res, "id")
+        mirrorFields(array::class.java, packageName, res, "array")
+    }
+
+    private fun mirrorFields(clazz: Class<*>, packageName: String, res: Resources, type: String) {
+        for (field in clazz.declaredFields) {
+            if (field.name == "INSTANCE" || field.name == "\$stable") continue
+            try {
+                val id = res.getIdentifier(field.name, type, packageName)
+                if (id != 0) {
+                    field.isAccessible = true
+                    field.set(null, id)
+                }
+            } catch (e: Exception) {
+                // Ignore
+            }
+        }
     }
 }

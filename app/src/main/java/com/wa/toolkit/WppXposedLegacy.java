@@ -95,9 +95,11 @@ public class WppXposedLegacy implements IXposedHookLoadPackage, IXposedHookInitP
         
         try {
             // Modern LibXposed removed resource hooks. The legacy wrapper might still support it.
-            // com.wa.toolkit.xposed.utils.ResourceMirror.INSTANCE.mirror(resparam, null);
+            if (MODULE_PATH != null) {
+                com.wa.toolkit.xposed.utils.ResourceMirror.INSTANCE.mirror(resparam, de.robv.android.xposed.res.XModuleResources.createInstance(MODULE_PATH, resparam.res));
+            }
         } catch (Throwable t) {
-            // Ignore
+            de.robv.android.xposed.XposedBridge.log("[WAE] Failed to mirror resources: " + t.getMessage());
         }
     }
 }
