@@ -21,12 +21,12 @@ class PinnedLimit(loader: ClassLoader, preferences: XSharedPreferences) : Featur
         val pinnedInChatMethod = Unobfuscator.loadPinnedInChatMethod(classLoader)
 
         // increase pinned limit in chat to 60
-        XposedBridge.hookMethod(pinnedInChatMethod, XC_MethodReplacement.returnConstant(60))
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(pinnedInChatMethod, XC_MethodReplacement.returnConstant(60))
 
         if (prefs.getBoolean("pinnedlimit", false)) {
             // Disable pinned called by Server to prevent it from clearing the pinned list
             val setPinnedLimitMethod = Unobfuscator.loadSetPinnedLimitMethod(classLoader)
-            XposedBridge.hookMethod(setPinnedLimitMethod, object : XC_MethodHook() {
+            com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(setPinnedLimitMethod, object : XC_MethodHook() {
                 @Throws(Throwable::class)
                 override fun beforeHookedMethod(param: MethodHookParam) {
                     if (ReflectionUtils.isCalledFromString("SyncResponseHandler")) {
@@ -59,7 +59,7 @@ class PinnedLimit(loader: ClassLoader, preferences: XSharedPreferences) : Featur
         })
 
         // This creates a modified linkedhashMap to return 0 if the fixed list is less than 60.
-        XposedBridge.hookMethod(pinnedHashSetMethod, object : XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(pinnedHashSetMethod, object : XC_MethodHook() {
             @Suppress("UNCHECKED_CAST")
             @Throws(Throwable::class)
             override fun afterHookedMethod(param: MethodHookParam) {
@@ -91,7 +91,7 @@ class PinnedLimit(loader: ClassLoader, preferences: XSharedPreferences) : Featur
         })
 
         val method = Unobfuscator.loadPinnedFilterMethod(classLoader)
-        XposedBridge.hookMethod(method, object : XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(method, object : XC_MethodHook() {
             @Suppress("UNCHECKED_CAST")
             @Throws(Throwable::class)
             override fun afterHookedMethod(param: MethodHookParam) {

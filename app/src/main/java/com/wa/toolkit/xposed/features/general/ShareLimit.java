@@ -23,7 +23,7 @@ public class ShareLimit extends Feature {
         var shareItemField = Unobfuscator.loadShareMapItemField(classLoader);
         logDebug(Unobfuscator.getFieldDescriptor(shareItemField));
 
-        XposedBridge.hookMethod(
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(
                 shareLimitMethod,
                 new XC_MethodHook() {
                     private HashMap<Object, Object> fakeMap;

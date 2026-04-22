@@ -41,7 +41,7 @@ public class FontEngine extends Feature {
             return;
         }
 
-        XposedHelpers.findAndHookMethod(TextView.class, "setTypeface", Typeface.class, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(TextView.class, "setTypeface", Typeface.class, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 if (customTypeface != null) {
@@ -63,7 +63,7 @@ public class FontEngine extends Feature {
             }
         });
 
-        XposedHelpers.findAndHookMethod(TextView.class, "setTypeface", Typeface.class, int.class, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(TextView.class, "setTypeface", Typeface.class, int.class, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 if (customTypeface != null) {
@@ -85,7 +85,7 @@ public class FontEngine extends Feature {
             }
         });
         
-        XposedHelpers.findAndHookMethod(Typeface.class, "create", String.class, int.class, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(Typeface.class, "create", String.class, int.class, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 if (customTypeface != null) {

@@ -6,7 +6,6 @@ import static com.wa.toolkit.utils.IColors.alphacolors;
 import static com.wa.toolkit.utils.IColors.backgroundColors;
 import static com.wa.toolkit.utils.IColors.primaryColors;
 import static com.wa.toolkit.utils.IColors.textColors;
-import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 
 import android.Manifest;
 import android.app.Activity;
@@ -168,7 +167,7 @@ public class CustomThemeV2 extends Feature {
         loadAndApplyColorsWallpaper();
 
         var homeActivityClass = WppCore.getHomeActivityClass(classLoader);
-        XposedHelpers.findAndHookMethod(homeActivityClass, "onCreate", Bundle.class, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(homeActivityClass, "onCreate", Bundle.class, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 var activity = (Activity) param.thisObject;
@@ -202,7 +201,7 @@ public class CustomThemeV2 extends Feature {
 
         var hookFragmentView = Unobfuscator.loadFragmentViewMethod(classLoader);
 
-        XposedBridge.hookMethod(hookFragmentView,
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(hookFragmentView,
                 new XC_MethodHook() {
                     @Override
                     protected void afterHookedMethod(MethodHookParam param) throws Throwable {
@@ -214,7 +213,7 @@ public class CustomThemeV2 extends Feature {
                 });
 
         var loadTabFrameClass = Unobfuscator.loadTabFrameClass(classLoader);
-        XposedHelpers.findAndHookMethod(FrameLayout.class, "onMeasure", int.class, int.class, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(FrameLayout.class, "onMeasure", int.class, int.class, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 if (!loadTabFrameClass.isInstance(param.thisObject))
@@ -268,7 +267,7 @@ public class CustomThemeV2 extends Feature {
             }
         });
         var intBgHook = new IntBgColorHook();
-        findAndHookMethod(Paint.class, "setColor", int.class, intBgHook);
+        com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(Paint.class, "setColor", int.class, intBgHook);
 
         Class<?> filterItemClass = Unobfuscator.loadFilterItemClass(classLoader);
 
@@ -285,7 +284,7 @@ public class CustomThemeV2 extends Feature {
 
         // Method activeButtonNav = Unobfuscator.loadActiveButtonNav(classLoader);
         //
-        // XposedBridge.hookMethod(activeButtonNav, new XC_MethodHook() {
+        // com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(activeButtonNav, new XC_MethodHook() {
         // @Override
         // protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
         // var drawable = (Drawable) param.args[0];
@@ -452,7 +451,7 @@ public class CustomThemeV2 extends Feature {
         toolbar.setBackground(null);
         toolbar.setBackgroundTintList(null);
         replaceColors(toolbar, toolbarAlpha);
-        XposedHelpers.findAndHookMethod(View.class, "setBackgroundColor", int.class,
+        com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(View.class, "setBackgroundColor", int.class,
                 new XC_MethodHook() {
                     @Override
                     protected void beforeHookedMethod(MethodHookParam param) {

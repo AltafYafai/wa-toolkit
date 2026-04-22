@@ -30,7 +30,7 @@ public class MetadataStripper extends Feature {
             }
         });
 
-        XposedHelpers.findAndHookMethod(ExifInterface.class, "saveAttributes", new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(ExifInterface.class, "saveAttributes", new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 stripMetadata((ExifInterface) param.thisObject);

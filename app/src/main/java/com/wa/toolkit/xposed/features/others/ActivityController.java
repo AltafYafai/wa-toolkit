@@ -45,7 +45,7 @@ public class ActivityController extends Feature {
         var clazz = Unobfuscator.findFirstClassUsingName(classLoader, StringMatchType.EndsWith,".SettingsNotifications");
         Class<?> statusDistribution = Unobfuscator.loadStatusDistributionClass(classLoader);
 
-        XposedHelpers.findAndHookMethod(Activity.class, "onCreate", Bundle.class, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(Activity.class, "onCreate", Bundle.class, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 if (clazz != param.thisObject.getClass()) return;
@@ -59,7 +59,7 @@ public class ActivityController extends Feature {
             }
         });
 
-        XposedHelpers.findAndHookMethod(Unobfuscator.loadStatusTemporalRecipientsActivityClass(classLoader), "onCreate", Bundle.class, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(Unobfuscator.loadStatusTemporalRecipientsActivityClass(classLoader), "onCreate", Bundle.class, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 var activity = (Activity) param.thisObject;
@@ -73,7 +73,7 @@ public class ActivityController extends Feature {
         });
 
 
-        XposedHelpers.findAndHookMethod(Activity.class, "onActivityResult", int.class, int.class, Intent.class, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(Activity.class, "onActivityResult", int.class, int.class, Intent.class, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 if (clazz != param.thisObject.getClass()) return;

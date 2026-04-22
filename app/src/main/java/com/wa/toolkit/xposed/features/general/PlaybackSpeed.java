@@ -27,7 +27,7 @@ public class PlaybackSpeed extends Feature {
     public void doHook() throws Exception {
         var voicenote_speed = prefs.getFloat("voicenote_speed", 2.0f);
         var playBackSpeed = Unobfuscator.loadPlaybackSpeed(classLoader);
-        XposedBridge.hookMethod(playBackSpeed, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(playBackSpeed, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 super.beforeHookedMethod(param);
@@ -38,7 +38,7 @@ public class PlaybackSpeed extends Feature {
         });
         var voicenoteClass = Unobfuscator.findFirstClassUsingName(classLoader, StringMatchType.EndsWith, "VoiceNoteProfileAvatarView");
         var method = ReflectionUtils.findAllMethodsUsingFilter(voicenoteClass, method1 -> method1.getParameterCount() == 4 && method1.getParameterTypes()[0] == int.class && method1.getReturnType().equals(void.class));
-        XposedBridge.hookMethod(method[method.length - 1], new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(method[method.length - 1], new XC_MethodHook() {
             @SuppressLint("SetTextI18n")
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {

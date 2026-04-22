@@ -26,7 +26,7 @@ public class CustomTime extends Feature {
         var secondsToTimeMethod = Unobfuscator.loadTimeToSecondsMethod(classLoader);
         logDebug(Unobfuscator.getMethodDescriptor(secondsToTimeMethod));
 
-        XposedBridge.hookMethod(secondsToTimeMethod, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(secondsToTimeMethod, new XC_MethodHook() {
 
             @Override
             protected void afterHookedMethod(MethodHookParam param) {

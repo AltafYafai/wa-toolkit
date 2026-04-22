@@ -172,7 +172,7 @@ public class ContactBlockedVerify extends Feature {
         var methods = ReflectionUtils.findAllMethodsUsingFilter(dialerProfilePictureLoader, method -> method.getName().length() == 3 && method.getParameterCount() > 1);
         var onSuccess = Arrays.stream(methods).filter(method -> !List.of(method.getParameterTypes()).contains(String.class)).findFirst().orElseThrow();
         var onError = Arrays.stream(methods).filter(method -> List.of(method.getParameterTypes()).contains(String.class)).findFirst().orElseThrow();
-        XposedBridge.hookMethod(onSuccess, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(onSuccess, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 var fieldUserJid = ReflectionUtils.getFieldByExtendType(param.args[0].getClass(), FMessageWpp.UserJid.TYPE_JID);
@@ -184,7 +184,7 @@ public class ContactBlockedVerify extends Feature {
                 showNotBlocked(tv);
             }
         });
-        XposedBridge.hookMethod(onError, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(onError, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 var userJid = new FMessageWpp.UserJid(param.args[0]);

@@ -21,7 +21,7 @@ public class DisableSecureFlag extends Feature {
     public void doHook() throws Throwable {
         if (!prefs.getBoolean("disable_secure_flag", false)) return;
 
-        XposedHelpers.findAndHookMethod(Window.class, "setFlags", int.class, int.class, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(Window.class, "setFlags", int.class, int.class, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 param.args[0] = (int) param.args[0] & ~WindowManager.LayoutParams.FLAG_SECURE;
@@ -29,7 +29,7 @@ public class DisableSecureFlag extends Feature {
             }
         });
 
-        XposedHelpers.findAndHookMethod(Window.class, "addFlags", int.class, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(Window.class, "addFlags", int.class, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 param.args[0] = (int) param.args[0] & ~WindowManager.LayoutParams.FLAG_SECURE;

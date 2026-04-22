@@ -56,7 +56,7 @@ public class MediaQuality extends Feature {
         // Enable Media Quality selection for Stories
         try {
             var hookMediaQualitySelection = Unobfuscator.loadMediaQualitySelectionMethod(classLoader);
-            XposedBridge.hookMethod(hookMediaQualitySelection, XC_MethodReplacement.returnConstant(true));
+            com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(hookMediaQualitySelection, XC_MethodReplacement.returnConstant(true));
         } catch (Exception ignored) {
             var BottomBarConfigClass = Unobfuscator.loadBottomBarConfigClass(classLoader);
             var fieldsBottomBarConfig = Unobfuscator.getAllMapFields(BottomBarConfigClass);
@@ -105,7 +105,7 @@ public class MediaQuality extends Feature {
             var fieldsMediaDataVideoConfiguration = Unobfuscator.getAllMapFields(MediaDataVideoConfiguration);
 
             Method VideoTranscoderStart = Unobfuscator.loadVideoTranscoderStartMethod(classLoader);
-            XposedBridge.hookMethod(VideoTranscoderStart, new XC_MethodHook() {
+            com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(VideoTranscoderStart, new XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                     var videoProcessor = param.args[0];
@@ -135,7 +135,7 @@ public class MediaQuality extends Feature {
 
             final EncoderVideoCapabilities finalEncoderVideoCapabilities = encoderVideoCapabilities;
 
-            XposedBridge.hookMethod(videoMethod, new XC_MethodHook() {
+            com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(videoMethod, new XC_MethodHook() {
 
                 @Override
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
@@ -229,7 +229,7 @@ public class MediaQuality extends Feature {
 
             // Prevent crashes in Media preview
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                XposedHelpers.findAndHookMethod(RecordingCanvas.class, "throwIfCannotDraw", Bitmap.class, XC_MethodReplacement.DO_NOTHING);
+                com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(RecordingCanvas.class, "throwIfCannotDraw", Bitmap.class, XC_MethodReplacement.DO_NOTHING);
             }
 
         }

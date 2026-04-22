@@ -23,7 +23,7 @@ public class StampCopiedMessage extends Feature {
 
         var copiedMessage = Unobfuscator.loadCopiedMessageMethod(classLoader);
 
-        XposedBridge.hookMethod(copiedMessage, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(copiedMessage, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 var Collection = (java.util.Collection) param.args[param.args.length - 1];

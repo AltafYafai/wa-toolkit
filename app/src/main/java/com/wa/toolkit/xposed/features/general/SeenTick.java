@@ -157,7 +157,7 @@ public class SeenTick extends Feature {
         logDebug(Unobfuscator.getMethodDescriptor(setPageActiveMethod));
         var fieldList = ReflectionUtils.getFieldByType(setPageActiveMethod.getDeclaringClass(), List.class);
 
-        XposedBridge.hookMethod(setPageActiveMethod, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(setPageActiveMethod, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 var position = (int) param.args[1];
@@ -191,7 +191,7 @@ public class SeenTick extends Feature {
         logDebug(Unobfuscator.getMethodDescriptor(viewButtonMethod));
         var viewStatusField = Unobfuscator.loadBlueOnReplayViewButtonOutSideField(classLoader);
         if (ticktype == 1) {
-            XposedBridge.hookMethod(viewButtonMethod, new XC_MethodHook() {
+            com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(viewButtonMethod, new XC_MethodHook() {
                 @Override
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                     if (!prefs.getBoolean("hidestatusview", false)) return;
@@ -262,7 +262,7 @@ public class SeenTick extends Feature {
     private void hookConversationScreen(int ticktype) throws Exception {
         var onCreateMenuConversationMethod = Unobfuscator.loadBlueOnReplayCreateMenuConversationMethod(classLoader);
         logDebug(Unobfuscator.getMethodDescriptor(onCreateMenuConversationMethod));
-        XposedBridge.hookMethod(onCreateMenuConversationMethod, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(onCreateMenuConversationMethod, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 var menu = (Menu) param.args[0];
@@ -322,7 +322,7 @@ public class SeenTick extends Feature {
         var menuMethod = Unobfuscator.loadViewOnceDownloadMenuMethod(classLoader);
         logDebug(Unobfuscator.getMethodDescriptor(menuMethod));
 
-        XposedBridge.hookMethod(menuMethod, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(menuMethod, new XC_MethodHook() {
             @Override
             @SuppressLint("DiscouragedApi")
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
@@ -346,7 +346,7 @@ public class SeenTick extends Feature {
             }
         });
 
-        XposedHelpers.findAndHookMethod(WppCore.getViewOnceViewerActivityClass(classLoader), "onCreateOptionsMenu", classLoader.loadClass("android.view.Menu"),
+        com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(WppCore.getViewOnceViewerActivityClass(classLoader), "onCreateOptionsMenu", classLoader.loadClass("android.view.Menu"),
                 new XC_MethodHook() {
                     @Override
                     protected void afterHookedMethod(MethodHookParam param) throws Throwable {
@@ -381,7 +381,7 @@ public class SeenTick extends Feature {
         var messageJobMethod = Unobfuscator.loadBlueOnReplayMessageJobMethod(classLoader);
         var messageSendClass = Unobfuscator.findFirstClassUsingName(classLoader, StringMatchType.Contains, "SendE2EMessageJob");
 
-        XposedBridge.hookMethod(messageJobMethod, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(messageJobMethod, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 if (!prefs.getBoolean("blueonreply", false)) return;

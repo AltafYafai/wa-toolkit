@@ -106,8 +106,8 @@ public class CustomPrivacy extends Feature {
                     });
                 }
             };
-            XposedHelpers.findAndHookMethod(ContactInfoActivityClass, "onCreateOptionsMenu", Menu.class, hooker);
-            XposedHelpers.findAndHookMethod(GroupInfoActivityClass, "onCreateOptionsMenu", Menu.class, hooker);
+            com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(ContactInfoActivityClass, "onCreateOptionsMenu", Menu.class, hooker);
+            com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(GroupInfoActivityClass, "onCreateOptionsMenu", Menu.class, hooker);
         }
 
         if (type == 0) return;

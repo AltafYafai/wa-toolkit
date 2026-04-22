@@ -47,7 +47,7 @@ public class RecoverDeleteForMe extends Feature {
                 return;
             }
 
-            XposedBridge.hookMethod(targetMethod, new XC_MethodHook() {
+            com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(targetMethod, new XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) {
                     try {

@@ -33,7 +33,7 @@ public class StealthTyping extends Feature {
     public void doHook() throws Throwable {
         // 1. Intercept "Typing..." indicators if toggle is ON
         Method ghostMethod = Unobfuscator.loadGhostModeMethod(classLoader);
-        XposedBridge.hookMethod(ghostMethod, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(ghostMethod, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) {
                 if (prefs.getBoolean("stealth_typing", false)) {

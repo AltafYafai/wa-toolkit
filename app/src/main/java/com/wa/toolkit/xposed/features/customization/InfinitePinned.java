@@ -24,7 +24,7 @@ public class InfinitePinned extends Feature {
 
         try {
             Method limitMethod = Unobfuscator.loadSetPinnedLimitMethod(classLoader);
-            XposedBridge.hookMethod(limitMethod, XC_MethodReplacement.returnConstant(999));
+            com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(limitMethod, XC_MethodReplacement.returnConstant(999));
         } catch (Exception e) {
             logDebug("Error hooking Pinned Limit", e);
         }

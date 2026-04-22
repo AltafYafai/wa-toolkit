@@ -139,7 +139,7 @@ public class SystemProperties extends Feature {
     private void hookProps() throws Exception {
         var methodPropsBoolean = Unobfuscator.loadPropsBooleanMethod(classLoader);
         var dataUsageActivityClass = WppCore.getDataUsageActivityClass(classLoader);
-        XposedBridge.hookMethod(methodPropsBoolean, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(methodPropsBoolean, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 var list = ReflectionUtils.findInstancesOfType(param.args, Integer.class);
@@ -156,7 +156,7 @@ public class SystemProperties extends Feature {
         });
 
         var methodPropsInteger = Unobfuscator.loadPropsIntegerMethod(classLoader);
-        XposedBridge.hookMethod(methodPropsInteger, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(methodPropsInteger, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 var list = ReflectionUtils.findInstancesOfType(param.args, Integer.class);

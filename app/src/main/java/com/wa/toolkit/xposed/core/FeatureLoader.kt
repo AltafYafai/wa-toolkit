@@ -61,8 +61,12 @@ object FeatureLoader {
         sendEnabledBroadcast(app)
         
         Feature.DEBUG = pref.getBoolean("enablelogs", true)
+        XposedBridge.log("[WAE] initFromBridge: Preferences keys: ${pref.all.keys.joinToString(", ")}")
+        if (pref.all.isEmpty()) {
+            XposedBridge.log("[WAE] initFromBridge: WARNING: Preferences are EMPTY!")
+        }
         Utils.xprefs = pref
-
+        
         // Inject Bootloader Spoofer
         if (pref.getBoolean("bootloader_spoofer", false)) {
             HookBL.hook(loader, pref)
@@ -104,6 +108,10 @@ object FeatureLoader {
         
         Feature.DEBUG = pref.getBoolean("enablelogs", true)
         XposedBridge.log("[WAE] Feature.DEBUG: ${Feature.DEBUG}")
+        XposedBridge.log("[WAE] Preferences keys: ${pref.all.keys.joinToString(", ")}")
+        if (pref.all.isEmpty()) {
+            XposedBridge.log("[WAE] WARNING: Preferences are EMPTY! Features will not be enabled.")
+        }
         
         Utils.xprefs = pref
 

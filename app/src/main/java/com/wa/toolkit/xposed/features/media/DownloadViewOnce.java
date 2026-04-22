@@ -47,7 +47,7 @@ public class DownloadViewOnce extends Feature {
 
             var menuMethod = Unobfuscator.loadViewOnceDownloadMenuMethod(classLoader);
             // Media Activity
-            XposedBridge.hookMethod(menuMethod, new XC_MethodHook() {
+            com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(menuMethod, new XC_MethodHook() {
                 @Override
                 @SuppressLint("DiscouragedApi")
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
@@ -77,7 +77,7 @@ public class DownloadViewOnce extends Feature {
 
             });
             // View Once Activity
-            XposedHelpers.findAndHookMethod(WppCore.getViewOnceViewerActivityClass(classLoader), "onCreateOptionsMenu", classLoader.loadClass("android.view.Menu"),
+            com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(WppCore.getViewOnceViewerActivityClass(classLoader), "onCreateOptionsMenu", classLoader.loadClass("android.view.Menu"),
                     new XC_MethodHook() {
                         @Override
                         protected void afterHookedMethod(MethodHookParam param) throws Throwable {

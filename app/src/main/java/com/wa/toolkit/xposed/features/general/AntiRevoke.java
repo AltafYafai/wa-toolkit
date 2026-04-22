@@ -112,7 +112,7 @@ public class AntiRevoke extends Feature {
         Class<?> statusPlaybackClass = Unobfuscator.loadStatusPlaybackViewClass(classLoader);
         logDebug(statusPlaybackClass);
 
-        XposedBridge.hookMethod(antiRevokeMessageMethod, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(antiRevokeMessageMethod, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Exception {
                 if (param.args == null || param.args.length == 0 || param.args[0] == null)
@@ -157,7 +157,7 @@ public class AntiRevoke extends Feature {
             }
         });
 
-        XposedBridge.hookMethod(unknownStatusPlaybackMethod, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(unknownStatusPlaybackMethod, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 Object obj = ReflectionUtils.getArg(param.args, param.method.getDeclaringClass(), 0);

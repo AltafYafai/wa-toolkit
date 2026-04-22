@@ -30,7 +30,7 @@ public class ShowOnlineNotification extends Feature {
         var showOnline = prefs.getBoolean("showonline", false);
 
         var checkOnlineMethod = Unobfuscator.loadCheckOnlineMethod(classLoader);
-        XposedBridge.hookMethod(checkOnlineMethod, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(checkOnlineMethod, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 var message = (Message) param.args[0];

@@ -34,7 +34,7 @@ public class HideChat extends Feature {
                 @Override
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                     Object thiz = param.thisObject;
-                    XposedBridge.hookMethod(setVisibilityMethod, new XC_MethodHook() {
+                    com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(setVisibilityMethod, new XC_MethodHook() {
                         @Override
                         protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                             Object view = viewField.get(thiz);

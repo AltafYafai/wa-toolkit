@@ -57,7 +57,7 @@ public class ShowEditMessage extends Feature {
         var getEditMessage = Unobfuscator.loadGetEditMessageMethod(classLoader);
         logDebug(Unobfuscator.getMethodDescriptor(getEditMessage));
 
-        XposedBridge.hookMethod(onMessageEdit, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(onMessageEdit, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 var editMessage = getEditMessage.invoke(null, param.args[0]);

@@ -46,7 +46,7 @@ public class CallType extends Feature {
 
         var callConfirmationFragment = com.wa.toolkit.xposed.core.devkit.Unobfuscator.loadCallConfirmationFragmentClass(classLoader);
         var method = ReflectionUtils.findMethodUsingFilter(callConfirmationFragment, m -> m.getParameterCount() == 1 && m.getParameterTypes()[0].equals(android.os.Bundle.class));
-        XposedBridge.hookMethod(method, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(method, new XC_MethodHook() {
             private boolean isVideoCall;
             private String jid;
             private Dialog newDialog;
@@ -54,7 +54,7 @@ public class CallType extends Feature {
 
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                hookBundleString = XposedHelpers.findAndHookMethod(BaseBundle.class, "getString", String.class, new XC_MethodHook() {
+                hookBundleString = com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(BaseBundle.class, "getString", String.class, new XC_MethodHook() {
                     @Override
                     protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                         if (param.args[0] == "jid") {
@@ -62,7 +62,7 @@ public class CallType extends Feature {
                         }
                     }
                 });
-                hookBundleBoolean = XposedHelpers.findAndHookMethod(BaseBundle.class, "getBoolean", String.class, new XC_MethodHook() {
+                hookBundleBoolean = com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(BaseBundle.class, "getBoolean", String.class, new XC_MethodHook() {
                     @Override
                     protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                         if (param.args[0] == "is_video_call") {

@@ -15,28 +15,110 @@ import java.lang.reflect.Modifier
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XSharedPreferences
 import de.robv.android.xposed.XposedBridge
+import de.robv.android.xposed.XposedHelpers
 
 object FeatureManager {
     private val features = mutableListOf<Class<out Feature>>()
     private val errors = Vector<FeatureLoader.ErrorItem>()
     private val loadTimes = Vector<String>()
-    private val hookRegistry = ConcurrentHashMap<Member, MutableList<XC_MethodHook.Unhook>>()
+    private val hookRegistry = ConcurrentHashMap<Member, MutableList<Any>>()
+
+    @JvmStatic
+    var xposedModule: Any? = null
 
     fun register(clazz: Class<out Feature>) {
         features.add(clazz)
     }
 
     @Synchronized
-    fun safeHookMethod(method: Member?, callback: XC_MethodHook): XC_MethodHook.Unhook? {
+    @JvmStatic
+    fun safeHookMethod(method: Member?, callback: XC_MethodHook): Any? {
         if (method == null) return null
+        
+        val module = xposedModule
+        if (module is io.github.libxposed.api.XposedModule && method is java.lang.reflect.Method) {
+            try {
+                XposedBridge.log("Using Modern Hook for ${method.name}")
+                val hook = module.hook(method).intercept { chain ->
+                    val param = XC_MethodHook.MethodHookParam()
+                    param.method = method
+                    param.thisObject = chain.thisObject
+                    param.args = chain.args.toTypedArray()
+
+                    callback.beforeHookedMethod(param)
+
+                    if (param.hasThrowable()) {
+                        throw param.throwable
+                    }
+
+                    if (param.returnEarly) {
+                        return@intercept param.result
+                    }
+
+                    val result = chain.proceed()
+                    param.result = result
+
+                    callback.afterHookedMethod(param)
+
+                    if (param.hasThrowable()) {
+                        throw param.throwable
+                    }
+
+                    param.result
+                }
+                hookRegistry.computeIfAbsent(method) { mutableListOf() }.add(hook)
+                return hook
+            } catch (e: Throwable) {
+                XposedBridge.log("Failed to hook method (Modern) ${method.name}: ${e.message}")
+                // Fallback to legacy if possible (might still fail)
+            }
+        }
+
         return try {
             val unhook = XposedBridge.hookMethod(method, callback)
             hookRegistry.computeIfAbsent(method) { mutableListOf() }.add(unhook)
             unhook
         } catch (e: Throwable) {
-            XposedBridge.log("Failed to hook method ${method.name}: ${e.message}")
+            XposedBridge.log("Failed to hook method (Legacy) ${method.name}: ${e.message}")
             null
         }
+    }
+
+    @Synchronized
+    @JvmStatic
+    fun safeFindAndHookMethod(clazz: Class<*>, methodName: String, vararg parameterTypesAndCallback: Any?): Any? {
+        return try {
+            val callback = parameterTypesAndCallback.last() as XC_MethodHook
+            val parameterTypes = parameterTypesAndCallback.take(parameterTypesAndCallback.size - 1).toTypedArray()
+            val method = XposedHelpers.findMethodExact(clazz, methodName, *parameterTypes)
+            safeHookMethod(method, callback)
+        } catch (e: Throwable) {
+            XposedBridge.log("Failed to find and hook method ${clazz.name}#$methodName: ${e.message}")
+            null
+        }
+    }
+
+    @Synchronized
+    @JvmStatic
+    fun safeFindAndHookMethod(className: String, loader: ClassLoader, methodName: String, vararg parameterTypesAndCallback: Any?): Any? {
+        return try {
+            val clazz = XposedHelpers.findClass(className, loader)
+            safeFindAndHookMethod(clazz, methodName, *parameterTypesAndCallback)
+        } catch (e: Throwable) {
+            XposedBridge.log("Failed to find and hook method $className#$methodName: ${e.message}")
+            null
+        }
+    }
+
+    @Synchronized
+    @JvmStatic
+    fun safeHookAllConstructors(clazz: Class<*>, callback: XC_MethodHook): List<Any> {
+        val hooks = mutableListOf<Any>()
+        clazz.declaredConstructors.forEach { constructor ->
+            val hook = safeHookMethod(constructor, callback)
+            if (hook != null) hooks.add(hook)
+        }
+        return hooks
     }
 
     fun registerAll(classes: Array<Class<out Any>>) {

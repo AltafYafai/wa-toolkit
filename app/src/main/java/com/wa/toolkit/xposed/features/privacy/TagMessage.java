@@ -34,7 +34,7 @@ public class TagMessage extends Feature {
         Class<?> forwardClass = Unobfuscator.loadForwardClassMethod(classLoader);
         logDebug("ForwardClass: " + forwardClass.getName());
 
-        XposedBridge.hookMethod(method, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(method, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 if (!prefs.getBoolean("hidetag", false)) return;

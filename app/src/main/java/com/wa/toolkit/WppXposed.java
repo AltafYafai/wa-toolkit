@@ -84,6 +84,7 @@ public class WppXposed extends XposedModule {
         boolean isBusiness = packageName.equals(FeatureLoader.PACKAGE_BUSINESS);
         
         if (isWpp || isBusiness) {
+            com.wa.toolkit.xposed.core.FeatureManager.setXposedModule(this);
             ApplicationInfo appInfo = param.getApplicationInfo();
             FeatureLoaderBridge.startModern(classLoader, PrefUtils.getPref(), appInfo.sourceDir, MODULE_PATH, this);
         }

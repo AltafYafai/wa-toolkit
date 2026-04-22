@@ -32,7 +32,7 @@ public class TextStatusComposer extends Feature {
 
         var clazz = WppCore.getTextStatusComposerFragmentClass(classLoader);
         var methodOnCreate = ReflectionUtils.findMethodUsingFilter(clazz, method -> method.getParameterCount() == 2 && method.getParameterTypes()[0] == Bundle.class && method.getParameterTypes()[1] == View.class);
-        XposedBridge.hookMethod(methodOnCreate,
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(methodOnCreate,
                 new XC_MethodHook() {
 
                     @Override
@@ -76,7 +76,7 @@ public class TextStatusComposer extends Feature {
         var methodsTextStatus = Unobfuscator.loadTextStatusData(classLoader);
 
         for (var method : methodsTextStatus) {
-            XposedBridge.hookMethod(method, new XC_MethodHook() {
+            com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(method, new XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                     var textData = param.args[0];

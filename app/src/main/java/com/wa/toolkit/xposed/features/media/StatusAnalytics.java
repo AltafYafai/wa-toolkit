@@ -42,7 +42,7 @@ public class StatusAnalytics extends Feature {
 
         var onInsertReceipt = Unobfuscator.loadOnInsertReceipt(classLoader);
 
-        XposedBridge.hookMethod(onInsertReceipt, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(onInsertReceipt, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 processReceipt(param);

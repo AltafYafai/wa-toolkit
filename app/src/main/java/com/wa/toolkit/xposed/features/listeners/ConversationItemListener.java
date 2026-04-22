@@ -36,7 +36,7 @@ public class ConversationItemListener extends Feature {
 
     @Override
     public void doHook() throws Throwable {
-        XposedHelpers.findAndHookMethod(ListView.class, "setAdapter", ListAdapter.class, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(ListView.class, "setAdapter", ListAdapter.class, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 Activity currentActivity = WppCore.getCurrentActivity();
@@ -69,7 +69,7 @@ public class ConversationItemListener extends Feature {
                 }
 
                 var method = mAdapter.getClass().getDeclaredMethod("getView", int.class, View.class, ViewGroup.class);
-                hooked = XposedBridge.hookMethod(method, new XC_MethodHook() {
+                hooked = com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(method, new XC_MethodHook() {
                     @Override
                     protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                         if (param.thisObject != mAdapter) return;

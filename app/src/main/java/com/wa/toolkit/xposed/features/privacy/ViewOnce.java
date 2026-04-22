@@ -25,7 +25,7 @@ public class ViewOnce extends Feature {
 
         for (var method : methods) {
             logDebug(Unobfuscator.getMethodDescriptor(method));
-            XposedBridge.hookMethod(method, new XC_MethodHook() {
+            com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(method, new XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) {
                     int returnValue = (int) param.args[0];

@@ -75,7 +75,7 @@ public class HideSeen extends Feature {
         Method sendReadReceiptJobMethod = Unobfuscator.loadHideViewSendReadJob(classLoader);
         Class<?> sendJobClass = Unobfuscator.findFirstClassUsingName(classLoader, StringMatchType.EndsWith, "SendReadReceiptJob");
 
-        XposedBridge.hookMethod(sendReadReceiptJobMethod, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(sendReadReceiptJobMethod, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 if (!sendJobClass.isInstance(param.thisObject)) return;
@@ -163,7 +163,7 @@ public class HideSeen extends Feature {
         Method hideViewInChatMethod = Unobfuscator.loadHideViewInChatMethod(classLoader);
         Method outsideMethod = Unobfuscator.loadReceiptOutsideChat(classLoader);
 
-        XposedBridge.hookMethod(receiptMethod, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(receiptMethod, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 if (!isValidChatContext(outsideMethod, hideViewInChatMethod)) return;
@@ -231,7 +231,7 @@ public class HideSeen extends Feature {
     private void hookSenderPlayed() throws Exception {
         Method loadSenderPlayed = Unobfuscator.loadSenderPlayedMethod(classLoader);
 
-        XposedBridge.hookMethod(loadSenderPlayed, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(loadSenderPlayed, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 FMessageWpp fMessage = new FMessageWpp(param.args[0]);
@@ -243,7 +243,7 @@ public class HideSeen extends Feature {
     private void hookSenderPlayedBusiness() throws Exception {
         Method loadSenderPlayedBusiness = Unobfuscator.loadSenderPlayedBusiness(classLoader);
 
-        XposedBridge.hookMethod(loadSenderPlayedBusiness, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(loadSenderPlayedBusiness, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 Set<?> set = (Set<?>) param.args[0];

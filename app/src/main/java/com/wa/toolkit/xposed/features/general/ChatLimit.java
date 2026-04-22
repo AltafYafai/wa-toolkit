@@ -35,7 +35,7 @@ public class ChatLimit extends Feature {
 
         var epUpdateMethod = Unobfuscator.loadEphemeralInsertdb(classLoader);
 
-        XposedHelpers.findAndHookMethod(WppCore.getHomeActivityClass(classLoader), "onCreate", Bundle.class, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(WppCore.getHomeActivityClass(classLoader), "onCreate", Bundle.class, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 if (antiDisappearing) {
@@ -44,7 +44,7 @@ public class ChatLimit extends Feature {
             }
         });
 
-        XposedBridge.hookMethod(epUpdateMethod, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(epUpdateMethod, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 if (antiDisappearing) {
@@ -56,7 +56,7 @@ public class ChatLimit extends Feature {
 
 
         if (revokeallmessages) {
-            XposedBridge.hookMethod(chatLimitDelete2Method, new XC_MethodHook() {
+            com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(chatLimitDelete2Method, new XC_MethodHook() {
                 private Unhook unhooked;
 
                 @Override
@@ -74,7 +74,7 @@ public class ChatLimit extends Feature {
                         }
                     }
                     if (!isExpired) {
-                        unhooked = XposedBridge.hookMethod(chatLimitDeleteMethod, new XC_MethodHook() {
+                        unhooked = com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(chatLimitDeleteMethod, new XC_MethodHook() {
                             @Override
                             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                                 if (ReflectionUtils.isCalledFromMethod(chatLimitDelete2Method)) {
@@ -96,7 +96,7 @@ public class ChatLimit extends Feature {
 
         var seeMoreMethod = Unobfuscator.loadSeeMoreConstructor(classLoader);
 
-        XposedBridge.hookMethod(seeMoreMethod, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(seeMoreMethod, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 if (!prefs.getBoolean("removeseemore", false)) return;

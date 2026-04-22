@@ -46,7 +46,7 @@ public class ChatFilters extends Feature {
         });
         var methodSetFilter = ReflectionUtils.findMethodUsingFilter(filterAdaperClass, method -> method.getParameterCount() == 1 && method.getParameterTypes()[0].equals(int.class));
 
-        XposedBridge.hookMethod(methodSetFilter, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(methodSetFilter, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 var index = (int) param.args[0];

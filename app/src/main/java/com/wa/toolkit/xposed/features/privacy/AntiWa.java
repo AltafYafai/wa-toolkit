@@ -25,10 +25,10 @@ public class AntiWa extends Feature {
         if (!prefs.getBoolean("bootloader_spoofer", false)) return;
         var rootDetector = Unobfuscator.loadRootDetector(classLoader);
         for (var detector : rootDetector) {
-            XposedBridge.hookMethod(detector, XC_MethodReplacement.returnConstant(false));
+            com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(detector, XC_MethodReplacement.returnConstant(false));
         }
         var settingsGetInt = Settings.Global.class.getDeclaredMethod("getInt", ContentResolver.class, String.class, int.class);
-        XposedBridge.hookMethod(settingsGetInt, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(settingsGetInt, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 var key = (String) param.args[1];
@@ -38,10 +38,10 @@ public class AntiWa extends Feature {
             }
         });
         var checkEmulator = Unobfuscator.loadCheckEmulator(classLoader);
-        XposedBridge.hookMethod(checkEmulator, XC_MethodReplacement.returnConstant(false));
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(checkEmulator, XC_MethodReplacement.returnConstant(false));
         // File Check
         var FileConstructor = File.class.getConstructor(String.class);
-        XposedBridge.hookMethod(FileConstructor, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(FileConstructor, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 var path = (String) param.args[0];
@@ -54,7 +54,7 @@ public class AntiWa extends Feature {
         });
 
         var checkCustomRom = Unobfuscator.loadCheckCustomRom(classLoader);
-        XposedBridge.hookMethod(checkCustomRom, XC_MethodReplacement.returnConstant(false));
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(checkCustomRom, XC_MethodReplacement.returnConstant(false));
     }
 
     @NonNull

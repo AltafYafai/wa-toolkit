@@ -34,7 +34,7 @@ public class SearchCustomization extends Feature {
         Method searchbar = Unobfuscator.loadViewAddSearchBarMethod(classLoader);
         var searchBarID = Utils.getID("my_search_bar", "id");
 
-        XposedBridge.hookMethod(searchbar, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(searchbar, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 View view = null;
@@ -58,7 +58,7 @@ public class SearchCustomization extends Feature {
         try {
             if (!Objects.equals(filterChats, "2")) {
                 var loadMySearchBar = Unobfuscator.loadMySearchBarMethod(classLoader);
-                XposedBridge.hookMethod(loadMySearchBar, XC_MethodReplacement.DO_NOTHING);
+                com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(loadMySearchBar, XC_MethodReplacement.DO_NOTHING);
             }
         } catch (Exception ignored) {
         }
@@ -66,7 +66,7 @@ public class SearchCustomization extends Feature {
 
         try {
             Method addSeachBar = Unobfuscator.loadAddOptionSearchBarMethod(classLoader);
-            XposedBridge.hookMethod(addSeachBar, new XC_MethodHook() {
+            com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(addSeachBar, new XC_MethodHook() {
                 private Object homeActivity;
                 private Field pageIdField;
                 private int originPageId;
@@ -97,7 +97,7 @@ public class SearchCustomization extends Feature {
         } catch (Throwable ignored) {
         }
 
-        XposedHelpers.findAndHookMethod(WppCore.getHomeActivityClass(classLoader), "onPrepareOptionsMenu", Menu.class, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(WppCore.getHomeActivityClass(classLoader), "onPrepareOptionsMenu", Menu.class, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 var menu = (Menu) param.args[0];

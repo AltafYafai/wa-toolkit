@@ -21,7 +21,7 @@ public class StatusStyle extends Feature {
         var status_style = Integer.parseInt(prefs.getString("status_style", "0"));
         
         var retStatusStyle = Unobfuscator.loadStatusStyleMethod(classLoader);
-        XposedBridge.hookMethod(retStatusStyle, XC_MethodReplacement.returnConstant(status_style));
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(retStatusStyle, XC_MethodReplacement.returnConstant(status_style));
         
         status_style = oldStatus ? 0 : status_style;
         SystemProperties.propsInteger.put(9973, 1);

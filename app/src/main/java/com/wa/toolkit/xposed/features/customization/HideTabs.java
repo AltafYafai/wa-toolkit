@@ -46,7 +46,7 @@ public class HideTabs extends Feature {
         logDebug(Unobfuscator.getMethodDescriptor(onCreateTabList));
         var ListField = ReflectionUtils.getFieldByType(home, List.class);
 
-        XposedBridge.hookMethod(onCreateTabList, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(onCreateTabList, new XC_MethodHook() {
             @Override
             @SuppressWarnings("unchecked")
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
@@ -60,7 +60,7 @@ public class HideTabs extends Feature {
         });
 
         var OnTabItemAddMethod = Unobfuscator.loadOnTabItemAddMethod(classLoader);
-        XposedBridge.hookMethod(OnTabItemAddMethod, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(OnTabItemAddMethod, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 var menuItem = (MenuItem) param.getResult();
@@ -94,7 +94,7 @@ public class HideTabs extends Feature {
             }
         });
 
-        XposedHelpers.findAndHookMethod(WppCore.getHomeActivityClass(classLoader), "onCreate", Bundle.class, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(WppCore.getHomeActivityClass(classLoader), "onCreate", Bundle.class, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 Class<?> TabsPagerClass = WppCore.getTabsPagerClass(classLoader);
@@ -106,7 +106,7 @@ public class HideTabs extends Feature {
 
         var onMenuItemSelected = Unobfuscator.loadOnMenuItemSelected(classLoader);
 
-        XposedBridge.hookMethod(onMenuItemSelected, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(onMenuItemSelected, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 if (param.thisObject == mTabPagerInstance) {
@@ -117,7 +117,7 @@ public class HideTabs extends Feature {
             }
         });
 
-        XposedHelpers.findAndHookMethod("androidx.viewpager.widget.ViewPager", classLoader, "addView", classLoader.loadClass("android.view.View"), int.class, classLoader.loadClass("android.view.ViewGroup$LayoutParams"),
+        com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod("androidx.viewpager.widget.ViewPager", classLoader, "addView", classLoader.loadClass("android.view.View"), int.class, classLoader.loadClass("android.view.ViewGroup$LayoutParams"),
                 new XC_MethodHook() {
                     @Override
                     protected void beforeHookedMethod(MethodHookParam param) throws Throwable {

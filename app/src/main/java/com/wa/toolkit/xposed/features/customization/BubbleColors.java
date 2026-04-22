@@ -40,7 +40,7 @@ public class BubbleColors extends Feature {
 
         var dateWrapper = Unobfuscator.loadBallonDateDrawable(classLoader);
 
-        XposedBridge.hookMethod(dateWrapper, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(dateWrapper, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 var drawable = (Drawable) param.getResult();
@@ -57,7 +57,7 @@ public class BubbleColors extends Feature {
         });
 
         var babblon = Unobfuscator.loadBallonBorderDrawable(classLoader);
-        XposedBridge.hookMethod(babblon, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(babblon, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 var drawable = (Drawable) param.getResult();
@@ -76,7 +76,7 @@ public class BubbleColors extends Feature {
 
         var bubbleDrawableMethod = Unobfuscator.loadBubbleDrawableMethod(classLoader);
 
-        XposedBridge.hookMethod(bubbleDrawableMethod, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(bubbleDrawableMethod, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 var position = (int) param.args[0];

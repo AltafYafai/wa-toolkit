@@ -48,7 +48,7 @@ public class Channels extends Feature {
             var headerChannelItem = Unobfuscator.loadHeaderChannelItemClass(classLoader);
             var listChannelItem = Unobfuscator.loadListChannelItemClass(classLoader);
             var listUpdateItems = Unobfuscator.loadListUpdateItems(classLoader);
-            XposedBridge.hookMethod(listUpdateItems, new XC_MethodHook() {
+            com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(listUpdateItems, new XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                     var results = ReflectionUtils.findInstancesOfType(param.args, List.class);
@@ -71,7 +71,7 @@ public class Channels extends Feature {
             });
 
             if (channels) {
-                XposedHelpers.findAndHookMethod(WppCore.getHomeActivityClass(classLoader), "onPrepareOptionsMenu", Menu.class, new XC_MethodHook() {
+                com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(WppCore.getHomeActivityClass(classLoader), "onPrepareOptionsMenu", Menu.class, new XC_MethodHook() {
                     @Override
                     protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                         var menu = (Menu) param.args[0];

@@ -83,7 +83,7 @@ public class WppCore {
 
             // StartUpPrefs
             var startPrefsConfig = Unobfuscator.loadStartPrefsConfig(loader);
-            XposedBridge.hookMethod(startPrefsConfig, new XC_MethodHook() {
+            FeatureManager.safeHookMethod(startPrefsConfig, new XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                     mStartUpConfig = param.thisObject;
@@ -93,7 +93,7 @@ public class WppCore {
             // ActionUser
             actionUser = Unobfuscator.loadActionUser(loader);
             XposedBridge.log("ActionUser: " + actionUser.getName());
-            XposedBridge.hookAllConstructors(actionUser, new XC_MethodHook() {
+            FeatureManager.safeHookAllConstructors(actionUser, new XC_MethodHook() {
                 @Override
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                     mActionUser = param.thisObject;
@@ -102,7 +102,7 @@ public class WppCore {
 
             // CachedMessageStore
             cachedMessageStoreKey = Unobfuscator.loadCachedMessageStoreKey(loader);
-            XposedBridge.hookAllConstructors(cachedMessageStoreKey.getDeclaringClass(), new XC_MethodHook() {
+            FeatureManager.safeHookAllConstructors(cachedMessageStoreKey.getDeclaringClass(), new XC_MethodHook() {
                 @Override
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                     mCachedMessageStore = param.thisObject;
@@ -112,7 +112,7 @@ public class WppCore {
             // WaJidMap
             convertLidToJid = Unobfuscator.loadConvertLidToJid(loader);
             convertJidToLid = Unobfuscator.loadConvertJidToLid(loader);
-            XposedBridge.hookAllConstructors(convertLidToJid.getDeclaringClass(), new XC_MethodHook() {
+            FeatureManager.safeHookAllConstructors(convertLidToJid.getDeclaringClass(), new XC_MethodHook() {
                 @Override
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                     mWaJidMapRepository = param.thisObject;
@@ -123,7 +123,7 @@ public class WppCore {
 
             Class<?> meManagerClass = Unobfuscator.loadMeManagerClass(loader);
             meManagerPhoneJidField = ReflectionUtils.getFieldByType(meManagerClass, FMessageWpp.UserJid.TYPE_PHONEUSERJID);
-            XposedBridge.hookAllConstructors(meManagerClass, new XC_MethodHook() {
+            FeatureManager.safeHookAllConstructors(meManagerClass, new XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                     meManagerInstance = param.thisObject;

@@ -52,7 +52,7 @@ public class AudioTranscript extends Feature {
         var transcribeMethod = Unobfuscator.loadTranscribeMethod(classLoader);
         Class<?> TranscriptionSegmentClass = Unobfuscator.loadTranscriptSegment(classLoader);
 
-        XposedBridge.hookMethod(transcribeMethod, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(transcribeMethod, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 var pttTranscriptionRequest = param.args[0];

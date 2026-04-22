@@ -20,7 +20,7 @@ public class DndMode extends Feature {
         if (!WppCore.getPrivBoolean("dndmode",false)) return;
         var dndMethod = Unobfuscator.loadDndModeMethod(classLoader);
         logDebug(Unobfuscator.getMethodDescriptor(dndMethod));
-        XposedBridge.hookMethod(dndMethod, XC_MethodReplacement.DO_NOTHING);
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(dndMethod, XC_MethodReplacement.DO_NOTHING);
     }
 
     @NonNull

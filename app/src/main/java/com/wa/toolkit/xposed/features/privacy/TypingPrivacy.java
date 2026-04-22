@@ -26,7 +26,7 @@ public class TypingPrivacy extends Feature {
         var ghostmode_r = prefs.getBoolean("ghostmode_r", false);
         Method method = Unobfuscator.loadGhostModeMethod(classLoader);
         logDebug(Unobfuscator.getMethodDescriptor(method));
-        XposedBridge.hookMethod(method, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(method, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) {
                 var p1 = (int) param.args[2];

@@ -20,7 +20,7 @@ public class DefEmojis extends Feature {
         if (!prefs.getBoolean("disable_defemojis", false)) return;
 
         var defEmojiClass = Unobfuscator.loadDefEmojiClass(classLoader);
-        XposedBridge.hookMethod(defEmojiClass, XC_MethodReplacement.returnConstant(null));
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(defEmojiClass, XC_MethodReplacement.returnConstant(null));
     }
 
     @NonNull

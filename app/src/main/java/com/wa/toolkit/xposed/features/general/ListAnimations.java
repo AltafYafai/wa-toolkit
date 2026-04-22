@@ -35,7 +35,7 @@ public class ListAnimations extends Feature {
         var field1 = Unobfuscator.loadViewHolderField1(classLoader);
         var absViewHolderClass = Unobfuscator.loadAbsViewHolder(classLoader);
 
-        XposedBridge.hookMethod(onChangeStatus, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(onChangeStatus, new XC_MethodHook() {
             @Override
             @SuppressLint("ResourceType")
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {

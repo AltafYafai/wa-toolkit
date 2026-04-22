@@ -351,14 +351,14 @@ public class CustomView extends Feature {
 
 
     private void registerHooks() {
-        XposedHelpers.findAndHookMethod(View.class, "onAttachedToWindow", new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(View.class, "onAttachedToWindow", new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 applyRulesForView((View) param.thisObject);
             }
         });
 
-        XposedHelpers.findAndHookMethod(View.class, "onDetachedFromWindow", new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(View.class, "onDetachedFromWindow", new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 processedViews.remove((View) param.thisObject);
@@ -366,7 +366,7 @@ public class CustomView extends Feature {
         });
 
         final int VISIBILITY_MASK = 0x0000000C;
-        XposedHelpers.findAndHookMethod(View.class, "setFlags", int.class, int.class, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(View.class, "setFlags", int.class, int.class, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 if (((int) param.args[1] & VISIBILITY_MASK) == 0) return;
@@ -440,7 +440,7 @@ public class CustomView extends Feature {
     }
 
     private void hookDrawableViews() {
-        XposedHelpers.findAndHookMethod(View.class, "setBackground", Drawable.class, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(View.class, "setBackground", Drawable.class, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 var view = (View) param.thisObject;
@@ -451,7 +451,7 @@ public class CustomView extends Feature {
             }
         });
 
-        XposedHelpers.findAndHookMethod(ImageView.class, "setImageDrawable", Drawable.class, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(ImageView.class, "setImageDrawable", Drawable.class, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 var view = (ImageView) param.thisObject;

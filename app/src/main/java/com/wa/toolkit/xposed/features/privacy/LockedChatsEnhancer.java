@@ -34,12 +34,12 @@ public class LockedChatsEnhancer extends Feature {
         Method jidNotifications = Unobfuscator.loadNotificationMethod(classLoader);
         Method lockedChatsMethod = Unobfuscator.loadLockedChatsMethod(classLoader);
 
-        XposedBridge.hookMethod(jidNotifications, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(jidNotifications, new XC_MethodHook() {
             private Unhook unhook;
 
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                this.unhook = XposedBridge.hookMethod(lockedChatsMethod, new XC_MethodHook() {
+                this.unhook = com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(lockedChatsMethod, new XC_MethodHook() {
                     @Override
                     protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                         param.setResult(new ArrayList<>());
@@ -65,7 +65,7 @@ public class LockedChatsEnhancer extends Feature {
 
         var loadedContacts = Unobfuscator.loadLoadedContactsMethod(classLoader);
 
-        XposedBridge.hookMethod(loadedContacts, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(loadedContacts, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 var field = Unobfuscator.loadLoadedContactsListField(classLoader);

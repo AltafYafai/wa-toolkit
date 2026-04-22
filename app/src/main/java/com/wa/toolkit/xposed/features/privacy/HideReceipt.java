@@ -59,7 +59,7 @@ public class HideReceipt extends Feature {
         Method hideViewInChatMethod = Unobfuscator.loadHideViewInChatMethod(classLoader);
         Method outsideMethod = Unobfuscator.loadReceiptOutsideChat(classLoader);
 
-        XposedBridge.hookMethod(receiptMethod, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(receiptMethod, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 if (!isValidCallContext(outsideMethod, hideViewInChatMethod)) return;

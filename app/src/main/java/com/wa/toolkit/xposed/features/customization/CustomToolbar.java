@@ -62,7 +62,7 @@ public class CustomToolbar extends Feature {
         onMenuItemSelected = Unobfuscator.loadOnMenuItemSelected(classLoader);
 
         var methodHook = new ToolbarMethodHook(showName, showBio, typeArchive);
-        XposedHelpers.findAndHookMethod(
+        com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(
                 WppCore.getHomeActivityClass(classLoader),
                 "onCreate",
                 Bundle.class,
@@ -103,7 +103,7 @@ public class CustomToolbar extends Feature {
     }
 
     private void hookAboutActivity() throws Exception {
-        XposedHelpers.findAndHookMethod(
+        com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(
                 WppCore.getAboutActivityClass(classLoader),
                 "onCreate",
                 classLoader.loadClass("android.os.Bundle"),
@@ -264,7 +264,7 @@ public class CustomToolbar extends Feature {
         }
 
         private void setupTabVisibilityHook(Object tabInstance, LinearLayout toolbarLayout) {
-            XposedBridge.hookMethod(onMenuItemSelected, new XC_MethodHook() {
+            com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(onMenuItemSelected, new XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                     if (tabInstance != param.thisObject) return;

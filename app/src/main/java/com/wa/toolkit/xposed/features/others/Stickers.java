@@ -30,12 +30,12 @@ public class Stickers extends Feature {
         if (!prefs.getBoolean("alertsticker", false)) return;
         var sendStickerMethods = Unobfuscator.loadSendStickerMethods(classLoader);
         for (var method : sendStickerMethods) {
-            XposedBridge.hookMethod(method, new XC_MethodHook() {
+            com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(method, new XC_MethodHook() {
                 private Unhook unhooked;
 
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                    unhooked = XposedHelpers.findAndHookMethod(View.class, "setOnClickListener", View.OnClickListener.class, new XC_MethodHook() {
+                    unhooked = com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(View.class, "setOnClickListener", View.OnClickListener.class, new XC_MethodHook() {
                         @Override
                         protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                             View.OnClickListener mCaptureOnClickListener = (View.OnClickListener) param.args[0];

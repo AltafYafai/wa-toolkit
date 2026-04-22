@@ -20,7 +20,7 @@ public class AlwaysOnline extends Feature {
         if (!prefs.getBoolean("always_online", false)) return;
         
         var stateChange = Unobfuscator.loadStateChangeMethod(classLoader);
-        XposedBridge.hookMethod(stateChange, XC_MethodReplacement.DO_NOTHING);
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(stateChange, XC_MethodReplacement.DO_NOTHING);
     }
 
     @NonNull

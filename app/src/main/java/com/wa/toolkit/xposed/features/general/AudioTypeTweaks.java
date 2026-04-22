@@ -22,7 +22,7 @@ public class AudioTypeTweaks extends Feature {
         if (audio_type <= 0) return;
 
         var sendAudioTypeMethod = Unobfuscator.loadSendAudioTypeMethod(classLoader);
-        XposedBridge.hookMethod(sendAudioTypeMethod, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(sendAudioTypeMethod, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 var results = ReflectionUtils.findInstancesOfType(param.args, Integer.class);
@@ -40,7 +40,7 @@ public class AudioTypeTweaks extends Feature {
         var originFMessageField = Unobfuscator.loadOriginFMessageField(classLoader);
         var forwardAudioTypeMethod = Unobfuscator.loadForwardAudioTypeMethod(classLoader);
 
-        XposedBridge.hookMethod(forwardAudioTypeMethod, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(forwardAudioTypeMethod, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 var fMessage = param.getResult();

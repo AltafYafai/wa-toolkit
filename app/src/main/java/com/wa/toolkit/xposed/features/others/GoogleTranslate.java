@@ -41,7 +41,7 @@ public class GoogleTranslate extends Feature {
 
         var checkSupportLanguage = Unobfuscator.loadCheckSupportLanguage(classLoader);
 
-        XposedBridge.hookMethod(checkSupportLanguage, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(checkSupportLanguage, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 param.args[0] = "pt";
@@ -53,7 +53,7 @@ public class GoogleTranslate extends Feature {
 
         var pre21Method = XposedHelpers.findMethodExactIfExists(translatorClazz, "translate", String.class);
         if (pre21Method != null) {
-            XposedHelpers.findAndHookMethod(translatorClazz, pre21Method.getName(), String.class, new XC_MethodReplacement() {
+            com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(translatorClazz, pre21Method.getName(), String.class, new XC_MethodReplacement() {
                 @Override
                 protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
                     var texto = (String) param.args[0];
@@ -67,7 +67,7 @@ public class GoogleTranslate extends Feature {
 
         var newMethod = XposedHelpers.findMethodExactIfExists(translatorClazz, "translate", List.class);
         if (newMethod != null) {
-            XposedHelpers.findAndHookMethod(translatorClazz, "translate", List.class, new XC_MethodReplacement() {
+            com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(translatorClazz, "translate", List.class, new XC_MethodReplacement() {
                 @Override
                 protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
                     var list = (List) param.args[0];

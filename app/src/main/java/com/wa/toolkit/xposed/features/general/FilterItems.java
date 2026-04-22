@@ -32,7 +32,7 @@ public class FilterItems extends Feature {
                 idsFilter.add(id);
             }
         }
-        XposedHelpers.findAndHookMethod(View.class, "invalidate", boolean.class, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(View.class, "invalidate", boolean.class, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 var view = (View) param.thisObject;

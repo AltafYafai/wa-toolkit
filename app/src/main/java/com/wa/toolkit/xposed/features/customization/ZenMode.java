@@ -28,7 +28,7 @@ public class ZenMode extends Feature {
         
         // We hook the loading of the chat list
         var loadMethod = Unobfuscator.loadHomeConversationFragmentMethod(classLoader);
-        XposedBridge.hookMethod(loadMethod, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(loadMethod, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 if (isZenTime()) {

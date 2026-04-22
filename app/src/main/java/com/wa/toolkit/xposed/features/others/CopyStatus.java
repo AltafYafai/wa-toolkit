@@ -28,7 +28,7 @@ public class CopyStatus extends Feature {
         var viewButtonMethod = Unobfuscator.loadBlueOnReplayViewButtonMethod(classLoader);
         logDebug(Unobfuscator.getMethodDescriptor(viewButtonMethod));
 
-        XposedBridge.hookMethod(viewButtonMethod, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(viewButtonMethod, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 var view = (View) param.getResult();
@@ -45,7 +45,7 @@ public class CopyStatus extends Feature {
         });
 
         var viewStatusMethod = Unobfuscator.loadBlueOnReplayStatusViewMethod(classLoader);
-        XposedBridge.hookMethod(viewStatusMethod, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(viewStatusMethod, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 var view = (View) param.args[0];

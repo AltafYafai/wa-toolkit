@@ -34,7 +34,7 @@ public class HomeFilters extends Feature {
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 var view = (View) param.thisObject;
                 view.setVisibility(View.GONE);
-                XposedHelpers.findAndHookMethod(View.class, "setVisibility", int.class, new XC_MethodHook() {
+                com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(View.class, "setVisibility", int.class, new XC_MethodHook() {
                     @Override
                     protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                         if (view == param.thisObject && (int) param.args[0] != View.GONE) {

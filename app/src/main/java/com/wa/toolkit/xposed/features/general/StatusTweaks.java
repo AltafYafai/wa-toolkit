@@ -25,7 +25,7 @@ public class StatusTweaks extends Feature {
 
         Class<?> StatusPlaybackContactFragmentClass = Unobfuscator.loadStatusPlaybackContactFragmentClass(classLoader);
         var runNextStatusMethod = Unobfuscator.loadNextStatusRunMethod(classLoader);
-        XposedBridge.hookMethod(runNextStatusMethod, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(runNextStatusMethod, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 var field = Unobfuscator.loadNextStatusFragmentField(classLoader);
@@ -36,7 +36,7 @@ public class StatusTweaks extends Feature {
             }
         });
         var onPlayBackFinished = Unobfuscator.loadOnPlaybackFinished(classLoader);
-        XposedBridge.hookMethod(onPlayBackFinished, XC_MethodReplacement.DO_NOTHING);
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(onPlayBackFinished, XC_MethodReplacement.DO_NOTHING);
     }
 
     @NonNull

@@ -87,7 +87,7 @@ public class SeparateGroup extends Feature {
         constructor3.setAccessible(true);
 
         logDebug(Unobfuscator.getMethodDescriptor(enableCountMethod));
-        XposedBridge.hookMethod(enableCountMethod, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(enableCountMethod, new XC_MethodHook() {
             @Override
             @SuppressLint({"Range", "Recycle"})
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
@@ -141,13 +141,13 @@ public class SeparateGroup extends Feature {
         var menuAddAndroidX = Unobfuscator.loadAddMenuAndroidX(classLoader);
         logDebug(menuAddAndroidX);
 
-        XposedBridge.hookMethod(iconTabMethod, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(iconTabMethod, new XC_MethodHook() {
 
                     private Unhook hooked;
 
                     @Override
                     protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                        hooked = XposedBridge.hookMethod(menuAddAndroidX, new XC_MethodHook() {
+                        hooked = com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(menuAddAndroidX, new XC_MethodHook() {
                             @Override
                             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                                 if (param.args.length > 2 && ((int) param.args[1]) == GROUPS) {
@@ -174,7 +174,7 @@ public class SeparateGroup extends Feature {
     @SuppressLint("ResourceType")
     private void hookTabName() throws Exception {
         var tabNameMethod = Unobfuscator.loadTabNameMethod(classLoader);
-        XposedBridge.hookMethod(tabNameMethod, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(tabNameMethod, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 var tab = (int) param.args[0];
@@ -198,7 +198,7 @@ public class SeparateGroup extends Feature {
 
         Class<?> FragmentClass = Unobfuscator.loadFragmentClass(classLoader);
 
-        XposedBridge.hookMethod(recreateFragmentMethod, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(recreateFragmentMethod, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 var string = "";
@@ -222,7 +222,7 @@ public class SeparateGroup extends Feature {
             }
         });
 
-        XposedBridge.hookMethod(getTabMethod, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(getTabMethod, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 var tabId = tabs.get((int) param.args[0]).intValue();
@@ -240,7 +240,7 @@ public class SeparateGroup extends Feature {
             }
         });
 
-        XposedBridge.hookMethod(methodTabInstance, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(methodTabInstance, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 var chatsList = (List) param.getResult();
@@ -252,7 +252,7 @@ public class SeparateGroup extends Feature {
         var fabintMethod = Unobfuscator.loadFabMethod(classLoader);
         logDebug(Unobfuscator.getMethodDescriptor(fabintMethod));
 
-        XposedBridge.hookMethod(fabintMethod, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(fabintMethod, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 if (Objects.equals(tabInstances.get(GROUPS), param.thisObject)) {
@@ -264,7 +264,7 @@ public class SeparateGroup extends Feature {
         var publishResultsMethod = Unobfuscator.loadGetFiltersMethod(classLoader);
         logDebug(Unobfuscator.getMethodDescriptor(publishResultsMethod));
 
-        XposedBridge.hookMethod(publishResultsMethod, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(publishResultsMethod, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 var filters = param.args[1];
@@ -299,7 +299,7 @@ public class SeparateGroup extends Feature {
         if (fieldTabsList == null) {
             throw new NullPointerException("fieldTabList is NULL!");
         }
-        XposedBridge.hookMethod(onCreateTabList, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(onCreateTabList, new XC_MethodHook() {
             @Override
             @SuppressWarnings("unchecked")
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {

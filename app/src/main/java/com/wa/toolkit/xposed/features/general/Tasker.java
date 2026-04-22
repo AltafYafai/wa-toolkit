@@ -64,7 +64,7 @@ public class Tasker extends Feature {
     public void hookReceiveMessage() throws Throwable {
         var method = Unobfuscator.loadReceiptMethod(classLoader);
 
-        XposedBridge.hookMethod(method, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(method, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 if (param.args[4] == "sender" || param.args[1] == null || param.args[3] == null)
@@ -88,7 +88,7 @@ public class Tasker extends Feature {
 
         // Hook for contact presence (Online status)
         var checkOnlineMethod = Unobfuscator.loadCheckOnlineMethod(classLoader);
-        XposedBridge.hookMethod(checkOnlineMethod, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(checkOnlineMethod, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 var userJid = new FMessageWpp.UserJid(param.args[0]);

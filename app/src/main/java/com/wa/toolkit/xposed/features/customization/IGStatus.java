@@ -45,7 +45,7 @@ public class IGStatus extends Feature {
         var folderFragmentClass = Unobfuscator.findFirstClassUsingName(classLoader, StringMatchType.EndsWith, "FolderConversationsFragment");
 
         var getViewConversationMethod = Unobfuscator.loadGetViewConversationMethod(classLoader);
-        XposedBridge.hookMethod(getViewConversationMethod, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(getViewConversationMethod, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 if (archivedFragmentClass.isInstance(param.thisObject))
@@ -123,7 +123,7 @@ public class IGStatus extends Feature {
 
         var onGetInvokeField = Unobfuscator.loadGetInvokeField(classLoader);
         logDebug(Unobfuscator.getFieldDescriptor(onGetInvokeField));
-        XposedBridge.hookMethod(onUpdateStatusChanged, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(onUpdateStatusChanged, new XC_MethodHook() {
 
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {

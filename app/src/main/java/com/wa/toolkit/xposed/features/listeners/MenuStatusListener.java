@@ -41,7 +41,7 @@ public class MenuStatusListener extends Feature {
         var listStatusField = Unobfuscator.loadStatusListField(classLoader);
         var indexField = Unobfuscator.loadStatusIndexField(classLoader);
 
-        XposedBridge.hookMethod(menuStatusMethod, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(menuStatusMethod, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 var fieldObjects = Arrays.stream(param.method.getDeclaringClass().getDeclaredFields()).map(field -> ReflectionUtils.getObjectField(field, param.thisObject)).filter(Objects::nonNull).collect(Collectors.toList());
