@@ -532,8 +532,6 @@
     <string name="stealth_typing_sum">Type privately in a floating box; text is sent only when you hit Send, bypassing \"Typing...\" indicators</string>
     <string name="local_vault">Local Burn-After-Reading Vault</string>
     <string name="local_vault_sum">Auto-delete messages and media from marked chats locally after 1 hour</string>
-    <string name="blueonreply">Send Blue Ticks upon Reply</string>
-    <string name="blueonreply_sum">Sends blue ticks after replying to a message (Must have \"Hide Blue Ticks\" active)</string>
 
     <!-- Advanced Features Phase 2 -->
     <string name="voice_changer">Voice Changer</string>
@@ -542,8 +540,6 @@
     <string name="auto_ocr_sum">Automatically extract text from received images and make it searchable</string>
     <string name="lossless_status">Lossless Status Uploader</string>
     <string name="lossless_status_sum">Bypass WhatsApp compression for true HD status uploads</string>
-    <string name="disable_pinned_limit">Infinite Pinned Chats</string>
-    <string name="disable_pinned_limit_sum">Remove the limit of 3 pinned chats and allow infinite pinning</string>
 
     <!-- Advanced Features Phase 3 -->
     <string name="zen_mode">Zen Mode Scheduler</string>
