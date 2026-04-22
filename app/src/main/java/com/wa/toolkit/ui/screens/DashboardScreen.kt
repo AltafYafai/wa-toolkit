@@ -34,6 +34,13 @@ import com.wa.toolkit.ui.preferences.SwitchSetting
 import com.wa.toolkit.ui.preferences.CategoryHeader
 import android.widget.Toast
 
+data class DashboardItem(
+    val id: Int,
+    val title: String,
+    val summary: String,
+    val icon: Int
+)
+
 @Composable
 fun DashboardScreen(
     mainViewModel: MainViewModel,

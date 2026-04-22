@@ -18,6 +18,7 @@ import com.wa.toolkit.ui.preferences.*
 @Composable
 fun CustomizationScreen(
     viewModel: SettingsViewModel,
+    onNavigateToThemeManager: () -> Unit,
     onBack: () -> Unit
 ) {
     val context = LocalContext.current
@@ -41,6 +42,16 @@ fun CustomizationScreen(
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
+            item { CategoryHeader("Theme Management") }
+            item {
+                ActionSetting(
+                    title = "Theme Manager",
+                    summary = "Import, export and create custom color themes",
+                    onClick = onNavigateToThemeManager,
+                    icon = R.drawable.ic_round_settings_24
+                )
+            }
+
             item { CategoryHeader("Interface & Styles") }
             item {
                 ListSetting(
