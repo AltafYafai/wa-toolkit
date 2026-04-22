@@ -862,6 +862,81 @@ public class FeatureCatalog {
                 SearchableFeature.FragmentType.MEDIA,
                 null,
                 Arrays.asList("media", "preview", "temporary")));
+
+        // Advanced AI Features
+        catalog.add(new SearchableFeature("auto_ocr",
+                context.getString(R.string.auto_ocr),
+                context.getString(R.string.auto_ocr_sum),
+                SearchableFeature.Category.MEDIA,
+                SearchableFeature.FragmentType.MEDIA,
+                null,
+                Arrays.asList("ocr", "text", "extract", "image", "ai")));
+
+        catalog.add(new SearchableFeature("voice_transcription",
+                context.getString(R.string.voice_transcription),
+                context.getString(R.string.voice_transcription_sum),
+                SearchableFeature.Category.MEDIA,
+                SearchableFeature.FragmentType.MEDIA,
+                null,
+                Arrays.asList("transcribe", "voice", "audio", "text", "ai")));
+
+        catalog.add(new SearchableFeature("ai_rewrite",
+                context.getString(R.string.ai_rewrite),
+                context.getString(R.string.ai_rewrite_sum),
+                SearchableFeature.Category.GENERAL_HOMESCREEN,
+                SearchableFeature.FragmentType.GENERAL_HOME,
+                "general_home",
+                Arrays.asList("ai", "rewrite", "tone", "translator", "professional")));
+
+        catalog.add(new SearchableFeature("group_tldr",
+                context.getString(R.string.group_tldr),
+                context.getString(R.string.group_tldr_sum),
+                SearchableFeature.Category.GENERAL_HOMESCREEN,
+                SearchableFeature.FragmentType.GENERAL_HOME,
+                "general_home",
+                Arrays.asList("ai", "summary", "tldr", "group", "unread")));
+
+        // Advanced Privacy Features
+        catalog.add(new SearchableFeature("stealth_typing",
+                context.getString(R.string.stealth_typing),
+                context.getString(R.string.stealth_typing_sum),
+                SearchableFeature.Category.PRIVACY,
+                SearchableFeature.FragmentType.PRIVACY,
+                null,
+                Arrays.asList("stealth", "typing", "sandbox", "private", "indicators")));
+
+        catalog.add(new SearchableFeature("local_vault",
+                context.getString(R.string.local_vault),
+                context.getString(R.string.local_vault_sum),
+                SearchableFeature.Category.PRIVACY,
+                SearchableFeature.FragmentType.PRIVACY,
+                null,
+                Arrays.asList("vault", "burn", "delete", "automatic", "privacy")));
+
+        // Advanced Media & Workflow
+        catalog.add(new SearchableFeature("lossless_status",
+                context.getString(R.string.lossless_status),
+                context.getString(R.string.lossless_status_sum),
+                SearchableFeature.Category.MEDIA,
+                SearchableFeature.FragmentType.MEDIA,
+                null,
+                Arrays.asList("lossless", "status", "hd", "4k", "quality", "upload")));
+
+        catalog.add(new SearchableFeature("zen_mode",
+                context.getString(R.string.zen_mode),
+                context.getString(R.string.zen_mode_sum),
+                SearchableFeature.Category.GENERAL_HOMESCREEN,
+                SearchableFeature.FragmentType.GENERAL_HOME,
+                "homescreen",
+                Arrays.asList("zen", "mode", "schedule", "hide", "work")));
+
+        catalog.add(new SearchableFeature("voice_changer",
+                context.getString(R.string.voice_changer),
+                context.getString(R.string.voice_changer_sum),
+                SearchableFeature.Category.MEDIA,
+                SearchableFeature.FragmentType.MEDIA,
+                null,
+                Arrays.asList("voice", "changer", "pitch", "effects", "audio")));
     }
 
     private static void addCustomizationFeatures(Context context, List<SearchableFeature> catalog) {
