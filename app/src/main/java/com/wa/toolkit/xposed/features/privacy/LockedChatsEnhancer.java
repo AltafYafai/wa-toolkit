@@ -35,7 +35,7 @@ public class LockedChatsEnhancer extends Feature {
         Method lockedChatsMethod = Unobfuscator.loadLockedChatsMethod(classLoader);
 
         com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(jidNotifications, new XC_MethodHook() {
-            private Unhook unhook;
+            private Object unhook;
 
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
@@ -49,7 +49,9 @@ public class LockedChatsEnhancer extends Feature {
 
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                unhook.unhook();
+                if (unhook instanceof XC_MethodHook.Unhook) {
+                    ((XC_MethodHook.Unhook) unhook).unhook();
+                }
             }
         });
 

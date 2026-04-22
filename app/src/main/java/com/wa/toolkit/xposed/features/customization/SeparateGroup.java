@@ -143,7 +143,7 @@ public class SeparateGroup extends Feature {
 
         com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(iconTabMethod, new XC_MethodHook() {
 
-                    private Unhook hooked;
+                    private Object hooked;
 
                     @Override
                     protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
@@ -163,8 +163,8 @@ public class SeparateGroup extends Feature {
                     @SuppressLint("ResourceType")
                     @Override
                     protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                        if (hooked != null) {
-                            hooked.unhook();
+                        if (hooked instanceof XC_MethodHook.Unhook) {
+                            ((XC_MethodHook.Unhook) hooked).unhook();
                         }
                     }
                 }

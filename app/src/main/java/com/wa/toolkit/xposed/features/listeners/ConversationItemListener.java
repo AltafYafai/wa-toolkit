@@ -24,7 +24,7 @@ public class ConversationItemListener extends Feature {
 
     public static final HashSet<OnConversationItemListener> conversationListeners = new HashSet<>();
     private static ListAdapter mAdapter;
-    private static XC_MethodHook.Unhook hooked;
+    private static Object hooked;
 
     public ConversationItemListener(@NonNull ClassLoader loader, @NonNull XSharedPreferences preferences) {
         super(loader, preferences);
@@ -64,8 +64,8 @@ public class ConversationItemListener extends Feature {
                     listener.onAttachAdapter(mAdapter);
                 }
 
-                if (hooked != null) {
-                    hooked.unhook();
+                if (hooked instanceof XC_MethodHook.Unhook) {
+                    ((XC_MethodHook.Unhook) hooked).unhook();
                 }
 
                 var method = mAdapter.getClass().getDeclaredMethod("getView", int.class, View.class, ViewGroup.class);

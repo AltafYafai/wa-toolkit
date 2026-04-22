@@ -57,7 +57,7 @@ public class ChatLimit extends Feature {
 
         if (revokeallmessages) {
             com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(chatLimitDelete2Method, new XC_MethodHook() {
-                private Unhook unhooked;
+                private Object unhooked;
 
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
@@ -87,8 +87,8 @@ public class ChatLimit extends Feature {
 
                 @Override
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                    if (unhooked != null) {
-                        unhooked.unhook();
+                    if (unhooked instanceof XC_MethodHook.Unhook) {
+                        ((XC_MethodHook.Unhook) unhooked).unhook();
                     }
                 }
             });

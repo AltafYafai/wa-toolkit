@@ -24,7 +24,7 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 
 public class CallType extends Feature {
-    private XC_MethodHook.Unhook hookBundleBoolean;
+    private Object hookBundleBoolean;
 
     public CallType(@NonNull ClassLoader loader, @NonNull XSharedPreferences preferences) {
         super(loader, preferences);
@@ -50,7 +50,7 @@ public class CallType extends Feature {
             private boolean isVideoCall;
             private String jid;
             private Dialog newDialog;
-            private Unhook hookBundleString;
+            private Object hookBundleString;
 
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
@@ -74,8 +74,12 @@ public class CallType extends Feature {
 
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                hookBundleString.unhook();
-                hookBundleBoolean.unhook();
+                if (hookBundleString instanceof XC_MethodHook.Unhook) {
+                    ((XC_MethodHook.Unhook) hookBundleString).unhook();
+                }
+                if (hookBundleBoolean instanceof XC_MethodHook.Unhook) {
+                    ((XC_MethodHook.Unhook) hookBundleBoolean).unhook();
+                }
                 if (jid == null || isVideoCall) return;
                 var origDialog = (Dialog) param.getResult();
                 var context = origDialog.getContext();

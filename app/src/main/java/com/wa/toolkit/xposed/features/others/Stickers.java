@@ -31,7 +31,7 @@ public class Stickers extends Feature {
         var sendStickerMethods = Unobfuscator.loadSendStickerMethods(classLoader);
         for (var method : sendStickerMethods) {
             com.wa.toolkit.xposed.core.FeatureManager.safeHookMethod(method, new XC_MethodHook() {
-                private Unhook unhooked;
+                private Object unhooked;
 
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
@@ -80,7 +80,9 @@ public class Stickers extends Feature {
 
                 @Override
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                    unhooked.unhook();
+                    if (unhooked instanceof XC_MethodHook.Unhook) {
+                        ((XC_MethodHook.Unhook) unhooked).unhook();
+                    }
                 }
             });
         }
