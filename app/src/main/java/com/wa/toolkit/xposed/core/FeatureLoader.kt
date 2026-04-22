@@ -53,7 +53,7 @@ object FeatureLoader {
     private var modulePath: String? = null
 
     @JvmStatic
-    fun startModern(loader: ClassLoader, pref: XSharedPreferences, sourceDir: String, modulePath: String, framework: io.github.libxposed.XposedInterface) {
+    fun startModern(loader: ClassLoader, pref: XSharedPreferences, sourceDir: String, modulePath: String, framework: io.github.libxposed.api.XposedInterface) {
         XposedBridge.log("[WAE] FeatureLoader.startModern called")
         this.modulePath = modulePath
         if (!Unobfuscator.initWithPath(sourceDir)) {
@@ -67,39 +67,41 @@ object FeatureLoader {
         try {
             val instrumentationClass = Instrumentation::class.java
             val callApplicationOnCreate = instrumentationClass.getDeclaredMethod("callApplicationOnCreate", Application::class.java)
-            framework.hookMethod(callApplicationOnCreate) { chain ->
-                val app = chain.args[0] as Application
-                mApp = app
-                
-                // Inject Bootloader Spoofer
-                if (pref.getBoolean("bootloader_spoofer", false)) {
-                    HookBL.hook(loader, pref)
-                }
-
-                val packageManager = app.packageManager
-                val packageInfo = packageManager.getPackageInfo(app.packageName, 0)
-                currentVersion = packageInfo.versionName
-                
-                val resIdArray = if (app.packageName == PACKAGE_WPP) ResId.array.supported_versions_wpp else ResId.array.supported_versions_business
-                supportedVersions = app.resources.getStringArray(resIdArray).toList()
-                
-                app.registerActivityLifecycleCallbacks(WaCallback())
-                registerReceivers()
-                
-                try {
-                    UnobfuscatorCache.init(app)
-                    SharedPreferencesWrapper.hookInit(app.classLoader)
-                    ReflectionUtils.initCache(app)
+            framework.hookMethod(callApplicationOnCreate, object : io.github.libxposed.api.XposedInterface.Hooker<Method, io.github.libxposed.api.XposedInterface.MethodHookParam> {
+                override fun intercept(chain: io.github.libxposed.api.XposedInterface.Hooker.Chain<Method, io.github.libxposed.api.XposedInterface.MethodHookParam>): Any? {
+                    val app = chain.args[0] as Application
+                    mApp = app
                     
-                    initComponents(loader, pref)
-                    plugins(loader, pref, packageInfo.versionName ?: "")
-                    sendEnabledBroadcast(app)
-                } catch (e: Throwable) {
-                    XposedBridge.log("[WAE] Error loading features: ${e.message}")
-                    XposedBridge.log(e)
+                    // Inject Bootloader Spoofer
+                    if (pref.getBoolean("bootloader_spoofer", false)) {
+                        HookBL.hook(loader, pref)
+                    }
+
+                    val packageManager = app.packageManager
+                    val packageInfo = packageManager.getPackageInfo(app.packageName, 0)
+                    currentVersion = packageInfo.versionName
+                    
+                    val resIdArray = if (app.packageName == PACKAGE_WPP) ResId.array.supported_versions_wpp else ResId.array.supported_versions_business
+                    supportedVersions = app.resources.getStringArray(resIdArray).toList()
+                    
+                    app.registerActivityLifecycleCallbacks(WaCallback())
+                    registerReceivers()
+                    
+                    try {
+                        UnobfuscatorCache.init(app)
+                        SharedPreferencesWrapper.hookInit(app.classLoader)
+                        ReflectionUtils.initCache(app)
+                        
+                        initComponents(loader, pref)
+                        plugins(loader, pref, packageInfo.versionName ?: "")
+                        sendEnabledBroadcast(app)
+                    } catch (e: Throwable) {
+                        XposedBridge.log("[WAE] Error loading features: ${e.message}")
+                        XposedBridge.log(e)
+                    }
+                    return chain.proceed()
                 }
-                chain.proceed()
-            }
+            })
         } catch (e: Throwable) {
             XposedBridge.log("[WAE] Error in startModern: ${e.message}")
         }

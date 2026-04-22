@@ -15,12 +15,17 @@ import java.lang.reflect.Method;
 import java.util.Objects;
 
 import de.robv.android.xposed.XSharedPreferences;
-import io.github.libxposed.XposedModule;
+import de.robv.android.xposed.callbacks.XC_InitPackageResources;
+import io.github.libxposed.api.XposedModule;
+import io.github.libxposed.api.XposedInterface;
 
 public class WppXposed extends XposedModule {
 
     private static XSharedPreferences pref;
     private String MODULE_PATH;
+    
+    @Deprecated
+    public static XC_InitPackageResources.InitPackageResourcesParam ResParam = null;
 
     public WppXposed(@NonNull XposedInterface base, @NonNull ModuleLoadedParam param) {
         super(base, param);
@@ -73,8 +78,6 @@ public class WppXposed extends XposedModule {
         }
 
         if (packageName.equals("android") || packageName.equals("com.android.providers.settings")) {
-            // Note: Patch and ScopeHook need to be updated to support API 101 or we use a wrapper
-            // For now, I'll pass the framework to them if I update them
             Patch.handlePackage(param, getPref(), getFramework());
             ScopeHook.handlePackage(param, getFramework());
             return;
@@ -93,12 +96,7 @@ public class WppXposed extends XposedModule {
         boolean isWpp = packageName.equals(FeatureLoader.PACKAGE_WPP);
         boolean isBusiness = packageName.equals(FeatureLoader.PACKAGE_BUSINESS);
         
-        // App.isOriginalPackage() might need access to current context or we keep it as is if it's static
-        // Assuming App.isOriginalPackage() is available
-        
         if (isWpp || isBusiness) {
-            // Load features
-            // FeatureLoader needs to be updated to support API 101
             ApplicationInfo appInfo = param.getApplicationInfo();
             FeatureLoader.startModern(classLoader, getPref(), appInfo.sourceDir, MODULE_PATH, getFramework());
         }
