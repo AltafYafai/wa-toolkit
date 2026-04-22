@@ -34,6 +34,15 @@ public class WppXposedLegacy implements IXposedHookLoadPackage, IXposedHookInitP
         
         String packageName = lpparam.packageName;
         ClassLoader classLoader = lpparam.classLoader;
+        
+        if (MODULE_PATH == null || MODULE_PATH.isEmpty()) {
+            try {
+                android.content.Context systemContext = (android.content.Context) de.robv.android.xposed.XposedHelpers.callMethod(de.robv.android.xposed.XposedHelpers.callStaticMethod(de.robv.android.xposed.XposedHelpers.findClass("android.app.ActivityThread", null), "currentActivityThread"), "getSystemContext");
+                MODULE_PATH = systemContext.getPackageManager().getApplicationInfo(BuildConfig.APPLICATION_ID, 0).sourceDir;
+            } catch (Throwable t) {
+                de.robv.android.xposed.XposedBridge.log("[WAE] Failed to get MODULE_PATH via ActivityThread: " + t.getMessage());
+            }
+        }
 
         if (packageName.contains("com.wa.toolkit")) {
             de.robv.android.xposed.XposedHelpers.findAndHookMethod("com.wa.toolkit.MainActivity", classLoader, "isXposedEnabled", de.robv.android.xposed.XC_MethodReplacement.returnConstant(true));
@@ -54,8 +63,8 @@ public class WppXposedLegacy implements IXposedHookLoadPackage, IXposedHookInitP
         }
 
         if (packageName.equals("android") || packageName.equals("com.android.providers.settings")) {
-            // Note: Patch and ScopeHook are now using modern API. We need legacy wrappers or to revert them
-            // to support this legacy fallback.
+            com.wa.toolkit.xposed.downgrade.Patch.handleLoadPackage(lpparam, WppXposed.getPref());
+            com.wa.toolkit.xposed.bridge.ScopeHook.hook(lpparam);
             return;
         }
 
@@ -63,8 +72,13 @@ public class WppXposedLegacy implements IXposedHookLoadPackage, IXposedHookInitP
             return;
         }
         
+        com.wa.toolkit.xposed.AntiUpdater.hookSession(lpparam);
+        com.wa.toolkit.xposed.downgrade.Patch.handleLoadPackage(lpparam, WppXposed.getPref());
+        com.wa.toolkit.xposed.bridge.ScopeHook.hook(lpparam);
+
         boolean isWpp = packageName.equals(com.wa.toolkit.xposed.core.FeatureLoader.PACKAGE_WPP);
         boolean isBusiness = packageName.equals(com.wa.toolkit.xposed.core.FeatureLoader.PACKAGE_BUSINESS);
+
 
         if (isWpp || isBusiness) {
             com.wa.toolkit.xposed.core.FeatureLoader.start(classLoader, WppXposed.getPref(), lpparam.appInfo.sourceDir, MODULE_PATH);
