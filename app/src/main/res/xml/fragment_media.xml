@@ -36,7 +36,7 @@
             android:key="lossless_status"
             android:summary="@string/lossless_status_sum"
             android:title="@string/lossless_status"
-            app:icon="@drawable/ic_status" />
+            app:icon="@drawable/eye_enabled" />
 
         <androidx.preference.SwitchPreferenceCompat
             android:defaultValue="false"

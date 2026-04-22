@@ -79,7 +79,7 @@ public class IGStatusAdapter extends ArrayAdapter {
                 var dialog = WppCore.createBottomDialog(activity);
                 var tabdialog = new TabDialogContent(activity);
                 tabdialog.setTitle(activity.getString(ResId.string.select_status_type));
-                tabdialog.addTab(UnobfuscatorCache.getInstance().getString("mystatus"), DesignUtils.getIconByName("ic_status", true), (view) -> {
+                tabdialog.addTab(UnobfuscatorCache.getInstance().getString("mystatus"), DesignUtils.getIconByName("eye_enabled", true), (view) -> {
                     try {
                         var clazz = Unobfuscator.loadMyStatusesActivityClass(getContext().getClassLoader());
                         var intent = new Intent(WppCore.getCurrentActivity(), clazz);

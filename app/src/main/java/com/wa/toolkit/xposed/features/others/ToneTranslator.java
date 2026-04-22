@@ -50,7 +50,7 @@ public class ToneTranslator extends Feature {
 
             Context context = root.getContext();
             ImageButton rewriteBtn = new ImageButton(context);
-            rewriteBtn.setImageResource(Utils.getID("ic_emoji_people", "drawable")); // Use a "Tone" icon
+            rewriteBtn.setImageResource(Utils.getID("ic_round_settings_24", "drawable")); // Use a valid icon
             rewriteBtn.setBackground(null);
             rewriteBtn.setPadding(Utils.dipToPixels(8), 0, Utils.dipToPixels(8), 0);
 
