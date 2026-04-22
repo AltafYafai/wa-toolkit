@@ -342,6 +342,3 @@ object Utils {
         mActivity.startActivity(browserIntent)
     }
 }
-ent)
-    }
-}

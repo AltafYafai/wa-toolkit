@@ -9,7 +9,7 @@ import android.graphics.drawable.shapes.RoundRectShape
 import android.os.Build
 import androidx.core.content.ContextCompat
 import de.robv.android.xposed.XposedBridge
-import com.wa.toolkit.WppXposed
+import com.wa.toolkit.xposed.utils.PrefUtils
 import com.wa.toolkit.xposed.core.WppCore
 
 object DesignUtils {
