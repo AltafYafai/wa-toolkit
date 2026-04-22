@@ -130,6 +130,19 @@ object FeatureManager {
         return hooks
     }
 
+    @Synchronized
+    @JvmStatic
+    fun safeHookAllMethods(clazz: Class<*>, methodName: String, callback: XC_MethodHook): List<Any> {
+        val hooks = mutableListOf<Any>()
+        clazz.declaredMethods.forEach { method ->
+            if (method.name == methodName) {
+                val hook = safeHookMethod(method, callback)
+                if (hook != null) hooks.add(hook)
+            }
+        }
+        return hooks
+    }
+
     fun registerAll(classes: Array<Class<out Any>>) {
         classes.forEach { 
             if (Feature::class.java.isAssignableFrom(it)) {

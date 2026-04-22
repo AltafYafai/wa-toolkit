@@ -91,7 +91,7 @@ public class SharedPreferencesWrapper implements SharedPreferences {
     }
 
     public static void hookInit(ClassLoader classLoader) throws Exception {
-        XposedHelpers.findAndHookMethod("android.app.ContextImpl", classLoader, "getSharedPreferences", String.class, int.class, new XC_MethodHook() {
+        com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod("android.app.ContextImpl", classLoader, "getSharedPreferences", String.class, int.class, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 var pref = (SharedPreferences) param.getResult();
@@ -173,14 +173,14 @@ public class SharedPreferencesWrapper implements SharedPreferences {
         for (var sharedPreferencesClass : sharedPreferencesClasses) {
             if (sharedPreferencesClass == null) continue;
             if (SharedPreferencesWrapper.class.getName().equals(sharedPreferencesClass.getName())) continue;
-            XposedHelpers.findAndHookMethod(sharedPreferencesClass, "getString", String.class, String.class, getStringHook);
-            XposedHelpers.findAndHookMethod(sharedPreferencesClass, "getStringSet", String.class, Set.class, getStringHook);
-            XposedHelpers.findAndHookMethod(sharedPreferencesClass, "getInt", String.class, int.class, getIntHook);
-            XposedHelpers.findAndHookMethod(sharedPreferencesClass, "getLong", String.class, long.class, getLongHook);
-            XposedHelpers.findAndHookMethod(sharedPreferencesClass, "getFloat", String.class, float.class, getFloatHook);
-            XposedHelpers.findAndHookMethod(sharedPreferencesClass, "getBoolean", String.class, boolean.class, getBooleanHook);
-            XposedHelpers.findAndHookMethod(sharedPreferencesClass, "contains", String.class, containsHook);
-            XposedHelpers.findAndHookMethod(sharedPreferencesClass, "getAll", getAllHook);
+            com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(sharedPreferencesClass, "getString", String.class, String.class, getStringHook);
+            com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(sharedPreferencesClass, "getStringSet", String.class, java.util.Set.class, getStringHook);
+            com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(sharedPreferencesClass, "getInt", String.class, int.class, getIntHook);
+            com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(sharedPreferencesClass, "getLong", String.class, long.class, getLongHook);
+            com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(sharedPreferencesClass, "getFloat", String.class, float.class, getFloatHook);
+            com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(sharedPreferencesClass, "getBoolean", String.class, boolean.class, getBooleanHook);
+            com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(sharedPreferencesClass, "contains", String.class, containsHook);
+            com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(sharedPreferencesClass, "getAll", getAllHook);
         }
     }
 

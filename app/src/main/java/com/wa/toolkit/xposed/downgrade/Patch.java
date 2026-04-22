@@ -1,11 +1,9 @@
 package com.wa.toolkit.xposed.downgrade;
 
-import static de.robv.android.xposed.XposedBridge.hookAllMethods;
-import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
-
 import android.os.Build;
 
 import com.wa.toolkit.xposed.core.FeatureLoader;
+import com.wa.toolkit.xposed.core.FeatureManager;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -95,7 +93,7 @@ public class Patch {
             case 36: // BAKLAVA
             case Build.VERSION_CODES.VANILLA_ICE_CREAM:  // 35
             case Build.VERSION_CODES.UPSIDE_DOWN_CAKE: // 34
-                findAndHookMethod("com.android.server.pm.PackageManagerServiceUtils", lpparam.classLoader,
+                FeatureManager.INSTANCE.safeFindAndHookMethod("com.android.server.pm.PackageManagerServiceUtils", lpparam.classLoader,
                         "checkDowngrade",
                         "com.android.server.pm.pkg.AndroidPackage",
                         "android.content.pm.PackageInfoLite", hookDowngradeObject
@@ -107,7 +105,7 @@ public class Patch {
                         "com.android.server.pm.parsing.pkg.AndroidPackage",
                         "android.content.pm.PackageInfoLite");
                 if (checkDowngrade != null) {
-                    XposedBridge.hookMethod(checkDowngrade, hookDowngradeObject);
+                    FeatureManager.INSTANCE.safeHookMethod(checkDowngrade, hookDowngradeObject);
                 }
                 break;
             case Build.VERSION_CODES.S_V2: // 32
@@ -121,20 +119,20 @@ public class Patch {
                             "android.content.pm.PackageInfoLite");
                     if (checkDowngrade1 != null) {
                         // 允许降级
-                        XposedBridge.hookMethod(checkDowngrade1, hookDowngradeObject);
+                        FeatureManager.INSTANCE.safeHookMethod(checkDowngrade1, hookDowngradeObject);
                     }
                     // exists on flyme 9(Android 11) only
                     var flymeCheckDowngrade = XposedHelpers.findMethodExactIfExists(pmService, "checkDowngrade",
                             "android.content.pm.PackageInfoLite",
                             "android.content.pm.PackageInfoLite");
                     if (flymeCheckDowngrade != null)
-                        XposedBridge.hookMethod(flymeCheckDowngrade, hookDowngradeBoolean);
+                        FeatureManager.INSTANCE.safeHookMethod(flymeCheckDowngrade, hookDowngradeBoolean);
                 }
                 break;
             case Build.VERSION_CODES.Q: // 29
             case Build.VERSION_CODES.P: // 28
                 Class<?> packageClazz = XposedHelpers.findClass("android.content.pm.PackageParser.Package", lpparam.classLoader);
-                hookAllMethods(XposedHelpers.findClass("com.android.server.pm.PackageManagerService", lpparam.classLoader), "checkDowngrade", new XC_MethodHook() {
+                FeatureManager.INSTANCE.safeHookAllMethods(XposedHelpers.findClass("com.android.server.pm.PackageManagerService", lpparam.classLoader), "checkDowngrade", new XC_MethodHook() {
                     public void beforeHookedMethod(MethodHookParam methodHookParam) throws Throwable {
                         Object packageInfoLite = methodHookParam.args[0];
                         var packageName = XposedHelpers.getObjectField(packageInfoLite, "packageName");

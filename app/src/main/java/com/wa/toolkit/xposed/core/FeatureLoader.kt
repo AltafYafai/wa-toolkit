@@ -85,11 +85,10 @@ object FeatureLoader {
         val packageInfo = packageManager.getPackageInfo(app.packageName, 0)
         currentVersion = packageInfo.versionName
         
-        val resIdArray = if (app.packageName == PACKAGE_WPP) ResId.array.supported_versions_wpp else ResId.array.supported_versions_business
-        
         // Load supported versions using module context as fallback
         try {
             val moduleContext = app.createPackageContext(BuildConfig.APPLICATION_ID, Context.CONTEXT_IGNORE_SECURITY)
+            val resIdArray = if (app.packageName == PACKAGE_WPP) ResId.array.supported_versions_wpp else ResId.array.supported_versions_business
             supportedVersions = moduleContext.resources.getStringArray(resIdArray).toList()
         } catch (e: Throwable) {
             XposedBridge.log("[WAE] Failed to load supportedVersions: ${e.message}")
@@ -189,8 +188,6 @@ object FeatureLoader {
                     XposedBridge.log("[WAE] WhatsApp Version: ${packageInfo.versionName}")
                     currentVersion = packageInfo.versionName
                     
-                    val resIdArray = if (app.packageName == PACKAGE_WPP) ResId.array.supported_versions_wpp else ResId.array.supported_versions_business
-                    
                     // Initialize ResId via module context as fallback
                     try {
                         val moduleContext = app.createPackageContext(BuildConfig.APPLICATION_ID, Context.CONTEXT_IGNORE_SECURITY)
@@ -198,11 +195,14 @@ object FeatureLoader {
                             ResId.init(moduleContext)
                             XposedBridge.log("[WAE] ResId initialized via Module Context (Legacy Fallback)")
                         }
+                        
+                        val resIdArray = if (app.packageName == PACKAGE_WPP) ResId.array.supported_versions_wpp else ResId.array.supported_versions_business
                         supportedVersions = moduleContext.resources.getStringArray(resIdArray).toList()
                     } catch (e: Throwable) {
                         XposedBridge.log("[WAE] Failed to load supportedVersions: ${e.message}")
                         // Try app resources if mirrored
                         try {
+                            val resIdArray = if (app.packageName == PACKAGE_WPP) ResId.array.supported_versions_wpp else ResId.array.supported_versions_business
                             supportedVersions = app.resources.getStringArray(resIdArray).toList()
                         } catch (ignored: Throwable) {}
                     }

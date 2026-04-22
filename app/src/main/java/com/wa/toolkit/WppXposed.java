@@ -74,7 +74,7 @@ public class WppXposed extends XposedModule {
             return;
         }
 
-        AntiUpdater.hookPackage(param, this);
+        AntiUpdater.handleModern(this);
 
         Patch.handlePackage(param, PrefUtils.getPref(), this);
 
