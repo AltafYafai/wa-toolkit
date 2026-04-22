@@ -20,6 +20,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.documentfile.provider.DocumentFile
 import com.wa.toolkit.App
 import com.wa.toolkit.WppXposed
+import io.github.libxposed.api.XposedModule
 import com.wa.toolkit.xposed.core.FeatureLoader
 import com.wa.toolkit.xposed.core.WppCore
 import com.wa.toolkit.xposed.core.components.FMessageWpp
