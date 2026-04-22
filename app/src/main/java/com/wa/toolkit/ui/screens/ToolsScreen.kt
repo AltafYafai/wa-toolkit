@@ -13,6 +13,7 @@ import com.wa.toolkit.R
 import com.wa.toolkit.ui.SettingsViewModel
 import com.wa.toolkit.ui.preferences.SwitchSetting
 import com.wa.toolkit.ui.preferences.ActionSetting
+import com.wa.toolkit.ui.preferences.ListSetting
 import com.wa.toolkit.ui.preferences.CategoryHeader
 
 import androidx.activity.compose.rememberLauncherForActivityResult
