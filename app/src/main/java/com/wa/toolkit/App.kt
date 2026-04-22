@@ -110,7 +110,14 @@ class App : Application() {
         super.onCreate()
         instance = this
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val modeStr = sharedPreferences.getString("thememode", "0") ?: "0"
+        val modeStr = try {
+            sharedPreferences.getString("thememode", "0") ?: "0"
+        } catch (e: ClassCastException) {
+            // If it was stored as a boolean by mistake, migrate it
+            val value = if (sharedPreferences.getBoolean("thememode", false)) "1" else "0"
+            sharedPreferences.edit().putString("thememode", value).apply()
+            value
+        }
         val mode = modeStr.toIntOrNull() ?: 0
         setThemeMode(mode)
         changeLanguage(this)

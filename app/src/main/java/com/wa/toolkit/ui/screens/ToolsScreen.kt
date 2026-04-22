@@ -64,11 +64,14 @@ fun ToolsScreen(
         ) {
             item { CategoryHeader("Appearance & Display") }
             item {
-                SwitchSetting(
+                ListSetting(
                     title = stringResource(R.string.theme_mode),
                     summary = stringResource(R.string.theme_mode_sum),
                     viewModel = viewModel,
                     prefKey = "thememode",
+                    entries = context.resources.getStringArray(R.array.thememode_entries),
+                    entryValues = context.resources.getStringArray(R.array.thememode_values),
+                    defaultValue = "0",
                     icon = R.drawable.ic_round_settings_24
                 )
             }
