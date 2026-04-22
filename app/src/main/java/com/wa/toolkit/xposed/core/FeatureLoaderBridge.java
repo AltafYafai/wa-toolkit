@@ -3,7 +3,7 @@ package com.wa.toolkit.xposed.core;
 import android.app.Application;
 import android.app.Instrumentation;
 
-import com.wa.toolkit.xposed.utils.Unobfuscator;
+import com.wa.toolkit.xposed.core.devkit.Unobfuscator;
 
 import java.lang.reflect.Method;
 
@@ -26,7 +26,6 @@ public class FeatureLoaderBridge {
             framework.hookMethod(callApplicationOnCreate, chain -> {
                 Application app = (Application) chain.getArgs()[0];
                 
-                // Call back to Kotlin FeatureLoader to do the heavy lifting
                 FeatureLoader.initFromBridge(app, loader, pref, modulePath);
                 
                 return chain.proceed();
