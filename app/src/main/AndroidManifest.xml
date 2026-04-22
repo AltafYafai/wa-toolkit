@@ -142,6 +142,13 @@
             android:exported="true"
             tools:ignore="ExportedContentProvider" />
 
+        <meta-data
+            android:name="xposedmodule"
+            android:value="true" />
+        <meta-data
+            android:name="xposeddescription"
+            android:value="@string/app_desc" />
+
         <receiver
             android:name=".receivers.WAFReceiver"
             android:exported="true"
