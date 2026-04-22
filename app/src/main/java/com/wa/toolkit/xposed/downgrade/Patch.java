@@ -17,8 +17,8 @@ public class Patch {
         if (!("android".equals(param.getPackageName())))
             return;
 
-        XposedInterface.Hooker hookDowngradeObject = chain -> {
-            Object pkgObj = chain.getArgs()[0];
+        XposedInterface.Hooker<Method, XposedInterface.MethodHookParam> hookDowngradeObject = chain -> {
+            Object pkgObj = chain.getArgs().get(0);
             try {
                 Method getPackageName = pkgObj.getClass().getMethod("getPackageName");
                 String pkg = (String) getPackageName.invoke(pkgObj);

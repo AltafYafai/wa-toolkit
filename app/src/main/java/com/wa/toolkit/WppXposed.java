@@ -28,9 +28,10 @@ public class WppXposed extends XposedModule {
     @Deprecated
     public static XC_InitPackageResources.InitPackageResourcesParam ResParam = null;
 
-    // Test with no-arg constructor as requested by compiler error
-    public WppXposed() {
-        super();
+    // Use parameterized constructor again but fix types
+    public WppXposed(@NonNull XposedInterface base, @NonNull ModuleLoadedParam param) {
+        super(base, param);
+        MODULE_PATH = getModuleApplicationInfo().sourceDir;
     }
 
     @NonNull
@@ -57,24 +58,21 @@ public class WppXposed extends XposedModule {
             try {
                 Class<?> mainActivity = classLoader.loadClass("com.wa.toolkit.MainActivity");
                 Method isXposedEnabled = mainActivity.getDeclaredMethod("isXposedEnabled");
-                // Use hook() if available or getFramework() if I can find it
-                // Since I'm not sure, I'll try to find a way to get the framework
-                // For now, I'll assume hook() is available in XposedModule
-                hook(isXposedEnabled).intercept(chain -> true);
+                hookMethod(isXposedEnabled, chain -> true);
 
                 try {
                     Class<?> companion = classLoader.loadClass("com.wa.toolkit.MainActivity$Companion");
                     Method isXposedEnabledCompanion = companion.getDeclaredMethod("isXposedEnabled");
-                    hook(isXposedEnabledCompanion).intercept(chain -> true);
+                    hookMethod(isXposedEnabledCompanion, chain -> true);
                 } catch (Throwable ignored) {}
 
                 // Force MODE_WORLD_READABLE at Context level
                 Class<?> contextImpl = classLoader.loadClass("android.app.ContextImpl");
                 Method getSharedPreferences = contextImpl.getDeclaredMethod("getSharedPreferences", String.class, int.class);
-                hook(getSharedPreferences).intercept(chain -> {
-                    String name = (String) chain.getArgs()[0];
+                hookMethod(getSharedPreferences, chain -> {
+                    String name = (String) chain.getArgs().get(0);
                     if (name.contains("preferences") || name.contains("com.wa.toolkit")) {
-                        chain.getArgs()[1] = ContextWrapper.MODE_WORLD_READABLE;
+                        chain.getArgs().set(1, ContextWrapper.MODE_WORLD_READABLE);
                     }
                     return chain.proceed();
                 });
@@ -85,14 +83,9 @@ public class WppXposed extends XposedModule {
             return;
         }
 
-        XposedInterface framework = null; 
-        // How to get framework if constructor is empty?
-        // Maybe it's available via a method in XposedModule.
-        // I'll try to find it or use reflection.
-        
         if (packageName.equals("android") || packageName.equals("com.android.providers.settings")) {
-            // Patch.handlePackage(param, getPref(), framework);
-            // ScopeHook.handlePackage(param, framework);
+            Patch.handlePackage(param, getPref(), this);
+            ScopeHook.handlePackage(param, this);
             return;
         }
 
@@ -100,18 +93,18 @@ public class WppXposed extends XposedModule {
             return;
         }
 
-        // AntiUpdater.hookPackage(param, framework);
+        AntiUpdater.hookPackage(param, this);
 
-        // Patch.handlePackage(param, getPref(), framework);
+        Patch.handlePackage(param, getPref(), this);
 
-        // ScopeHook.handlePackage(param, framework);
+        ScopeHook.handlePackage(param, this);
 
         boolean isWpp = packageName.equals(FeatureLoader.PACKAGE_WPP);
         boolean isBusiness = packageName.equals(FeatureLoader.PACKAGE_BUSINESS);
         
         if (isWpp || isBusiness) {
             ApplicationInfo appInfo = param.getApplicationInfo();
-            // FeatureLoaderBridge.startModern(classLoader, getPref(), appInfo.sourceDir, MODULE_PATH, framework);
+            FeatureLoaderBridge.startModern(classLoader, getPref(), appInfo.sourceDir, MODULE_PATH, this);
         }
     }
 }

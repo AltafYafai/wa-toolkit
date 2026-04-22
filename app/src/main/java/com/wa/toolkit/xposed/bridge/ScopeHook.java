@@ -30,7 +30,7 @@ public class ScopeHook {
                 for (Method m : serviceManager.getDeclaredMethods()) {
                     if (m.getName().equals("addService")) {
                         framework.hookMethod(m, chain -> {
-                            String service = (String) chain.getArgs()[0];
+                            String service = (String) chain.getArgs().get(0);
                             if (Objects.equals(service, "package")) {
                                 // Logic for scope hook
                             }
@@ -46,8 +46,8 @@ public class ScopeHook {
                 Class<?> clsSet = param.getClassLoader().loadClass("com.android.providers.settings.SettingsProvider");
                 Method mCall = clsSet.getDeclaredMethod("call", String.class, String.class, Bundle.class);
                 framework.hookMethod(mCall, chain -> {
-                    String method = (String) chain.getArgs()[0];
-                    String arg = (String) chain.getArgs()[1];
+                    String method = (String) chain.getArgs().get(0);
+                    String arg = (String) chain.getArgs().get(1);
                     if ("WhatsappToolkit".equals(method)) {
                         if ("getHookBinder".equals(arg)) {
                             // Logic for binder

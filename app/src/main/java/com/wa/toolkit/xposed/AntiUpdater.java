@@ -16,7 +16,7 @@ public class AntiUpdater {
         try {
             Method createSession = PackageInstaller.class.getDeclaredMethod("createSession", PackageInstaller.SessionParams.class);
             framework.hookMethod(createSession, chain -> {
-                PackageInstaller.SessionParams session = (PackageInstaller.SessionParams) chain.getArgs()[0];
+                PackageInstaller.SessionParams session = (PackageInstaller.SessionParams) chain.getArgs().get(0);
                 java.lang.reflect.Field field = PackageInstaller.SessionParams.class.getDeclaredField("appPackageName");
                 field.setAccessible(true);
                 String packageName = (String) field.get(session);
