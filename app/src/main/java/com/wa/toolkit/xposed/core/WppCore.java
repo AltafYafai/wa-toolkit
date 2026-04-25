@@ -223,17 +223,33 @@ public class WppCore {
         return true;
     }
 
-    public static void sendMessage(String number, String message) {
+    public static void sendMessage(String jid, String message) {
         try {
+            XposedBridge.log("[WAE] Attempting to send message to: " + jid);
             var senderMethod = ReflectionUtils.findMethodUsingFilterIfExists(actionUser,
                     (method) -> List.class.isAssignableFrom(method.getReturnType())
                             && ReflectionUtils.findIndexOfType(method.getParameterTypes(), String.class) != -1);
+            
             if (senderMethod != null) {
-                var userJid = createUserJid(number + "@s.whatsapp.net");
+                // Determine the correct raw JID
+                String fullJid = jid;
+                if (!fullJid.contains("@")) {
+                    fullJid = fullJid + "@s.whatsapp.net";
+                }
+                
+                var userJid = createUserJid(fullJid);
                 if (userJid == null) {
+                    XposedBridge.log("[WAE] Failed to create UserJID for: " + fullJid);
                     Utils.showToast("UserJID not found", Toast.LENGTH_SHORT);
                     return;
                 }
+                
+                Object actionUserInstance = getActionUser();
+                if (actionUserInstance == null) {
+                    XposedBridge.log("[WAE] ActionUser instance is NULL. Cannot send.");
+                    return;
+                }
+
                 var newObject = new Object[senderMethod.getParameterCount()];
                 for (int i = 0; i < newObject.length; i++) {
                     var param = senderMethod.getParameterTypes()[i];
@@ -243,12 +259,18 @@ public class WppCore {
                 newObject[index] = message;
                 var index2 = ReflectionUtils.findIndexOfType(senderMethod.getParameterTypes(), List.class);
                 newObject[index2] = Collections.singletonList(userJid);
-                senderMethod.invoke(getActionUser(), newObject);
-                Utils.showToast("Message sent to " + number, Toast.LENGTH_SHORT);
+                
+                XposedBridge.log("[WAE] Invoking sender method: " + senderMethod.getName());
+                senderMethod.invoke(actionUserInstance, newObject);
+                XposedBridge.log("[WAE] Message sent successfully to " + fullJid);
+                Utils.showToast("Message sent to " + stripJID(fullJid), Toast.LENGTH_SHORT);
+            } else {
+                XposedBridge.log("[WAE] Sender method not found in ActionUser class!");
             }
         } catch (Exception e) {
-            Utils.showToast("Error in sending message:" + e.getMessage(), Toast.LENGTH_SHORT);
+            XposedBridge.log("[WAE] Exception in sendMessage: " + e.getMessage());
             XposedBridge.log(e);
+            Utils.showToast("Error in sending message:" + e.getMessage(), Toast.LENGTH_SHORT);
         }
     }
 

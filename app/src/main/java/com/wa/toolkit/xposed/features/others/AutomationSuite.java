@@ -108,17 +108,17 @@ public class AutomationSuite extends Feature {
 
         for (AutomationStore.ScheduledMessage msg : pending) {
             XposedBridge.log("[WAE] Processing scheduled message " + msg.id + " to " + msg.jid);
-            sendMessageMainThread(WppCore.stripJID(msg.jid), msg.content);
+            sendMessageMainThread(msg.jid, msg.content);
             // We update status immediately to avoid re-sending, assuming sendMessageMainThread starts the process
             store.updateMessageStatus(msg.id, 1); 
         }
     }
 
-    private void sendMessageMainThread(final String number, final String message) {
+    private void sendMessageMainThread(final String jid, final String message) {
         mainHandler.post(() -> {
             try {
-                XposedBridge.log("[WAE] Sending message via Main Thread to: " + number);
-                WppCore.sendMessage(number, message);
+                XposedBridge.log("[WAE] Sending message via Main Thread to: " + jid);
+                WppCore.sendMessage(jid, message);
             } catch (Exception e) {
                 XposedBridge.log("[WAE] Failed to send message on Main Thread: " + e.getMessage());
             }
@@ -128,7 +128,7 @@ public class AutomationSuite extends Feature {
     public static void bulkSend(String message, List<String> jids) {
         // Bulk send should also ideally use Main Thread for each message or a shared handler
         for (String jid : jids) {
-            WppCore.sendMessage(WppCore.stripJID(jid), message);
+            WppCore.sendMessage(jid, message);
             try {
                 Thread.sleep(800); 
             } catch (InterruptedException ignored) {}
