@@ -52,16 +52,23 @@ public class AutomationUI extends Feature {
     }
 
     private void registerBroadcastReceiver() {
-        Utils.getApplication().registerReceiver(new BroadcastReceiver() {
+        Context app = Utils.getApplication();
+        BroadcastReceiver receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, android.content.Intent intent) {
-                // Find current activity via reflection or ActivityStateRegistry
                 Activity activity = com.wa.toolkit.xposed.core.ActivityStateRegistry.getCurrentActivity();
                 if (activity != null) {
                     showAutomationManager(activity);
                 }
             }
-        }, new IntentFilter("com.wa.toolkit.OPEN_AUTOMATION_MANAGER"));
+        };
+        IntentFilter filter = new IntentFilter("com.wa.toolkit.OPEN_AUTOMATION_MANAGER");
+        
+        if (android.os.Build.VERSION.SDK_INT >= 34) {
+            app.registerReceiver(receiver, filter, Context.RECEIVER_NOT_EXPORTED);
+        } else {
+            app.registerReceiver(receiver, filter);
+        }
     }
 
     private void hookConversationMenu() {
