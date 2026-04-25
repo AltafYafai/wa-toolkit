@@ -33,6 +33,9 @@ import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedHelpers;
 
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
+
 public class AutomationUI extends Feature {
 
     private AutomationStore store;
@@ -44,18 +47,21 @@ public class AutomationUI extends Feature {
 
     @Override
     public void doHook() throws Throwable {
-        hookHomeMenu();
         hookConversationMenu();
+        registerBroadcastReceiver();
     }
 
-    private void hookHomeMenu() {
-        MenuHome.menuItems.add((menu, activity) -> {
-            MenuItem item = menu.add(0, 0, 0, "Automation Manager");
-            item.setOnMenuItemClickListener(menuItem -> {
-                showAutomationManager(activity);
-                return true;
-            });
-        });
+    private void registerBroadcastReceiver() {
+        Utils.getApplication().registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, android.content.Intent intent) {
+                // Find current activity via reflection or ActivityStateRegistry
+                Activity activity = com.wa.toolkit.xposed.core.ActivityStateRegistry.getCurrentActivity();
+                if (activity != null) {
+                    showAutomationManager(activity);
+                }
+            }
+        }, new IntentFilter("com.wa.toolkit.OPEN_AUTOMATION_MANAGER"));
     }
 
     private void hookConversationMenu() {
