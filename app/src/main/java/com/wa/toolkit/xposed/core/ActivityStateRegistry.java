@@ -75,4 +75,19 @@ public class ActivityStateRegistry {
     public static int getTrackedCount() {
         return activityStates.size();
     }
+
+    public static Activity getCurrentActivity() {
+        // Return the first activity that is in RESUMED or STARTED state
+        for (Map.Entry<Activity, WppCore.ActivityChangeState.ChangeType> entry : activityStates.entrySet()) {
+            if (entry.getValue() == WppCore.ActivityChangeState.ChangeType.RESUMED) {
+                return entry.getKey();
+            }
+        }
+        for (Map.Entry<Activity, WppCore.ActivityChangeState.ChangeType> entry : activityStates.entrySet()) {
+            if (entry.getValue() == WppCore.ActivityChangeState.ChangeType.STARTED) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
 }
