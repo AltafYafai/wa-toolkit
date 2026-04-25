@@ -151,7 +151,7 @@ jobs:
             MESSAGE+="<b>SHA:</b> <code>${{ env.SHORT_SHA }}</code>%0A"
             MESSAGE+="<b>Author:</b> ${{ github.actor }}%0A"
             MESSAGE+="<b>Status:</b> $STATUS%0A%0A"
-            MESSAGE+="<b>Changelog:</b>%0A<pre>${{ env.CHANGELOG }}</pre>"
+            MESSAGE+="${{ env.CHANGELOG }}"
           else
             STATUS="❌ Failed"
             MESSAGE="<b>📦 Whatsapp Toolkit Build</b>%0A%0A"

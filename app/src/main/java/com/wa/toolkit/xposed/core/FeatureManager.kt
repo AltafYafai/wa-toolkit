@@ -17,8 +17,46 @@ import de.robv.android.xposed.XSharedPreferences
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
 
+import com.wa.toolkit.xposed.features.others.AutomationSuite
+import com.wa.toolkit.xposed.features.others.ChatFilters
+import com.wa.toolkit.xposed.features.others.ChatSummarization
+import com.wa.toolkit.xposed.features.others.CopyStatus
+import com.wa.toolkit.xposed.features.others.DebugFeature
+import com.wa.toolkit.xposed.features.others.DisableSecureFlag
+import com.wa.toolkit.xposed.features.others.FloatingChatHeads
+import com.wa.toolkit.xposed.features.others.GoogleTranslate
+import com.wa.toolkit.xposed.features.others.GroupAdmin
+import com.wa.toolkit.xposed.features.others.GroupSummarizer
+import com.wa.toolkit.xposed.features.others.MenuHome
+import com.wa.toolkit.xposed.features.others.SmartReply
+import com.wa.toolkit.xposed.features.others.Spy
+import com.wa.toolkit.xposed.features.others.Stickers
+import com.wa.toolkit.xposed.features.others.TextStatusComposer
+import com.wa.toolkit.xposed.features.others.ToastViewer
+import com.wa.toolkit.xposed.features.others.ToneTranslator
+import com.wa.toolkit.xposed.features.others.VoiceToTask
+import com.wa.toolkit.xposed.features.privacy.HideReceipt
+import com.wa.toolkit.xposed.features.privacy.HideSeen
+import com.wa.toolkit.xposed.features.privacy.HideTyping
+import com.wa.toolkit.xposed.features.privacy.HideRecording
+import com.wa.toolkit.xposed.features.privacy.HideStatusView
+import com.wa.toolkit.xposed.features.privacy.AntiRevoke
+import com.wa.toolkit.xposed.features.privacy.FreezeLastSeen
+import com.wa.toolkit.xposed.features.privacy.BlueOnReply
+import com.wa.toolkit.xposed.features.privacy.CallBlocker
+import com.wa.toolkit.xposed.features.privacy.HideArchivedChats
+import com.wa.toolkit.xposed.features.privacy.HideViewOnceSeen
+import com.wa.toolkit.xposed.features.media.MediaQuality
+import com.wa.toolkit.xposed.features.media.StatusDownload
+import com.wa.toolkit.xposed.features.media.ViewOnceUnlimited
+import com.wa.toolkit.xposed.features.media.LosslessMedia
+import com.wa.toolkit.xposed.features.media.AudioTranscription
+import com.wa.toolkit.xposed.features.media.VoiceChanger
+
 object FeatureManager {
-    private val features = mutableListOf<Class<out Feature>>()
+    private val features = mutableListOf<Class<out Feature>>(
+        AutomationSuite::class.java
+    )
     private val errors = Vector<FeatureLoader.ErrorItem>()
     private val loadTimes = Vector<String>()
     private val hookRegistry = ConcurrentHashMap<Member, MutableList<Any>>()

@@ -118,6 +118,24 @@ fun ToolsScreen(
             item { CategoryHeader("Automation & Integration") }
             item {
                 SwitchSetting(
+                    title = stringResource(R.string.scheduler_enabled),
+                    summary = stringResource(R.string.scheduler_enabled_sum),
+                    viewModel = viewModel,
+                    prefKey = "scheduler_enabled",
+                    icon = R.drawable.ic_round_settings_24
+                )
+            }
+            item {
+                SwitchSetting(
+                    title = stringResource(R.string.auto_reply_enabled),
+                    summary = stringResource(R.string.auto_reply_enabled_sum),
+                    viewModel = viewModel,
+                    prefKey = "auto_reply_enabled",
+                    icon = R.drawable.ic_round_settings_24
+                )
+            }
+            item {
+                SwitchSetting(
                     title = stringResource(R.string.enable_tasker_automation),
                     summary = stringResource(R.string.enable_tasker_automation_sum),
                     viewModel = viewModel,

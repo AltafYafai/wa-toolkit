@@ -1,23 +1,25 @@
-[ADDED]
-* Full Dynamic Discovery Support for WA/WB 2.26.13.xx & 2.26.14.xx (via DexKit)
-* AI & Automation Suite:
-    - Auto-OCR for Images: Automatically extract text from images (ML Kit)
-    - Voice Note Transcription: Subtitle-style transcription UI
-    - AI Tone Translator: Formalize/polish messages with one tap
-    - Group Chat TL;DR: Quick AI summary for long group chatter
-* Advanced Privacy Suite:
-    - Stealth Typing Sandbox: Private typing box that bypasses all indicators
-    - Local Burn-After-Reading Vault: Auto-delete chats locally after 1 hour
-    - Granular Read Receipts: Send blue ticks only upon reply
-* Media God-Mode:
-    - Lossless Status Uploader: True HD/4K status uploads (bypasses compression)
-    - Infinite Pinned Chats: Remove the hardcoded pin limit
-    - Real-time Voice Changer: Pitch and effect controls for voice notes
-* Power User Tweaks:
-    - Zen Mode Scheduler: Filter chat lists based on custom schedules
-    - Optimized module initialization (eliminated stack trace overhead)
+🚀 <b>Whatsapp Toolkit - Mega Update v1.0.0-Beta</b> 🚀
 
-[FIXED]
-* Resolved 'PerfettoTrace' JNI crash on Android 14/15 (Termux build fix included)
-* Fixed duplicate resource conflicts in strings.xml
-* Optimized Unobfuscator cache lookups (200% faster initialization)
+<b>The ultimate Xposed powerhouse for WhatsApp just got smarter!</b>
+
+🆕 <b>[ADDED] Automation Suite</b>
+• 📅 <b>Message Scheduler:</b> Never miss a birthday or important announcement! Schedule messages to be sent at any future date/time.
+• 🤖 <b>Advanced Auto-Reply:</b> Set custom rules (Contains/Exact/Starts With) to automatically reply to messages while you're away.
+• 📦 <b>Bulk Message Sender:</b> Send mass announcements to multiple contacts with intelligent rate-limiting protection.
+
+✨ <b>[IMPROVED] Core Engine</b>
+• Optimized <code>AutomationStore</code> for lightweight local task management.
+• Enhanced UI hooks for seamless integration of automation toggles.
+• Improved stability for WhatsApp & Business 2.26.x variants.
+
+🛠️ <b>[FIXED]</b>
+• Minor UI bugs in Emerald Hub Dashboard.
+• Fixed occasional database lock issues during high-frequency hooking.
+
+---
+👨‍💻 <b>Developer:</b> @AltafYafai
+🔗 <b>GitHub:</b> <a href="https://github.com/AltafYafai/whatsapp-toolkit">Project Link</a>
+📦 <b>Release:</b> v1.0.0-Beta
+---
+
+#Whatsapp #Xposed #Automation #Toolkit #Android

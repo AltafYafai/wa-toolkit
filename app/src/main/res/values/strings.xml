@@ -98,6 +98,17 @@
     <string name="message_original">Original Message</string>
     <string name="new_chat">New Chat</string>
     <string name="number_with_country_code">Number with country code</string>
+
+    <!-- Automation Suite -->
+    <string name="automation_suite">Automation Suite</string>
+    <string name="scheduler_enabled">Message Scheduler</string>
+    <string name="scheduler_enabled_sum">Schedule messages to be sent at a specific time</string>
+    <string name="auto_reply_enabled">Advanced Auto-Reply</string>
+    <string name="auto_reply_enabled_sum">Automatically reply to messages based on keywords</string>
+    <string name="bulk_sender">Bulk Message Sender</string>
+    <string name="bulk_sender_sum">Send a message to multiple contacts at once</string>
+    <string name="add_task">Add Task</string>
+    <string name="manage_tasks">Manage Tasks</string>
     <string name="message">Message</string>
     <string name="download">Download</string>
     <string name="reboot_whatsapp">(Restart WhatsApp)</string>
