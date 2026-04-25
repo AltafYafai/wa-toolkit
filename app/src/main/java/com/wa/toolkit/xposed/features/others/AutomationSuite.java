@@ -1,5 +1,7 @@
 package com.wa.toolkit.xposed.features.others;
 
+import android.os.Handler;
+import android.os.Looper;
 import androidx.annotation.NonNull;
 
 import com.wa.toolkit.xposed.core.Feature;
@@ -20,6 +22,7 @@ public class AutomationSuite extends Feature {
 
     private AutomationStore store;
     private Timer schedulerTimer;
+    private final Handler mainHandler = new Handler(Looper.getMainLooper());
 
     public AutomationSuite(ClassLoader loader, XSharedPreferences preferences) {
         super(loader, preferences);
@@ -28,11 +31,15 @@ public class AutomationSuite extends Feature {
 
     @Override
     public void doHook() throws Throwable {
+        XposedBridge.log("[WAE] AutomationSuite initialized");
+        
         if (prefs.getBoolean("auto_reply_enabled", false)) {
+            XposedBridge.log("[WAE] Auto-Reply enabled");
             setupAutoReply();
         }
 
         if (prefs.getBoolean("scheduler_enabled", false)) {
+            XposedBridge.log("[WAE] Scheduler enabled");
             startScheduler();
         }
     }
@@ -50,7 +57,8 @@ public class AutomationSuite extends Feature {
                 for (AutomationStore.AutoReply reply : replies) {
                     if (shouldReply(incomingText, reply)) {
                         String jid = fMessage.getKey().remoteJid.getPhoneRawString();
-                        WppCore.sendMessage(WppCore.stripJID(jid), reply.content);
+                        XposedBridge.log("[WAE] Auto-replying to " + jid + " with: " + reply.content);
+                        sendMessageMainThread(WppCore.stripJID(jid), reply.content);
                         break;
                     }
                 }
@@ -80,31 +88,49 @@ public class AutomationSuite extends Feature {
         schedulerTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                checkScheduledMessages();
+                try {
+                    checkScheduledMessages();
+                } catch (Exception e) {
+                    XposedBridge.log("[WAE] Scheduler Timer Error: " + e.getMessage());
+                }
             }
-        }, 0, 60000); // Check every minute
+        }, 5000, 60000); // Start after 5s, check every minute
+        XposedBridge.log("[WAE] Scheduler Timer started");
     }
 
     private void checkScheduledMessages() {
         long now = System.currentTimeMillis();
         List<AutomationStore.ScheduledMessage> pending = store.getPendingMessages(now);
 
+        if (!pending.isEmpty()) {
+            XposedBridge.log("[WAE] Found " + pending.size() + " pending scheduled messages");
+        }
+
         for (AutomationStore.ScheduledMessage msg : pending) {
-            try {
-                WppCore.sendMessage(WppCore.stripJID(msg.jid), msg.content);
-                store.updateMessageStatus(msg.id, 1); // Sent
-            } catch (Exception e) {
-                store.updateMessageStatus(msg.id, 2); // Failed
-                XposedBridge.log("[WAE] Failed to send scheduled message: " + e.getMessage());
-            }
+            XposedBridge.log("[WAE] Processing scheduled message " + msg.id + " to " + msg.jid);
+            sendMessageMainThread(WppCore.stripJID(msg.jid), msg.content);
+            // We update status immediately to avoid re-sending, assuming sendMessageMainThread starts the process
+            store.updateMessageStatus(msg.id, 1); 
         }
     }
 
+    private void sendMessageMainThread(final String number, final String message) {
+        mainHandler.post(() -> {
+            try {
+                XposedBridge.log("[WAE] Sending message via Main Thread to: " + number);
+                WppCore.sendMessage(number, message);
+            } catch (Exception e) {
+                XposedBridge.log("[WAE] Failed to send message on Main Thread: " + e.getMessage());
+            }
+        });
+    }
+
     public static void bulkSend(String message, List<String> jids) {
+        // Bulk send should also ideally use Main Thread for each message or a shared handler
         for (String jid : jids) {
             WppCore.sendMessage(WppCore.stripJID(jid), message);
             try {
-                Thread.sleep(500); // Small delay to avoid rate limiting/flagging
+                Thread.sleep(800); 
             } catch (InterruptedException ignored) {}
         }
     }
