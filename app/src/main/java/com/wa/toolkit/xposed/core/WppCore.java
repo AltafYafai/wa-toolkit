@@ -287,13 +287,41 @@ public class WppCore {
     }
 
     public static Object getActionUser() {
+        if (mActionUser != null) return mActionUser;
+
         try {
-            if (mActionUser == null) {
-                mActionUser = actionUser.getConstructors()[0].newInstance();
+            // WhatsApp classes often have a static field named 'A00' or 'A01' that holds the instance
+            // We search for a static field that is an instance of the class itself
+            for (Field field : actionUser.getDeclaredFields()) {
+                if (java.lang.reflect.Modifier.isStatic(field.getModifiers()) && field.getType() == actionUser) {
+                    field.setAccessible(true);
+                    Object instance = field.get(null);
+                    if (instance != null) {
+                        mActionUser = instance;
+                        XposedBridge.log("[WAE] Found ActionUser via static singleton field: " + field.getName());
+                        return mActionUser;
+                    }
+                }
             }
         } catch (Exception e) {
-            XposedBridge.log(e);
+            XposedBridge.log("[WAE] Error searching for ActionUser field: " + e.getMessage());
         }
+
+        try {
+            // Fallback: Try the first constructor if it has no arguments or we can provide nulls
+            if (actionUser.getConstructors().length > 0) {
+                var constructor = actionUser.getConstructors()[0];
+                var params = new Object[constructor.getParameterCount()];
+                for (int i = 0; i < params.length; i++) {
+                    params[i] = ReflectionUtils.getDefaultValue(constructor.getParameterTypes()[i]);
+                }
+                mActionUser = constructor.newInstance(params);
+                XposedBridge.log("[WAE] Created new ActionUser instance via constructor fallback");
+            }
+        } catch (Exception e) {
+            XposedBridge.log("[WAE] Failed to create ActionUser instance: " + e.getMessage());
+        }
+
         return mActionUser;
     }
 
