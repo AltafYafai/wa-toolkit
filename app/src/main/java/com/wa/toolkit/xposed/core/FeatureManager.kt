@@ -18,10 +18,12 @@ import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
 
 import com.wa.toolkit.xposed.features.others.AutomationSuite
+import com.wa.toolkit.xposed.features.others.AutomationUI
 
 object FeatureManager {
     private val features = mutableListOf<Class<out Feature>>(
-        AutomationSuite::class.java
+        AutomationSuite::class.java,
+        AutomationUI::class.java
     )
     private val errors = Vector<FeatureLoader.ErrorItem>()
     private val loadTimes = Vector<String>()
