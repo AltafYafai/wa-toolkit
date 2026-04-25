@@ -33,64 +33,19 @@ import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedHelpers;
 
-import android.content.BroadcastReceiver;
-import android.content.IntentFilter;
-
 public class AutomationUI extends Feature {
-
-    private AutomationStore store;
 
     public AutomationUI(ClassLoader loader, XSharedPreferences preferences) {
         super(loader, preferences);
-        this.store = AutomationStore.getInstance(Utils.getApplication());
     }
 
     @Override
     public void doHook() throws Throwable {
         hookConversationMenu();
-        registerBroadcastReceiver();
-    }
-
-    private void registerBroadcastReceiver() {
-        Context app = Utils.getApplication();
-        BroadcastReceiver receiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, android.content.Intent intent) {
-                Activity activity = com.wa.toolkit.xposed.core.ActivityStateRegistry.getCurrentActivity();
-                if (activity != null) {
-                    showAutomationManager(activity);
-                }
-            }
-        };
-        IntentFilter filter = new IntentFilter("com.wa.toolkit.OPEN_AUTOMATION_MANAGER");
-        
-        if (android.os.Build.VERSION.SDK_INT >= 34) {
-            app.registerReceiver(receiver, filter, Context.RECEIVER_NOT_EXPORTED);
-        } else {
-            app.registerReceiver(receiver, filter);
-        }
     }
 
     private void hookConversationMenu() {
-        com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(
-                "com.whatsapp.conversation.ConversationHelper", classLoader,
-                "A00", // This is a common obfuscated name for menu creation, might need adjustment
-                Activity.class, Menu.class, int.class,
-                new XC_MethodHook() {
-            @Override
-            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                Activity activity = (Activity) param.args[0];
-                Menu menu = (Menu) param.args[1];
-                
-                MenuItem item = menu.add(0, 0, 0, "⏰ Schedule Message");
-                item.setOnMenuItemClickListener(menuItem -> {
-                    showScheduleDialog(activity);
-                    return true;
-                });
-            }
-        });
-        
-        // Alternative hook for modern WA
+        // Conversation Menu Hook
         com.wa.toolkit.xposed.core.FeatureManager.safeFindAndHookMethod(
                 "com.whatsapp.Conversation", classLoader,
                 "onCreateOptionsMenu", Menu.class,
@@ -110,7 +65,7 @@ public class AutomationUI extends Feature {
         });
     }
 
-    private void showScheduleDialog(Activity activity) {
+    private static void showScheduleDialog(Activity activity) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle("Schedule Message");
 
@@ -151,7 +106,7 @@ public class AutomationUI extends Feature {
 
             String jid = getJidFromActivity(activity);
             if (jid != null) {
-                store.addScheduledMessage(jid, message, calendar.getTimeInMillis());
+                AutomationStore.getInstance(activity).addScheduledMessage(jid, message, calendar.getTimeInMillis());
                 Toast.makeText(activity, "Message scheduled!", Toast.LENGTH_SHORT).show();
             }
         });
@@ -159,9 +114,10 @@ public class AutomationUI extends Feature {
         builder.show();
     }
 
-    private void showAutomationManager(Activity activity) {
+    public static void showAutomationManager(Activity activity) {
+        AutomationStore store = AutomationStore.getInstance(activity);
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setTitle("Automation Manager");
+        builder.setTitle("💚 Automation Manager");
 
         ScrollView scrollView = new ScrollView(activity);
         LinearLayout container = new LinearLayout(activity);
@@ -172,22 +128,31 @@ public class AutomationUI extends Feature {
         TextView schedHeader = new TextView(activity);
         schedHeader.setText("📅 Scheduled Messages");
         schedHeader.setTextSize(18);
+        schedHeader.setTextColor(Color.BLACK);
         schedHeader.setPadding(0, 20, 0, 10);
         container.addView(schedHeader);
 
         List<AutomationStore.ScheduledMessage> pending = store.getPendingMessages(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 365);
-        for (AutomationStore.ScheduledMessage msg : pending) {
-            TextView tv = new TextView(activity);
-            String date = new SimpleDateFormat("MM/dd HH:mm", Locale.getDefault()).format(new Date(msg.time));
-            tv.setText("[" + date + "] To " + msg.jid + ":\n" + msg.content);
-            tv.setPadding(0, 10, 0, 10);
-            container.addView(tv);
+        if (pending.isEmpty()) {
+            TextView empty = new TextView(activity);
+            empty.setText("No pending messages.");
+            empty.setPadding(20, 10, 0, 10);
+            container.addView(empty);
+        } else {
+            for (AutomationStore.ScheduledMessage msg : pending) {
+                TextView tv = new TextView(activity);
+                String date = new SimpleDateFormat("MM/dd HH:mm", Locale.getDefault()).format(new Date(msg.time));
+                tv.setText("[" + date + "] To " + msg.jid + ":\n" + msg.content);
+                tv.setPadding(0, 10, 0, 10);
+                container.addView(tv);
+            }
         }
 
         // --- Auto Reply Section ---
         TextView replyHeader = new TextView(activity);
         replyHeader.setText("\n🤖 Auto-Reply Rules");
         replyHeader.setTextSize(18);
+        replyHeader.setTextColor(Color.BLACK);
         replyHeader.setPadding(0, 20, 0, 10);
         container.addView(replyHeader);
 
@@ -196,8 +161,8 @@ public class AutomationUI extends Feature {
         List<AutomationStore.AutoReply> replies = store.getEnabledAutoReplies();
         for (AutomationStore.AutoReply reply : replies) {
             TextView tv = new TextView(activity);
-            tv.setText("If contains '" + reply.keyword + "' -> '" + reply.content + "'");
-            tv.setPadding(0, 10, 0, 10);
+            tv.setText("• If contains '" + reply.keyword + "' -> '" + reply.content + "'");
+            tv.setPadding(20, 10, 0, 10);
             container.addView(tv);
         }
 
@@ -207,18 +172,18 @@ public class AutomationUI extends Feature {
         builder.show();
     }
 
-    private TextView createAddAutoReplyButton(Activity activity) {
+    private static TextView createAddAutoReplyButton(Activity activity) {
         TextView btn = new TextView(activity);
         btn.setText("[+ Add Rule]");
-        btn.setTextColor(Color.BLUE);
-        btn.setPadding(0, 10, 0, 10);
+        btn.setTextColor(Color.parseColor("#34B7F1"));
+        btn.setPadding(20, 10, 0, 20);
         btn.setOnClickListener(v -> {
             showAddReplyDialog(activity);
         });
         return btn;
     }
 
-    private void showAddReplyDialog(Activity activity) {
+    private static void showAddReplyDialog(Activity activity) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle("New Auto-Reply");
 
@@ -239,7 +204,7 @@ public class AutomationUI extends Feature {
             String kw = keyword.getText().toString();
             String re = reply.getText().toString();
             if (!kw.isEmpty() && !re.isEmpty()) {
-                store.addAutoReply(kw, re, 0);
+                AutomationStore.getInstance(activity).addAutoReply(kw, re, 0);
                 Toast.makeText(activity, "Rule saved!", Toast.LENGTH_SHORT).show();
             }
         });
@@ -247,16 +212,14 @@ public class AutomationUI extends Feature {
         builder.show();
     }
 
-    private String getJidFromActivity(Activity activity) {
+    private static String getJidFromActivity(Activity activity) {
         try {
-            // This depends on WA version, trying a few common fields
-            Object contact = XposedHelpers.getObjectField(activity, "A0G"); // Common for Conversation
+            Object contact = XposedHelpers.getObjectField(activity, "A0G");
             if (contact != null) {
-                return XposedHelpers.getObjectField(contact, "A02").toString(); // JID field
+                return XposedHelpers.getObjectField(contact, "A02").toString();
             }
         } catch (Exception e) {
             try {
-                // Fallback attempt
                 Intent intent = activity.getIntent();
                 return intent.getStringExtra("jid");
             } catch (Exception ignored) {}

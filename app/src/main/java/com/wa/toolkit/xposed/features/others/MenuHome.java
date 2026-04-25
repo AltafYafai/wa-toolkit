@@ -74,11 +74,7 @@ public class MenuHome extends Feature {
         // 2. Automation Manager
         options.add("Automation Manager");
         actions.add(() -> {
-            // This will be handled by AutomationUI if registered correctly, 
-            // but we can invoke it here directly if we have access.
-            // For now, we rely on the AutomationUI hook to provide its own menu entry or handle it here.
-            // We'll use a broadcast or direct call if possible.
-            activity.sendBroadcast(new Intent("com.wa.toolkit.OPEN_AUTOMATION_MANAGER"));
+            AutomationUI.showAutomationManager(activity);
         });
 
         // 3. Ghost Mode
